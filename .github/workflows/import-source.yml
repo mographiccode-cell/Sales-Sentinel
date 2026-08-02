@@ -1,0 +1,37 @@
+name: Import Sales Sentinel source
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout destination
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone verified source repository
+        run: git clone --depth 1 https://github.com/daghbas/Sales-Sentinel.git /tmp/sales-sentinel-source
+
+      - name: Replace destination with complete source
+        run: |
+          rsync -a --delete --exclude='.git' /tmp/sales-sentinel-source/ ./
+          rm -rf .git
+          mv /tmp/sales-sentinel-source/.git .git
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git branch -M main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push complete project to this repository
+        run: git push --force origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
