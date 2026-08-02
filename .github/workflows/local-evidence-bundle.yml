@@ -2,6 +2,10 @@ name: Local evidence source bundle
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/local-evidence-bundle.yml'
   push:
     branches: [main]
     paths:
@@ -15,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - name: Create exact main source bundle
         run: |
           mkdir -p docs/evidence
@@ -24,6 +30,7 @@ jobs:
           base64 -w 0 /tmp/sales-sentinel-main.zip > docs/evidence/source_bundle.b64
           sha256sum /tmp/sales-sentinel-main.zip > docs/evidence/source_bundle.sha256
       - name: Commit reproducible source evidence
+        if: github.event_name == 'push'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
