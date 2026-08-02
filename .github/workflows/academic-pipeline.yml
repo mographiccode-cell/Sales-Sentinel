@@ -45,11 +45,12 @@ jobs:
             data/source_manifest.json
             models/sales_forecast.json
             reports/model_metrics.json
-      - name: Commit reproducible artifacts on main builds
-        if: github.event_name != 'pull_request'
+      - name: Commit reproducible artifacts
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/processed/daily_sales.csv data/source_manifest.json models/sales_forecast.json reports/model_metrics.json
-          git diff --cached --quiet || git commit -m 'data: rebuild UCI dataset and trained forecasting artifact'
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: persist verified UCI model artifacts [skip ci]'
+            git push origin HEAD:${{ github.head_ref || github.ref_name }}
+          fi
