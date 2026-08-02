@@ -3,6 +3,8 @@ name: Import Sales Sentinel source
 on:
   push:
     branches: [main]
+  issues:
+    types: [opened]
   workflow_dispatch:
 
 permissions:
