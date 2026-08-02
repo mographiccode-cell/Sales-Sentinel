@@ -20,6 +20,12 @@ def create_app(config_object=None):
     Path(app.config["UPLOAD_DIR"]).mkdir(parents=True, exist_ok=True)
     Path(app.config["REPORT_DIR"]).mkdir(parents=True, exist_ok=True)
     init_engine(app.config["DATABASE_URL"])
+
+    # Correct the legacy many-to-many reverse names before SQLAlchemy configures mappers.
+    from .models import Branch, User
+    Branch.__mapper__.get_property("users", _configure_mappers=False).back_populates = "branches"
+    User.__mapper__.get_property("branches", _configure_mappers=False).back_populates = "users"
+
     from .services.bootstrap import ensure_seed_data
     ensure_seed_data()
 
