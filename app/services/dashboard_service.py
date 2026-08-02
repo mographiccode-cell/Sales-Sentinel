@@ -21,7 +21,7 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
     previous_sales = float(db.scalar(scoped(select(func.sum(Sale.net_sales)).where(Sale.sale_date.between(previous_start, current_start - timedelta(days=1))))) or 0)
     change = ((current_sales - previous_sales) / previous_sales * 100) if previous_sales else 0
     transactions = int(db.scalar(scoped(select(func.count(func.distinct(Sale.transaction_number))).where(Sale.sale_date.between(current_start, max_date)))) or 0)
-    returns = float(db.scalar(scoped(select(func.sum(case((Sale.transaction_type != "INV", func.abs(Sale.net_sales)), else_=0))).where(Sale.sale_date.between(current_start, max_date)))) or 0)
+    returns = float(db.scalar(scoped(select(func.sum(case((Sale.gross_sales > Sale.net_sales, Sale.gross_sales - Sale.net_sales), else_=0))).where(Sale.sale_date.between(current_start, max_date)))) or 0)
     discounts = abs(float(db.scalar(scoped(select(func.sum(Sale.discount_amount)).where(Sale.sale_date.between(current_start, max_date)))) or 0))
     avg_transaction = current_sales / transactions if transactions else 0
     series_stmt = scoped(select(Sale.sale_date, func.sum(Sale.net_sales)).where(Sale.sale_date >= max_date - timedelta(days=89)).group_by(Sale.sale_date).order_by(Sale.sale_date))
