@@ -1,0 +1,26 @@
+name: Local evidence source bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/local-evidence-bundle.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  package-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create source bundle
+        run: |
+          zip -r sales-sentinel-main.zip . -x '.git/*' '.venv/*' '__pycache__/*' '*.pyc'
+      - name: Upload source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-main-source
+          path: sales-sentinel-main.zip
+          retention-days: 7
