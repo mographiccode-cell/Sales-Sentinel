@@ -3,7 +3,7 @@
   "dataset": "UCI Online Retail",
   "dataset_doi": "10.24432/C5BW33",
   "selected_model": "ridge_raw_1",
-  "trained_at": "2026-08-02T18:23:00.034014+00:00",
+  "trained_at": "2026-08-02T18:28:47.872043+00:00",
   "history_start": "2010-12-01",
   "history_end": "2011-12-09",
   "validation_days": 30,
