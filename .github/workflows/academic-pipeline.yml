@@ -1,0 +1,41 @@
+name: Academic data, model and tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_uci_online_retail.py'
+      - 'app/**'
+      - 'tests/**'
+      - 'requirements-training.txt'
+      - '.github/workflows/academic-pipeline.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements-training.txt
+      - name: Build official UCI dataset and train models
+        run: python scripts/build_uci_online_retail.py
+      - name: Run tests
+        env:
+          SECRET_KEY: ci-secret-key-that-is-long-enough
+        run: pytest -q
+      - name: Commit reproducible artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/processed/daily_sales.csv data/source_manifest.json models/sales_forecast.json reports/model_metrics.json
+          git diff --cached --quiet || git commit -m 'data: rebuild UCI dataset and trained forecasting artifact'
+          git push
