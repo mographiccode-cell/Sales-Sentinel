@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10231c">
+  <title>{% block title %}{{ t('app_name') }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+{% if current_user %}
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard.index') }}">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><strong>{{ t('app_name') }}</strong><small>Sales intelligence</small></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><span>01</span>{{ t('dashboard') }}</a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><span>02</span>{{ t('sales') }}</a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><span>03</span>{{ t('forecasts') }}</a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><span>04</span>{{ t('imports') }}</a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><span>05</span>{{ t('reports') }}</a>
+      {% if 'users.manage' in current_user.permission_codes %}
+      <div class="nav-divider"></div>
+      <a class="{{ 'active' if request.endpoint == 'admin.users' else '' }}" href="{{ url_for('admin.users') }}"><span>06</span>{{ t('users') }}</a>
+      <a class="{{ 'active' if request.endpoint == 'admin.health' else '' }}" href="{{ url_for('admin.health') }}"><span>07</span>{{ t('system_health') }}</a>
+      <a class="{{ 'active' if request.endpoint == 'admin.settings' else '' }}" href="{{ url_for('admin.settings') }}"><span>08</span>{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
+      {% endif %}
+    </nav>
+    <div class="sidebar-foot">
+      <span class="data-status"><i></i>{{ 'بيانات يومية حقيقية' if locale == 'ar' else 'Real daily data' }}</span>
+      <form method="post" action="{{ url_for('auth.logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="logout-button" type="submit">{{ t('logout') }}</button>
+      </form>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <div><span class="topbar-label">{{ 'مساحة التحليل' if locale == 'ar' else 'Analytics workspace' }}</span><strong>{{ current_user.full_name_ar if locale == 'ar' else current_user.full_name_en }}</strong></div>
+      <div class="topbar-actions">{% if deployment_mode.startswith('vercel') %}<span class="mode-badge">Vercel demo</span>{% endif %}<a class="language-switch" href="{{ url_for('set_locale', language='en' if locale == 'ar' else 'ar', next=request.full_path) }}">{{ t('language') }}</a></div>
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% else %}
+  {% block guest %}{% block content_guest %}{% endblock %}{% endblock %}
+{% endif %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
