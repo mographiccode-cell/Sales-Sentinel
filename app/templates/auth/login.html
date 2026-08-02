@@ -6,11 +6,11 @@
     <a class="login-language" href="{{ url_for('set_locale', language='en' if locale == 'ar' else 'ar', next=request.full_path) }}">{{ t('language') }}</a>
     <div class="login-brand"><span class="brand-mark large"><i></i><i></i><i></i></span><div><strong>{{ t('app_name') }}</strong><small>{{ t('app_subtitle') }}</small></div></div>
     <div class="story-copy">
-      <span class="eyebrow">{{ 'ذكاء مبيعات سعودي' if locale == 'ar' else 'Saudi sales intelligence' }}</span>
-      <h1>{{ 'رصد مبكر لانخفاض المبيعات، مبني على بيانات فعلية.' if locale == 'ar' else 'Early sales-decline detection grounded in actual data.' }}</h1>
-      <p>{{ 'حلل الاتجاه اليومي، راجع فواصل عدم اليقين، وافهم العوامل المرتبطة بالتغير قبل اتخاذ القرار.' if locale == 'ar' else 'Review daily trends, uncertainty intervals, and measured associations before deciding.' }}</p>
+      <span class="eyebrow">{{ 'ذكاء مبيعات مبني على بيانات موثقة' if locale == 'ar' else 'Sales intelligence built on verified data' }}</span>
+      <h1>{{ 'رصد مبكر لانخفاض المبيعات، مبني على معاملات فعلية.' if locale == 'ar' else 'Early sales-decline detection grounded in real transactions.' }}</h1>
+      <p>{{ 'دُرّب المودل على UCI Online Retail باستخدام تقسيم زمني مستقل، مع فواصل عدم يقين ومقاييس اختبار محفوظة.' if locale == 'ar' else 'The model was trained on UCI Online Retail with an independent chronological split, empirical intervals, and persisted test metrics.' }}</p>
     </div>
-    <div class="story-metrics"><div><strong>2,695</strong><span>{{ 'سجلًا نظيفًا' if locale == 'ar' else 'clean rows' }}</span></div><div><strong>121</strong><span>{{ 'يوم بيع فعلي' if locale == 'ar' else 'observed days' }}</span></div><div><strong>352</strong><span>{{ 'منتجًا' if locale == 'ar' else 'products' }}</span></div></div>
+    <div class="story-metrics"><div><strong>536,639</strong><span>{{ 'معاملة نظيفة' if locale == 'ar' else 'clean transactions' }}</span></div><div><strong>305</strong><span>{{ 'أيام بيع مرصودة' if locale == 'ar' else 'observed sales days' }}</span></div><div><strong>23.63%</strong><span>{{ 'WAPE للاختبار' if locale == 'ar' else 'test WAPE' }}</span></div></div>
   </section>
   <section class="login-panel">
     <form method="post" class="login-card">
