@@ -1,4 +1,4 @@
-# Verification trigger for exact-main local screenshots
+# Verification trigger for exact-main local screenshots — final data fixes
 name: Local evidence source bundle
 
 on:
