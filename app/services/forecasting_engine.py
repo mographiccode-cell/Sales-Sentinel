@@ -39,6 +39,14 @@ def _std(values: list[float]) -> float:
     return math.sqrt(sum((value - mean) ** 2 for value in values) / len(values))
 
 
+def _history_cap(history: list[float]) -> float:
+    finite = sorted(max(0.0, float(value)) for value in history if math.isfinite(float(value)))
+    if not finite:
+        return 1.0
+    quantile_index = min(len(finite) - 1, int((len(finite) - 1) * 0.995))
+    return max(finite[quantile_index] * 4.0, (sum(finite) / len(finite)) * 10.0, 1.0)
+
+
 def _ridge_predict(history: list[float], target_date: date, trend: int, artifact: dict) -> float:
     ridge = artifact["ridge"]
     values = _feature_values(history, target_date, trend)
@@ -49,22 +57,26 @@ def _ridge_predict(history: list[float], target_date: date, trend: int, artifact
     prediction = ridge["intercept"] + sum(
         coefficient * value for coefficient, value in zip(ridge["coefficients"], scaled)
     )
+    cap = max(float(ridge.get("prediction_cap", 0.0)), _history_cap(history))
     if ridge.get("target_transform") == "log1p":
-        prediction = math.expm1(prediction)
-    return max(0.0, prediction)
+        prediction = math.expm1(min(max(prediction, -20.0), math.log1p(cap)))
+    if not math.isfinite(prediction):
+        raise RuntimeError("Trained Ridge model produced a non-finite value")
+    return min(max(0.0, prediction), cap)
 
 
 def _next_prediction(history: list[float], target: date, artifact: dict) -> float:
     model_name = artifact["selected_model"]
+    cap = _history_cap(history)
     if model_name == "seasonal_naive_7":
-        return max(0.0, history[-7])
+        return min(max(0.0, history[-7]), cap)
     if model_name == "moving_average_7":
-        return max(0.0, sum(history[-7:]) / 7)
+        return min(max(0.0, sum(history[-7:]) / 7), cap)
     if model_name == "median_7":
         ordered = sorted(history[-7:])
-        return max(0.0, ordered[len(ordered) // 2])
+        return min(max(0.0, ordered[len(ordered) // 2]), cap)
     if model_name == "moving_average_14":
-        return max(0.0, sum(history[-14:]) / 14)
+        return min(max(0.0, sum(history[-14:]) / 14), cap)
     if model_name.startswith("ridge_"):
         return _ridge_predict(history, target, len(history), artifact)
     raise RuntimeError(f"Unsupported trained model: {model_name}")
