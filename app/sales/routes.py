@@ -21,7 +21,7 @@ def index():
     stmt = select(
         Sale.sale_date,
         func.sum(Sale.net_sales).label("net_sales"),
-        func.sum(Sale.total_amount).label("total_amount"),
+        func.sum(Sale.gross_sales).label("total_amount"),
         func.sum(Sale.quantity).label("quantity"),
         func.count(func.distinct(Sale.transaction_number)).label("transactions"),
         func.sum(case((Sale.gross_sales > Sale.net_sales, Sale.gross_sales - Sale.net_sales), else_=0)).label("returns"),
