@@ -24,7 +24,7 @@ def index():
         func.sum(Sale.total_amount).label("total_amount"),
         func.sum(Sale.quantity).label("quantity"),
         func.count(func.distinct(Sale.transaction_number)).label("transactions"),
-        func.sum(case((Sale.transaction_type != "INV", func.abs(Sale.net_sales)), else_=0)).label("returns"),
+        func.sum(case((Sale.gross_sales > Sale.net_sales, Sale.gross_sales - Sale.net_sales), else_=0)).label("returns"),
         func.sum(func.abs(Sale.discount_amount)).label("discounts"),
     )
     if start:
