@@ -8,19 +8,31 @@ on:
       - '.github/workflows/local-evidence-bundle.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   package-source:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create source bundle
+      - name: Create exact main source bundle
         run: |
-          zip -r sales-sentinel-main.zip . -x '.git/*' '.venv/*' '__pycache__/*' '*.pyc'
+          mkdir -p docs/evidence
+          zip -r /tmp/sales-sentinel-main.zip . \
+            -x '.git/*' '.venv/*' '__pycache__/*' '*.pyc' \
+               'docs/evidence/source_bundle.b64'
+          base64 -w 0 /tmp/sales-sentinel-main.zip > docs/evidence/source_bundle.b64
+          sha256sum /tmp/sales-sentinel-main.zip > docs/evidence/source_bundle.sha256
+      - name: Commit reproducible source evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/evidence/source_bundle.b64 docs/evidence/source_bundle.sha256
+          git diff --cached --quiet || git commit -m 'evidence: publish exact main source bundle [skip ci]'
+          git push
       - name: Upload source bundle
         uses: actions/upload-artifact@v4
         with:
           name: sales-sentinel-main-source
-          path: sales-sentinel-main.zip
+          path: /tmp/sales-sentinel-main.zip
           retention-days: 7
