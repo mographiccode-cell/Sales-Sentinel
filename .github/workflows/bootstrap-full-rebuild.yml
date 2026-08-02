@@ -1,0 +1,83 @@
+name: Bootstrap complete Sales Sentinel
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  bootstrap:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[bootstrap]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout destination
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Restore complete readable source tree
+        run: |
+          cat .bootstrap/chunk_* > /tmp/sales-sentinel-source.b64
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          base64 -d /tmp/sales-sentinel-source.b64 | tar -xzf - -C .
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Build data, train models and validate project
+        id: build
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          {
+            python -m pip install --upgrade pip
+            pip install -r requirements-dev.txt
+            python scripts/download_and_build.py --force-download
+            rm -f /tmp/sales-sentinel-migration.db
+            DATABASE_URL=sqlite:////tmp/sales-sentinel-migration.db alembic upgrade head
+            pytest --cov=app --cov=ml --cov-report=term-missing
+            ruff check app ml scripts tests
+            python scripts/smoke_test.py
+          } > /tmp/bootstrap.log 2>&1
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          tail -n 160 /tmp/bootstrap.log
+
+      - name: Commit complete generated project
+        if: steps.build.outputs.exit_code == '0'
+        run: |
+          git config user.name "sales-sentinel-bot"
+          git config user.email "sales-sentinel-bot@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: complete real-data academic Sales Sentinel" || true
+          git push origin main
+
+      - name: Comment result
+        if: always() && github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ steps.build.outputs.exit_code }}" = "0" ]; then
+            printf '✅ Complete rebuild, UCI data processing, model training, SQLite generation, Alembic migration and tests succeeded.\n' > /tmp/comment.txt
+          else
+            printf '❌ Bootstrap failed. Last log lines:\n\n```text\n' > /tmp/comment.txt
+            tail -n 100 /tmp/bootstrap.log >> /tmp/comment.txt
+            printf '\n```\n' >> /tmp/comment.txt
+          fi
+          gh issue comment "${{ github.event.issue.number }}" --body-file /tmp/comment.txt
+
+      - name: Fail when validation failed
+        if: steps.build.outputs.exit_code != '0'
+        run: exit 1
