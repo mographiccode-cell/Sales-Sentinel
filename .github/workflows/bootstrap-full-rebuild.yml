@@ -8,14 +8,19 @@ on:
     branches: [main]
     paths:
       - '.bootstrap/trigger.txt'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.bootstrap/trigger-pr.txt'
 
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   bootstrap:
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || startsWith(github.event.issue.title, '[bootstrap]')
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || github.event_name == 'pull_request' || startsWith(github.event.issue.title, '[bootstrap]')
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
