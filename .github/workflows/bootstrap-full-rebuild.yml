@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   issues:
     types: [opened]
+  push:
+    branches: [main]
+    paths:
+      - '.bootstrap/trigger.txt'
 
 permissions:
   contents: write
@@ -11,7 +15,7 @@ permissions:
 
 jobs:
   bootstrap:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[bootstrap]')
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push' || startsWith(github.event.issue.title, '[bootstrap]')
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -64,7 +68,7 @@ jobs:
           git commit -m "feat: complete real-data academic Sales Sentinel" || true
           git push origin main
 
-      - name: Comment result
+      - name: Comment issue result
         if: always() && github.event_name == 'issues'
         env:
           GH_TOKEN: ${{ github.token }}
