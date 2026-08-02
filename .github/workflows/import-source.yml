@@ -5,6 +5,8 @@ on:
     branches: [main]
   issues:
     types: [opened]
+  pull_request_target:
+    types: [opened]
   workflow_dispatch:
 
 permissions:
@@ -18,6 +20,7 @@ jobs:
       - name: Checkout destination
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Clone verified source repository
