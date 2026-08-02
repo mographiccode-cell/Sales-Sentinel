@@ -15,13 +15,13 @@ def create_app(config_object=None):
     config_object = config_object or Config
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_object)
-    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(
-        seconds=app.config["PERMANENT_SESSION_LIFETIME_SECONDS"]
-    )
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(seconds=app.config["PERMANENT_SESSION_LIFETIME_SECONDS"])
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     Path(app.config["UPLOAD_DIR"]).mkdir(parents=True, exist_ok=True)
     Path(app.config["REPORT_DIR"]).mkdir(parents=True, exist_ok=True)
     init_engine(app.config["DATABASE_URL"])
+    from .services.bootstrap import ensure_seed_data
+    ensure_seed_data()
 
     from .admin.routes import admin_bp
     from .auth.routes import auth_bp
@@ -46,28 +46,13 @@ def create_app(config_object=None):
         response.headers.setdefault("X-Frame-Options", "DENY")
         response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
         response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
-        response.headers.setdefault(
-            "Content-Security-Policy",
-            "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
-            "script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; "
-            "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com",
-        )
+        response.headers.setdefault("Content-Security-Policy", "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com")
         return response
 
     @app.context_processor
     def context():
         user = current_user()
-        return {
-            "current_user": user,
-            "t": t,
-            "locale": locale(),
-            "direction": "rtl" if locale() == "ar" else "ltr",
-            "money": money,
-            "number": number,
-            "date_value": date_value,
-            "csrf_token": csrf_token,
-            "deployment_mode": app.config["DEPLOYMENT_MODE"],
-        }
+        return {"current_user": user, "t": t, "locale": locale(), "direction": "rtl" if locale() == "ar" else "ltr", "money": money, "number": number, "date_value": date_value, "csrf_token": csrf_token, "deployment_mode": app.config["DEPLOYMENT_MODE"]}
 
     @app.route("/locale/<language>")
     def set_locale(language):
