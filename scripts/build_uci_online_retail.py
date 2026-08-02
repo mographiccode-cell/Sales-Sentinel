@@ -130,6 +130,8 @@ def supervised(values: list[float], dates: list[date]) -> tuple[np.ndarray, np.n
 
 
 def scores(actual: np.ndarray, predicted: np.ndarray) -> dict[str, float]:
+    if not np.isfinite(predicted).all():
+        raise FloatingPointError("Model produced a non-finite prediction")
     error = actual - predicted
     denominator = max(float(np.abs(actual).sum()), 1e-9)
     smape_den = np.maximum(np.abs(actual) + np.abs(predicted), 1e-9)
@@ -141,9 +143,21 @@ def scores(actual: np.ndarray, predicted: np.ndarray) -> dict[str, float]:
     }
 
 
+def prediction_cap(history: list[float]) -> float:
+    values = np.asarray([max(0.0, value) for value in history if math.isfinite(value)], dtype=float)
+    if not len(values):
+        return 1.0
+    return max(
+        float(np.quantile(values, 0.995)) * 4.0,
+        float(np.mean(values)) * 10.0,
+        1.0,
+    )
+
+
 def baseline(history: list[float], horizon: int, name: str) -> np.ndarray:
     mutable = list(history)
     predictions: list[float] = []
+    cap = prediction_cap(history)
     for _ in range(horizon):
         if name == "seasonal_naive_7":
             value = mutable[-7]
@@ -155,8 +169,9 @@ def baseline(history: list[float], horizon: int, name: str) -> np.ndarray:
             value = float(np.mean(mutable[-14:]))
         else:
             raise ValueError(name)
-        mutable.append(max(0.0, value))
-        predictions.append(max(0.0, value))
+        value = min(max(0.0, float(value)), cap)
+        mutable.append(value)
+        predictions.append(value)
     return np.asarray(predictions)
 
 
@@ -172,13 +187,22 @@ def ridge_forecast(history: list[float], dates: list[date], future_dates: list[d
     scaler, model = fit_ridge(history, dates, alpha, transform)
     mutable = list(history)
     predictions: list[float] = []
+    cap = prediction_cap(history)
+    max_log = math.log1p(cap)
     for target_date in future_dates:
         row = feature_row(mutable, target_date, len(mutable))
         vector = np.asarray([[row[name] for name in FEATURES]], dtype=float)
-        value = float(model.predict(scaler.transform(vector))[0])
+        if not np.isfinite(vector).all():
+            raise FloatingPointError("Recursive features became non-finite")
+        raw_value = float(model.predict(scaler.transform(vector))[0])
         if transform == "log1p":
-            value = float(np.expm1(value))
-        value = max(0.0, value)
+            raw_value = min(max(raw_value, -20.0), max_log)
+            value = math.expm1(raw_value)
+        else:
+            value = raw_value
+        if not math.isfinite(value):
+            raise FloatingPointError("Ridge model produced a non-finite prediction")
+        value = min(max(0.0, value), cap)
         mutable.append(value)
         predictions.append(value)
     return np.asarray(predictions), scaler, model
@@ -194,14 +218,24 @@ def evaluate(values: list[float], dates: list[date], training_end: int, horizon:
     for name in ("seasonal_naive_7", "moving_average_7", "median_7", "moving_average_14"):
         prediction = baseline(history, horizon, name)
         predictions[name] = prediction
-        results[name] = scores(actual, prediction)
+        results[name] = {**scores(actual, prediction), "status": "valid"}
 
     for alpha in (1.0, 10.0, 100.0, 1000.0):
         for transform in ("identity", "log1p"):
             name = f"ridge_{'log' if transform == 'log1p' else 'raw'}_{int(alpha)}"
-            prediction, _, _ = ridge_forecast(history, history_dates, future_dates, alpha, transform)
-            predictions[name] = prediction
-            results[name] = scores(actual, prediction)
+            try:
+                prediction, _, _ = ridge_forecast(history, history_dates, future_dates, alpha, transform)
+                predictions[name] = prediction
+                results[name] = {**scores(actual, prediction), "status": "valid"}
+            except (FloatingPointError, OverflowError, ValueError) as exc:
+                results[name] = {
+                    "mae": 1e308,
+                    "rmse": 1e308,
+                    "wape": 1e308,
+                    "smape": 2.0,
+                    "status": "excluded_unstable",
+                    "reason": str(exc),
+                }
     return results, predictions
 
 
@@ -216,7 +250,13 @@ def train(daily: pd.DataFrame) -> tuple[dict, dict]:
     validation_end = len(values) - test_days
     validation_start = validation_end - validation_days
     validation_metrics, _ = evaluate(values, dates, validation_start, validation_days)
-    selected = min(validation_metrics, key=lambda name: validation_metrics[name]["wape"])
+    valid_candidates = {
+        name: metrics for name, metrics in validation_metrics.items()
+        if metrics.get("status") == "valid" and math.isfinite(metrics["wape"])
+    }
+    if not valid_candidates:
+        raise RuntimeError("No numerically stable forecasting model was produced")
+    selected = min(valid_candidates, key=lambda name: valid_candidates[name]["wape"])
 
     history = values[:validation_end]
     history_dates = dates[:validation_end]
@@ -235,7 +275,10 @@ def train(daily: pd.DataFrame) -> tuple[dict, dict]:
     residuals = test_actual - test_prediction
     lower_error = float(np.quantile(residuals, 0.05))
     upper_error = float(np.quantile(residuals, 0.95))
-    coverage = float(np.mean((test_actual >= np.maximum(0, test_prediction + lower_error)) & (test_actual <= test_prediction + upper_error)))
+    coverage = float(np.mean(
+        (test_actual >= np.maximum(0, test_prediction + lower_error))
+        & (test_actual <= test_prediction + upper_error)
+    ))
 
     ridge_payload: dict = {}
     if selected.startswith("ridge_"):
@@ -248,6 +291,7 @@ def train(daily: pd.DataFrame) -> tuple[dict, dict]:
             "intercept": float(model.intercept_),
             "alpha": float(alpha),
             "target_transform": transform,
+            "prediction_cap": prediction_cap(values),
         }
 
     artifact = {
@@ -262,7 +306,7 @@ def train(daily: pd.DataFrame) -> tuple[dict, dict]:
         "test_days": test_days,
         "selection_metric": "validation_wape",
         "metrics": test_metrics,
-        "validation_metrics": validation_metrics[selected],
+        "validation_metrics": valid_candidates[selected],
         "all_validation_metrics": validation_metrics,
         "residual_quantiles": {
             "lower": lower_error,
