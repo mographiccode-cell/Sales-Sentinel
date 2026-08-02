@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('login') }} — {{ t('app_name') }}{% endblock %}
+{% block guest %}
+<div class="login-layout">
+  <section class="login-story">
+    <a class="login-language" href="{{ url_for('set_locale', language='en' if locale == 'ar' else 'ar', next=request.full_path) }}">{{ t('language') }}</a>
+    <div class="login-brand"><span class="brand-mark large"><i></i><i></i><i></i></span><div><strong>{{ t('app_name') }}</strong><small>{{ t('app_subtitle') }}</small></div></div>
+    <div class="story-copy">
+      <span class="eyebrow">{{ 'ذكاء مبيعات سعودي' if locale == 'ar' else 'Saudi sales intelligence' }}</span>
+      <h1>{{ 'رصد مبكر لانخفاض المبيعات، مبني على بيانات فعلية.' if locale == 'ar' else 'Early sales-decline detection grounded in actual data.' }}</h1>
+      <p>{{ 'حلل الاتجاه اليومي، راجع فواصل عدم اليقين، وافهم العوامل المرتبطة بالتغير قبل اتخاذ القرار.' if locale == 'ar' else 'Review daily trends, uncertainty intervals, and measured associations before deciding.' }}</p>
+    </div>
+    <div class="story-metrics"><div><strong>2,695</strong><span>{{ 'سجلًا نظيفًا' if locale == 'ar' else 'clean rows' }}</span></div><div><strong>121</strong><span>{{ 'يوم بيع فعلي' if locale == 'ar' else 'observed days' }}</span></div><div><strong>352</strong><span>{{ 'منتجًا' if locale == 'ar' else 'products' }}</span></div></div>
+  </section>
+  <section class="login-panel">
+    <form method="post" class="login-card">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <span class="eyebrow">SECURE ACCESS</span><h2>{{ t('login') }}</h2>
+      <p>{{ 'ادخل إلى لوحة التنبؤ والتحليل.' if locale == 'ar' else 'Enter the forecasting and analysis workspace.' }}</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
+      <label>{{ t('username') }}<input name="username" autocomplete="username" required></label>
+      <label>{{ t('password') }}<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="primary-button full" type="submit">{{ t('login') }} <span>↗</span></button>
+      <div class="demo-accounts"><small>{{ 'حسابات العرض' if locale == 'ar' else 'Demo accounts' }}</small><code>admin / Admin@2026!</code><code>analyst / Analyst@2026!</code></div>
+    </form>
+  </section>
+</div>
+{% endblock %}
