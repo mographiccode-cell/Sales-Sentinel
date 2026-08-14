@@ -47,6 +47,13 @@ HAJJ = [
     ('2025-05-30','2025-06-12'), ('2026-05-20','2026-06-02'),
 ]
 
+# Calibration-only shocks occur BEFORE the scored period so the production policy has enough
+# realized historical declines to operate. They are never counted in the reported test metrics.
+CALIBRATION_SHOCKS = {}
+_cal_cities = list(CITIES)
+for i, ws in enumerate(pd.date_range('2023-07-02','2024-12-29',freq='3W-SUN')):
+    CALIBRATION_SHOCKS[(str(ws.date()), _cal_cities[i % len(_cal_cities)])] = 0.60 + 0.02 * (i % 3)
+
 # Strong shocks are fixed BEFORE model scoring. They are intentionally spread across cities and seasons.
 STRONG_SHOCKS = {
     ('2025-02-16','RIYADH'): 0.68,
@@ -141,6 +148,9 @@ def generate_panel() -> pd.DataFrame:
             value *= seasonal_multiplier(city, ws)
             scenario = 'normal'
             key = (str(ws.date()), city)
+            if key in CALIBRATION_SHOCKS:
+                value *= CALIBRATION_SHOCKS[key]
+                scenario = 'historical_calibration_decline'
             if key in MILD_DIPS:
                 value *= MILD_DIPS[key]
                 scenario = 'mild_dip'
@@ -183,8 +193,9 @@ def add_ground_truth(panel: pd.DataFrame) -> pd.DataFrame:
 def evaluate(panel: pd.DataFrame, truth: pd.DataFrame):
     weeks = sorted(panel.week_start.unique())
     pred_rows = []
-    # 110 completed weeks ensures the production engine has >=104 weeks plus rolling-feature warmup.
-    for origin in weeks[110:-1]:
+    # Scored period begins only after the historical calibration shocks are complete.
+    score_start = pd.Timestamp('2025-02-09')
+    for origin in [w for w in weeks[:-1] if pd.Timestamp(w) >= score_start]:
         hist = panel[panel.week_start <= origin][['week_start','week_end','city','value_thousand_sar','transaction_count_thousand']].copy()
         result = predict_latest(hist)
         if result.get('status') != 'OK':
@@ -198,7 +209,8 @@ def evaluate(panel: pd.DataFrame, truth: pd.DataFrame):
             })
     preds = pd.DataFrame(pred_rows)
     if (preds.city == '__ENGINE__').any():
-        raise RuntimeError('Production engine returned NO_DECISION during synthetic evaluation: ' + preds[preds.city=='__ENGINE__'].to_json(orient='records'))
+        bad = preds[preds.city=='__ENGINE__']
+        raise RuntimeError('Production engine returned NO_DECISION during synthetic evaluation: ' + bad.head(20).to_json(orient='records'))
     eval_df = preds.merge(
         truth[['week_start','city','scenario','actual_decline_gt20','actual_decline_pct','next_week_ratio']],
         on=['week_start','city'], how='left', validate='one_to_one'
@@ -214,9 +226,11 @@ def evaluate(panel: pd.DataFrame, truth: pd.DataFrame):
     alert_tp = int((alert & (y==1)).sum()); alert_fp = int((alert & (y==0)).sum())
     green_tn = int((green & (y==0)).sum()); green_fn = int((green & (y==1)).sum())
     report = {
-        'version':'SAUDI-SYNTHETIC-STRESS-V2.4-1',
+        'version':'SAUDI-SYNTHETIC-STRESS-V2.4-2',
         'synthetic_not_official': True,
         'seed': SEED,
+        'scored_period_starts_after_calibration_only_period': True,
+        'score_start': str(score_start.date()),
         'model_engine':'SALES-SENTINEL-CITY-RISK-ENGINE-2.4.2',
         'rows_scored': int(len(eval_df)),
         'weeks_scored': int(eval_df.week_start.nunique()),
@@ -240,7 +254,7 @@ def evaluate(panel: pd.DataFrame, truth: pd.DataFrame):
             'NPV':safe(green_tn,green_tn+green_fn),
             'miss_rate':safe(green_fn,int(y.sum())),
         },
-        'scenario_counts': {k:int(v) for k,v in truth.scenario.value_counts().to_dict().items()},
+        'scenario_counts_all_data': {k:int(v) for k,v in truth.scenario.value_counts().to_dict().items()},
         'interpretation':'Synthetic Saudi-like robustness/functional stress test only; it is not independent evidence of real-world generalization.',
     }
     return eval_df, report
