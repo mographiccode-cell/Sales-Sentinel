@@ -1,0 +1,190 @@
+{
+  "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+  "marker_lines": [
+    122
+  ],
+  "selected_marker": 122,
+  "end_line": 206,
+  "candidate_rows": [
+    {
+      "line": 134,
+      "label": "Abha",
+      "numeric_count": 10,
+      "text": "                       Abha \u202b\u0623\u0628\u0647\u0627\u202c                            4,202           228,499        4,078          217,181         4,112          217,228         5,004         295,877           21.7             36.2"
+    },
+    {
+      "line": 136,
+      "label": "Abu-Areesh",
+      "numeric_count": 10,
+      "text": "                Abu-Areesh \u202b\u0623\u0628\u0648 \u0639\u0631\u064a\u0634\u202c                         1,068            44,668         975           39,592           913           35,261          1,190          59,752           30.3             69.5"
+    },
+    {
+      "line": 138,
+      "label": "Ahad-Almasarha",
+      "numeric_count": 10,
+      "text": "            Ahad-Almasarha \u202b\u0623\u062d\u062f \u0627\u0644\u0645\u0633\u0627\u0631\u062d\u0629\u202c                      440             15,294         407           14,053           383           10,686           503           20,412           31.3             91.0"
+    },
+    {
+      "line": 140,
+      "label": "Ahad-Rufaidah",
+      "numeric_count": 10,
+      "text": "               Ahad-Rufaidah \u202b\u0623\u062d\u062f \u0631\u0641\u064a\u062f\u0629\u202c                       660             30,570         639           28,748           623           27,173           789           39,008           26.6             43.6"
+    },
+    {
+      "line": 142,
+      "label": "Al-Baha",
+      "numeric_count": 10,
+      "text": "                    Al-Baha \u202b\u0627\u0644\u0628\u0627\u062d\u0629\u202c                          1,381            75,767        1,426          76,487          1,484          77,636          1,910         113,839           28.7             46.6"
+    },
+    {
+      "line": 144,
+      "label": "Al-Badaea",
+      "numeric_count": 10,
+      "text": "                   Al-Badaea \u202b\u0627\u0644\u0628\u062f\u0627\u0626\u0639\u202c                         390             15,138         365           13,725           346           12,935           406           17,946           17.4             38.7"
+    },
+    {
+      "line": 146,
+      "label": "Al-Bekairiyah",
+      "numeric_count": 10,
+      "text": "                Al-Bekairiyah \u202b\u0627\u0644\u0628\u0643\u064a\u0631\u064a\u0629\u202c                       484             21,864         451           19,631           430           18,865           503           25,307           16.9             34.1"
+    },
+    {
+      "line": 148,
+      "label": "Al-Jubail",
+      "numeric_count": 10,
+      "text": "                   Al-Jubail \u202b\u0627\u0644\u062c\u0628\u064a\u0644\u202c                         2,588           133,582        2,451          121,208         2,351          114,501         2,543         146,229            8.2             27.7"
+    },
+    {
+      "line": 150,
+      "label": "Al-Khubar",
+      "numeric_count": 10,
+      "text": "                    Al-Khubar \u202b\u0627\u0644\u062e\u0628\u0631\u202c                         4,961           377,471        4,680          354,309         4,479          332,549         4,939         408,350           10.3             22.8"
+    },
+    {
+      "line": 152,
+      "label": "Al-Kharj",
+      "numeric_count": 10,
+      "text": "                    Al-Kharj \u202b\u0627\u0644\u062e\u0631\u062c\u202c                          2,456           118,385        2,309          106,698         2,190          101,475         2,596         143,258           18.5             41.2"
+    },
+    {
+      "line": 154,
+      "label": "Al-Khafji",
+      "numeric_count": 10,
+      "text": "                   Al-Khafji \u202b\u0627\u0644\u062e\u0641\u062c\u064a\u202c                          683             38,225         638           35,065           620           34,644           726           46,204           17.2             33.4"
+    },
+    {
+      "line": 156,
+      "label": "Al-Darb",
+      "numeric_count": 10,
+      "text": "                    Al-Darb \u202b\u0627\u0644\u062f\u0631\u0628\u202c                            265             10,921         238            9,282           215            8,383           288           14,067           33.7             67.8"
+    },
+    {
+      "line": 158,
+      "label": "Dammam",
+      "numeric_count": 10,
+      "text": "                   Dammam \u202b\u0627\u0644\u062f\u0645\u0627\u0645\u202c                            9,549           677,689        8,989          617,018         8,537          578,944         9,595         725,726           12.4             25.4"
+    },
+    {
+      "line": 160,
+      "label": "Al-Dawadmi",
+      "numeric_count": 10,
+      "text": "                Al-Dawadmi \u202b\u0627\u0644\u062f\u0648\u0627\u062f\u0645\u064a\u202c                          954             47,963         905           43,465           869           41,056          1,071          60,098           23.2             46.4"
+    },
+    {
+      "line": 162,
+      "label": "Al-Rass",
+      "numeric_count": 10,
+      "text": "                     Al-Rass \u202b\u0627\u0644\u0631\u0633\u202c                           1,168            60,998        1,089          55,356          1,034          50,373          1,260          73,028           21.8             45.0"
+    },
+    {
+      "line": 164,
+      "label": "Riyadh",
+      "numeric_count": 10,
+      "text": "                     Riyadh \u202b\u0627\u0644\u0631\u064a\u0627\u0636\u202c                         78,678           4,718,051      75,066        4,360,990        72,570        4,156,514        82,883       5,229,751          14.2             25.8"
+    },
+    {
+      "line": 166,
+      "label": "Al-Zulfi",
+      "numeric_count": 10,
+      "text": "                    Al-Zulfi \u202b\u0627\u0644\u0632\u0644\u0641\u064a\u202c                          471             23,125         457           21,248           430           20,384           485           25,571           12.8             25.4"
+    },
+    {
+      "line": 168,
+      "label": "Al-Tayef",
+      "numeric_count": 10,
+      "text": "                   Al-Tayef \u202b\u0627\u0644\u0637\u0627\u0626\u0641\u202c                          7,239           376,274        6,874          344,574         6,638          328,556         8,228         477,217           24.0             45.2"
+    },
+    {
+      "line": 170,
+      "label": "Al-Dahran",
+      "numeric_count": 10,
+      "text": "                  Al-Dahran \u202b\u0627\u0644\u0638\u0647\u0631\u0627\u0646\u202c                          740             49,118         709           44,365           698           44,437           734           50,668            5.2             14.0"
+    },
+    {
+      "line": 172,
+      "label": "Al-Ola",
+      "numeric_count": 10,
+      "text": "                      Al-Ola \u202b\u0627\u0644\u0639\u0627\u0644\u202c                           387             16,466         352           14,154           342           13,191           412           19,539           20.7             48.1"
+    },
+    {
+      "line": 174,
+      "label": "Al-Qurayyat",
+      "numeric_count": 10,
+      "text": "                 Al-Qurayyat \u202b\u0627\u0644\u0642\u0631\u064a\u0627\u062a\u202c                        1,010            42,696         900           35,565           809           32,073          1,124          55,929           38.9             74.4"
+    },
+    {
+      "line": 176,
+      "label": "Al-Qateef",
+      "numeric_count": 10,
+      "text": "                  Al-Qateef \u202b\u0627\u0644\u0642\u0637\u064a\u0641\u202c                          1,528            93,090        1,502          89,566          1,415          85,356          1,521          96,505            7.5             13.1"
+    },
+    {
+      "line": 178,
+      "label": "Al-Gunfudah",
+      "numeric_count": 10,
+      "text": "                 Al-Gunfudah \u202b\u0627\u0644\u0642\u0646\u0641\u0630\u0629\u202c                        1,079            43,800         984           38,158           891           34,208          1,193          56,148           33.9             64.1"
+    },
+    {
+      "line": 180,
+      "label": "Al-Queyah",
+      "numeric_count": 10,
+      "text": "                  Al-Queyah \u202b\u0627\u0644\u0642\u0648\u064a\u0639\u064a\u0629\u202c                         423             18,222         395           15,952           367           14,720           463           22,507           26.1             52.9"
+    },
+    {
+      "line": 182,
+      "label": "Al-laith",
+      "numeric_count": 10,
+      "text": "                     Al-laith \u202b\u0627\u0644\u0644\u064a\u062b\u202c                          349             11,559         310            9,662           287            8,852           372           15,138           29.7             71.0"
+    },
+    {
+      "line": 184,
+      "label": "Al-Mubarraz",
+      "numeric_count": 10,
+      "text": "                  Al-Mubarraz \u202b\u0627\u0644\u0645\u0628\u0631\u0632\u202c                         821             52,359         784           46,477           726           41,145           845           59,059           16.4             43.5"
+    },
+    {
+      "line": 186,
+      "label": "Al-Majma'a",
+      "numeric_count": 10,
+      "text": "                 Al-Majma'a \u202b\u0627\u0644\u0645\u062c\u0645\u0639\u0629\u202c                          702             35,437         656           31,670           636           30,191           764           41,289           20.1             36.8"
+    },
+    {
+      "line": 188,
+      "label": "Al-Madinah",
+      "numeric_count": 10,
+      "text": "              Al-Madinah \u202b\u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0645\u0646\u0648\u0631\u0629\u202c                    9,745           569,748        9,161          526,109         8,619          487,643         10,304        649,022           19.5             33.1"
+    },
+    {
+      "line": 190,
+      "label": "Al-Muzahmiya",
+      "numeric_count": 10,
+      "text": "               Al-Muzahmiya \u202b\u0627\u0644\u0645\u0632\u0627\u062d\u0645\u064a\u0629\u202c                        510             23,785         485           22,386           459           20,772           555           30,246           20.9             45.6"
+    },
+    {
+      "line": 192,
+      "label": "Al-Neairiyah",
+      "numeric_count": 10,
+      "text": "                 Al-Neairiyah \u202b\u0627\u0644\u0646\u0639\u064a\u0631\u064a\u0629\u202c                       365             17,083         340           14,987           312           13,978           377           20,313           20.8             45.3"
+    }
+  ]
+}
