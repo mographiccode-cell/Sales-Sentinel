@@ -20,6 +20,10 @@ CUTOFF = "2025-07-07"
 ANCHORS = [
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
+    # Official archive pages whose rendered result set explicitly contains Mar 31 and Apr 7/14/21/28 2026.
+    "https://sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?p_id=305&p_samafilepublishdate=20251222+21%3A00%3A00&p_sortbehavior=0&paged=true&pagefirstrow=201&view=b4401d62-99ad-4aef-b47d-ac437af4daf0",
+    "https://sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=61&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=307&p_SAMAFilePublishDate=20260209+21%3A00%3A00&p_SortBehavior=0",
+    "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=231&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=315&p_SAMAFilePublishDate=20260413+21%3A00%3A00&p_SortBehavior=0",
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=313&p_SAMAFilePublishDate=20260330+21%3A00%3A00&p_SortBehavior=0",
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
     "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
