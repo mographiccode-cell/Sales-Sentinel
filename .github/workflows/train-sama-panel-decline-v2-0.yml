@@ -1,0 +1,50 @@
+name: Train SAMA panel decline v2.0
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_panel_decline_v2_0.py'
+      - '.github/workflows/train-sama-panel-decline-v2-0.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Verify official SAMA panel
+        run: test -f data/sama_pos/sama_pos_2020_2025_normalized.csv
+      - name: Train and test SAMA panel decline model
+        run: python scripts/train_sama_panel_decline_v2_0.py
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sama-panel-decline-v2-0
+          if-no-files-found: warn
+          path: |
+            models/sama_panel_v2_0/**
+            reports/sama_panel_v2_0/**
+      - name: Persist model and report
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/sama_panel_v2_0 reports/sama_panel_v2_0
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist real SAMA panel decline v2.0 [skip ci]'
+            git push origin main
+          fi
