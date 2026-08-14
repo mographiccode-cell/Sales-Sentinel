@@ -18,6 +18,21 @@
   },
   "date_min": "2023-01-01",
   "date_max": "2025-07-06",
+  "history": {
+    "min_year": 2020,
+    "max_year": 2025,
+    "value_weeks": 270,
+    "count_weeks": 270,
+    "aligned_weeks": 270,
+    "value_weeks_by_year": {
+      "2020": 34,
+      "2021": 52,
+      "2022": 52,
+      "2023": 53,
+      "2024": 52,
+      "2025": 27
+    }
+  },
   "checks": {
     "download_nonempty": true,
     "normalized_rows_positive": true,
@@ -25,8 +40,13 @@
     "contains_2023": true,
     "contains_2024": true,
     "no_duplicate_national_weeks": true,
-    "national_values_positive": true
+    "national_values_positive": true,
+    "history_starts_2020_or_earlier_available_floor": true,
+    "history_value_has_at_least_250_weeks": true,
+    "history_count_has_at_least_250_weeks": true,
+    "history_value_count_alignment_at_least_250_weeks": true,
+    "history_counts_positive": true
   },
   "all_tests_passed": true,
-  "scientific_boundary": "Official Saudi aggregate POS data are used only as external calibration targets; they are not copied as merchant-level transactions."
+  "scientific_boundary": "Official Saudi aggregate POS data are used as external calibration and forecast inputs; they are never represented as merchant-level observed transactions."
 }
