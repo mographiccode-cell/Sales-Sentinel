@@ -7,6 +7,7 @@ on:
     paths:
       - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
       - 'scripts/train_sama_city_risk_v2_1.py'
+      - 'scripts/run_sama_city_risk_v2_1.py'
       - '.github/workflows/train-sama-city-risk-v2-1.yml'
 
 permissions:
@@ -33,9 +34,11 @@ jobs:
           import json
           d=json.load(open('reports/sama_city_v2_1/history_audit.json',encoding='utf-8'))
           assert d['all_checks_passed'] is True
+          assert d['checks']['city_values_reconcile_to_national_below_0_01pct'] is True
+          assert d['checks']['city_counts_reconcile_to_national_below_0_01pct'] is True
           PY
       - name: Train frozen city market-risk model
-        run: python scripts/train_sama_city_risk_v2_1.py
+        run: python scripts/run_sama_city_risk_v2_1.py
       - name: Show development evidence
         run: cat reports/sama_city_v2_1/development_summary.md
       - uses: actions/upload-artifact@v4
