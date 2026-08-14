@@ -1,0 +1,36 @@
+name: Diagnose SAMA panel v2.0
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_sama_panel_v2_0.py'
+      - '.github/workflows/diagnose-sama-panel-v2-0.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas==2.2.3 numpy==2.2.4
+      - name: Diagnose preparation stages
+        run: python scripts/diagnose_sama_panel_v2_0.py
+      - name: Persist diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_panel_v2_0/panel_preparation_diagnosis.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'debug: persist SAMA panel preparation diagnosis [skip ci]'
+            git push origin main
+          fi
