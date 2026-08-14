@@ -1,0 +1,116 @@
+{
+  "version": "SAMA-CITY-FRESH-HOLDOUT-2.1.4",
+  "scientific_boundary": "Official SAMA City Total weekly POS. The historical OTHER definition is preserved after the 2025 city-table expansion by reconstructing OTHER as official national total minus the same 10 named historical cities.",
+  "pdfs_downloaded": 66,
+  "usable_report_files": 52,
+  "holdout_report_files": 52,
+  "failures": [
+    {
+      "file": "POS_Report_05_Apr_2025.pdf",
+      "error": "RuntimeError('POS_Report_05_Apr_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_05_Jul_2025.pdf",
+      "error": "RuntimeError('POS_Report_05_Jul_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_10_May_2025.pdf",
+      "error": "RuntimeError('POS_Report_10_May_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_12_Jul_2025.pdf",
+      "error": "RuntimeError('POS_Report_12_Jul_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_13_Apr_2025.pdf",
+      "error": "RuntimeError('POS_Report_13_Apr_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_17_Jun_2025.pdf",
+      "error": "RuntimeError('POS_Report_17_Jun_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_17_May_2025.pdf",
+      "error": "RuntimeError('POS_Report_17_May_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_19_Jul_2025.pdf",
+      "error": "RuntimeError('POS_Report_19_Jul_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_20_Apr_2025.pdf",
+      "error": "RuntimeError('POS_Report_20_Apr_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_24_Jun_2025.pdf",
+      "error": "RuntimeError('POS_Report_24_Jun_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_24_May_2025.pdf",
+      "error": "RuntimeError('POS_Report_24_May_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_26_Apr_2025.pdf",
+      "error": "RuntimeError('POS_Report_26_Apr_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "POS_Report_31_May_2025.pdf",
+      "error": "RuntimeError('POS_Report_31_May_2025.pdf: Table 2.1 not found')"
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_28th-Jun-2025.pdf",
+      "error": "RuntimeError('Weekly_Points_of_Sale_Transactions_Report_28th-Jun-2025.pdf: Table 2.1 not found')"
+    }
+  ],
+  "rows": 616,
+  "weeks": 56,
+  "city_count": 11,
+  "cities": [
+    "ABHA",
+    "BURAIDAH",
+    "DAMMAM",
+    "HAIL",
+    "JEDDAH",
+    "KHOBAR",
+    "MADINA",
+    "MAKKAH",
+    "OTHER",
+    "RIYADH",
+    "TABOUK"
+  ],
+  "date_start": "2025-07-13",
+  "date_end": "2026-08-02",
+  "week_gap_days": [
+    7
+  ],
+  "coverage": {
+    "min": 11,
+    "median": 11.0,
+    "max": 11
+  },
+  "national_reconciliation": {
+    "max_value_relative_difference": 0.0,
+    "max_count_relative_difference": 0.0
+  },
+  "max_named_overlap_value_relative_spread": 0.0,
+  "max_named_overlap_count_relative_spread": 0.0,
+  "max_national_overlap_value_relative_spread": 0.0,
+  "max_national_overlap_count_relative_spread": 0.0,
+  "checks": {
+    "all_11_historical_city_definitions_present": true,
+    "at_least_56_holdout_weeks": true,
+    "starts_post_development": true,
+    "covers_aug_2026": true,
+    "strict_weekly_sequence": true,
+    "all_cities_share_identical_week_keys": true,
+    "constant_11_city_coverage": true,
+    "no_duplicate_city_week": true,
+    "positive_values": true,
+    "positive_counts": true,
+    "named_city_overlap_consistency_below_1pct": true,
+    "national_overlap_consistency_below_1pct": true,
+    "fresh_city_sum_reconciles_to_national_below_0_01pct": true,
+    "other_residual_positive": true
+  },
+  "all_checks_passed": true
+}

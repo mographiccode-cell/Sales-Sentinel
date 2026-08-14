@@ -1,0 +1,54 @@
+{
+  "version": "SAMA-CITY-HISTORY-2.1.2",
+  "source": "Saudi Central Bank (SAMA) weekly POS via KAPSARC distribution",
+  "scientific_boundary": "City Total rows only; no sector taxonomy is used. Source weekly boundary dates contain occasional 6/8-day adjustments but no missing observations.",
+  "rows": 2970,
+  "weeks": 270,
+  "cities": [
+    "ABHA",
+    "BURAIDAH",
+    "DAMMAM",
+    "HAIL",
+    "JEDDAH",
+    "KHOBAR",
+    "MADINA",
+    "MAKKAH",
+    "OTHER",
+    "RIYADH",
+    "TABOUK"
+  ],
+  "city_count": 11,
+  "date_start": "2020-05-10",
+  "date_end": "2025-07-06",
+  "week_gap_day_counts": {
+    "6": 1,
+    "7": 267,
+    "8": 1
+  },
+  "actual_span_days": 1883,
+  "expected_span_days": 1883,
+  "coverage_per_week": {
+    "min": 11,
+    "median": 11.0,
+    "max": 11
+  },
+  "national_reconciliation": {
+    "max_value_relative_difference": 3.0739172587543625e-07,
+    "max_count_relative_difference": 5.24493863421798e-05
+  },
+  "checks": {
+    "at_least_8_cities": true,
+    "exactly_270_weeks": true,
+    "at_least_1800_rows": true,
+    "no_duplicate_city_weeks": true,
+    "all_values_positive": true,
+    "all_counts_positive": true,
+    "all_cities_share_identical_week_keys": true,
+    "weekly_boundary_adjustments_only_6_7_8_days": true,
+    "overall_span_equals_269_standard_weeks": true,
+    "constant_city_coverage": true,
+    "city_values_reconcile_to_national_below_0_01pct": true,
+    "city_counts_reconcile_to_national_below_0_01pct": true
+  },
+  "all_checks_passed": true
+}
