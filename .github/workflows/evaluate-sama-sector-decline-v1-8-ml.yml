@@ -1,0 +1,53 @@
+name: Calibrate SAMA Sector Decline v1.8 ML
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/evaluate_sama_weekly_sector_decline_v1_8.py'
+      - '.github/workflows/evaluate-sama-sector-decline-v1-8-ml.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-training.txt
+      - name: Verify SAMA inputs
+        run: |
+          test -f data/sama_pos/sama_sector_weekly_value_count_2020_2025.csv
+          test -f data/sama_pos/sama_sector_walkforward_forecasts_2023_2025.csv
+      - name: Train calibrated real SAMA decline model
+        run: python scripts/evaluate_sama_weekly_sector_decline_v1_8.py
+      - name: Show evidence
+        run: |
+          cat reports/sama_sector_decline_v1_8/summary.md
+          cat reports/sama_sector_decline_v1_8/report.json
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sama-sector-decline-v1-8-ml
+          path: |
+            reports/sama_sector_decline_v1_8/**
+            models/sama_sector_decline_v1_8/**
+          retention-days: 30
+      - name: Persist evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_sector_decline_v1_8 models/sama_sector_decline_v1_8
+          git diff --cached --quiet || git commit -m 'ml: persist calibrated SAMA sector decline v1.8 model'
+          git stash push --include-untracked -m 'ci-leftovers' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
