@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 from pathlib import Path
 
 import numpy as np
@@ -46,35 +45,55 @@ def match_city(line:str,cities:set[str]):
 
 def parse_city_pdf(path:Path,cities:list[str]):
     text=common.pdf_text(path)
-    if 'Table 2.1:' not in text:
+    marker='Table 2.1:'
+    if marker not in text:
         raise RuntimeError(f'{path.name}: Table 2.1 not found')
-    seg=text.split('Table 2.1:',1)[1]
-    for marker in ('Table 3','Table 2.2','Table 3.1'):
-        if marker in seg: seg=seg.split(marker,1)[0]
+    # Table 2.1 spans multiple PDF pages. Extract its four date ranges near the marker,
+    # then scan ALL later lines for explicit historical city aliases. The first matching
+    # row for each city is its Table 2.1 city-total row; later tables cannot replace it.
+    before,after=text.split(marker,1)
+    header_window='\n'.join(after.splitlines()[:45])
     ranges=[]
-    for a,b in common.DATE_RANGE_RE.findall(seg):
+    for a,b in common.DATE_RANGE_RE.findall(header_window):
         pair=(common.parse_date(a),common.parse_date(b))
         if pair not in ranges: ranges.append(pair)
         if len(ranges)==4: break
     if len(ranges)!=4:
+        # Defensive fallback: the dates may be split farther down by PDF text extraction.
+        for a,b in common.DATE_RANGE_RE.findall(after):
+            pair=(common.parse_date(a),common.parse_date(b))
+            if pair not in ranges: ranges.append(pair)
+            if len(ranges)==4: break
+    if len(ranges)!=4:
         raise RuntimeError(f'{path.name}: expected 4 city-table week ranges, got {len(ranges)}')
 
-    city_set=set(cities); found={}; rows=[]; lines=seg.splitlines()
-    for line in lines:
+    city_set=set(cities); found={}; rows=[]
+    for line in after.splitlines():
         city,alias=match_city(line,city_set)
         if not city or city in found: continue
         vals=[float(x.replace(',','')) for x in common.NUM_RE.findall(line)]
         if len(vals)<8: continue
+        # Table 2.1 row: four (number transactions, value transactions) pairs,
+        # followed by two weekly-change percentages.
         for k,(ws,we) in enumerate(ranges):
-            rows.append({'week_start':ws.normalize(),'week_end':we.normalize(),'city':city,
-                         'value_thousand_sar':float(vals[2*k+1]),'transaction_count_thousand':float(vals[2*k]),
-                         'source_pdf':path.name,'source_city_label':line.strip(),'source_city_alias':alias,
-                         'report_latest_week_end':ranges[-1][1].normalize()})
+            rows.append({
+                'week_start':ws.normalize(),'week_end':we.normalize(),'city':city,
+                'value_thousand_sar':float(vals[2*k+1]),
+                'transaction_count_thousand':float(vals[2*k]),
+                'source_pdf':path.name,'source_city_label':line.strip(),'source_city_alias':alias,
+                'report_latest_week_end':ranges[-1][1].normalize(),
+            })
         found[city]={'alias':alias,'line':line.strip()}
+        if len(found)==len(city_set): break
     missing=sorted(city_set-set(found))
-    if missing: raise RuntimeError(f'{path.name}: missing historical city labels after explicit alias mapping: {missing}')
-    return rows,{'file':path.name,'week_ranges':[[str(a.date()),str(b.date())] for a,b in ranges],
-                 'cities_found':sorted(found),'city_count':len(found),'matched_aliases':{c:v['alias'] for c,v in found.items()}}
+    if missing:
+        raise RuntimeError(f'{path.name}: missing historical city labels after complete multi-page scan: {missing}')
+    return rows,{
+        'file':path.name,
+        'week_ranges':[[str(a.date()),str(b.date())] for a,b in ranges],
+        'cities_found':sorted(found),'city_count':len(found),
+        'matched_aliases':{c:v['alias'] for c,v in found.items()},
+    }
 
 
 def main():
@@ -85,8 +104,10 @@ def main():
     for path in paths:
         try:
             rr,info=parse_city_pdf(path,cities); rows.extend(rr); files.append(info)
-        except Exception as exc: failures.append({'file':path.name,'error':repr(exc)})
-    if not rows: raise RuntimeError('No city rows parsed from fresh SAMA PDFs')
+        except Exception as exc:
+            failures.append({'file':path.name,'error':repr(exc)})
+    if not rows:
+        raise RuntimeError(f'No city rows parsed from fresh SAMA PDFs; failures={failures[:5]}')
 
     raw=pd.DataFrame(rows); raw.week_start=pd.to_datetime(raw.week_start); raw.week_end=pd.to_datetime(raw.week_end)
     hraw=raw[raw.week_start>=CUTOFF].copy()
@@ -121,7 +142,7 @@ def main():
         'overlap_count_consistency_below_1pct':float(spread.count_rel_spread.fillna(0).max())<.01,
         'fresh_city_sum_reconciles_to_national_when_available':bool(reconciliation_checks),
     }
-    audit={'version':'SAMA-CITY-FRESH-HOLDOUT-2.1.2','scientific_boundary':'Official SAMA City Total weekly POS only; independent of sector taxonomy revision. City row parsing follows the observed same-line Table 2.1 layout with explicit aliases.',
+    audit={'version':'SAMA-CITY-FRESH-HOLDOUT-2.1.3','scientific_boundary':'Official SAMA City Total weekly POS only; independent of sector taxonomy revision. Table 2.1 is scanned across all PDF pages with explicit historical-city aliases.',
            'pdfs':len(paths),'parsed_pdfs':len(files),'failures':failures,'rows':int(len(d)),'weeks':int(d.week_start.nunique()),'cities':cities,'city_count':len(cities),
            'date_start':str(d.week_start.min().date()),'date_end':str(d.week_start.max().date()),'coverage':{'min':int(coverage.min()),'median':float(coverage.median()),'max':int(coverage.max())},
            'max_overlap_value_relative_spread':float(spread.value_rel_spread.fillna(0).max()),'max_overlap_count_relative_spread':float(spread.count_rel_spread.fillna(0).max()),'national_reconciliation':reconciliation,
