@@ -1,0 +1,21 @@
+{
+  "version": "SAMA-NATIONAL-HOLDOUT-2.0",
+  "pdfs": 35,
+  "failures": [],
+  "weeks": 44,
+  "date_start": "2025-09-21",
+  "date_end": "2026-08-02",
+  "max_overlap_value_relative_spread": 0.0,
+  "max_overlap_count_relative_spread": 0.0,
+  "checks": {
+    "at_least_40_weeks": true,
+    "covers_2026_july": true,
+    "no_duplicate_weeks": true,
+    "positive_values": true,
+    "positive_counts": true,
+    "overlap_value_revisions_below_1pct": true,
+    "overlap_count_revisions_below_1pct": true,
+    "pdf_parse_failure_below_10pct": true
+  },
+  "all_checks_passed": true
+}

@@ -19,7 +19,7 @@
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112501,
+      "bytes": 112485,
       "accepted": true
     },
     {
@@ -27,7 +27,7 @@
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 113576,
+      "bytes": 113561,
       "accepted": true
     },
     {
@@ -35,7 +35,7 @@
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=313&p_SAMAFilePublishDate=20260330+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 113507,
+      "bytes": 113491,
       "accepted": true
     },
     {
@@ -43,7 +43,7 @@
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 113605,
+      "bytes": 113589,
       "accepted": true
     },
     {
@@ -51,7 +51,7 @@
       "final_url": "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 113463,
+      "bytes": 113449,
       "accepted": true
     },
     {
@@ -67,7 +67,7 @@
       "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=284&p_samafilepublishdate=20250901+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
       "status": 404,
       "pdf_strings_found": 0,
-      "bytes": 1649,
+      "bytes": 1648,
       "accepted": false
     },
     {
@@ -75,7 +75,7 @@
       "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=288&p_samafilepublishdate=20250929+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
       "status": 404,
       "pdf_strings_found": 0,
-      "bytes": 1649,
+      "bytes": 1648,
       "accepted": false
     },
     {
@@ -91,7 +91,7 @@
       "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=296&p_samafilepublishdate=20251124+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
       "status": 404,
       "pdf_strings_found": 0,
-      "bytes": 1650,
+      "bytes": 1649,
       "accepted": false
     }
   ],
