@@ -17,8 +17,6 @@ REPORT.mkdir(parents=True, exist_ok=True)
 BASE = "https://www.sama.gov.sa"
 CUTOFF = "2025-07-07"
 
-# Anchors are official SAMA SharePoint views at several points in the 2025-2026 archive.
-# They intentionally overlap; downstream parsing deduplicates by week+sector.
 ANCHORS = [
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
@@ -26,7 +24,6 @@ ANCHORS = [
     "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
     "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
     "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=280&p_modified=20250805+13%3A12%3A08&p_samafilepublishdate=20250804+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&pagefirstrow=2761&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
-    # Additional inferred archive anchors. If SAMA ignores one, it simply duplicates another page and is harmless.
     "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=284&p_samafilepublishdate=20250901+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
     "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=288&p_samafilepublishdate=20250929+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
     "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=292&p_samafilepublishdate=20251027+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
@@ -56,7 +53,6 @@ def normalize(raw: str) -> str:
 
 def extract_refs(html: str) -> set[str]:
     refs = set()
-    # Prefer explicit SharePoint FileRef values because they are direct official paths.
     for m in re.finditer(r'''FileRef\\?\"\s*:\s*\\?\"([^\"]+?\.pdf)''', html, re.I):
         refs.add(m.group(1))
     for m in PDF_STRING_RE.finditer(html):
@@ -69,20 +65,25 @@ def main():
     s.headers.update({"User-Agent": "Mozilla/5.0 Sales-Sentinel academic data verifier"})
     refs=set(); page_stats=[]
     for url in ANCHORS:
-        r=s.get(url,timeout=45)
-        r.raise_for_status()
-        found=extract_refs(r.text)
-        refs |= found
-        page_stats.append({"url":url,"final_url":r.url,"status":r.status_code,"pdf_strings_found":len(found),"bytes":len(r.content)})
+        try:
+            r=s.get(url,timeout=45)
+            if r.status_code != 200:
+                page_stats.append({"url":url,"final_url":r.url,"status":r.status_code,"pdf_strings_found":0,"bytes":len(r.content),"accepted":False})
+                continue
+            found=extract_refs(r.text)
+            refs |= found
+            page_stats.append({"url":url,"final_url":r.url,"status":r.status_code,"pdf_strings_found":len(found),"bytes":len(r.content),"accepted":True})
+        except Exception as exc:
+            page_stats.append({"url":url,"status":None,"pdf_strings_found":0,"accepted":False,"error":repr(exc)})
 
     candidates=sorted({normalize(x) for x in refs if '.pdf' in x.lower()})
-    # Only direct SAMA archive paths are valid download candidates.
     candidates=[u for u in candidates if '/indices/' in u.lower() or '/statistics/indices/' in u.lower()]
 
     manifest={"source":"Saudi Central Bank (SAMA) weekly POS archive","cutoff":CUTOFF,"anchors":ANCHORS,"page_stats":page_stats,"candidate_urls":candidates,"downloads":[]}
+    seen_names=set()
     for url in candidates:
         name=unquote(url.split('?')[0].split('/')[-1])
-        if not any(y in name for y in ('2025','2026')):
+        if not any(y in name for y in ('2025','2026')) or name in seen_names:
             continue
         try:
             r=s.get(url,timeout=60,allow_redirects=True)
@@ -91,6 +92,7 @@ def main():
                 path=OUT/name
                 path.write_bytes(r.content)
                 row.update({"is_pdf":True,"sha256":sha256(path)})
+                seen_names.add(name)
             else:
                 row['is_pdf']=False
             manifest['downloads'].append(row)
@@ -99,8 +101,10 @@ def main():
 
     manifest['downloaded_pdfs']=sum(1 for x in manifest['downloads'] if x.get('is_pdf'))
     manifest['downloaded_names']=sorted({x['name'] for x in manifest['downloads'] if x.get('is_pdf')})
+    manifest['successful_anchor_pages']=sum(1 for x in page_stats if x.get('accepted'))
+    manifest['failed_anchor_pages']=sum(1 for x in page_stats if not x.get('accepted'))
     (REPORT/'source_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-    print(json.dumps({"anchor_pages":len(ANCHORS),"candidate_urls":len(candidates),"downloaded_pdfs":manifest['downloaded_pdfs'],"names":manifest['downloaded_names']},indent=2))
+    print(json.dumps({"anchor_pages":len(ANCHORS),"successful_anchors":manifest['successful_anchor_pages'],"failed_anchors":manifest['failed_anchor_pages'],"candidate_urls":len(candidates),"downloaded_pdfs":manifest['downloaded_pdfs'],"names":manifest['downloaded_names']},indent=2))
     if manifest['downloaded_pdfs'] < 20:
         raise RuntimeError(f"Expected at least 20 distinct recent SAMA PDFs; got {manifest['downloaded_pdfs']}")
 
