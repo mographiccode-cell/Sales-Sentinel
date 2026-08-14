@@ -13,7 +13,7 @@ import build_prior_shift_policy_v2_4 as prior
 ROOT=Path(__file__).resolve().parents[1]
 BASE_MODEL=ROOT/'models'/'sama_city_v2_2'/'city_market_risk_v2_2.joblib'
 POLICY_MODEL=ROOT/'models'/'sama_city_v2_4'/'prior_shift_policy_v2_4.joblib'
-ENGINE_VERSION='SALES-SENTINEL-CITY-RISK-ENGINE-2.4.1'
+ENGINE_VERSION='SALES-SENTINEL-CITY-RISK-ENGINE-2.4.2'
 
 
 def safe_ratio(a,b):
@@ -36,7 +36,6 @@ def build_inference_features(panel:pd.DataFrame) -> tuple[pd.DataFrame,pd.DataFr
     if d.duplicated(['week_start','city']).any(): raise ValueError('Duplicate week/city rows')
     g=d.groupby('city',sort=False)
 
-    # Training-identical historical target construction. Latest origin remains target_float=NaN.
     d['baseline4']=g.value_thousand_sar.transform(lambda s:s.rolling(4,min_periods=4).mean())
     d['actual_next_value']=g.value_thousand_sar.shift(-1)
     d['future_ratio']=safe_ratio(d.actual_next_value,d.baseline4)
@@ -92,13 +91,26 @@ def build_inference_features(panel:pd.DataFrame) -> tuple[pd.DataFrame,pd.DataFr
 
 
 def _expected_cities(features:list[str]) -> set[str]:
-    return {c.removeprefix('city_') for c in features if c.startswith('city_')}
+    """Extract only one-hot city identity columns from the frozen feature contract.
+
+    Do NOT treat engineered features such as city_decline_rate_13 as city identities.
+    City dummy suffixes in this model are uppercase canonical city codes.
+    """
+    cities=set()
+    for c in features:
+        if not c.startswith('city_') or c.startswith('city_decline_rate_'):
+            continue
+        suffix=c.removeprefix('city_')
+        if suffix and suffix.upper()==suffix and not any(ch.isdigit() for ch in suffix):
+            cities.add(suffix)
+    return cities
 
 
 def validate_latest_source(d:pd.DataFrame,features:list[str]) -> dict[str,Any]:
     latest=pd.Timestamp(d.week_start.max()); q=d[d.week_start==latest]
     expected=_expected_cities(features); actual=set(q.city.astype(str))
     checks={
+        'nonempty_expected_city_contract':len(expected)>0,
         'latest_has_exact_expected_cities':actual==expected,
         'one_row_per_latest_city':not q.duplicated('city').any() and len(q)==len(expected),
         'positive_latest_values':bool((q.value_thousand_sar>0).all()),
@@ -115,7 +127,6 @@ def predict_latest(panel:pd.DataFrame,base_path:Path=BASE_MODEL,policy_path:Path
     if not qc['passed']:
         return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':'SOURCE_QC_FAILED','source_qc':qc}
 
-    # Exact frozen feature contract: no silent missing/extra feature substitution.
     missing=[c for c in base['features'] if c not in F.columns]
     if missing: return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':f'FEATURE_SCHEMA_MISSING:{missing}'}
     latest=qc['latest_week']; mask=d.week_start.eq(latest); X=F.loc[mask,base['features']].copy(); meta=d.loc[mask,['week_start','city']].reset_index(drop=True); X=X.reset_index(drop=True)
@@ -125,7 +136,6 @@ def predict_latest(panel:pd.DataFrame,base_path:Path=BASE_MODEL,policy_path:Path
     raw=base['model'].predict_proba(X)[:,1]
     bp=base['calibrator'].predict_proba(pd.DataFrame({base['selected']:raw}))[:,1]
 
-    # Reconstruct only REALIZED label history. Current/latest target is excluded by week<latest.
     history=d[(d.week_start<latest)&d.target_float.notna()][['week_start','city','target']].rename(columns={'target':'y'}).copy()
     if len(history)<500 or history.y.sum()<20:
         return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':'INSUFFICIENT_REALIZED_CALIBRATION_HISTORY'}
