@@ -35,9 +35,11 @@ jobs:
         run: python scripts/run_saudi_v1_2_fixed.py
 
       - name: Upload full v1.2 evidence bundle
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sales-sentinel-saudi-v1-2-training-safe
+          if-no-files-found: warn
           path: |
             data/saudi_v1_2/**
             reports/saudi_v1_2/**
@@ -45,6 +47,7 @@ jobs:
             artifacts/saudi_v1_2/**
 
       - name: Persist review-sized artifacts
+        if: success()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
