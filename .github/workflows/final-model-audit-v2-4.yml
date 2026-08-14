@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/final_model_audit_v2_4.py'
+      - 'scripts/production_city_risk_engine_v2_4.py'
       - '.github/workflows/final-model-audit-v2-4.yml'
       - 'models/sama_city_v2_2/**'
       - 'models/sama_city_v2_4/**'
@@ -56,4 +57,4 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
-# audit-trigger: 2026-08-14
+# audit-trigger: 2026-08-14-engine-fix
