@@ -1,0 +1,66 @@
+{
+  "version": "SAMA-CITY-RISK-2.3-ROLLING-CONFORMAL",
+  "base_model": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "scientific_boundary": "Conformal policy parameters are fixed from desired class-conditional error budgets and evaluated only on historical 2025-H1 OOF. Fresh 2025-2026 outcomes are not used to choose alphas.",
+  "parameters": {
+    "alpha_red_global": 0.0075,
+    "alpha_red_city": 0.05,
+    "alpha_green_decline": 0.08,
+    "lookback_weeks": 104
+  },
+  "historical_policy_evaluation": {
+    "rows": 286,
+    "declines": 36,
+    "decline_rate": 0.1258741258741259,
+    "RED": {
+      "rows": 15,
+      "TP": 15,
+      "FP": 0,
+      "precision": 1.0,
+      "FPR": 0.0,
+      "recall_contribution": 0.4166666666666667
+    },
+    "AMBER": {
+      "rows": 84,
+      "declines": 18
+    },
+    "GREEN": {
+      "rows": 187,
+      "TN": 184,
+      "FN": 3,
+      "NPV": 0.983957219251337,
+      "miss_rate": 0.08333333333333333
+    },
+    "RED_plus_AMBER": {
+      "rows": 99,
+      "TP": 33,
+      "FP": 66,
+      "precision": 0.3333333333333333,
+      "recall": 0.9166666666666666
+    }
+  },
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "gates": {
+    "red_precision": true,
+    "red_fpr": true,
+    "alert_recall": false,
+    "green_npv": false,
+    "has_nonzero_red_alerts": true
+  },
+  "all_policy_gates_passed": false,
+  "controls": {
+    "class_conditional_conformal": true,
+    "rolling_only_past_realized_labels": true,
+    "city_specific_negative_calibration": true,
+    "abstention_state_AMBER": true,
+    "fixed_probability_thresholds_for_red_green": false,
+    "fresh_2025_2026_used_to_select_policy_parameters": false
+  }
+}
