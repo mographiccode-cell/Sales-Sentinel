@@ -1,0 +1,57 @@
+name: Final Model Audit v2.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/final_model_audit_v2_4.py'
+      - '.github/workflows/final-model-audit-v2-4.yml'
+      - 'models/sama_city_v2_2/**'
+      - 'models/sama_city_v2_4/**'
+      - 'reports/sama_city_v2_4/**'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2026_extended.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Run independent final audit and build app fixture
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/final_model_audit_v2_4.py
+      - name: Show audit evidence
+        run: |
+          cat reports/final_model_audit_v2_4/final_audit.md
+          cat tests/fixtures/sales_sentinel_v2_4/app_test_manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v2-4-final-audit-and-app-test
+          path: |
+            reports/final_model_audit_v2_4/**
+            tests/fixtures/sales_sentinel_v2_4/**
+          retention-days: 90
+      - name: Persist audit and test fixture
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/final_model_audit_v2_4 tests/fixtures/sales_sentinel_v2_4
+          git diff --cached --quiet || git commit -m 'audit: persist v2.4 final audit and application test fixture'
+          git pull --rebase origin main
+          git push origin HEAD:main
