@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_train_saudi_panel_v1_4.py'
+      - 'scripts/build_train_saudi_panel_v1_4_1.py'
       - '.github/workflows/rebuild-retrain-saudi-panel-v1-4.yml'
 
 permissions:
@@ -40,8 +41,8 @@ jobs:
       - name: Rebuild v1.3.1 microdata from source and pass quality gates
         run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
 
-      - name: Build panel v1.4, audit dataset, and retrain
-        run: python scripts/build_train_saudi_panel_v1_4.py
+      - name: Build exact panel v1.4.1, audit dataset, and retrain
+        run: python scripts/build_train_saudi_panel_v1_4_1.py
 
       - name: Show final evidence
         run: |
@@ -52,6 +53,8 @@ jobs:
           d=json.load(open(p,encoding='utf-8'))
           assert d['dataset_quality_passed'] is True
           print(json.dumps({
+            'version': d['version'],
+            'aggregation_method': d['panel'].get('aggregation_method'),
             'panel_rows': d['panel']['panel_rows'],
             'supervised_rows': d['supervised']['supervised_rows'],
             'entities': d['panel']['entities'],
@@ -86,6 +89,6 @@ jobs:
             size=$(stat -c%s models/saudi_v1_4/sales_decline_ensemble_v1_4.joblib)
             if [ "$size" -lt 90000000 ]; then git add models/saudi_v1_4/sales_decline_ensemble_v1_4.joblib; fi
           fi
-          git diff --cached --quiet || git commit -m 'ml: persist Saudi panel v1.4 audit and retraining evidence'
+          git diff --cached --quiet || git commit -m 'ml: persist Saudi panel v1.4.1 audit and retraining evidence'
           git pull --rebase origin main
           git push origin HEAD:main
