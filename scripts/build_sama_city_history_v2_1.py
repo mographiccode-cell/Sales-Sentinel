@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import io
 import json
 from pathlib import Path
 
@@ -30,32 +29,41 @@ def main():
     ind=d.indicator.astype(str).str.lower(); sector=d.sector.astype(str).str.strip().str.lower(); city=d.city.astype(str).str.strip()
     value_mask=ind.str.contains('value')&ind.str.contains('transaction')&~ind.str.contains('change')
     count_mask=ind.str.contains('number')&ind.str.contains('transaction')&~ind.str.contains('change')
-    # City totals are rows with Sector=Total and City != Total. Their meaning is independent of sector taxonomy.
     base=d[sector.eq('total') & ~city.str.lower().eq('total')].copy()
     v=base[value_mask.loc[base.index]][['week_start','city','value']].rename(columns={'value':'value_thousand_sar'})
     c=base[count_mask.loc[base.index]][['week_start','city','value']].rename(columns={'value':'transaction_count_thousand'})
     panel=v.merge(c,on=['week_start','city'],how='inner',validate='one_to_one').sort_values(['city','week_start']).reset_index(drop=True)
     panel['week_end']=panel.week_start+pd.Timedelta(days=6)
     panel=panel[['week_start','week_end','city','value_thousand_sar','transaction_count_thousand']]
-    city_stats=panel.groupby('city').agg(rows=('week_start','size'),start=('week_start','min'),end=('week_start','max')).reset_index()
-    gaps={name:int(q.week_start.sort_values().diff().dt.days.dropna().max()) for name,q in panel.groupby('city')}
+
+    canonical_weeks=sorted(pd.to_datetime(panel.week_start.unique()))
+    gap_series=pd.Series(canonical_weeks).diff().dt.days.dropna()
+    expected_span=(len(canonical_weeks)-1)*7
+    actual_span=(canonical_weeks[-1]-canonical_weeks[0]).days
+    city_week_sets={name:tuple(q.week_start.sort_values().tolist()) for name,q in panel.groupby('city')}
+    reference=next(iter(city_week_sets.values()))
+    all_cities_same_weeks=all(v==reference for v in city_week_sets.values())
+    gap_counts={str(int(k)):int(v) for k,v in gap_series.value_counts().sort_index().items()}
     weeks=panel.groupby('week_start').city.nunique()
     checks={
         'at_least_8_cities':panel.city.nunique()>=8,
-        'at_least_200_weeks':panel.week_start.nunique()>=200,
+        'exactly_270_weeks':panel.week_start.nunique()==270,
         'at_least_1800_rows':len(panel)>=1800,
         'no_duplicate_city_weeks':not panel.duplicated(['week_start','city']).any(),
         'all_values_positive':bool((panel.value_thousand_sar>0).all()),
         'all_counts_positive':bool((panel.transaction_count_thousand>0).all()),
-        'weekly_continuity_all_cities':max(gaps.values())<=7,
-        'constant_city_coverage':weeks.nunique()==1,
+        'all_cities_share_identical_week_keys':all_cities_same_weeks,
+        'weekly_boundary_adjustments_only_6_7_8_days':set(gap_series.astype(int).unique()).issubset({6,7,8}),
+        'overall_span_equals_269_standard_weeks':actual_span==expected_span,
+        'constant_city_coverage':weeks.nunique()==1 and int(weeks.iloc[0])==panel.city.nunique(),
     }
     audit={
-        'version':'SAMA-CITY-HISTORY-2.1','source':'Saudi Central Bank (SAMA) weekly POS via KAPSARC distribution',
-        'scientific_boundary':'City Total rows only; no sector taxonomy is used.',
+        'version':'SAMA-CITY-HISTORY-2.1.1','source':'Saudi Central Bank (SAMA) weekly POS via KAPSARC distribution',
+        'scientific_boundary':'City Total rows only; no sector taxonomy is used. Source weekly boundary dates contain occasional 6/8-day adjustments but no missing observations.',
         'rows':int(len(panel)),'weeks':int(panel.week_start.nunique()),'cities':sorted(panel.city.unique().tolist()),'city_count':int(panel.city.nunique()),
         'date_start':str(panel.week_start.min().date()),'date_end':str(panel.week_start.max().date()),
-        'max_gap_days_by_city':gaps,'coverage_per_week':{'min':int(weeks.min()),'median':float(weeks.median()),'max':int(weeks.max())},
+        'week_gap_day_counts':gap_counts,'actual_span_days':actual_span,'expected_span_days':expected_span,
+        'coverage_per_week':{'min':int(weeks.min()),'median':float(weeks.median()),'max':int(weeks.max())},
         'checks':checks,'all_checks_passed':bool(all(checks.values())),
     }
     panel.to_csv(CITY,index=False); AUDIT.write_text(json.dumps(audit,indent=2,default=str),encoding='utf-8')
