@@ -55,3 +55,5 @@ jobs:
           git diff --cached --quiet || git commit -m 'audit: persist v2.4 final audit and application test fixture'
           git pull --rebase origin main
           git push origin HEAD:main
+
+# audit-trigger: 2026-08-14
