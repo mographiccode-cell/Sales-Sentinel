@@ -1,0 +1,45 @@
+{
+  "version": "SAMA-MARKET-FORECASTER-1.6",
+  "source_weeks": 270,
+  "source_start": "2020-05-10",
+  "source_end": "2025-07-06",
+  "walkforward_forecast_rows": 133,
+  "evaluation_start": "2023-01-01",
+  "metrics": {
+    "value_h1": {
+      "rows": 130,
+      "MAE": 1007474.3679040272,
+      "WAPE": 0.0805513840403857,
+      "correlation": 0.6417025720222984
+    },
+    "value_h2": {
+      "rows": 130,
+      "MAE": 1142037.2847321392,
+      "WAPE": 0.0911725697363229,
+      "correlation": 0.5023748147389414
+    },
+    "count_h1": {
+      "rows": 130,
+      "MAE": 9539.37051760015,
+      "WAPE": 0.04993739563879565,
+      "correlation": 0.8547255272341415
+    },
+    "count_h2": {
+      "rows": 130,
+      "MAE": 10544.31092550376,
+      "WAPE": 0.055047964165081384,
+      "correlation": 0.8495261847979914
+    }
+  },
+  "models": {
+    "value_h1": "models/sama_market_v1_6/sama_value_h1_forecaster.joblib",
+    "value_h2": "models/sama_market_v1_6/sama_value_h2_forecaster.joblib",
+    "count_h1": "models/sama_market_v1_6/sama_count_h1_forecaster.joblib",
+    "count_h2": "models/sama_market_v1_6/sama_count_h2_forecaster.joblib"
+  },
+  "leakage_controls": {
+    "each_walkforward_prediction_trains_only_on_origins_strictly_before_current_origin": true,
+    "horizon_targets_required_to_be_available_by_origin_week": true,
+    "future_actual_sama_values_are_not_features": true
+  }
+}
