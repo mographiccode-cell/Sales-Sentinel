@@ -1,0 +1,189 @@
+{
+  "version": "SALES-SENTINEL-MARKET-RISK-2.0-FROZEN",
+  "scientific_boundary": "All model choice/calibration/policy thresholds use SAMA data ending 2025-07-06. Newly acquired 2025-2026 PDFs are not read by development training.",
+  "target": "next official SAMA sector week POS value is >=20% below trailing four completed official weeks mean",
+  "development_rows": 2074,
+  "development_positive_rate": 0.1051108968177435,
+  "folds": [
+    {
+      "validation_start": "2024-01-01",
+      "validation_end": "2024-03-31",
+      "train_rows": 714,
+      "validation_rows": 221,
+      "train_positive_rate": 0.09943977591036414,
+      "validation_positive_rate": 0.1493212669683258
+    },
+    {
+      "validation_start": "2024-04-01",
+      "validation_end": "2024-06-30",
+      "train_rows": 935,
+      "validation_rows": 221,
+      "train_positive_rate": 0.10160427807486631,
+      "validation_positive_rate": 0.14479638009049775
+    },
+    {
+      "validation_start": "2024-07-01",
+      "validation_end": "2024-09-30",
+      "train_rows": 1156,
+      "validation_rows": 221,
+      "train_positive_rate": 0.11764705882352941,
+      "validation_positive_rate": 0.049773755656108594
+    },
+    {
+      "validation_start": "2024-10-01",
+      "validation_end": "2024-12-31",
+      "train_rows": 1377,
+      "validation_rows": 221,
+      "train_positive_rate": 0.10675381263616558,
+      "validation_positive_rate": 0.05429864253393665
+    },
+    {
+      "validation_start": "2025-01-01",
+      "validation_end": "2025-03-31",
+      "train_rows": 1598,
+      "validation_rows": 221,
+      "train_positive_rate": 0.09949937421777222,
+      "validation_positive_rate": 0.14479638009049775
+    },
+    {
+      "validation_start": "2025-04-01",
+      "validation_end": "2025-06-29",
+      "train_rows": 1819,
+      "validation_rows": 221,
+      "train_positive_rate": 0.09565695437053326,
+      "validation_positive_rate": 0.11764705882352941
+    }
+  ],
+  "separation": {
+    "candidate_selection_end": "2024-12-31",
+    "policy_threshold_window": "2025-01-01..2025-06-29",
+    "fresh_holdout_not_used": true
+  },
+  "candidate_selection_metrics_2024": {
+    "LogisticRegression": {
+      "ROC_AUC": 0.8613664915486524,
+      "PR_AUC": 0.5235912871223598
+    },
+    "ExtraTrees": {
+      "ROC_AUC": 0.8877626770214709,
+      "PR_AUC": 0.5242676304301098
+    },
+    "HistGradientBoosting": {
+      "ROC_AUC": 0.8635364321608041,
+      "PR_AUC": 0.48100473524266396
+    },
+    "XGBoost": {
+      "ROC_AUC": 0.8558274326176336,
+      "PR_AUC": 0.5095003212084027
+    },
+    "ForecastRaw": {
+      "ROC_AUC": 0.849474645957058,
+      "PR_AUC": 0.5502976161723957
+    },
+    "ForecastCorrected": {
+      "ROC_AUC": 0.8177678163544997,
+      "PR_AUC": 0.456815973273748
+    },
+    "RobustMedian": {
+      "ROC_AUC": 0.8877198492462312,
+      "PR_AUC": 0.5402317673672555
+    }
+  },
+  "selected_score": "ForecastRaw",
+  "calibration_selection_window": {
+    "Brier": 0.06495287011823621,
+    "ECE_10bin": 0.03570983710695105
+  },
+  "policy_contract": {
+    "watch": {
+      "threshold": 0.06707659935311647,
+      "recall": 0.9137931034482759,
+      "precision": 0.3333333333333333,
+      "green_npv": 0.9823321554770318,
+      "alert_rate": 0.3597285067873303,
+      "TP": 53,
+      "FP": 106,
+      "FN": 5,
+      "TN": 278
+    },
+    "red": {
+      "threshold": 0.4,
+      "Accuracy": 0.9049773755656109,
+      "BalancedAccuracy": 0.6818426724137931,
+      "Precision": 0.7857142857142857,
+      "Recall": 0.3793103448275862,
+      "F1": 0.5116279069767442,
+      "FalsePositiveRate": 0.015625,
+      "TN": 378,
+      "FP": 6,
+      "FN": 36,
+      "TP": 22,
+      "red_alerts": 28,
+      "red_rate": 0.06334841628959276
+    },
+    "watch_fallback": false,
+    "red_fallback": false
+  },
+  "policy_window_ranking": {
+    "ROC_AUC": 0.888604525862069,
+    "PR_AUC": 0.6458320855413561
+  },
+  "policy_window_calibration": {
+    "Brier": 0.07774145337163219,
+    "ECE_10bin": 0.02776159850430585
+  },
+  "policy_window_triage": {
+    "rows": 442,
+    "positive_rate": 0.13122171945701358,
+    "RED": {
+      "coverage": 0.06334841628959276,
+      "alerts": 28,
+      "precision": 0.7857142857142857,
+      "recall_contribution": 0.3793103448275862,
+      "false_positive_rate": 0.015625
+    },
+    "AMBER": {
+      "coverage": 0.29638009049773756,
+      "rows": 131,
+      "positive_rate": 0.2366412213740458
+    },
+    "GREEN": {
+      "coverage": 0.6402714932126696,
+      "rows": 283,
+      "NPV": 0.9823321554770318,
+      "missed_declines": 5,
+      "miss_rate_of_all_declines": 0.08620689655172414
+    },
+    "RED_plus_AMBER": {
+      "coverage": 0.3597285067873303,
+      "precision": 0.3333333333333333,
+      "recall": 0.9137931034482759
+    }
+  },
+  "acceptance_contract": {
+    "red_precision_min": 0.7,
+    "red_false_positive_rate_max": 0.05,
+    "alert_recall_min": 0.9,
+    "green_npv_min": 0.98,
+    "roc_auc_min": 0.85,
+    "pr_auc_min": 0.4
+  },
+  "development_gates": {
+    "red_precision": true,
+    "red_false_positive_rate": true,
+    "alert_recall": true,
+    "green_npv": true,
+    "roc_auc": true,
+    "pr_auc": true
+  },
+  "development_all_gates_passed": true,
+  "leakage_controls": {
+    "expanding_time_folds": true,
+    "one_week_purge_before_each_validation_fold": true,
+    "future_actual_SAMA_as_feature": false,
+    "forecast_residual_features_shifted_before_use": true,
+    "candidate_selection_and_policy_threshold_windows_separated": true,
+    "fresh_2025_2026_holdout_used_for_training_or_thresholds": false,
+    "shuffle": false
+  }
+}
