@@ -1,4 +1,4 @@
-name: Retrain Saudi Sector v1.5
+name: Retrain Saudi Sector v1.5.1
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/train_sama_sector_forecaster_v1_7.py'
       - 'scripts/build_train_saudi_sector_panel_v1_5.py'
+      - 'scripts/run_saudi_sector_v1_5_1.py'
       - '.github/workflows/retrain-saudi-sector-v1-5.yml'
 
 permissions:
@@ -31,16 +32,31 @@ jobs:
         run: python scripts/train_sama_sector_forecaster_v1_7.py
       - name: Rebuild verified v1.3.1 merchant microdata
         run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
-      - name: Build sector dataset and retrain
-        run: python scripts/build_train_saudi_sector_panel_v1_5.py
+      - name: Build sector dataset and retrain v1.5.1
+        run: python scripts/run_saudi_sector_v1_5_1.py
       - name: Show evidence
         run: |
           cat reports/saudi_v1_5/retraining_summary_v1_5.md
           cat reports/sama_sector_v1_7/sama_sector_forecaster_report_v1_7.json
+          python - <<'PY'
+          import json
+          d=json.load(open('reports/saudi_v1_5/dataset_quality_audit_v1_5.json',encoding='utf-8'))
+          assert d['dataset_quality_passed'] is True
+          print(json.dumps({
+            'version': d['version'],
+            'panel': d['panel'],
+            'supervised': d['supervised'],
+            'split': d['training']['split'],
+            'test_metrics': d['training']['test_metrics'],
+            'majority': d['training']['majority_test_accuracy'],
+            'goal_90': d['training']['high_accuracy_90pct_goal_met'],
+            'acceptance': d['training']['all_acceptance_gates_passed'],
+          },indent=2))
+          PY
       - name: Upload evidence
         uses: actions/upload-artifact@v4
         with:
-          name: sales-sentinel-saudi-sector-v1-5
+          name: sales-sentinel-saudi-sector-v1-5-1
           path: |
             data/saudi_v1_5/**
             reports/saudi_v1_5/**
@@ -59,7 +75,7 @@ jobs:
             if [ "$size" -lt 90000000 ]; then git add models/saudi_v1_5/sales_decline_ensemble_v1_5.joblib; fi
           fi
           if [ -f data/saudi_v1_5/saudi_sector_daily_panel_v1_5.csv.gz ]; then git add data/saudi_v1_5/saudi_sector_daily_panel_v1_5.csv.gz; fi
-          git diff --cached --quiet || git commit -m 'ml: persist Saudi sector v1.5 evidence'
+          git diff --cached --quiet || git commit -m 'ml: persist Saudi sector v1.5.1 evidence'
           git stash push --include-untracked -m 'ci-generated-leftovers' || true
           git pull --rebase origin main
           git push origin HEAD:main
