@@ -1,0 +1,471 @@
+{
+  "version": "SALES-DECLINE-1.4-LEAKAGE-SAFE",
+  "dataset_version": "SA-LOCALIZATION-1.3.1-SAMA-SAFE",
+  "problem_found": {
+    "previous_target": "same-day unique-customer decline versus trailing 28-day customer mean",
+    "previous_test_accuracy": 0.75,
+    "previous_validation_dummy_accuracy": 0.8,
+    "diagnosis": "Raw accuracy was misleading under imbalance, and the target did not match the Sales Sentinel core objective of predicting sales decline."
+  },
+  "new_target": {
+    "definition": "At prediction origin t, flag decline when mean SAMA-calibrated merchant sales over t+1..t+7 is at least 20% below the trailing 28-day mean known at t.",
+    "horizon_days": 7,
+    "decline_threshold": 0.2,
+    "baseline_days": 28
+  },
+  "data": {
+    "daily_rows": 604,
+    "supervised_origins": 541,
+    "pretest_fit_origins": 444,
+    "test_origins": 90,
+    "fit_positive_rate": 0.06756756756756757,
+    "test_positive_rate": 0.1,
+    "test_start_date": "2024-05-22",
+    "test_end_date": "2024-08-19",
+    "purge_days": 7
+  },
+  "features": [
+    "sales_t0",
+    "sales_lag_1",
+    "sales_lag_2",
+    "sales_lag_3",
+    "sales_lag_7",
+    "sales_lag_14",
+    "sales_lag_21",
+    "sales_lag_28",
+    "sales_lag_35",
+    "sales_lag_56",
+    "sales_mean_7",
+    "sales_std_7",
+    "sales_median_7",
+    "sales_mean_14",
+    "sales_std_14",
+    "sales_median_14",
+    "sales_mean_28",
+    "sales_std_28",
+    "sales_median_28",
+    "sales_mean_56",
+    "sales_std_56",
+    "sales_median_56",
+    "customers_t0",
+    "customers_lag_1",
+    "customers_lag_2",
+    "customers_lag_3",
+    "customers_lag_7",
+    "customers_lag_14",
+    "customers_lag_21",
+    "customers_lag_28",
+    "customers_lag_35",
+    "customers_lag_56",
+    "customers_mean_7",
+    "customers_std_7",
+    "customers_median_7",
+    "customers_mean_14",
+    "customers_std_14",
+    "customers_median_14",
+    "customers_mean_28",
+    "customers_std_28",
+    "customers_median_28",
+    "customers_mean_56",
+    "customers_std_56",
+    "customers_median_56",
+    "invoices_t0",
+    "invoices_lag_1",
+    "invoices_lag_2",
+    "invoices_lag_3",
+    "invoices_lag_7",
+    "invoices_lag_14",
+    "invoices_lag_21",
+    "invoices_lag_28",
+    "invoices_lag_35",
+    "invoices_lag_56",
+    "invoices_mean_7",
+    "invoices_std_7",
+    "invoices_median_7",
+    "invoices_mean_14",
+    "invoices_std_14",
+    "invoices_median_14",
+    "invoices_mean_28",
+    "invoices_std_28",
+    "invoices_median_28",
+    "invoices_mean_56",
+    "invoices_std_56",
+    "invoices_median_56",
+    "transactions_t0",
+    "transactions_lag_1",
+    "transactions_lag_2",
+    "transactions_lag_3",
+    "transactions_lag_7",
+    "transactions_lag_14",
+    "transactions_lag_21",
+    "transactions_lag_28",
+    "transactions_lag_35",
+    "transactions_lag_56",
+    "transactions_mean_7",
+    "transactions_std_7",
+    "transactions_median_7",
+    "transactions_mean_14",
+    "transactions_std_14",
+    "transactions_median_14",
+    "transactions_mean_28",
+    "transactions_std_28",
+    "transactions_median_28",
+    "transactions_mean_56",
+    "transactions_std_56",
+    "transactions_median_56",
+    "new_customers_t0",
+    "new_customers_lag_1",
+    "new_customers_lag_2",
+    "new_customers_lag_3",
+    "new_customers_lag_7",
+    "new_customers_lag_14",
+    "new_customers_lag_21",
+    "new_customers_lag_28",
+    "new_customers_lag_35",
+    "new_customers_lag_56",
+    "new_customers_mean_7",
+    "new_customers_std_7",
+    "new_customers_median_7",
+    "new_customers_mean_14",
+    "new_customers_std_14",
+    "new_customers_median_14",
+    "new_customers_mean_28",
+    "new_customers_std_28",
+    "new_customers_median_28",
+    "new_customers_mean_56",
+    "new_customers_std_56",
+    "new_customers_median_56",
+    "returning_customers_t0",
+    "returning_customers_lag_1",
+    "returning_customers_lag_2",
+    "returning_customers_lag_3",
+    "returning_customers_lag_7",
+    "returning_customers_lag_14",
+    "returning_customers_lag_21",
+    "returning_customers_lag_28",
+    "returning_customers_lag_35",
+    "returning_customers_lag_56",
+    "returning_customers_mean_7",
+    "returning_customers_std_7",
+    "returning_customers_median_7",
+    "returning_customers_mean_14",
+    "returning_customers_std_14",
+    "returning_customers_median_14",
+    "returning_customers_mean_28",
+    "returning_customers_std_28",
+    "returning_customers_median_28",
+    "returning_customers_mean_56",
+    "returning_customers_std_56",
+    "returning_customers_median_56",
+    "avg_invoice_t0",
+    "avg_invoice_lag_1",
+    "avg_invoice_lag_2",
+    "avg_invoice_lag_3",
+    "avg_invoice_lag_7",
+    "avg_invoice_lag_14",
+    "avg_invoice_lag_21",
+    "avg_invoice_lag_28",
+    "avg_invoice_lag_35",
+    "avg_invoice_lag_56",
+    "avg_invoice_mean_7",
+    "avg_invoice_std_7",
+    "avg_invoice_median_7",
+    "avg_invoice_mean_14",
+    "avg_invoice_std_14",
+    "avg_invoice_median_14",
+    "avg_invoice_mean_28",
+    "avg_invoice_std_28",
+    "avg_invoice_median_28",
+    "avg_invoice_mean_56",
+    "avg_invoice_std_56",
+    "avg_invoice_median_56",
+    "return_rate_t0",
+    "return_rate_lag_1",
+    "return_rate_lag_2",
+    "return_rate_lag_3",
+    "return_rate_lag_7",
+    "return_rate_lag_14",
+    "return_rate_lag_21",
+    "return_rate_lag_28",
+    "return_rate_lag_35",
+    "return_rate_lag_56",
+    "return_rate_mean_7",
+    "return_rate_std_7",
+    "return_rate_median_7",
+    "return_rate_mean_14",
+    "return_rate_std_14",
+    "return_rate_median_14",
+    "return_rate_mean_28",
+    "return_rate_std_28",
+    "return_rate_median_28",
+    "return_rate_mean_56",
+    "return_rate_std_56",
+    "return_rate_median_56",
+    "sales_t0_vs_mean7",
+    "sales_t0_vs_mean28",
+    "sales_mean7_vs_mean28",
+    "customers_t0_vs_mean7",
+    "customers_mean7_vs_mean28",
+    "invoices_t0_vs_mean28",
+    "transactions_t0_vs_mean28",
+    "returning_share_t0",
+    "new_customer_share_t0",
+    "sama_market_index_lag_7",
+    "sama_market_index_lag_14",
+    "sama_market_index_lag_28",
+    "baseline_sales_28"
+  ],
+  "selection_walk_forward": {
+    "LogisticRegression": {
+      "OOFThreshold": 0.5000000000000003,
+      "OOFMetrics": {
+        "Accuracy": 0.8,
+        "BalancedAccuracy": 0.6594788858939802,
+        "Precision": 0.2857142857142857,
+        "Recall": 0.47619047619047616,
+        "F1": 0.35714285714285715,
+        "ROC_AUC": 0.7223719676549866,
+        "ConfusionMatrix": [
+          [
+            134,
+            25
+          ],
+          [
+            11,
+            10
+          ]
+        ]
+      },
+      "SelectionScore": 0.5817654986522911,
+      "Folds": [
+        {
+          "fold": 1,
+          "train_end_date": "2023-11-09",
+          "validation_start_date": "2023-11-17",
+          "validation_end_date": "2024-01-15",
+          "train_positive_rate": 0.027237354085603113,
+          "validation_positive_rate": 0.06666666666666667
+        },
+        {
+          "fold": 2,
+          "train_end_date": "2024-01-08",
+          "validation_start_date": "2024-01-16",
+          "validation_end_date": "2024-03-15",
+          "train_positive_rate": 0.03785488958990536,
+          "validation_positive_rate": 0.15
+        },
+        {
+          "fold": 3,
+          "train_end_date": "2024-03-08",
+          "validation_start_date": "2024-03-16",
+          "validation_end_date": "2024-05-14",
+          "train_positive_rate": 0.042440318302387266,
+          "validation_positive_rate": 0.13333333333333333
+        }
+      ]
+    },
+    "RandomForest": {
+      "OOFThreshold": 0.1,
+      "OOFMetrics": {
+        "Accuracy": 0.7555555555555555,
+        "BalancedAccuracy": 0.6963162623539982,
+        "Precision": 0.2653061224489796,
+        "Recall": 0.6190476190476191,
+        "F1": 0.37142857142857144,
+        "ROC_AUC": 0.7130877508236,
+        "ConfusionMatrix": [
+          [
+            123,
+            36
+          ],
+          [
+            8,
+            13
+          ]
+        ]
+      },
+      "SelectionScore": 0.5944534291704103,
+      "Folds": [
+        {
+          "fold": 1,
+          "train_end_date": "2023-11-09",
+          "validation_start_date": "2023-11-17",
+          "validation_end_date": "2024-01-15",
+          "train_positive_rate": 0.027237354085603113,
+          "validation_positive_rate": 0.06666666666666667
+        },
+        {
+          "fold": 2,
+          "train_end_date": "2024-01-08",
+          "validation_start_date": "2024-01-16",
+          "validation_end_date": "2024-03-15",
+          "train_positive_rate": 0.03785488958990536,
+          "validation_positive_rate": 0.15
+        },
+        {
+          "fold": 3,
+          "train_end_date": "2024-03-08",
+          "validation_start_date": "2024-03-16",
+          "validation_end_date": "2024-05-14",
+          "train_positive_rate": 0.042440318302387266,
+          "validation_positive_rate": 0.13333333333333333
+        }
+      ]
+    },
+    "ExtraTrees": {
+      "OOFThreshold": 0.4650000000000003,
+      "OOFMetrics": {
+        "Accuracy": 0.9111111111111111,
+        "BalancedAccuracy": 0.6190476190476191,
+        "Precision": 1.0,
+        "Recall": 0.23809523809523808,
+        "F1": 0.38461538461538464,
+        "ROC_AUC": 0.7373465109314166,
+        "ConfusionMatrix": [
+          [
+            159,
+            0
+          ],
+          [
+            16,
+            5
+          ]
+        ]
+      },
+      "SelectionScore": 0.5954090354090353,
+      "Folds": [
+        {
+          "fold": 1,
+          "train_end_date": "2023-11-09",
+          "validation_start_date": "2023-11-17",
+          "validation_end_date": "2024-01-15",
+          "train_positive_rate": 0.027237354085603113,
+          "validation_positive_rate": 0.06666666666666667
+        },
+        {
+          "fold": 2,
+          "train_end_date": "2024-01-08",
+          "validation_start_date": "2024-01-16",
+          "validation_end_date": "2024-03-15",
+          "train_positive_rate": 0.03785488958990536,
+          "validation_positive_rate": 0.15
+        },
+        {
+          "fold": 3,
+          "train_end_date": "2024-03-08",
+          "validation_start_date": "2024-03-16",
+          "validation_end_date": "2024-05-14",
+          "train_positive_rate": 0.042440318302387266,
+          "validation_positive_rate": 0.13333333333333333
+        }
+      ]
+    },
+    "HistGradientBoosting": {
+      "OOFThreshold": 0.15000000000000005,
+      "OOFMetrics": {
+        "Accuracy": 0.8722222222222222,
+        "BalancedAccuracy": 0.5970350404312669,
+        "Precision": 0.4166666666666667,
+        "Recall": 0.23809523809523808,
+        "F1": 0.30303030303030304,
+        "ROC_AUC": 0.7702905061395627,
+        "ConfusionMatrix": [
+          [
+            152,
+            7
+          ],
+          [
+            16,
+            5
+          ]
+        ]
+      },
+      "SelectionScore": 0.5491708186991207,
+      "Folds": [
+        {
+          "fold": 1,
+          "train_end_date": "2023-11-09",
+          "validation_start_date": "2023-11-17",
+          "validation_end_date": "2024-01-15",
+          "train_positive_rate": 0.027237354085603113,
+          "validation_positive_rate": 0.06666666666666667
+        },
+        {
+          "fold": 2,
+          "train_end_date": "2024-01-08",
+          "validation_start_date": "2024-01-16",
+          "validation_end_date": "2024-03-15",
+          "train_positive_rate": 0.03785488958990536,
+          "validation_positive_rate": 0.15
+        },
+        {
+          "fold": 3,
+          "train_end_date": "2024-03-08",
+          "validation_start_date": "2024-03-16",
+          "validation_end_date": "2024-05-14",
+          "train_positive_rate": 0.042440318302387266,
+          "validation_positive_rate": 0.13333333333333333
+        }
+      ]
+    }
+  },
+  "selected_model": "ExtraTrees",
+  "selected_probability_threshold": 0.4650000000000003,
+  "final_test": {
+    "Accuracy": 0.9,
+    "BalancedAccuracy": 0.5493827160493827,
+    "Precision": 0.5,
+    "Recall": 0.1111111111111111,
+    "F1": 0.18181818181818182,
+    "ROC_AUC": 0.7860082304526748,
+    "ConfusionMatrix": [
+      [
+        80,
+        1
+      ],
+      [
+        8,
+        1
+      ]
+    ]
+  },
+  "majority_baseline_test": {
+    "Accuracy": 0.9,
+    "BalancedAccuracy": 0.5,
+    "Precision": 0.0,
+    "Recall": 0.0,
+    "F1": 0.0,
+    "ROC_AUC": 0.5,
+    "ConfusionMatrix": [
+      [
+        81,
+        0
+      ],
+      [
+        9,
+        0
+      ]
+    ]
+  },
+  "acceptance": {
+    "accuracy_at_least_90pct": true,
+    "balanced_accuracy_at_least_80pct": false,
+    "f1_at_least_70pct": false,
+    "roc_auc_at_least_85pct": false,
+    "beats_majority_accuracy": false
+  },
+  "all_acceptance_gates_passed": false,
+  "libraries": {
+    "sklearn": "1.6.1",
+    "pandas": "2.2.3",
+    "numpy": "2.2.4"
+  },
+  "leakage_controls": {
+    "shuffle": false,
+    "final_test_used_for_selection": false,
+    "purged_gap_equals_forecast_horizon": true,
+    "future_sama_values_used_as_features": false,
+    "current_same_week_sama_index_used_as_feature": false,
+    "only_lagged_sama_index_7_14_28_days": true
+  }
+}
