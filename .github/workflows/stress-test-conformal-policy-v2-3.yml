@@ -1,5 +1,6 @@
 name: Stress Test Conformal Policy v2.3
 
+# v2.3.3 policy + frozen v2.2 feature contract stress test.
 on:
   workflow_dispatch:
   push:
