@@ -1,0 +1,682 @@
+{
+  "version": "SAMA-CITY-RISK-2.4-PREQUENTIAL-STRESS",
+  "independence_status": "NOT AN INDEPENDENT HOLDOUT: architecture was motivated by diagnosis of this period, but v2.4 parameters/thresholds were selected on historical OOF only.",
+  "base_model": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "policy": "SAMA-CITY-RISK-2.4-PRIOR-SHIFT",
+  "rows": 605,
+  "weeks": 55,
+  "period": {
+    "start": "2025-07-13",
+    "end": "2026-07-26"
+  },
+  "fixed_thresholds": {
+    "watch": 0.023979822506159636,
+    "red": 0.163
+  },
+  "reference_prior": 0.04079254079254079,
+  "stress_prior_range": {
+    "global_min": 0.027972027972027972,
+    "global_max": 0.0784313725490196,
+    "effective_min": 0.024318198916921444,
+    "effective_max": 0.0999807747763291
+  },
+  "metrics": {
+    "rows": 605,
+    "declines": 17,
+    "decline_rate": 0.02809917355371901,
+    "RED": {
+      "rows": 45,
+      "TP": 11,
+      "FP": 34,
+      "precision": 0.24444444444444444,
+      "FPR": 0.05782312925170068,
+      "recall_contribution": 0.6470588235294118
+    },
+    "AMBER": {
+      "rows": 409,
+      "declines": 5
+    },
+    "GREEN": {
+      "rows": 151,
+      "TN": 150,
+      "FN": 1,
+      "NPV": 0.9933774834437086,
+      "miss_rate": 0.058823529411764705
+    },
+    "RED_plus_AMBER": {
+      "rows": 454,
+      "TP": 16,
+      "FP": 438,
+      "precision": 0.03524229074889868,
+      "recall": 0.9411764705882353
+    }
+  },
+  "ranking": {
+    "ROC_AUC": 0.8620448179271709,
+    "PR_AUC": 0.2987426184562571
+  },
+  "Brier": 0.02826413840312284,
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "gates": {
+    "red_precision": false,
+    "red_fpr": false,
+    "alert_recall": true,
+    "green_npv": true,
+    "roc_auc": false,
+    "pr_auc": false
+  },
+  "all_gates_passed": false,
+  "by_city": {
+    "ABHA": {
+      "rows": 55,
+      "declines": 3,
+      "red_tp": 3,
+      "red_fp": 5,
+      "green_fn": 0,
+      "alert_recall": 1.0,
+      "prior_mean": 0.06580039237734522
+    },
+    "BURAIDAH": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 2,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.050469568403963785
+    },
+    "DAMMAM": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 1,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.050386772777381135
+    },
+    "HAIL": {
+      "rows": 55,
+      "declines": 4,
+      "red_tp": 2,
+      "red_fp": 8,
+      "green_fn": 0,
+      "alert_recall": 1.0,
+      "prior_mean": 0.08150452347842545
+    },
+    "JEDDAH": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 2,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.050469568403963785
+    },
+    "KHOBAR": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 0,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.046762859695775295
+    },
+    "MADINA": {
+      "rows": 55,
+      "declines": 2,
+      "red_tp": 2,
+      "red_fp": 5,
+      "green_fn": 0,
+      "alert_recall": 1.0,
+      "prior_mean": 0.07311816973261433
+    },
+    "MAKKAH": {
+      "rows": 55,
+      "declines": 5,
+      "red_tp": 4,
+      "red_fp": 0,
+      "green_fn": 0,
+      "alert_recall": 1.0,
+      "prior_mean": 0.06711063969408382
+    },
+    "OTHER": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 7,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.06579533049137166
+    },
+    "RIYADH": {
+      "rows": 55,
+      "declines": 0,
+      "red_tp": 0,
+      "red_fp": 1,
+      "green_fn": 0,
+      "alert_recall": null,
+      "prior_mean": 0.050386772777381135
+    },
+    "TABOUK": {
+      "rows": 55,
+      "declines": 3,
+      "red_tp": 0,
+      "red_fp": 3,
+      "green_fn": 1,
+      "alert_recall": 0.6666666666666666,
+      "prior_mean": 0.0649826689467236
+    }
+  },
+  "weekly": [
+    {
+      "week_start": "2025-07-13",
+      "global_prior_mean": 0.06951871657754012,
+      "effective_prior_mean": 0.06894471952615654,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2025-07-20",
+      "global_prior_mean": 0.07130124777183601,
+      "effective_prior_mean": 0.07042569393430789,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-07-27",
+      "global_prior_mean": 0.07130124777183601,
+      "effective_prior_mean": 0.07042569393430789,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-08-03",
+      "global_prior_mean": 0.07130124777183601,
+      "effective_prior_mean": 0.07042569393430789,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-08-10",
+      "global_prior_mean": 0.07130124777183601,
+      "effective_prior_mean": 0.07042569393430789,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-08-17",
+      "global_prior_mean": 0.06951871657754012,
+      "effective_prior_mean": 0.06894471952615655,
+      "red": 1,
+      "amber": 9,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-08-24",
+      "global_prior_mean": 0.06951871657754012,
+      "effective_prior_mean": 0.06894471952615655,
+      "red": 1,
+      "amber": 9,
+      "green": 1,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2025-08-31",
+      "global_prior_mean": 0.07130124777183601,
+      "effective_prior_mean": 0.07003392605985606,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2025-09-07",
+      "global_prior_mean": 0.07308377896613193,
+      "effective_prior_mean": 0.07151229174351895,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2025-09-14",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.0729701933899279,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-09-21",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.0729701933899279,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-09-28",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.0729701933899279,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-10-05",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.07265498589737854,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-10-12",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.07234382821104407,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "declines_realized_after_prediction": 2
+    },
+    {
+      "week_start": "2025-10-19",
+      "global_prior_mean": 0.07843137254901959,
+      "effective_prior_mean": 0.07484645269584857,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-10-26",
+      "global_prior_mean": 0.07843137254901959,
+      "effective_prior_mean": 0.07453130833741452,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-11-02",
+      "global_prior_mean": 0.07843137254901959,
+      "effective_prior_mean": 0.07422011153633516,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-11-09",
+      "global_prior_mean": 0.07843137254901959,
+      "effective_prior_mean": 0.07391278056181852,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-11-16",
+      "global_prior_mean": 0.0766488413547237,
+      "effective_prior_mean": 0.07256177274949743,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-11-23",
+      "global_prior_mean": 0.0766488413547237,
+      "effective_prior_mean": 0.07226620421853493,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-11-30",
+      "global_prior_mean": 0.0766488413547237,
+      "effective_prior_mean": 0.07197421836095112,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-12-07",
+      "global_prior_mean": 0.0766488413547237,
+      "effective_prior_mean": 0.07168574337900471,
+      "red": 3,
+      "amber": 8,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-12-14",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.07036443234309006,
+      "red": 2,
+      "amber": 9,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-12-21",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.07008685953588853,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2025-12-28",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.06981254592151732,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-01-04",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.06954142821411659,
+      "red": 2,
+      "amber": 9,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-01-11",
+      "global_prior_mean": 0.07486631016042779,
+      "effective_prior_mean": 0.06892954742570928,
+      "red": 5,
+      "amber": 6,
+      "green": 0,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-01-18",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-01-25",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-02-01",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-02-08",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 7,
+      "amber": 4,
+      "green": 0,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-02-15",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-02-22",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-03-01",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-03-08",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06507412583620865,
+      "red": 1,
+      "amber": 9,
+      "green": 1,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-03-15",
+      "global_prior_mean": 0.0677361853832442,
+      "effective_prior_mean": 0.06411349309233585,
+      "red": 10,
+      "amber": 1,
+      "green": 0,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-03-22",
+      "global_prior_mean": 0.06951871657754012,
+      "effective_prior_mean": 0.0654945040521786,
+      "red": 2,
+      "amber": 8,
+      "green": 1,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-03-29",
+      "global_prior_mean": 0.0516934046345811,
+      "effective_prior_mean": 0.05505062474106211,
+      "red": 2,
+      "amber": 5,
+      "green": 4,
+      "declines_realized_after_prediction": 2
+    },
+    {
+      "week_start": "2026-04-05",
+      "global_prior_mean": 0.0516934046345811,
+      "effective_prior_mean": 0.054469356103982,
+      "red": 4,
+      "amber": 4,
+      "green": 3,
+      "declines_realized_after_prediction": 2
+    },
+    {
+      "week_start": "2026-04-12",
+      "global_prior_mean": 0.044563279857397504,
+      "effective_prior_mean": 0.04827661186194421,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-04-19",
+      "global_prior_mean": 0.039215686274509796,
+      "effective_prior_mean": 0.044306783093867125,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-04-26",
+      "global_prior_mean": 0.039215686274509796,
+      "effective_prior_mean": 0.044306783093867125,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-05-03",
+      "global_prior_mean": 0.04099821746880571,
+      "effective_prior_mean": 0.04572138953013842,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-05-10",
+      "global_prior_mean": 0.04099821746880571,
+      "effective_prior_mean": 0.04572138953013842,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-05-17",
+      "global_prior_mean": 0.04099821746880571,
+      "effective_prior_mean": 0.04572138953013842,
+      "red": 0,
+      "amber": 4,
+      "green": 7,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-05-24",
+      "global_prior_mean": 0.04099821746880571,
+      "effective_prior_mean": 0.04572138953013842,
+      "red": 0,
+      "amber": 8,
+      "green": 3,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-05-31",
+      "global_prior_mean": 0.04099821746880571,
+      "effective_prior_mean": 0.04572138953013842,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-06-07",
+      "global_prior_mean": 0.0338680926916221,
+      "effective_prior_mean": 0.040937674034338296,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-06-14",
+      "global_prior_mean": 0.028520499108734398,
+      "effective_prior_mean": 0.03423691960179372,
+      "red": 0,
+      "amber": 1,
+      "green": 10,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-06-21",
+      "global_prior_mean": 0.028520499108734398,
+      "effective_prior_mean": 0.03423691960179372,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-06-28",
+      "global_prior_mean": 0.028520499108734398,
+      "effective_prior_mean": 0.03423691960179372,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-07-05",
+      "global_prior_mean": 0.028520499108734398,
+      "effective_prior_mean": 0.03423691960179372,
+      "red": 0,
+      "amber": 1,
+      "green": 10,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-07-12",
+      "global_prior_mean": 0.027972027972027972,
+      "effective_prior_mean": 0.033856680172749364,
+      "red": 0,
+      "amber": 1,
+      "green": 10,
+      "declines_realized_after_prediction": 1
+    },
+    {
+      "week_start": "2026-07-19",
+      "global_prior_mean": 0.027972027972027972,
+      "effective_prior_mean": 0.03412511961213779,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "declines_realized_after_prediction": 0
+    },
+    {
+      "week_start": "2026-07-26",
+      "global_prior_mean": 0.027972027972027972,
+      "effective_prior_mean": 0.03412511961213779,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "declines_realized_after_prediction": 0
+    }
+  ],
+  "anti_leakage": {
+    "current_label_used_before_current_prediction": false,
+    "fresh_labels_enter_prior_only_after_prediction": true,
+    "base_model_retrained_on_fresh": false,
+    "thresholds_selected_on_fresh": false,
+    "prior_parameters_selected_on_fresh": false,
+    "feature_contract_frozen": true
+  }
+}
