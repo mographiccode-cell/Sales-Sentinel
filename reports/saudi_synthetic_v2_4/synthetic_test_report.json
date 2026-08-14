@@ -1,0 +1,47 @@
+{
+  "version": "SAUDI-SYNTHETIC-STRESS-V2.4-2",
+  "synthetic_not_official": true,
+  "seed": 20260814,
+  "scored_period_starts_after_calibration_only_period": true,
+  "score_start": "2025-02-09",
+  "model_engine": "SALES-SENTINEL-CITY-RISK-ENGINE-2.4.2",
+  "rows_scored": 847,
+  "weeks_scored": 77,
+  "cities": 11,
+  "actual_declines": 14,
+  "actual_decline_rate": 0.01652892561983471,
+  "states": {
+    "GREEN": 651,
+    "RED": 133,
+    "AMBER": 63
+  },
+  "RED": {
+    "TP": 2,
+    "FP": 131,
+    "FN": 12,
+    "TN": 702,
+    "precision": 0.015037593984962405,
+    "recall_contribution": 0.14285714285714285,
+    "FPR": 0.15726290516206481
+  },
+  "RED_plus_AMBER": {
+    "TP": 5,
+    "FP": 191,
+    "recall": 0.35714285714285715,
+    "precision": 0.025510204081632654
+  },
+  "GREEN": {
+    "TN": 642,
+    "FN": 9,
+    "NPV": 0.9861751152073732,
+    "miss_rate": 0.6428571428571429
+  },
+  "scenario_counts_all_data": {
+    "normal": 2019,
+    "historical_calibration_decline": 27,
+    "forced_strong_decline": 11,
+    "mild_dip": 7,
+    "positive_spike": 4
+  },
+  "interpretation": "Synthetic Saudi-like robustness/functional stress test only; it is not independent evidence of real-world generalization."
+}
