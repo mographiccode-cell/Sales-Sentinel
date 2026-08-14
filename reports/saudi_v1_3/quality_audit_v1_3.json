@@ -1,0 +1,299 @@
+{
+  "dataset": "Saudi-localized synthetic merchant microdata calibrated to official SAMA weekly POS aggregates",
+  "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+  "scientific_boundary": "Row-level transactions originate from UCI Online Retail II. SAMA provides official aggregate Saudi market calibration only; rows are not observed Saudi merchant transactions.",
+  "sources": {
+    "UCI_Online_Retail_II_DOI": "10.24432/C5CG6D",
+    "SAMA_dataset": {
+      "dataset": "Point of Sale Transactions by Sector and City",
+      "publisher": "Saudi Central Bank (SAMA)",
+      "distribution": "KAPSARC Data Portal Opendatasoft export",
+      "sama_official_page": "https://www.sama.gov.sa/en-US/Statistics/Indices/Pages/POS.aspx",
+      "dataset_page": "https://data.kapsarc.org/explore/dataset/point-of-sale-transactions-by-sector-and-city/analyze/?flg=en-gb",
+      "export_url": "https://data.kapsarc.org/api/explore/v2.1/catalog/datasets/point-of-sale-transactions-by-sector-and-city/exports/csv",
+      "download_sha256": "4f569cffc3bdbf9bd38474aac904f0de0ac1592045e00b8f6fbf2ea055b7924e",
+      "download_bytes": 2480242,
+      "raw_rows": 31262,
+      "normalized_rows_2023_2025": 15312,
+      "national_week_rows": 132,
+      "national_sector_week_rows": 2244,
+      "national_weeks_by_year": {
+        "2023": 53,
+        "2024": 52,
+        "2025": 27
+      },
+      "date_min": "2023-01-01",
+      "date_max": "2025-07-06",
+      "checks": {
+        "download_nonempty": true,
+        "normalized_rows_positive": true,
+        "national_total_rows_positive": true,
+        "contains_2023": true,
+        "contains_2024": true,
+        "no_duplicate_national_weeks": true,
+        "national_values_positive": true
+      },
+      "all_tests_passed": true,
+      "scientific_boundary": "Official Saudi aggregate POS data are used only as external calibration targets; they are not copied as merchant-level transactions."
+    }
+  },
+  "method": {
+    "calendar": "604 observed UCI business dates are mapped chronologically to consecutive Saudi training-safe dates starting 2023-01-01; inherited UK closed days are not retained as zero-sales Saudi days.",
+    "national_weekly_calibration": "Scale merchant weekly sales to the relative week-to-week shape of official SAMA national POS transaction value, while preserving merchant-sized median scale.",
+    "sector_calibration": "Blend 35% official SAMA mapped-sector share with 65% localized merchant category share, then normalize within each week.",
+    "payment": "Rank invoices deterministically within each year and assign exactly round(target_share * invoices) as Electronic, avoiding Monte-Carlo/hash-share drift.",
+    "customer_decline": "Counts only ObservedSourceCustomerID / ObservedSaudiCustomerID; invoice fallback identities are excluded.",
+    "leakage": "Same-week SAMA official values construct historical targets but are not model features. Forecast features are lagged historical merchant observations only."
+  },
+  "cleaning": {
+    "raw_rows": 1067371,
+    "duplicates_removed": 12133,
+    "rows_after_duplicates": 1055238,
+    "required_value_rows_removed": 0,
+    "zero_quantity_or_nonpositive_price_removed": 6196,
+    "clean_rows": 1049042
+  },
+  "base_v1_2": {
+    "localized_rows": 1049042,
+    "critical_null_count": 0,
+    "vat_error_rows": 0,
+    "modeled_math_error_rows": 0,
+    "administrative_rows_retained_but_excluded_from_training": 5752,
+    "observed_customer_rows": 812297,
+    "fallback_customer_rows": 236745,
+    "unique_invoices": 48369,
+    "unique_observed_customers": 5939,
+    "unique_fallback_customer_keys": 3499,
+    "training_safe_days": 604,
+    "training_safe_date_start": "2023-01-01",
+    "training_safe_date_end": "2024-08-26",
+    "max_region_share_difference": 0.011936485753114623,
+    "payment_calibration": {
+      "2023": {
+        "invoice_count": 29030,
+        "actual_electronic_share": 0.6996555287633482,
+        "target_electronic_share": 0.7,
+        "absolute_difference": 0.0003444712366517111
+      },
+      "2024": {
+        "invoice_count": 19339,
+        "actual_electronic_share": 0.7799782822276229,
+        "target_electronic_share": 0.79,
+        "absolute_difference": 0.010021717772377148
+      }
+    },
+    "uci_archive_sha256": "572e36277c2390fbfde10664750731e0a86f55e33470d91919085f0408e67bfb",
+    "uci_workbook_sha256": "bcbe73b35f5b7babf197fb0cb983a11f5d9ff929078d4aa53d171b1f2df2e980",
+    "source_dates": 604,
+    "observed_customers": 5939,
+    "fallback_customer_keys": 3499,
+    "source_invoices": 48369,
+    "second_pass_clean_rows": 1049042
+  },
+  "v1_3": {
+    "rows": 1049042,
+    "unique_line_ids": 1049042,
+    "duplicate_line_ids": 0,
+    "missing_sama_rows": 0,
+    "payment_calibration": {
+      "2023": {
+        "invoice_count": 29030,
+        "target": 0.7,
+        "actual": 0.7,
+        "absolute_difference": 0.0
+      },
+      "2024": {
+        "invoice_count": 19339,
+        "target": 0.79,
+        "actual": 0.7900098247065516,
+        "absolute_difference": 9.824706551531115e-06
+      }
+    },
+    "factor_min": 0.227682636421467,
+    "factor_p01": 0.27075482732280237,
+    "factor_median": 0.8185749406570509,
+    "factor_p99": 4.579675440284365,
+    "factor_max": 5576.266891781241
+  },
+  "exact_payment_precheck": {
+    "2023": {
+      "invoice_count": 29030,
+      "electronic_invoice_count": 20321,
+      "target_share": 0.7,
+      "actual_share": 0.7,
+      "absolute_difference": 0.0
+    },
+    "2024": {
+      "invoice_count": 19339,
+      "electronic_invoice_count": 15278,
+      "target_share": 0.79,
+      "actual_share": 0.7900098247065516,
+      "absolute_difference": 9.824706551531115e-06
+    }
+  },
+  "weekly_match": {
+    "full_weeks_checked": 86,
+    "max_relative_error_full_week": 1.6876020984510912e-08,
+    "median_relative_error_full_week": 4.764975960333558e-09
+  },
+  "sector_factor_distribution": {
+    "count": 696.0,
+    "mean": 15.749813792953958,
+    "std": 212.75504064736063,
+    "min": 0.227682636421467,
+    "1%": 0.33817694426726375,
+    "5%": 0.4431218413851369,
+    "50%": 1.0653621459714138,
+    "95%": 39.09058830425146,
+    "99%": 143.08307814913658,
+    "max": 5576.266891781241
+  },
+  "checks": {
+    "sama_source_passed": true,
+    "uci_raw_rows_match": true,
+    "clean_rows_match_legacy_verified_count": true,
+    "v13_rows_match_clean_rows": true,
+    "no_duplicate_line_ids": true,
+    "all_rows_have_sama_week": true,
+    "exact_payment_calibration_within_0_1pp": true,
+    "weekly_sama_target_match_full_weeks": true,
+    "training_period_has_at_least_500_days": true,
+    "observed_customers_only_for_customer_target": true,
+    "scenario_multiplier_not_sales_training_target": true,
+    "same_week_sama_not_used_as_prediction_feature": true
+  },
+  "all_tests_passed": true,
+  "artifacts": {
+    "full_microdata_sha256": "01121db1e39e9ef665c46de3bbc5472dc55c856ef4022cdd2de0bf6fdacccfd6",
+    "daily_sha256": "4d08d392944acdef2f8ef67ddc7d7882c06c421af8e00a5335c66be03e0ef266",
+    "weekly_calibration_sha256": "7318c91fb464b603c1ab26607206f24743fc0afd06284feaa61e80bd9060fdd9",
+    "sector_calibration_sha256": "ca742d1ce2c37b435cc6e307a3102e3bfab5371555306ba7992afef3df97a7a1"
+  },
+  "model_training": {
+    "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+    "training_target_sales": "base_net_sales_sar",
+    "scenario_sales_is_not_a_training_target": true,
+    "customer_target_uses_only_observed_source_customer_ids": true,
+    "source_calendar_fields_forbidden": true,
+    "feature_columns": [
+      "sales_lag_1",
+      "sales_lag_2",
+      "sales_lag_3",
+      "sales_lag_7",
+      "sales_lag_14",
+      "sales_lag_28",
+      "sales_mean_7",
+      "sales_std_7",
+      "sales_mean_14",
+      "sales_std_14",
+      "sales_mean_28",
+      "sales_std_28",
+      "customers_lag_1",
+      "customers_lag_2",
+      "customers_lag_3",
+      "customers_lag_7",
+      "customers_lag_14",
+      "customers_lag_28",
+      "customers_mean_7",
+      "customers_std_7",
+      "customers_mean_14",
+      "customers_std_14",
+      "customers_mean_28",
+      "customers_std_28",
+      "invoices_lag_1",
+      "invoices_lag_2",
+      "invoices_lag_3",
+      "invoices_lag_7",
+      "invoices_lag_14",
+      "invoices_lag_28",
+      "invoices_mean_7",
+      "invoices_std_7",
+      "invoices_mean_14",
+      "invoices_std_14",
+      "invoices_mean_28",
+      "invoices_std_28",
+      "returns_rate_lag_1",
+      "returns_rate_lag_2",
+      "returns_rate_lag_3",
+      "returns_rate_lag_7",
+      "returns_rate_lag_14",
+      "returns_rate_lag_28",
+      "returns_rate_mean_7",
+      "returns_rate_std_7",
+      "returns_rate_mean_14",
+      "returns_rate_std_14",
+      "returns_rate_mean_28",
+      "returns_rate_std_28",
+      "trend"
+    ],
+    "chronological_split": {
+      "validation_days": 60,
+      "test_days": 60,
+      "shuffle": false
+    },
+    "regression": {
+      "selected_ml_model": "ExtraTrees",
+      "validation": {
+        "SeasonalNaive7": {
+          "WAPE": 0.5717690193848368,
+          "MAE": 92953.76033333335
+        },
+        "Ridge": {
+          "WAPE": 0.5667816115064247,
+          "MAE": 92142.94634919465
+        },
+        "ExtraTrees": {
+          "WAPE": 0.3758835415644095,
+          "MAE": 61108.22281594445
+        },
+        "HistGradientBoosting": {
+          "WAPE": 0.3998014612852117,
+          "MAE": 64996.612186518156
+        }
+      },
+      "test": {
+        "MAE": 51990.033087944474,
+        "RMSE": 110806.23027224011,
+        "WAPE": 0.30168794873174587,
+        "R2": -0.022266723964430968
+      }
+    },
+    "classification": {
+      "selected_model": "LogisticRegression",
+      "selected_threshold": 0.3999999999999999,
+      "validation": {
+        "Dummy": {
+          "Accuracy": 0.8,
+          "BalancedAccuracy": 0.5,
+          "F1": 0.0
+        },
+        "LogisticRegression": {
+          "Accuracy": 0.8166666666666667,
+          "BalancedAccuracy": 0.6666666666666666,
+          "F1": 0.47619047619047616
+        },
+        "ExtraTrees": {
+          "Accuracy": 0.8166666666666667,
+          "BalancedAccuracy": 0.5416666666666666,
+          "F1": 0.15384615384615385
+        },
+        "HistGradientBoosting": {
+          "Accuracy": 0.7833333333333333,
+          "BalancedAccuracy": 0.5208333333333334,
+          "F1": 0.13333333333333333
+        }
+      },
+      "test": {
+        "Accuracy": 0.6666666666666666,
+        "BalancedAccuracy": 0.76,
+        "Precision": 0.32142857142857145,
+        "Recall": 0.9,
+        "F1": 0.47368421052631576,
+        "ROC_AUC": 0.862
+      }
+    },
+    "sales_target": "sama_calibrated_net_sales_sar",
+    "SAMA_same_week_indicator_used_as_model_feature": false,
+    "SAMA_role": "historical aggregate target calibration only; future SAMA values are unavailable at prediction time"
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+  "training_target_sales": "base_net_sales_sar",
+  "scenario_sales_is_not_a_training_target": true,
+  "customer_target_uses_only_observed_source_customer_ids": true,
+  "source_calendar_fields_forbidden": true,
+  "feature_columns": [
+    "sales_lag_1",
+    "sales_lag_2",
+    "sales_lag_3",
+    "sales_lag_7",
+    "sales_lag_14",
+    "sales_lag_28",
+    "sales_mean_7",
+    "sales_std_7",
+    "sales_mean_14",
+    "sales_std_14",
+    "sales_mean_28",
+    "sales_std_28",
+    "customers_lag_1",
+    "customers_lag_2",
+    "customers_lag_3",
+    "customers_lag_7",
+    "customers_lag_14",
+    "customers_lag_28",
+    "customers_mean_7",
+    "customers_std_7",
+    "customers_mean_14",
+    "customers_std_14",
+    "customers_mean_28",
+    "customers_std_28",
+    "invoices_lag_1",
+    "invoices_lag_2",
+    "invoices_lag_3",
+    "invoices_lag_7",
+    "invoices_lag_14",
+    "invoices_lag_28",
+    "invoices_mean_7",
+    "invoices_std_7",
+    "invoices_mean_14",
+    "invoices_std_14",
+    "invoices_mean_28",
+    "invoices_std_28",
+    "returns_rate_lag_1",
+    "returns_rate_lag_2",
+    "returns_rate_lag_3",
+    "returns_rate_lag_7",
+    "returns_rate_lag_14",
+    "returns_rate_lag_28",
+    "returns_rate_mean_7",
+    "returns_rate_std_7",
+    "returns_rate_mean_14",
+    "returns_rate_std_14",
+    "returns_rate_mean_28",
+    "returns_rate_std_28",
+    "trend"
+  ],
+  "chronological_split": {
+    "validation_days": 60,
+    "test_days": 60,
+    "shuffle": false
+  },
+  "regression": {
+    "selected_ml_model": "ExtraTrees",
+    "validation": {
+      "SeasonalNaive7": {
+        "WAPE": 0.5717690193848368,
+        "MAE": 92953.76033333335
+      },
+      "Ridge": {
+        "WAPE": 0.5667816115064247,
+        "MAE": 92142.94634919465
+      },
+      "ExtraTrees": {
+        "WAPE": 0.3758835415644095,
+        "MAE": 61108.22281594445
+      },
+      "HistGradientBoosting": {
+        "WAPE": 0.3998014612852117,
+        "MAE": 64996.612186518156
+      }
+    },
+    "test": {
+      "MAE": 51990.033087944474,
+      "RMSE": 110806.23027224011,
+      "WAPE": 0.30168794873174587,
+      "R2": -0.022266723964430968
+    }
+  },
+  "classification": {
+    "selected_model": "LogisticRegression",
+    "selected_threshold": 0.3999999999999999,
+    "validation": {
+      "Dummy": {
+        "Accuracy": 0.8,
+        "BalancedAccuracy": 0.5,
+        "F1": 0.0
+      },
+      "LogisticRegression": {
+        "Accuracy": 0.8166666666666667,
+        "BalancedAccuracy": 0.6666666666666666,
+        "F1": 0.47619047619047616
+      },
+      "ExtraTrees": {
+        "Accuracy": 0.8166666666666667,
+        "BalancedAccuracy": 0.5416666666666666,
+        "F1": 0.15384615384615385
+      },
+      "HistGradientBoosting": {
+        "Accuracy": 0.7833333333333333,
+        "BalancedAccuracy": 0.5208333333333334,
+        "F1": 0.13333333333333333
+      }
+    },
+    "test": {
+      "Accuracy": 0.6666666666666666,
+      "BalancedAccuracy": 0.76,
+      "Precision": 0.32142857142857145,
+      "Recall": 0.9,
+      "F1": 0.47368421052631576,
+      "ROC_AUC": 0.862
+    }
+  },
+  "sales_target": "sama_calibrated_net_sales_sar",
+  "SAMA_same_week_indicator_used_as_model_feature": false,
+  "SAMA_role": "historical aggregate target calibration only; future SAMA values are unavailable at prediction time"
+}
