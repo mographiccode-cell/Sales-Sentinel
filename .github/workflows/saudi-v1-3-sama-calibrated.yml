@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_saudi_sama_calibrated_v1_3.py'
+      - 'scripts/build_saudi_sama_calibrated_v1_3_safe.py'
       - '.github/workflows/saudi-v1-3-sama-calibrated.yml'
 
 permissions:
@@ -28,12 +29,12 @@ jobs:
           pip install -r requirements-training.txt
           pip install requests joblib
       - name: Rebuild, SAMA-calibrate, audit, and train
-        run: python scripts/build_saudi_sama_calibrated_v1_3.py
+        run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
       - name: Upload complete v1.3 evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sales-sentinel-saudi-v1-3-sama-calibrated
+          name: sales-sentinel-saudi-v1-3-sama-safe
           if-no-files-found: warn
           path: |
             data/saudi_v1_3/**
@@ -47,6 +48,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/saudi_v1_3 reports/saudi_v1_3 models/saudi_v1_3
           if ! git diff --cached --quiet; then
-            git commit -m 'data: persist Saudi v1.3 SAMA-calibrated audit and models [skip ci]'
+            git commit -m 'data: persist Saudi v1.3.1 SAMA-safe audit and models [skip ci]'
             git push origin main
           fi
