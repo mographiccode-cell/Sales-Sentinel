@@ -1,0 +1,65 @@
+name: Retrain Saudi Sector v1.5
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_sector_forecaster_v1_7.py'
+      - 'scripts/build_train_saudi_sector_panel_v1_5.py'
+      - '.github/workflows/retrain-saudi-sector-v1-5.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Build official SAMA sector walk-forward forecasts
+        run: python scripts/train_sama_sector_forecaster_v1_7.py
+      - name: Rebuild verified v1.3.1 merchant microdata
+        run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
+      - name: Build sector dataset and retrain
+        run: python scripts/build_train_saudi_sector_panel_v1_5.py
+      - name: Show evidence
+        run: |
+          cat reports/saudi_v1_5/retraining_summary_v1_5.md
+          cat reports/sama_sector_v1_7/sama_sector_forecaster_report_v1_7.json
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-saudi-sector-v1-5
+          path: |
+            data/saudi_v1_5/**
+            reports/saudi_v1_5/**
+            models/saudi_v1_5/**
+            reports/sama_sector_v1_7/**
+            data/sama_pos/sama_sector_walkforward_forecasts_2023_2025.csv
+            data/sama_pos/sama_sector_weekly_value_count_2020_2025.csv
+          retention-days: 30
+      - name: Persist compact evidence and model
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/saudi_v1_5 reports/sama_sector_v1_7 models/saudi_v1_5/model_metadata_v1_5.json data/sama_pos/sama_sector_walkforward_forecasts_2023_2025.csv data/sama_pos/sama_sector_weekly_value_count_2020_2025.csv
+          if [ -f models/saudi_v1_5/sales_decline_ensemble_v1_5.joblib ]; then
+            size=$(stat -c%s models/saudi_v1_5/sales_decline_ensemble_v1_5.joblib)
+            if [ "$size" -lt 90000000 ]; then git add models/saudi_v1_5/sales_decline_ensemble_v1_5.joblib; fi
+          fi
+          if [ -f data/saudi_v1_5/saudi_sector_daily_panel_v1_5.csv.gz ]; then git add data/saudi_v1_5/saudi_sector_daily_panel_v1_5.csv.gz; fi
+          git diff --cached --quiet || git commit -m 'ml: persist Saudi sector v1.5 evidence'
+          git stash push --include-untracked -m 'ci-generated-leftovers' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
