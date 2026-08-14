@@ -1,0 +1,100 @@
+{
+  "source_url": "https://www.kaggle.com/api/v1/datasets/download/shilton123456/sales-in-saudi-arabia",
+  "download_sha256": "6351a6acdd47478aa5d9e3ede2d90b29a580aa671d0b80e128ae67680c3a2e0a",
+  "files": [
+    "Interactive Dashboards Start.xlsx"
+  ],
+  "datasets": [
+    {
+      "file": "Interactive Dashboards Start.xlsx",
+      "rows": 49998,
+      "columns": [
+        "Invoice Date",
+        "Invoice ID",
+        "Customer Type",
+        "Customer Name",
+        "City",
+        "Customer Gender",
+        "Employee Name",
+        "Manager Name",
+        "Product Name",
+        "Product Category",
+        "Channel",
+        "Customer Satisfaction",
+        "Total Sales"
+      ],
+      "exact_duplicate_rows": 0,
+      "null_cells": 0,
+      "unique_rows_ratio": 1.0,
+      "date_column": "Invoice Date",
+      "date_parse_success": 1.0,
+      "date_min": "2020-01-01 00:00:00",
+      "date_max": "2023-12-31 00:00:00",
+      "unique_dates": 1461,
+      "unique_timestamps": 1461,
+      "date_span_days": 1460,
+      "rows_per_date_median": 34.0,
+      "invoice_column": "Invoice ID",
+      "unique_invoices": 49998,
+      "invoice_duplicate_row_ratio": 0.0,
+      "sales_column": "Total Sales",
+      "sales_numeric_rate": 1.0,
+      "sales_min": 22.0,
+      "sales_median": 958.0,
+      "sales_mean": 1973.11878475139,
+      "sales_max": 9700.0,
+      "sales_unique_values": 2641,
+      "sales_round_integer_rate": 1.0,
+      "city_column": "City",
+      "unique_citys": 12,
+      "city_top10": {
+        "Riyadh": 6901,
+        "Medina": 5480,
+        "Tabuk": 5429,
+        "Buraydah": 5241,
+        "Jeddah": 4548,
+        "Hafar Al Batin": 4239,
+        "Mecca": 3992,
+        "Wadi ad Dawasir": 3420,
+        "Arar": 3227,
+        "Najran": 3020
+      },
+      "product_column": "Product Name",
+      "unique_products": 100,
+      "product_top10": {
+        "Half-Zip Hooded": 629,
+        "Softside Luggage": 627,
+        "Half Zip Pullover": 622,
+        "Digger Megalodon": 621,
+        "Skinactive Micellar Wate": 616,
+        "Original Fit Jeans": 613,
+        "Quilted Jacket": 611,
+        "Heavyweight Jacket": 610,
+        "Air Compressor Tire": 610,
+        "Carry On Foldable": 608
+      },
+      "category_column": "Product Category",
+      "unique_categorys": 10,
+      "category_top10": {
+        "Beauty And Personal Care": 5594,
+        "Girls' Fashion": 5526,
+        "Boys' Fashion": 5262,
+        "Men'S Fashion": 5110,
+        "Women'S Fashion": 5062,
+        "Automotive": 5053,
+        "Toys And Games": 4805,
+        "Pet Supplies": 4793,
+        "Luggage": 4485,
+        "Electronics": 4308
+      },
+      "synthetic_risk_heuristics": [
+        "exactly_one_row_per_invoice",
+        "perfect_no_exact_duplicates_not_proof_but_review",
+        "perfect_no_nulls_not_proof_but_review"
+      ]
+    }
+  ],
+  "decision": "CANDIDATE_NEEDS_PROVENANCE_VERIFICATION",
+  "decision_reasons": [],
+  "best_file": "Interactive Dashboards Start.xlsx"
+}
