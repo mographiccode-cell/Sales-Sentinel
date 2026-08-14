@@ -18,8 +18,7 @@ BASE = "https://www.sama.gov.sa"
 LIST = "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx"
 CUTOFF = "2025-07-07"
 
-PDF_RE = re.compile(r'''(?:https?://[^\"'<> ]+|/[^\"'<> ]+)?Weekly[_%A-Za-z0-9\-(). ]+\.pdf''', re.I)
-DATE_RE = re.compile(r"(20\d{2})[-_/ ]?(\d{1,2})[-_/ ]?(\d{1,2})")
+PDF_RE = re.compile(r'''(?:https?://[^\"'<> ]+|/[^\"'<> ]+)?(?:Weekly|POS)[_%A-Za-z0-9\-(). ]+\.pdf''', re.I)
 
 
 def sha256(path: Path) -> str:
@@ -31,70 +30,81 @@ def sha256(path: Path) -> str:
 
 
 def normalize_candidate(raw: str) -> str:
-    raw = unquote(raw).replace("&amp;", "&")
+    raw = unquote(raw).replace("&amp;", "&").replace("\\u002f", "/")
     if raw.startswith("http"):
         return raw
     return urljoin(BASE, raw)
 
 
-def extract_pdf_urls(html: str) -> set[str]:
-    urls = set()
-    # href/src-like quoted values
+def extract_pdf_strings(html: str) -> set[str]:
+    values = set()
+    # quoted attributes or script strings containing .pdf
     for m in re.finditer(r'''[\"']([^\"']+\.pdf(?:\?[^\"']*)?)[\"']''', html, re.I):
-        urls.add(normalize_candidate(m.group(1)))
-    # SharePoint/JS escaped snippets containing the published filename
+        values.add(m.group(1))
     for m in PDF_RE.finditer(html):
-        urls.add(normalize_candidate(m.group(0)))
-    return {u for u in urls if "Weekly" in u and ".pdf" in u.lower()}
+        values.add(m.group(0))
+    return values
+
+
+def contexts(html: str, limit=20):
+    out=[]
+    for m in re.finditer(r'[^<>\"\']+\.pdf', html, re.I):
+        a=max(0,m.start()-500); b=min(len(html),m.end()+500)
+        text=html[a:b].replace('\n',' ').replace('\r',' ')
+        out.append(text)
+        if len(out)>=limit: break
+    return out
 
 
 def main():
     s = requests.Session()
     s.headers.update({"User-Agent": "Mozilla/5.0 Sales-Sentinel academic data verifier"})
-    discovered = set()
-    page_stats = []
+    raw_strings=set(); page_stats=[]; html_contexts=[]
 
-    # SAMA SharePoint view exposes 10 rows/page. Scan a broad window and dedupe URLs.
+    # Use the SharePoint pagination parameters known to be accepted by SAMA.
     for first in range(1, 421, 10):
-        params = {"PageFirstRow": first, "Paged": "TRUE"}
-        r = s.get(LIST, params=params, timeout=45)
+        params={"PageFirstRow": first, "Paged": "TRUE"}
+        r=s.get(LIST, params=params, timeout=45)
         r.raise_for_status()
-        urls = extract_pdf_urls(r.text)
-        discovered |= urls
-        page_stats.append({"first_row": first, "status": r.status_code, "pdf_urls_found": len(urls), "bytes": len(r.content)})
+        found=extract_pdf_strings(r.text)
+        raw_strings |= found
+        if found and len(html_contexts)<40:
+            html_contexts.extend(contexts(r.text, limit=10))
+        page_stats.append({"first_row":first,"status":r.status_code,"pdf_strings_found":len(found),"bytes":len(r.content),"final_url":r.url})
 
-    # If SAMA serves the view differently, preserve HTML diagnostics for reproducibility.
-    manifest = {
-        "source": LIST,
-        "cutoff": CUTOFF,
-        "pages_scanned": len(page_stats),
-        "discovered_pdf_urls": len(discovered),
-        "page_stats": page_stats,
-        "downloads": [],
+    candidates=sorted({normalize_candidate(x) for x in raw_strings})
+    manifest={
+        "source":LIST,"cutoff":CUTOFF,"pages_scanned":len(page_stats),
+        "raw_pdf_strings":sorted(raw_strings),"candidate_urls":candidates,
+        "page_stats":page_stats,"downloads":[]
     }
+    (REPORT/'html_contexts.json').write_text(json.dumps(html_contexts,indent=2),encoding='utf-8')
 
-    for url in sorted(discovered):
-        name = unquote(url.split("?")[0].split("/")[-1])
-        # filenames include report week; download all discovered recent-looking files and filter later by parsed report content.
-        if not any(y in name for y in ("2025", "2026")):
-            continue
+    for url in candidates:
+        name=unquote(url.split('?')[0].split('/')[-1])
+        if not any(y in name for y in ('2025','2026')): continue
         try:
-            r = s.get(url, timeout=60)
-            if r.status_code != 200 or not r.content.startswith(b"%PDF"):
-                manifest["downloads"].append({"url": url, "name": name, "status": r.status_code, "is_pdf": False, "bytes": len(r.content)})
-                continue
-            path = OUT / name
-            path.write_bytes(r.content)
-            manifest["downloads"].append({"url": url, "name": name, "status": 200, "is_pdf": True, "bytes": len(r.content), "sha256": sha256(path)})
+            r=s.get(url,timeout=60,allow_redirects=True)
+            row={"url":url,"name":name,"status":r.status_code,"content_type":r.headers.get('content-type'),"final_url":r.url,"bytes":len(r.content),"prefix":r.content[:20].hex()}
+            if r.status_code==200 and r.content.startswith(b'%PDF'):
+                path=OUT/name; path.write_bytes(r.content)
+                row.update({"is_pdf":True,"sha256":sha256(path)})
+            else: row['is_pdf']=False
+            manifest['downloads'].append(row)
         except Exception as exc:
-            manifest["downloads"].append({"url": url, "name": name, "error": repr(exc)})
+            manifest['downloads'].append({"url":url,"name":name,"error":repr(exc)})
 
-    manifest["downloaded_pdfs"] = sum(1 for x in manifest["downloads"] if x.get("is_pdf"))
-    (REPORT / "source_manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(json.dumps({"pages_scanned": manifest["pages_scanned"], "discovered": manifest["discovered_pdf_urls"], "downloaded_pdfs": manifest["downloaded_pdfs"]}, indent=2))
-    if manifest["downloaded_pdfs"] < 10:
-        raise RuntimeError(f"Too few recent SAMA PDFs downloaded: {manifest['downloaded_pdfs']}")
+    manifest['downloaded_pdfs']=sum(1 for x in manifest['downloads'] if x.get('is_pdf'))
+    (REPORT/'source_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+    print(json.dumps({
+        "pages_scanned":manifest['pages_scanned'],
+        "raw_pdf_strings":len(raw_strings),
+        "candidate_urls":candidates[:10],
+        "downloaded_pdfs":manifest['downloaded_pdfs'],
+        "download_attempts":manifest['downloads'][:10],
+        "html_context_samples":html_contexts[:3],
+    },indent=2))
 
 
-if __name__ == "__main__":
+if __name__=='__main__':
     main()
