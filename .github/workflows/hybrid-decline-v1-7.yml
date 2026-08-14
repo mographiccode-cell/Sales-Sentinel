@@ -1,0 +1,53 @@
+name: Hybrid decline regression v1.7
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/hybrid_decline_regression_v1_7.py'
+      - '.github/workflows/hybrid-decline-v1-7.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  train-evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Verify inputs
+        run: |
+          test -f data/saudi_v1_3/saudi_daily_sama_calibrated_v1_3.csv
+          test -f data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
+          test -f reports/sama_market_v1_6/sama_market_forecaster_report_v1_6.json
+      - name: Train and nested walk-forward evaluate
+        run: python scripts/hybrid_decline_regression_v1_7.py
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-decline-hybrid-v1-7
+          if-no-files-found: warn
+          path: |
+            models/saudi_v1_7/**
+            reports/saudi_v1_7/**
+      - name: Persist results
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/saudi_v1_7 reports/saudi_v1_7
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist continuous hybrid decline v1.7 [skip ci]'
+            git push origin main
+          fi
