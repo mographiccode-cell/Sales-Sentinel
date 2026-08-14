@@ -17,12 +17,14 @@ V22_MODEL=ROOT/'models'/'sama_city_v2_2'/'city_market_risk_v2_2.joblib'
 OUT=ROOT/'reports'/'sama_city_v2_3'; MOD=ROOT/'models'/'sama_city_v2_3'
 OUT.mkdir(parents=True,exist_ok=True); MOD.mkdir(parents=True,exist_ok=True)
 REPORT=OUT/'policy_development_report.json'; SUMMARY=OUT/'policy_development_summary.md'; POLICY=MOD/'conformal_policy_v2_3.joblib'
-VERSION='SAMA-CITY-RISK-2.3.2-ROLLING-CONFORMAL'
+VERSION='SAMA-CITY-RISK-2.3.3-ROLLING-CONFORMAL'
 MIN_GLOBAL_NEG=300; MIN_GLOBAL_POS=20; MIN_CITY_NEG=30; CAL_LOOKBACK_WEEKS=104
 POLICY_EVAL_START=pd.Timestamp('2025-01-01'); POLICY_EVAL_END=pd.Timestamp('2025-06-29')
 RED_GLOBAL_GRID=[.005,.0075,.01,.015,.02,.03,.05]
 RED_CITY_GRID=[.03,.05,.08,.10,.15,.20]
-GREEN_GRID=[.05,.08,.10,.12,.15,.20,.25]
+# Smaller decline-class alpha makes GREEN more conservative (more AMBER, fewer missed declines).
+# Grid choice is evaluated ONLY on historical 2025-H1 OOF; fresh 2025-2026 labels are forbidden here.
+GREEN_GRID=[.005,.01,.015,.02,.025,.03,.04,.05,.08,.10,.12,.15,.20,.25]
 
 
 def conformal_p_ge(values,x):
@@ -69,20 +71,24 @@ def main():
     for ag in RED_GLOBAL_GRID:
         for ac in RED_CITY_GRID:
             for green in GREEN_GRID:
-                q=apply_policy(pv,ag,ac,green); m=metrics(q)
-                gates={'red_precision':m['RED']['precision']>=contract['red_precision_min'],'red_fpr':m['RED']['FPR']<=contract['red_fpr_max'],'alert_recall':m['RED_plus_AMBER']['recall']>=contract['alert_recall_min'],'green_npv':m['GREEN']['NPV']>=contract['green_npv_min'],'has_nonzero_red_alerts':m['RED']['rows']>=3}
+                m=metrics(apply_policy(pv,ag,ac,green)); gates={
+                    'red_precision':m['RED']['precision']>=contract['red_precision_min'],
+                    'red_fpr':m['RED']['FPR']<=contract['red_fpr_max'],
+                    'alert_recall':m['RED_plus_AMBER']['recall']>=contract['alert_recall_min'],
+                    'green_npv':m['GREEN']['NPV']>=contract['green_npv_min'],
+                    'has_nonzero_red_alerts':m['RED']['rows']>=3}
                 candidates.append({'alpha_red_global':ag,'alpha_red_city':ac,'alpha_green_decline':green,'metrics':m,'gates':gates,'all_gates':all(gates.values())})
     valid=[c for c in candidates if c['all_gates']]
     if not valid:
         top=sorted(candidates,key=lambda c:(sum(c['gates'].values()),c['metrics']['RED']['precision'],c['metrics']['RED_plus_AMBER']['recall'],c['metrics']['GREEN']['NPV']),reverse=True)[:10]
         REPORT.write_text(json.dumps({'version':VERSION,'all_policy_gates_passed':False,'top_failed_candidates':top},indent=2),encoding='utf-8'); raise RuntimeError('No historical conformal alpha combination meets frozen production contract')
-    # Maximize useful critical recall first, then GREEN coverage, then RED precision. Contract is already satisfied.
+    # Contract first. Among valid policies: maximize critical RED recall, then GREEN coverage, then RED precision.
     best=max(valid,key=lambda c:(c['metrics']['RED']['recall_contribution'],c['metrics']['GREEN']['rows'],c['metrics']['RED']['precision'],-c['metrics']['AMBER']['rows']))
     ag=best['alpha_red_global']; ac=best['alpha_red_city']; green=best['alpha_green_decline']; m=best['metrics']; gates=best['gates']
     policy_artifact={'version':VERSION,'base_model_version':art['version'],'alpha_red_global':ag,'alpha_red_city':ac,'alpha_green_decline':green,'min_global_neg':MIN_GLOBAL_NEG,'min_global_pos':MIN_GLOBAL_POS,'min_city_neg':MIN_CITY_NEG,'calibration_lookback_weeks':CAL_LOOKBACK_WEEKS,'initial_oof_calibration_history':oo[oo.week_start<=POLICY_EVAL_END][['week_start','city','y','score']].copy(),'production_update_rule':'Classify current week first; append its realized label only after the next week closes, for later predictions.'}
     joblib.dump(policy_artifact,POLICY)
     report={'version':VERSION,'base_model':art['version'],'scientific_boundary':'Alpha grid selection uses historical 2025-H1 OOF only. No 2025-2026 fresh labels are used. City identity is bound directly inside each OOF prediction.','grid':{'red_global':RED_GLOBAL_GRID,'red_city':RED_CITY_GRID,'green':GREEN_GRID,'candidate_count':len(candidates),'valid_count':len(valid)},'selected_parameters':{'alpha_red_global':ag,'alpha_red_city':ac,'alpha_green_decline':green,'lookback_weeks':CAL_LOOKBACK_WEEKS},'historical_policy_evaluation':m,'contract':contract,'gates':gates,'all_policy_gates_passed':True,'oof_folds':fold_meta,'controls':{'rolling_only_past_realized_labels':True,'city_specific_negative_calibration':True,'abstention_state_AMBER':True,'fresh_2025_2026_used_to_select_policy_parameters':False}}
-    REPORT.write_text(json.dumps(report,indent=2),encoding='utf-8'); SUMMARY.write_text(f'''# SAMA City Risk v2.3.2 — Rolling Conformal Policy\n\n- Base: **{art['version']}**\n- Selected RED global alpha: **{ag:.2%}**\n- Selected RED city alpha: **{ac:.2%}**\n- Selected GREEN decline alpha: **{green:.2%}**\n- Historical rows: **{m['rows']:,}**\n- RED precision: **{m['RED']['precision']:.2%}** ({m['RED']['TP']} TP / {m['RED']['FP']} FP)\n- RED FPR: **{m['RED']['FPR']:.2%}**\n- RED+AMBER recall: **{m['RED_plus_AMBER']['recall']:.2%}**\n- GREEN NPV: **{m['GREEN']['NPV']:.2%}**\n- Missed declines: **{m['GREEN']['FN']} / {m['declines']}**\n- Valid policies in grid: **{len(valid)} / {len(candidates)}**\n- All historical policy gates passed: **True**\n- Fresh 2025-2026 labels used: **No**\n''',encoding='utf-8')
+    REPORT.write_text(json.dumps(report,indent=2),encoding='utf-8'); SUMMARY.write_text(f'''# SAMA City Risk v2.3.3 — Rolling Conformal Policy\n\n- Base: **{art['version']}**\n- Selected RED global alpha: **{ag:.2%}**\n- Selected RED city alpha: **{ac:.2%}**\n- Selected GREEN decline alpha: **{green:.2%}**\n- Historical rows: **{m['rows']:,}**\n- RED precision: **{m['RED']['precision']:.2%}** ({m['RED']['TP']} TP / {m['RED']['FP']} FP)\n- RED FPR: **{m['RED']['FPR']:.2%}**\n- RED+AMBER recall: **{m['RED_plus_AMBER']['recall']:.2%}**\n- GREEN NPV: **{m['GREEN']['NPV']:.2%}**\n- Missed declines: **{m['GREEN']['FN']} / {m['declines']}**\n- Valid policies in grid: **{len(valid)} / {len(candidates)}**\n- All historical policy gates passed: **True**\n- Fresh 2025-2026 labels used: **No**\n''',encoding='utf-8')
     print(json.dumps(report,indent=2))
 
 if __name__=='__main__': main()
