@@ -1,447 +1,187 @@
 {
-  "source": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
+  "source": "Saudi Central Bank (SAMA) weekly POS archive",
   "cutoff": "2025-07-07",
-  "pages_scanned": 42,
-  "raw_pdf_strings": [
-    "Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-    "Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-    "\\u002fen-US\\u002fStatistics\\u002fIndices\\u002fPOS_EN\\u002fWeekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf"
-  ],
-  "candidate_urls": [
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-    "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf"
+  "anchors": [
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=313&p_SAMAFilePublishDate=20260330+21%3A00%3A00&p_SortBehavior=0",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
+    "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
+    "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=280&p_modified=20250805+13%3A12%3A08&p_samafilepublishdate=20250804+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&pagefirstrow=2761&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+    "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=284&p_samafilepublishdate=20250901+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+    "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=288&p_samafilepublishdate=20250929+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+    "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=292&p_samafilepublishdate=20251027+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+    "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=296&p_samafilepublishdate=20251124+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D"
   ],
   "page_stats": [
     {
-      "first_row": 1,
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112585,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=1&Paged=TRUE"
+      "bytes": 112501,
+      "accepted": true
     },
     {
-      "first_row": 11,
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=317&p_SAMAFilePublishDate=20260427+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112733,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=11&Paged=TRUE"
+      "bytes": 113576,
+      "accepted": true
     },
     {
-      "first_row": 21,
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=313&p_SAMAFilePublishDate=20260330+21%3A00%3A00&p_SortBehavior=0",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=313&p_SAMAFilePublishDate=20260330+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112809,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=21&Paged=TRUE"
+      "bytes": 113507,
+      "accepted": true
     },
     {
-      "first_row": 31,
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE&PagedPrev=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=300&p_SAMAFilePublishDate=20251222+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112809,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=31&Paged=TRUE"
+      "bytes": 113605,
+      "accepted": true
     },
     {
-      "first_row": 41,
+      "url": "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
+      "final_url": "https://www.sama.gov.sa/en-us/statistics/indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE&View=%7BECDECFC9-707B-4F26-9830-F3EA40503071%7D&p_ID=302&p_SAMAFilePublishDate=20260105+21%3A00%3A00&p_SortBehavior=0",
       "status": 200,
       "pdf_strings_found": 20,
-      "bytes": 112810,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=41&Paged=TRUE"
+      "bytes": 113463,
+      "accepted": true
     },
     {
-      "first_row": 51,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112810,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=51&Paged=TRUE"
+      "url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=280&p_modified=20250805+13%3A12%3A08&p_samafilepublishdate=20250804+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&pagefirstrow=2761&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=280&p_modified=20250805+13%3A12%3A08&p_samafilepublishdate=20250804+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&pagefirstrow=2761&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "status": 404,
+      "pdf_strings_found": 0,
+      "bytes": 1649,
+      "accepted": false
     },
     {
-      "first_row": 61,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112809,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=61&Paged=TRUE"
+      "url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=284&p_samafilepublishdate=20250901+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=284&p_samafilepublishdate=20250901+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "status": 404,
+      "pdf_strings_found": 0,
+      "bytes": 1649,
+      "accepted": false
     },
     {
-      "first_row": 71,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112810,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=71&Paged=TRUE"
+      "url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=288&p_samafilepublishdate=20250929+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=288&p_samafilepublishdate=20250929+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "status": 404,
+      "pdf_strings_found": 0,
+      "bytes": 1649,
+      "accepted": false
     },
     {
-      "first_row": 81,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112810,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=81&Paged=TRUE"
+      "url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=292&p_samafilepublishdate=20251027+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=292&p_samafilepublishdate=20251027+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "status": 404,
+      "pdf_strings_found": 0,
+      "bytes": 1649,
+      "accepted": false
     },
     {
-      "first_row": 91,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112811,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=91&Paged=TRUE"
-    },
-    {
-      "first_row": 101,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112816,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=101&Paged=TRUE"
-    },
-    {
-      "first_row": 111,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=111&Paged=TRUE"
-    },
-    {
-      "first_row": 121,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=121&Paged=TRUE"
-    },
-    {
-      "first_row": 131,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=131&Paged=TRUE"
-    },
-    {
-      "first_row": 141,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112813,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=141&Paged=TRUE"
-    },
-    {
-      "first_row": 151,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=151&Paged=TRUE"
-    },
-    {
-      "first_row": 161,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112816,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=161&Paged=TRUE"
-    },
-    {
-      "first_row": 171,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=171&Paged=TRUE"
-    },
-    {
-      "first_row": 181,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=181&Paged=TRUE"
-    },
-    {
-      "first_row": 191,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=191&Paged=TRUE"
-    },
-    {
-      "first_row": 201,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112811,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=201&Paged=TRUE"
-    },
-    {
-      "first_row": 211,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=211&Paged=TRUE"
-    },
-    {
-      "first_row": 221,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112812,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=221&Paged=TRUE"
-    },
-    {
-      "first_row": 231,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112819,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=231&Paged=TRUE"
-    },
-    {
-      "first_row": 241,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112820,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=241&Paged=TRUE"
-    },
-    {
-      "first_row": 251,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112817,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=251&Paged=TRUE"
-    },
-    {
-      "first_row": 261,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=261&Paged=TRUE"
-    },
-    {
-      "first_row": 271,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=271&Paged=TRUE"
-    },
-    {
-      "first_row": 281,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112817,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=281&Paged=TRUE"
-    },
-    {
-      "first_row": 291,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112817,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=291&Paged=TRUE"
-    },
-    {
-      "first_row": 301,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=301&Paged=TRUE"
-    },
-    {
-      "first_row": 311,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112820,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=311&Paged=TRUE"
-    },
-    {
-      "first_row": 321,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112812,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=321&Paged=TRUE"
-    },
-    {
-      "first_row": 331,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=331&Paged=TRUE"
-    },
-    {
-      "first_row": 341,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=341&Paged=TRUE"
-    },
-    {
-      "first_row": 351,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112818,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=351&Paged=TRUE"
-    },
-    {
-      "first_row": 361,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112819,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=361&Paged=TRUE"
-    },
-    {
-      "first_row": 371,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112817,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=371&Paged=TRUE"
-    },
-    {
-      "first_row": 381,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112815,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=381&Paged=TRUE"
-    },
-    {
-      "first_row": 391,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112817,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=391&Paged=TRUE"
-    },
-    {
-      "first_row": 401,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112819,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=401&Paged=TRUE"
-    },
-    {
-      "first_row": 411,
-      "status": 200,
-      "pdf_strings_found": 20,
-      "bytes": 112819,
-      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/pages/pos.aspx?PageFirstRow=411&Paged=TRUE"
+      "url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=296&p_samafilepublishdate=20251124+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "final_url": "https://www.sama.gov.sa/en-us/indices/pages/pos.aspx?p_id=296&p_samafilepublishdate=20251124+21%3A00%3A00&p_sortbehavior=0&paged=true&pagedprev=true&view=%7Bcfcb1f9f-49c7-4bcc-8554-e968b1bb63aa%7D",
+      "status": 404,
+      "pdf_strings_found": 0,
+      "bytes": 1650,
+      "accepted": false
     }
+  ],
+  "candidate_urls": [
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_08_Nov_2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_18_Oct_2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
+    "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf"
   ],
   "downloads": [
     {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
-      "bytes": 697,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_08_Nov_2025.pdf",
+      "name": "POS_Report_08_Nov_2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_08_Nov_2025.pdf",
+      "bytes": 245483,
+      "is_pdf": true,
+      "sha256": "d4cd8a0a3838bf712c49ce661b0e10696a1f190e800850b179078cab839e6f4a"
     },
     {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
-      "bytes": 695,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_18_Oct_2025.pdf",
+      "name": "POS_Report_18_Oct_2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/POS_Report_18_Oct_2025.pdf",
+      "bytes": 245232,
+      "is_pdf": true,
+      "sha256": "cb53730ee3640630ab606afd63ac1b5630ee281673fc1a954ad6c5965a96603b"
     },
     {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
-      "bytes": 695,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+      "bytes": 177832,
+      "is_pdf": true,
+      "sha256": "bb9ab5aa06c444918b4ac5b08a78e35de511216e4a0317ce24bc632f0e68035c"
     },
     {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
-      "bytes": 696,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+      "bytes": 243632,
+      "is_pdf": true,
+      "sha256": "d2e5e4741e6f76e52538853d01011cf442cf4e626bb8fbe830037e893ecbbb21"
     },
     {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
-      "bytes": 695,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
-    },
-    {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
-      "bytes": 697,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
-    },
-    {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
-      "bytes": 697,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
-    },
-    {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
-      "bytes": 696,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
-    },
-    {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
-      "bytes": 694,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
-    },
-    {
-      "url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
-      "name": "Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
-      "status": 404,
-      "content_type": "text/html",
-      "final_url": "https://www.sama.gov.sa/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
-      "bytes": 696,
-      "prefix": "3c68746d6c3e0a3c686561643e0a3c6d65746120",
-      "is_pdf": false
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+      "bytes": 243742,
+      "is_pdf": true,
+      "sha256": "2dfc7d33b277c862d806dc3077f2db280658ecbb84cff2c96b6b49d00f84ab62"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
@@ -450,7 +190,6 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
       "bytes": 244652,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "f1980cdb22a225826dd98906067f2186e34362568b98bdc4240d9e9cd9112be0"
     },
@@ -461,9 +200,58 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
       "bytes": 244576,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "6d1b456b115c8040eb401d681c16abaf655fdf5c975867c4362b4f5eb245a215"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+      "bytes": 242787,
+      "is_pdf": true,
+      "sha256": "b6e639ed075fe96b62bd7e8d7ae1312bcf2dd8f787613f7408b52ee449c9cdc2"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+      "bytes": 243625,
+      "is_pdf": true,
+      "sha256": "a60bd3164f91db3b2824812b95850ec4db3ded0760ef3680dfd73b811009caf7"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+      "bytes": 245376,
+      "is_pdf": true,
+      "sha256": "fdd011af8109aa209dccf79ac6dc9367d04b5da61ba837d9e0988cefb7a38b40"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+      "bytes": 244603,
+      "is_pdf": true,
+      "sha256": "04e0fa9362c35cee4544c4579fa9d8f6f2bf2dd0e062d21a64cb0a74f63c1756"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+      "bytes": 243684,
+      "is_pdf": true,
+      "sha256": "67859d8c1e6b8e4c19d0021f2b99b946c0ece353b477a6b21f12bb20ac941964"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
@@ -472,9 +260,18 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
       "bytes": 242117,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353536",
       "is_pdf": true,
       "sha256": "f8a67018e85323a68feab711a2866e75ce60628209297e83069d9615552f7fbf"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+      "bytes": 245280,
+      "is_pdf": true,
+      "sha256": "4645a57a97076909261f6298427b19e97fc5c4cc676d4c3e303445035592085a"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
@@ -483,7 +280,6 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
       "bytes": 244505,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "9a9bac2e52133b0a33becb754f5202cca84135cc10cffbbc0f581a9e837fae55"
     },
@@ -494,9 +290,58 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
       "bytes": 244591,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "c557d567499e243700c5def4357107ccd1cc27f7a757ae559cc2aa6cfd338977"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+      "bytes": 297304,
+      "is_pdf": true,
+      "sha256": "8201f6f72e8ee286540c01722d63cffa85d04478f0ce37e45e889fc21d268e2b"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+      "bytes": 243781,
+      "is_pdf": true,
+      "sha256": "4272f076fb2bfb5d06b64f94c58960985527dee1d41488ccbf428810bc11dcc9"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+      "bytes": 243695,
+      "is_pdf": true,
+      "sha256": "dfb5a382e7d4682022809ad4496dc86878747e1a100095e90cb9b25acb9e2145"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+      "bytes": 242558,
+      "is_pdf": true,
+      "sha256": "a2abf29160846026348395a6b42fdb610d17142ac600ddd849382a4682127823"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+      "bytes": 243830,
+      "is_pdf": true,
+      "sha256": "18e58cf554357a34e08d25295abbc88e25b2333a5d241700ebd8eb05e5866a0e"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
@@ -505,9 +350,18 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
       "bytes": 295878,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "1103014b8c791ddcf757b8b8362d670faf7ee0c3bfb574395814acc0982a6206"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+      "bytes": 245139,
+      "is_pdf": true,
+      "sha256": "2684b1d1f8e072cd99fab381a3f775eda6dd37c03c06a276f07e19c102933627"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
@@ -516,9 +370,58 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
       "bytes": 181635,
-      "prefix": "255044462d312e360d25e2e3cfd30d0a32353435",
       "is_pdf": true,
       "sha256": "27b720fbaca550fe3845aebd78452091d69ef1fe29f80960af8d0be127844cf6"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+      "bytes": 243664,
+      "is_pdf": true,
+      "sha256": "9a8974f06f2bfa1ed80b5e61d44598243b17fa538406dc91acc6a28003ec8082"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+      "bytes": 247069,
+      "is_pdf": true,
+      "sha256": "101284fe5a3e6d08a4008af6a8792a9c3843521afbf1882b66adcf20dee95db6"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+      "bytes": 243611,
+      "is_pdf": true,
+      "sha256": "a92e06aa99a6318ea2c7687ce57a4c61898162f2e444f60951ba25ddb81d63a2"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+      "bytes": 244552,
+      "is_pdf": true,
+      "sha256": "6611b7d26efbc6a904af8d8402eca0faa2bfc432765b589a62a674329f840122"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+      "bytes": 243517,
+      "is_pdf": true,
+      "sha256": "5f22dacfd7cfd28cf15310413b64afe6ad4f0c5eaee93ba51922f8272571a059"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
@@ -527,7 +430,6 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
       "bytes": 244398,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "eb815f65acd7882bbf11ebf188ef1717f6df29f0575b4550a80849490a0e3396"
     },
@@ -538,9 +440,28 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
       "bytes": 244698,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "9e2233319752c87166b8df7ecb64cda392a6cf9cbbb03f06c0119ec322eaa04e"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+      "bytes": 245365,
+      "is_pdf": true,
+      "sha256": "fae0f151460819020763893f359f4715203aef54d121e67c1e211db7fe00015a"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+      "bytes": 243610,
+      "is_pdf": true,
+      "sha256": "19d97e8720c7360be8bec1784c998c8a861d0028cd76451359c4dc3b29fa1343"
     },
     {
       "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
@@ -549,10 +470,58 @@
       "content_type": "application/pdf",
       "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
       "bytes": 244695,
-      "prefix": "255044462d312e340d25e2e3cfd30d0a32353736",
       "is_pdf": true,
       "sha256": "0410fd8b2c7aa24de7c341894353a29403f1e0fa6bce759b9602165e8c9d8a63"
+    },
+    {
+      "url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf",
+      "name": "Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "final_url": "https://www.sama.gov.sa/en-US/Statistics/Indices/POS_EN/Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf",
+      "bytes": 243823,
+      "is_pdf": true,
+      "sha256": "82d8539cd902731f8de5bff483db17689f03bd4c7bb965291a37f2c3b116f740"
     }
   ],
-  "downloaded_pdfs": 10
+  "downloaded_pdfs": 35,
+  "downloaded_names": [
+    "POS_Report_08_Nov_2025.pdf",
+    "POS_Report_18_Oct_2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
+    "Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf"
+  ],
+  "successful_anchor_pages": 5,
+  "failed_anchor_pages": 5
 }

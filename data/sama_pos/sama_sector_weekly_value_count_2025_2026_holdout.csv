@@ -1,0 +1,705 @@
+week_start,week_end,sector,value_thousand_sar,transaction_count_thousand,source_pdf,source_activity_label
+2025-09-21,2025-09-27,Beverage and Food,1852616.0,49492.0,POS_Report_18_Oct_2025.pdf,Food & Beverages
+2025-09-28,2025-10-04,Beverage and Food,2677009.0,57145.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Food & Beverages
+2025-10-05,2025-10-11,Beverage and Food,2055055.0,54251.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Food & Beverages
+2025-10-12,2025-10-18,Beverage and Food,1915968.0,51960.0,POS_Report_08_Nov_2025.pdf,Food & Beverages
+2025-10-19,2025-10-25,Beverage and Food,1789377.0,49750.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Food & Beverages
+2025-10-26,2025-11-01,Beverage and Food,2664509.0,57361.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Food & Beverages
+2025-11-02,2025-11-08,Beverage and Food,2080656.0,53474.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Food & Beverages
+2025-11-09,2025-11-15,Beverage and Food,1970037.0,53120.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Food & Beverages
+2025-11-16,2025-11-22,Beverage and Food,1799911.0,50306.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Food & Beverages
+2025-11-23,2025-11-29,Beverage and Food,2310335.0,53464.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Food & Beverages
+2025-11-30,2025-12-06,Beverage and Food,2349010.0,53951.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Food & Beverages
+2025-12-07,2025-12-13,Beverage and Food,2012985.0,53895.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Food & Beverages
+2025-12-14,2025-12-20,Beverage and Food,1894401.0,50034.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Food & Beverages
+2025-12-21,2025-12-27,Beverage and Food,1916532.0,50507.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Food & Beverages
+2025-12-28,2026-01-03,Beverage and Food,2709201.0,57147.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Food & Beverages
+2026-01-04,2026-01-10,Beverage and Food,2068918.0,53036.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Food & Beverages
+2026-01-11,2026-01-17,Beverage and Food,2043112.0,52211.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Food & Beverages
+2026-01-18,2026-01-24,Beverage and Food,1881577.0,48804.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Food & Beverages
+2026-01-25,2026-01-31,Beverage and Food,2608259.0,55670.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Food & Beverages
+2026-02-01,2026-02-07,Beverage and Food,2686235.0,57930.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Food & Beverages
+2026-02-08,2026-02-14,Beverage and Food,2570672.0,57508.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Food & Beverages
+2026-02-15,2026-02-21,Beverage and Food,2624678.0,55158.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Food & Beverages
+2026-02-22,2026-02-28,Beverage and Food,2325743.0,51317.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Food & Beverages
+2026-03-01,2026-03-07,Beverage and Food,2499822.0,52952.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Food & Beverages
+2026-03-08,2026-03-14,Beverage and Food,2257461.0,51441.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Food & Beverages
+2026-03-15,2026-03-21,Beverage and Food,2114391.0,49008.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Food & Beverages
+2026-04-05,2026-04-11,Beverage and Food,2168393.0,56383.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Food & Beverages
+2026-04-12,2026-04-18,Beverage and Food,1997249.0,54593.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Food & Beverages
+2026-04-19,2026-04-25,Beverage and Food,1901255.0,52737.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Food & Beverages
+2026-04-26,2026-05-02,Beverage and Food,2831875.0,61925.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Food & Beverages
+2026-05-03,2026-05-09,Beverage and Food,2256672.0,58689.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Food & Beverages
+2026-05-10,2026-05-16,Beverage and Food,2135010.0,58446.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Food & Beverages
+2026-05-17,2026-05-23,Beverage and Food,2135329.0,56139.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Food & Beverages
+2026-05-24,2026-05-30,Beverage and Food,2457152.0,58384.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Food & Beverages
+2026-05-31,2026-06-06,Beverage and Food,2296471.0,56533.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Food & Beverages
+2026-06-07,2026-06-13,Beverage and Food,2102715.0,56659.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Food & Beverages
+2026-06-14,2026-06-20,Beverage and Food,1935392.0,54337.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Food & Beverages
+2026-06-21,2026-06-27,Beverage and Food,1974701.0,53427.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Food & Beverages
+2026-06-28,2026-07-04,Beverage and Food,2760525.0,61196.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Food & Beverages
+2026-07-05,2026-07-11,Beverage and Food,2213702.0,57806.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Food & Beverages
+2026-07-12,2026-07-18,Beverage and Food,2031424.0,55453.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Food & Beverages
+2026-07-19,2026-07-25,Beverage and Food,1911501.0,53125.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Food & Beverages
+2026-07-26,2026-08-01,Beverage and Food,2691606.0,60711.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Food & Beverages
+2026-08-02,2026-08-08,Beverage and Food,2280490.0,58407.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Food & Beverages
+2025-09-21,2025-09-27,Clothing and Footwear,951084.0,8631.0,POS_Report_18_Oct_2025.pdf,"Apparel, Clothing & Accessories"
+2025-09-28,2025-10-04,Clothing and Footwear,1145733.0,9975.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,"Apparel, Clothing & Accessories"
+2025-10-05,2025-10-11,Clothing and Footwear,967754.0,8839.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,"Apparel, Clothing & Accessories"
+2025-10-12,2025-10-18,Clothing and Footwear,880529.0,7873.0,POS_Report_08_Nov_2025.pdf,"Apparel, Clothing & Accessories"
+2025-10-19,2025-10-25,Clothing and Footwear,852422.0,7412.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,"Apparel, Clothing & Accessories"
+2025-10-26,2025-11-01,Clothing and Footwear,1366858.0,11132.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,"Apparel, Clothing & Accessories"
+2025-11-02,2025-11-08,Clothing and Footwear,1228105.0,10057.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,"Apparel, Clothing & Accessories"
+2025-11-09,2025-11-15,Clothing and Footwear,1178278.0,9751.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,"Apparel, Clothing & Accessories"
+2025-11-16,2025-11-22,Clothing and Footwear,1130930.0,9274.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,"Apparel, Clothing & Accessories"
+2025-11-23,2025-11-29,Clothing and Footwear,1522030.0,11798.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,"Apparel, Clothing & Accessories"
+2025-11-30,2025-12-06,Clothing and Footwear,1274223.0,10526.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,"Apparel, Clothing & Accessories"
+2025-12-07,2025-12-13,Clothing and Footwear,1163920.0,9926.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,"Apparel, Clothing & Accessories"
+2025-12-14,2025-12-20,Clothing and Footwear,1218671.0,9830.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,"Apparel, Clothing & Accessories"
+2025-12-21,2025-12-27,Clothing and Footwear,1234265.0,9714.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,"Apparel, Clothing & Accessories"
+2025-12-28,2026-01-03,Clothing and Footwear,1605031.0,12577.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,"Apparel, Clothing & Accessories"
+2026-01-04,2026-01-10,Clothing and Footwear,1295219.0,10999.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,"Apparel, Clothing & Accessories"
+2026-01-11,2026-01-17,Clothing and Footwear,1228132.0,10834.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,"Apparel, Clothing & Accessories"
+2026-01-18,2026-01-24,Clothing and Footwear,985938.0,8383.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,"Apparel, Clothing & Accessories"
+2026-01-25,2026-01-31,Clothing and Footwear,1335242.0,10607.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,"Apparel, Clothing & Accessories"
+2026-02-01,2026-02-07,Clothing and Footwear,1376971.0,11087.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,"Apparel, Clothing & Accessories"
+2026-02-08,2026-02-14,Clothing and Footwear,1383755.0,11076.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,"Apparel, Clothing & Accessories"
+2026-02-15,2026-02-21,Clothing and Footwear,1317039.0,10485.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,"Apparel, Clothing & Accessories"
+2026-02-22,2026-02-28,Clothing and Footwear,1899191.0,12910.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,"Apparel, Clothing & Accessories"
+2026-03-01,2026-03-07,Clothing and Footwear,2501967.0,17118.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,"Apparel, Clothing & Accessories"
+2026-03-08,2026-03-14,Clothing and Footwear,2833146.0,19821.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,"Apparel, Clothing & Accessories"
+2026-03-15,2026-03-21,Clothing and Footwear,2334244.0,18235.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,"Apparel, Clothing & Accessories"
+2026-04-05,2026-04-11,Clothing and Footwear,995841.0,8676.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,"Apparel, Clothing & Accessories"
+2026-04-12,2026-04-18,Clothing and Footwear,907300.0,7953.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,"Apparel, Clothing & Accessories"
+2026-04-19,2026-04-25,Clothing and Footwear,902565.0,7764.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,"Apparel, Clothing & Accessories"
+2026-04-26,2026-05-02,Clothing and Footwear,1381452.0,11201.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,"Apparel, Clothing & Accessories"
+2026-05-03,2026-05-09,Clothing and Footwear,1201529.0,9990.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,"Apparel, Clothing & Accessories"
+2026-05-10,2026-05-16,Clothing and Footwear,1224327.0,10263.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,"Apparel, Clothing & Accessories"
+2026-05-17,2026-05-23,Clothing and Footwear,1540353.0,11870.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,"Apparel, Clothing & Accessories"
+2026-05-24,2026-05-30,Clothing and Footwear,1751538.0,14604.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,"Apparel, Clothing & Accessories"
+2026-05-31,2026-06-06,Clothing and Footwear,1068423.0,8821.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,"Apparel, Clothing & Accessories"
+2026-06-07,2026-06-13,Clothing and Footwear,966687.0,8312.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,"Apparel, Clothing & Accessories"
+2026-06-14,2026-06-20,Clothing and Footwear,922003.0,7857.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,"Apparel, Clothing & Accessories"
+2026-06-21,2026-06-27,Clothing and Footwear,1021550.0,8309.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,"Apparel, Clothing & Accessories"
+2026-06-28,2026-07-04,Clothing and Footwear,1487080.0,12182.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,"Apparel, Clothing & Accessories"
+2026-07-05,2026-07-11,Clothing and Footwear,1203219.0,10446.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,"Apparel, Clothing & Accessories"
+2026-07-12,2026-07-18,Clothing and Footwear,1040840.0,9159.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,"Apparel, Clothing & Accessories"
+2026-07-19,2026-07-25,Clothing and Footwear,964306.0,8463.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,"Apparel, Clothing & Accessories"
+2026-07-26,2026-08-01,Clothing and Footwear,1408597.0,11838.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,"Apparel, Clothing & Accessories"
+2026-08-02,2026-08-08,Clothing and Footwear,1259303.0,10805.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,"Apparel, Clothing & Accessories"
+2025-09-21,2025-09-27,Construction & Building Materials,413237.0,2077.0,POS_Report_18_Oct_2025.pdf,Construction & Building Materials
+2025-09-28,2025-10-04,Construction & Building Materials,474823.0,2536.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Construction & Building Materials
+2025-10-05,2025-10-11,Construction & Building Materials,418944.0,2422.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Construction & Building Materials
+2025-10-12,2025-10-18,Construction & Building Materials,395625.0,2291.0,POS_Report_08_Nov_2025.pdf,Construction & Building Materials
+2025-10-19,2025-10-25,Construction & Building Materials,384622.0,2159.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Construction & Building Materials
+2025-10-26,2025-11-01,Construction & Building Materials,440526.0,2584.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Construction & Building Materials
+2025-11-02,2025-11-08,Construction & Building Materials,416099.0,2444.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Construction & Building Materials
+2025-11-09,2025-11-15,Construction & Building Materials,405700.0,2429.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Construction & Building Materials
+2025-11-16,2025-11-22,Construction & Building Materials,392160.0,2327.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Construction & Building Materials
+2025-11-23,2025-11-29,Construction & Building Materials,417501.0,2526.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Construction & Building Materials
+2025-11-30,2025-12-06,Construction & Building Materials,430657.0,2601.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Construction & Building Materials
+2025-12-07,2025-12-13,Construction & Building Materials,407323.0,2567.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Construction & Building Materials
+2025-12-14,2025-12-20,Construction & Building Materials,395718.0,2436.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Construction & Building Materials
+2025-12-21,2025-12-27,Construction & Building Materials,422658.0,2440.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Construction & Building Materials
+2025-12-28,2026-01-03,Construction & Building Materials,484173.0,2837.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Construction & Building Materials
+2026-01-04,2026-01-10,Construction & Building Materials,420430.0,2644.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Construction & Building Materials
+2026-01-11,2026-01-17,Construction & Building Materials,409935.0,2623.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Construction & Building Materials
+2026-01-18,2026-01-24,Construction & Building Materials,393221.0,2400.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Construction & Building Materials
+2026-01-25,2026-01-31,Construction & Building Materials,447112.0,2782.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Construction & Building Materials
+2026-02-01,2026-02-07,Construction & Building Materials,460511.0,2950.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Construction & Building Materials
+2026-02-08,2026-02-14,Construction & Building Materials,465400.0,3000.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Construction & Building Materials
+2026-02-15,2026-02-21,Construction & Building Materials,411695.0,2824.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Construction & Building Materials
+2026-02-22,2026-02-28,Construction & Building Materials,378351.0,2571.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Construction & Building Materials
+2026-03-01,2026-03-07,Construction & Building Materials,388545.0,2739.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Construction & Building Materials
+2026-03-08,2026-03-14,Construction & Building Materials,371135.0,2758.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Construction & Building Materials
+2026-03-15,2026-03-21,Construction & Building Materials,246698.0,2389.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Construction & Building Materials
+2026-04-05,2026-04-11,Construction & Building Materials,404333.0,2712.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Construction & Building Materials
+2026-04-12,2026-04-18,Construction & Building Materials,384093.0,2600.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Construction & Building Materials
+2026-04-19,2026-04-25,Construction & Building Materials,380514.0,2531.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Construction & Building Materials
+2026-04-26,2026-05-02,Construction & Building Materials,436185.0,3076.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Construction & Building Materials
+2026-05-03,2026-05-09,Construction & Building Materials,417965.0,2941.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Construction & Building Materials
+2026-05-10,2026-05-16,Construction & Building Materials,410149.0,2900.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Construction & Building Materials
+2026-05-17,2026-05-23,Construction & Building Materials,406863.0,2814.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Construction & Building Materials
+2026-05-24,2026-05-30,Construction & Building Materials,229117.0,2561.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Construction & Building Materials
+2026-05-31,2026-06-06,Construction & Building Materials,392571.0,2774.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Construction & Building Materials
+2026-06-07,2026-06-13,Construction & Building Materials,399497.0,2797.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Construction & Building Materials
+2026-06-14,2026-06-20,Construction & Building Materials,382178.0,2659.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Construction & Building Materials
+2026-06-21,2026-06-27,Construction & Building Materials,374318.0,2611.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Construction & Building Materials
+2026-06-28,2026-07-04,Construction & Building Materials,441729.0,3162.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Construction & Building Materials
+2026-07-05,2026-07-11,Construction & Building Materials,411007.0,2999.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Construction & Building Materials
+2026-07-12,2026-07-18,Construction & Building Materials,398078.0,2858.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Construction & Building Materials
+2026-07-19,2026-07-25,Construction & Building Materials,383469.0,2717.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Construction & Building Materials
+2026-07-26,2026-08-01,Construction & Building Materials,431544.0,3200.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Construction & Building Materials
+2026-08-02,2026-08-08,Construction & Building Materials,408823.0,3107.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Construction & Building Materials
+2025-09-21,2025-09-27,Education,113431.0,176.0,POS_Report_18_Oct_2025.pdf,Education
+2025-09-28,2025-10-04,Education,238233.0,266.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Education
+2025-10-05,2025-10-11,Education,152765.0,232.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Education
+2025-10-12,2025-10-18,Education,105127.0,200.0,POS_Report_08_Nov_2025.pdf,Education
+2025-10-19,2025-10-25,Education,103863.0,196.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Education
+2025-10-26,2025-11-01,Education,189444.0,220.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Education
+2025-11-02,2025-11-08,Education,179799.0,222.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Education
+2025-11-09,2025-11-15,Education,126756.0,206.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Education
+2025-11-16,2025-11-22,Education,104482.0,181.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Education
+2025-11-23,2025-11-29,Education,62260.0,145.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Education
+2025-11-30,2025-12-06,Education,218726.0,233.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Education
+2025-12-07,2025-12-13,Education,124911.0,187.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Education
+2025-12-14,2025-12-20,Education,92422.0,141.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Education
+2025-12-21,2025-12-27,Education,141499.0,157.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Education
+2025-12-28,2026-01-03,Education,235508.0,178.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Education
+2026-01-04,2026-01-10,Education,245662.0,164.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Education
+2026-01-11,2026-01-17,Education,162975.0,150.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Education
+2026-01-18,2026-01-24,Education,392975.0,222.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Education
+2026-01-25,2026-01-31,Education,316403.0,250.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Education
+2026-02-01,2026-02-07,Education,238326.0,247.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Education
+2026-02-08,2026-02-14,Education,155822.0,214.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Education
+2026-02-15,2026-02-21,Education,115361.0,150.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Education
+2026-02-22,2026-02-28,Education,93762.0,107.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Education
+2026-03-01,2026-03-07,Education,130705.0,117.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Education
+2026-03-08,2026-03-14,Education,44348.0,76.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Education
+2026-03-15,2026-03-21,Education,11930.0,44.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Education
+2026-04-05,2026-04-11,Education,220093.0,213.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Education
+2026-04-12,2026-04-18,Education,160186.0,181.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Education
+2026-04-19,2026-04-25,Education,157259.0,186.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Education
+2026-04-26,2026-05-02,Education,237773.0,227.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Education
+2026-05-03,2026-05-09,Education,210264.0,215.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Education
+2026-05-10,2026-05-16,Education,164070.0,191.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Education
+2026-05-17,2026-05-23,Education,142932.0,142.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Education
+2026-05-24,2026-05-30,Education,16365.0,46.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Education
+2026-05-31,2026-06-06,Education,147301.0,122.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Education
+2026-06-07,2026-06-13,Education,210914.0,163.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Education
+2026-06-14,2026-06-20,Education,220807.0,146.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Education
+2026-06-21,2026-06-27,Education,203922.0,134.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Education
+2026-06-28,2026-07-04,Education,211117.0,161.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Education
+2026-07-05,2026-07-11,Education,122272.0,142.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Education
+2026-07-12,2026-07-18,Education,98575.0,129.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Education
+2026-07-19,2026-07-25,Education,104668.0,121.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Education
+2026-07-26,2026-08-01,Education,177832.0,139.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Education
+2026-08-02,2026-08-08,Education,274114.0,141.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Education
+2025-09-21,2025-09-27,Electronic & Electric Devices,204897.0,1687.0,POS_Report_18_Oct_2025.pdf,Electronic & Electric Devices
+2025-09-28,2025-10-04,Electronic & Electric Devices,229247.0,1988.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Electronic & Electric Devices
+2025-10-05,2025-10-11,Electronic & Electric Devices,192800.0,1844.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Electronic & Electric Devices
+2025-10-12,2025-10-18,Electronic & Electric Devices,182354.0,1727.0,POS_Report_08_Nov_2025.pdf,Electronic & Electric Devices
+2025-10-19,2025-10-25,Electronic & Electric Devices,171312.0,1646.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Electronic & Electric Devices
+2025-10-26,2025-11-01,Electronic & Electric Devices,220197.0,2034.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Electronic & Electric Devices
+2025-11-02,2025-11-08,Electronic & Electric Devices,194082.0,1841.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Electronic & Electric Devices
+2025-11-09,2025-11-15,Electronic & Electric Devices,183953.0,1768.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Electronic & Electric Devices
+2025-11-16,2025-11-22,Electronic & Electric Devices,176649.0,1654.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Electronic & Electric Devices
+2025-11-23,2025-11-29,Electronic & Electric Devices,198065.0,1866.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Electronic & Electric Devices
+2025-11-30,2025-12-06,Electronic & Electric Devices,203522.0,1885.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Electronic & Electric Devices
+2025-12-07,2025-12-13,Electronic & Electric Devices,184309.0,1830.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Electronic & Electric Devices
+2025-12-14,2025-12-20,Electronic & Electric Devices,181993.0,1707.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Electronic & Electric Devices
+2025-12-21,2025-12-27,Electronic & Electric Devices,193941.0,1752.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Electronic & Electric Devices
+2025-12-28,2026-01-03,Electronic & Electric Devices,232100.0,2092.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Electronic & Electric Devices
+2026-01-04,2026-01-10,Electronic & Electric Devices,198855.0,1854.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Electronic & Electric Devices
+2026-01-11,2026-01-17,Electronic & Electric Devices,187025.0,1844.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Electronic & Electric Devices
+2026-01-18,2026-01-24,Electronic & Electric Devices,176552.0,1687.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Electronic & Electric Devices
+2026-01-25,2026-01-31,Electronic & Electric Devices,215565.0,2024.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Electronic & Electric Devices
+2026-02-01,2026-02-07,Electronic & Electric Devices,219492.0,2079.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Electronic & Electric Devices
+2026-02-08,2026-02-14,Electronic & Electric Devices,225903.0,2143.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Electronic & Electric Devices
+2026-02-15,2026-02-21,Electronic & Electric Devices,213148.0,2031.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Electronic & Electric Devices
+2026-02-22,2026-02-28,Electronic & Electric Devices,201040.0,1988.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Electronic & Electric Devices
+2026-03-01,2026-03-07,Electronic & Electric Devices,206593.0,2094.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Electronic & Electric Devices
+2026-03-08,2026-03-14,Electronic & Electric Devices,195388.0,2038.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Electronic & Electric Devices
+2026-03-15,2026-03-21,Electronic & Electric Devices,151877.0,1898.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Electronic & Electric Devices
+2026-04-05,2026-04-11,Electronic & Electric Devices,200641.0,2071.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Electronic & Electric Devices
+2026-04-12,2026-04-18,Electronic & Electric Devices,185040.0,1958.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Electronic & Electric Devices
+2026-04-19,2026-04-25,Electronic & Electric Devices,182928.0,1897.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Electronic & Electric Devices
+2026-04-26,2026-05-02,Electronic & Electric Devices,239915.0,2398.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Electronic & Electric Devices
+2026-05-03,2026-05-09,Electronic & Electric Devices,216288.0,2183.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Electronic & Electric Devices
+2026-05-10,2026-05-16,Electronic & Electric Devices,202045.0,2131.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Electronic & Electric Devices
+2026-05-17,2026-05-23,Electronic & Electric Devices,201484.0,2012.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Electronic & Electric Devices
+2026-05-24,2026-05-30,Electronic & Electric Devices,151451.0,2063.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Electronic & Electric Devices
+2026-05-31,2026-06-06,Electronic & Electric Devices,205302.0,2060.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Electronic & Electric Devices
+2026-06-07,2026-06-13,Electronic & Electric Devices,201900.0,2022.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Electronic & Electric Devices
+2026-06-14,2026-06-20,Electronic & Electric Devices,192186.0,1905.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Electronic & Electric Devices
+2026-06-21,2026-06-27,Electronic & Electric Devices,188327.0,1889.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Electronic & Electric Devices
+2026-06-28,2026-07-04,Electronic & Electric Devices,237085.0,2316.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Electronic & Electric Devices
+2026-07-05,2026-07-11,Electronic & Electric Devices,207556.0,2133.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Electronic & Electric Devices
+2026-07-12,2026-07-18,Electronic & Electric Devices,191213.0,2000.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Electronic & Electric Devices
+2026-07-19,2026-07-25,Electronic & Electric Devices,183188.0,1895.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Electronic & Electric Devices
+2026-07-26,2026-08-01,Electronic & Electric Devices,221602.0,2308.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Electronic & Electric Devices
+2026-08-02,2026-08-08,Electronic & Electric Devices,204339.0,2143.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Electronic & Electric Devices
+2025-09-21,2025-09-27,Furniture,682047.0,2548.0,POS_Report_18_Oct_2025.pdf,Furniture & Home Supplies
+2025-09-28,2025-10-04,Furniture,654712.0,2847.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Furniture & Home Supplies
+2025-10-05,2025-10-11,Furniture,458330.0,2510.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Furniture & Home Supplies
+2025-10-12,2025-10-18,Furniture,405336.0,2238.0,POS_Report_08_Nov_2025.pdf,Furniture & Home Supplies
+2025-10-19,2025-10-25,Furniture,431487.0,2137.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Furniture & Home Supplies
+2025-10-26,2025-11-01,Furniture,605721.0,2947.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Furniture & Home Supplies
+2025-11-02,2025-11-08,Furniture,549357.0,2677.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Furniture & Home Supplies
+2025-11-09,2025-11-15,Furniture,478252.0,2588.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Furniture & Home Supplies
+2025-11-16,2025-11-22,Furniture,439569.0,2396.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Furniture & Home Supplies
+2025-11-23,2025-11-29,Furniture,537039.0,2807.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Furniture & Home Supplies
+2025-11-30,2025-12-06,Furniture,518645.0,2779.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Furniture & Home Supplies
+2025-12-07,2025-12-13,Furniture,465024.0,2710.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Furniture & Home Supplies
+2025-12-14,2025-12-20,Furniture,474604.0,2602.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Furniture & Home Supplies
+2025-12-21,2025-12-27,Furniture,515884.0,2607.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Furniture & Home Supplies
+2025-12-28,2026-01-03,Furniture,677505.0,3322.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Furniture & Home Supplies
+2026-01-04,2026-01-10,Furniture,521075.0,2896.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Furniture & Home Supplies
+2026-01-11,2026-01-17,Furniture,489178.0,2896.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Furniture & Home Supplies
+2026-01-18,2026-01-24,Furniture,462856.0,2471.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Furniture & Home Supplies
+2026-01-25,2026-01-31,Furniture,603738.0,3130.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Furniture & Home Supplies
+2026-02-01,2026-02-07,Furniture,658284.0,3459.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Furniture & Home Supplies
+2026-02-08,2026-02-14,Furniture,697347.0,3595.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Furniture & Home Supplies
+2026-02-15,2026-02-21,Furniture,667428.0,3464.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Furniture & Home Supplies
+2026-02-22,2026-02-28,Furniture,617530.0,3072.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Furniture & Home Supplies
+2026-03-01,2026-03-07,Furniture,606547.0,3552.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Furniture & Home Supplies
+2026-03-08,2026-03-14,Furniture,604801.0,3838.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Furniture & Home Supplies
+2026-03-15,2026-03-21,Furniture,457545.0,3447.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Furniture & Home Supplies
+2026-04-05,2026-04-11,Furniture,443498.0,2613.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Furniture & Home Supplies
+2026-04-12,2026-04-18,Furniture,413695.0,2406.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Furniture & Home Supplies
+2026-04-19,2026-04-25,Furniture,398712.0,2208.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Furniture & Home Supplies
+2026-04-26,2026-05-02,Furniture,610892.0,3073.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Furniture & Home Supplies
+2026-05-03,2026-05-09,Furniture,587088.0,2830.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Furniture & Home Supplies
+2026-05-10,2026-05-16,Furniture,528188.0,2788.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Furniture & Home Supplies
+2026-05-17,2026-05-23,Furniture,485807.0,2849.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Furniture & Home Supplies
+2026-05-24,2026-05-30,Furniture,406775.0,3091.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Furniture & Home Supplies
+2026-05-31,2026-06-06,Furniture,453715.0,2582.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Furniture & Home Supplies
+2026-06-07,2026-06-13,Furniture,439134.0,2551.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Furniture & Home Supplies
+2026-06-14,2026-06-20,Furniture,406847.0,2382.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Furniture & Home Supplies
+2026-06-21,2026-06-27,Furniture,407293.0,2400.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Furniture & Home Supplies
+2026-06-28,2026-07-04,Furniture,549199.0,3213.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Furniture & Home Supplies
+2026-07-05,2026-07-11,Furniture,485205.0,2908.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Furniture & Home Supplies
+2026-07-12,2026-07-18,Furniture,443888.0,2663.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Furniture & Home Supplies
+2026-07-19,2026-07-25,Furniture,413410.0,2470.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Furniture & Home Supplies
+2026-07-26,2026-08-01,Furniture,516103.0,3128.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Furniture & Home Supplies
+2026-08-02,2026-08-08,Furniture,469233.0,2937.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Furniture & Home Supplies
+2025-09-21,2025-09-27,Gas Stations,948556.0,17658.0,POS_Report_18_Oct_2025.pdf,Gas Stations
+2025-09-28,2025-10-04,Gas Stations,1135598.0,19359.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Gas Stations
+2025-10-05,2025-10-11,Gas Stations,1031619.0,18319.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Gas Stations
+2025-10-12,2025-10-18,Gas Stations,944883.0,17093.0,POS_Report_08_Nov_2025.pdf,Gas Stations
+2025-10-19,2025-10-25,Gas Stations,897830.0,16671.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Gas Stations
+2025-10-26,2025-11-01,Gas Stations,1116062.0,19093.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Gas Stations
+2025-11-02,2025-11-08,Gas Stations,980043.0,17345.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Gas Stations
+2025-11-09,2025-11-15,Gas Stations,981364.0,17669.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Gas Stations
+2025-11-16,2025-11-22,Gas Stations,956103.0,17196.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Gas Stations
+2025-11-23,2025-11-29,Gas Stations,1049959.0,17939.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Gas Stations
+2025-11-30,2025-12-06,Gas Stations,991396.0,17148.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Gas Stations
+2025-12-07,2025-12-13,Gas Stations,998282.0,17691.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Gas Stations
+2025-12-14,2025-12-20,Gas Stations,919670.0,16440.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Gas Stations
+2025-12-21,2025-12-27,Gas Stations,918884.0,16689.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Gas Stations
+2025-12-28,2026-01-03,Gas Stations,1078994.0,17973.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Gas Stations
+2026-01-04,2026-01-10,Gas Stations,992319.0,17227.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Gas Stations
+2026-01-11,2026-01-17,Gas Stations,1000691.0,17210.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Gas Stations
+2026-01-18,2026-01-24,Gas Stations,890118.0,15976.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Gas Stations
+2026-01-25,2026-01-31,Gas Stations,1062832.0,18226.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Gas Stations
+2026-02-01,2026-02-07,Gas Stations,1004073.0,17372.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Gas Stations
+2026-02-08,2026-02-14,Gas Stations,971050.0,17181.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Gas Stations
+2026-02-15,2026-02-21,Gas Stations,850572.0,15332.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Gas Stations
+2026-02-22,2026-02-28,Gas Stations,875090.0,15245.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Gas Stations
+2026-03-01,2026-03-07,Gas Stations,897895.0,15295.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Gas Stations
+2026-03-08,2026-03-14,Gas Stations,840348.0,14682.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Gas Stations
+2026-03-15,2026-03-21,Gas Stations,824532.0,14657.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Gas Stations
+2026-04-05,2026-04-11,Gas Stations,999421.0,17490.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Gas Stations
+2026-04-12,2026-04-18,Gas Stations,959404.0,17073.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Gas Stations
+2026-04-19,2026-04-25,Gas Stations,945128.0,17036.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Gas Stations
+2026-04-26,2026-05-02,Gas Stations,1158887.0,19608.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Gas Stations
+2026-05-03,2026-05-09,Gas Stations,1024383.0,18011.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Gas Stations
+2026-05-10,2026-05-16,Gas Stations,1006734.0,18047.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Gas Stations
+2026-05-17,2026-05-23,Gas Stations,967087.0,17366.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Gas Stations
+2026-05-24,2026-05-30,Gas Stations,996040.0,17358.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Gas Stations
+2026-05-31,2026-06-06,Gas Stations,980401.0,17187.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Gas Stations
+2026-06-07,2026-06-13,Gas Stations,957690.0,17407.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Gas Stations
+2026-06-14,2026-06-20,Gas Stations,906549.0,16822.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Gas Stations
+2026-06-21,2026-06-27,Gas Stations,915760.0,16991.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Gas Stations
+2026-06-28,2026-07-04,Gas Stations,1117017.0,19115.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Gas Stations
+2026-07-05,2026-07-11,Gas Stations,1011818.0,17785.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Gas Stations
+2026-07-12,2026-07-18,Gas Stations,950218.0,17046.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Gas Stations
+2026-07-19,2026-07-25,Gas Stations,909706.0,16618.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Gas Stations
+2026-07-26,2026-08-01,Gas Stations,1117868.0,18987.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Gas Stations
+2026-08-02,2026-08-08,Gas Stations,1026344.0,17823.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Gas Stations
+2025-09-21,2025-09-27,Health,843867.0,9080.0,POS_Report_18_Oct_2025.pdf,Health
+2025-09-28,2025-10-04,Health,1062423.0,11241.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Health
+2025-10-05,2025-10-11,Health,885506.0,10379.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Health
+2025-10-12,2025-10-18,Health,818667.0,9877.0,POS_Report_08_Nov_2025.pdf,Health
+2025-10-19,2025-10-25,Health,774100.0,9466.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Health
+2025-10-26,2025-11-01,Health,1017132.0,11847.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Health
+2025-11-02,2025-11-08,Health,891720.0,10683.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Health
+2025-11-09,2025-11-15,Health,839697.0,10117.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Health
+2025-11-16,2025-11-22,Health,780007.0,9368.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Health
+2025-11-23,2025-11-29,Health,862837.0,10093.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Health
+2025-11-30,2025-12-06,Health,871872.0,10034.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Health
+2025-12-07,2025-12-13,Health,809856.0,9693.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Health
+2025-12-14,2025-12-20,Health,726592.0,8632.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Health
+2025-12-21,2025-12-27,Health,776023.0,8984.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Health
+2025-12-28,2026-01-03,Health,992502.0,10925.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Health
+2026-01-04,2026-01-10,Health,863454.0,10070.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Health
+2026-01-11,2026-01-17,Health,823640.0,9833.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Health
+2026-01-18,2026-01-24,Health,753088.0,8771.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Health
+2026-01-25,2026-01-31,Health,910544.0,10288.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Health
+2026-02-01,2026-02-07,Health,919762.0,10581.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Health
+2026-02-08,2026-02-14,Health,885678.0,10235.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Health
+2026-02-15,2026-02-21,Health,781966.0,9115.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Health
+2026-02-22,2026-02-28,Health,899673.0,9714.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Health
+2026-03-01,2026-03-07,Health,972154.0,10126.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Health
+2026-03-08,2026-03-14,Health,946300.0,9851.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Health
+2026-03-15,2026-03-21,Health,823826.0,11013.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Health
+2026-04-05,2026-04-11,Health,891879.0,10085.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Health
+2026-04-12,2026-04-18,Health,822362.0,9513.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Health
+2026-04-19,2026-04-25,Health,784026.0,9006.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Health
+2026-04-26,2026-05-02,Health,1021256.0,11258.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Health
+2026-05-03,2026-05-09,Health,929042.0,10243.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Health
+2026-05-10,2026-05-16,Health,895661.0,10125.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Health
+2026-05-17,2026-05-23,Health,886526.0,9370.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Health
+2026-05-24,2026-05-30,Health,719981.0,10089.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Health
+2026-05-31,2026-06-06,Health,860376.0,9737.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Health
+2026-06-07,2026-06-13,Health,846143.0,9301.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Health
+2026-06-14,2026-06-20,Health,788881.0,8603.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Health
+2026-06-21,2026-06-27,Health,791241.0,8584.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Health
+2026-06-28,2026-07-04,Health,1043271.0,11047.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Health
+2026-07-05,2026-07-11,Health,901449.0,9987.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Health
+2026-07-12,2026-07-18,Health,821074.0,9271.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Health
+2026-07-19,2026-07-25,Health,761026.0,8704.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Health
+2026-07-26,2026-08-01,Health,983832.0,10863.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Health
+2026-08-02,2026-08-08,Health,886156.0,10055.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Health
+2025-09-21,2025-09-27,Hotels,233055.0,662.0,POS_Report_18_Oct_2025.pdf,Hotels
+2025-09-28,2025-10-04,Hotels,288574.0,769.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Hotels
+2025-10-05,2025-10-11,Hotels,307778.0,816.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Hotels
+2025-10-12,2025-10-18,Hotels,297597.0,714.0,POS_Report_08_Nov_2025.pdf,Hotels
+2025-10-19,2025-10-25,Hotels,311201.0,689.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Hotels
+2025-10-26,2025-11-01,Hotels,376005.0,841.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Hotels
+2025-11-02,2025-11-08,Hotels,312937.0,763.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Hotels
+2025-11-09,2025-11-15,Hotels,318793.0,745.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Hotels
+2025-11-16,2025-11-22,Hotels,381978.0,809.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Hotels
+2025-11-23,2025-11-29,Hotels,445166.0,1045.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Hotels
+2025-11-30,2025-12-06,Hotels,335976.0,773.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Hotels
+2025-12-07,2025-12-13,Hotels,373541.0,863.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Hotels
+2025-12-14,2025-12-20,Hotels,346344.0,726.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Hotels
+2025-12-21,2025-12-27,Hotels,372273.0,730.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Hotels
+2025-12-28,2026-01-03,Hotels,396098.0,850.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Hotels
+2026-01-04,2026-01-10,Hotels,399615.0,864.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Hotels
+2026-01-11,2026-01-17,Hotels,455695.0,1028.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Hotels
+2026-01-18,2026-01-24,Hotels,351046.0,760.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Hotels
+2026-01-25,2026-01-31,Hotels,377098.0,848.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Hotels
+2026-02-01,2026-02-07,Hotels,392346.0,851.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Hotels
+2026-02-08,2026-02-14,Hotels,380911.0,837.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Hotels
+2026-02-15,2026-02-21,Hotels,338556.0,636.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Hotels
+2026-02-22,2026-02-28,Hotels,376259.0,662.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Hotels
+2026-03-01,2026-03-07,Hotels,334829.0,711.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Hotels
+2026-03-08,2026-03-14,Hotels,449830.0,724.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Hotels
+2026-03-15,2026-03-21,Hotels,362386.0,747.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Hotels
+2026-04-05,2026-04-11,Hotels,215178.0,719.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Hotels
+2026-04-12,2026-04-18,Hotels,236518.0,711.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Hotels
+2026-04-19,2026-04-25,Hotels,331951.0,859.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Hotels
+2026-04-26,2026-05-02,Hotels,355192.0,956.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Hotels
+2026-05-03,2026-05-09,Hotels,185887.0,691.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Hotels
+2026-05-10,2026-05-16,Hotels,177030.0,674.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Hotels
+2026-05-17,2026-05-23,Hotels,193306.0,662.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Hotels
+2026-05-24,2026-05-30,Hotels,263090.0,835.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Hotels
+2026-05-31,2026-06-06,Hotels,195939.0,691.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Hotels
+2026-06-07,2026-06-13,Hotels,188145.0,648.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Hotels
+2026-06-14,2026-06-20,Hotels,197381.0,635.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Hotels
+2026-06-21,2026-06-27,Hotels,231429.0,706.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Hotels
+2026-06-28,2026-07-04,Hotels,307245.0,965.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Hotels
+2026-07-05,2026-07-11,Hotels,306208.0,959.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Hotels
+2026-07-12,2026-07-18,Hotels,299180.0,911.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Hotels
+2026-07-19,2026-07-25,Hotels,295330.0,885.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Hotels
+2026-07-26,2026-08-01,Hotels,367627.0,1106.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Hotels
+2026-08-02,2026-08-08,Hotels,363661.0,1111.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Hotels
+2025-09-21,2025-09-27,Jewelry,325555.0,279.0,POS_Report_18_Oct_2025.pdf,Jewelry
+2025-09-28,2025-10-04,Jewelry,456070.0,341.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Jewelry
+2025-10-05,2025-10-11,Jewelry,432615.0,307.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Jewelry
+2025-10-12,2025-10-18,Jewelry,429803.0,276.0,POS_Report_08_Nov_2025.pdf,Jewelry
+2025-10-19,2025-10-25,Jewelry,390688.0,252.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Jewelry
+2025-10-26,2025-11-01,Jewelry,418480.0,325.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Jewelry
+2025-11-02,2025-11-08,Jewelry,348866.0,290.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Jewelry
+2025-11-09,2025-11-15,Jewelry,325279.0,273.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Jewelry
+2025-11-16,2025-11-22,Jewelry,335797.0,263.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Jewelry
+2025-11-23,2025-11-29,Jewelry,354453.0,300.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Jewelry
+2025-11-30,2025-12-06,Jewelry,325903.0,289.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Jewelry
+2025-12-07,2025-12-13,Jewelry,329708.0,278.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Jewelry
+2025-12-14,2025-12-20,Jewelry,291854.0,242.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Jewelry
+2025-12-21,2025-12-27,Jewelry,367697.0,268.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Jewelry
+2025-12-28,2026-01-03,Jewelry,544124.0,381.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Jewelry
+2026-01-04,2026-01-10,Jewelry,422540.0,332.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Jewelry
+2026-01-11,2026-01-17,Jewelry,406031.0,307.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Jewelry
+2026-01-18,2026-01-24,Jewelry,394622.0,251.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Jewelry
+2026-01-25,2026-01-31,Jewelry,613692.0,327.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Jewelry
+2026-02-01,2026-02-07,Jewelry,579571.0,344.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Jewelry
+2026-02-08,2026-02-14,Jewelry,436002.0,328.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Jewelry
+2026-02-15,2026-02-21,Jewelry,362291.0,275.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Jewelry
+2026-02-22,2026-02-28,Jewelry,510452.0,348.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Jewelry
+2026-03-01,2026-03-07,Jewelry,693112.0,489.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Jewelry
+2026-03-08,2026-03-14,Jewelry,785396.0,590.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Jewelry
+2026-03-15,2026-03-21,Jewelry,1003903.0,637.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Jewelry
+2026-04-05,2026-04-11,Jewelry,414007.0,290.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Jewelry
+2026-04-12,2026-04-18,Jewelry,342426.0,252.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Jewelry
+2026-04-19,2026-04-25,Jewelry,341200.0,231.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Jewelry
+2026-04-26,2026-05-02,Jewelry,499539.0,344.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Jewelry
+2026-05-03,2026-05-09,Jewelry,445519.0,314.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Jewelry
+2026-05-10,2026-05-16,Jewelry,427811.0,319.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Jewelry
+2026-05-17,2026-05-23,Jewelry,560128.0,374.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Jewelry
+2026-05-24,2026-05-30,Jewelry,472959.0,404.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Jewelry
+2026-05-31,2026-06-06,Jewelry,550745.0,351.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Jewelry
+2026-06-07,2026-06-13,Jewelry,638839.0,368.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Jewelry
+2026-06-14,2026-06-20,Jewelry,493781.0,314.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Jewelry
+2026-06-21,2026-06-27,Jewelry,477603.0,317.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Jewelry
+2026-06-28,2026-07-04,Jewelry,573452.0,428.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Jewelry
+2026-07-05,2026-07-11,Jewelry,421366.0,347.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Jewelry
+2026-07-12,2026-07-18,Jewelry,413696.0,314.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Jewelry
+2026-07-19,2026-07-25,Jewelry,346795.0,279.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Jewelry
+2026-07-26,2026-08-01,Jewelry,418648.0,359.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Jewelry
+2026-08-02,2026-08-08,Jewelry,365680.0,321.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Jewelry
+2025-09-21,2025-09-27,Other,59519.0,824.0,POS_Report_18_Oct_2025.pdf,Others
+2025-09-28,2025-10-04,Other,86142.0,1005.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Others
+2025-10-05,2025-10-11,Other,71819.0,938.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Others
+2025-10-12,2025-10-18,Other,65739.0,849.0,POS_Report_08_Nov_2025.pdf,Others
+2025-10-19,2025-10-25,Other,61240.0,798.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Others
+2025-10-26,2025-11-01,Other,84915.0,997.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Others
+2025-11-02,2025-11-08,Other,74241.0,924.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Others
+2025-11-09,2025-11-15,Other,71861.0,898.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Others
+2025-11-16,2025-11-22,Other,66833.0,853.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Others
+2025-11-23,2025-11-29,Other,74293.0,939.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Others
+2025-11-30,2025-12-06,Other,80741.0,963.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Others
+2025-12-07,2025-12-13,Other,71056.0,955.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Others
+2025-12-14,2025-12-20,Other,64948.0,857.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Others
+2025-12-21,2025-12-27,Other,70899.0,884.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Others
+2025-12-28,2026-01-03,Other,104059.0,1099.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Others
+2026-01-04,2026-01-10,Other,81322.0,985.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Others
+2026-01-11,2026-01-17,Other,75335.0,987.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Others
+2026-01-18,2026-01-24,Other,66619.0,881.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Others
+2026-01-25,2026-01-31,Other,87347.0,1070.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Others
+2026-02-01,2026-02-07,Other,92567.0,1124.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Others
+2026-02-08,2026-02-14,Other,85192.0,1096.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Others
+2026-02-15,2026-02-21,Other,84678.0,1081.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Others
+2026-02-22,2026-02-28,Other,96365.0,1135.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Others
+2026-03-01,2026-03-07,Other,98088.0,1221.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Others
+2026-03-08,2026-03-14,Other,90631.0,1204.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Others
+2026-03-15,2026-03-21,Other,68403.0,931.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Others
+2026-04-05,2026-04-11,Other,72564.0,958.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Others
+2026-04-12,2026-04-18,Other,64543.0,913.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Others
+2026-04-19,2026-04-25,Other,69529.0,931.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Others
+2026-04-26,2026-05-02,Other,106421.0,1177.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Others
+2026-05-03,2026-05-09,Other,86723.0,1024.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Others
+2026-05-10,2026-05-16,Other,89960.0,1033.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Others
+2026-05-17,2026-05-23,Other,90432.0,1024.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Others
+2026-05-24,2026-05-30,Other,80503.0,904.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Others
+2026-05-31,2026-06-06,Other,81741.0,960.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Others
+2026-06-07,2026-06-13,Other,70752.0,948.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Others
+2026-06-14,2026-06-20,Other,67787.0,904.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Others
+2026-06-21,2026-06-27,Other,72354.0,913.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Others
+2026-06-28,2026-07-04,Other,120179.0,1208.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Others
+2026-07-05,2026-07-11,Other,88229.0,1054.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Others
+2026-07-12,2026-07-18,Other,74537.0,975.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Others
+2026-07-19,2026-07-25,Other,64978.0,898.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Others
+2026-07-26,2026-08-01,Other,92828.0,1111.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Others
+2026-08-02,2026-08-08,Other,88734.0,1085.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Others
+2025-09-21,2025-09-27,Public Utilities,46519.0,727.0,POS_Report_18_Oct_2025.pdf,Public Utilities & Services
+2025-09-28,2025-10-04,Public Utilities,60538.0,871.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Public Utilities & Services
+2025-10-05,2025-10-11,Public Utilities,50310.0,781.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Public Utilities & Services
+2025-10-12,2025-10-18,Public Utilities,47753.0,736.0,POS_Report_08_Nov_2025.pdf,Public Utilities & Services
+2025-10-19,2025-10-25,Public Utilities,44438.0,699.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Public Utilities & Services
+2025-10-26,2025-11-01,Public Utilities,58925.0,848.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Public Utilities & Services
+2025-11-02,2025-11-08,Public Utilities,51102.0,778.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Public Utilities & Services
+2025-11-09,2025-11-15,Public Utilities,49156.0,774.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Public Utilities & Services
+2025-11-16,2025-11-22,Public Utilities,45632.0,706.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Public Utilities & Services
+2025-11-23,2025-11-29,Public Utilities,52051.0,766.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Public Utilities & Services
+2025-11-30,2025-12-06,Public Utilities,54747.0,814.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Public Utilities & Services
+2025-12-07,2025-12-13,Public Utilities,51650.0,855.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Public Utilities & Services
+2025-12-14,2025-12-20,Public Utilities,47607.0,752.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Public Utilities & Services
+2025-12-21,2025-12-27,Public Utilities,47829.0,748.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Public Utilities & Services
+2025-12-28,2026-01-03,Public Utilities,61306.0,895.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Public Utilities & Services
+2026-01-04,2026-01-10,Public Utilities,53322.0,814.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Public Utilities & Services
+2026-01-11,2026-01-17,Public Utilities,51223.0,814.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Public Utilities & Services
+2026-01-18,2026-01-24,Public Utilities,48870.0,777.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Public Utilities & Services
+2026-01-25,2026-01-31,Public Utilities,60802.0,902.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Public Utilities & Services
+2026-02-01,2026-02-07,Public Utilities,62220.0,932.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Public Utilities & Services
+2026-02-08,2026-02-14,Public Utilities,61658.0,930.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Public Utilities & Services
+2026-02-15,2026-02-21,Public Utilities,63064.0,1036.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Public Utilities & Services
+2026-02-22,2026-02-28,Public Utilities,60014.0,985.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Public Utilities & Services
+2026-03-01,2026-03-07,Public Utilities,62904.0,1020.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Public Utilities & Services
+2026-03-08,2026-03-14,Public Utilities,57976.0,966.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Public Utilities & Services
+2026-03-15,2026-03-21,Public Utilities,44511.0,805.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Public Utilities & Services
+2026-04-05,2026-04-11,Public Utilities,55130.0,897.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Public Utilities & Services
+2026-04-12,2026-04-18,Public Utilities,51268.0,862.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Public Utilities & Services
+2026-04-19,2026-04-25,Public Utilities,50288.0,822.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Public Utilities & Services
+2026-04-26,2026-05-02,Public Utilities,65136.0,1008.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Public Utilities & Services
+2026-05-03,2026-05-09,Public Utilities,56301.0,921.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Public Utilities & Services
+2026-05-10,2026-05-16,Public Utilities,54128.0,906.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Public Utilities & Services
+2026-05-17,2026-05-23,Public Utilities,54038.0,872.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Public Utilities & Services
+2026-05-24,2026-05-30,Public Utilities,49109.0,904.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Public Utilities & Services
+2026-05-31,2026-06-06,Public Utilities,56442.0,889.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Public Utilities & Services
+2026-06-07,2026-06-13,Public Utilities,54001.0,879.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Public Utilities & Services
+2026-06-14,2026-06-20,Public Utilities,47932.0,792.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Public Utilities & Services
+2026-06-21,2026-06-27,Public Utilities,47891.0,772.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Public Utilities & Services
+2026-06-28,2026-07-04,Public Utilities,66553.0,938.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Public Utilities & Services
+2026-07-05,2026-07-11,Public Utilities,58844.0,854.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Public Utilities & Services
+2026-07-12,2026-07-18,Public Utilities,54762.0,793.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Public Utilities & Services
+2026-07-19,2026-07-25,Public Utilities,50633.0,745.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Public Utilities & Services
+2026-07-26,2026-08-01,Public Utilities,64022.0,891.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Public Utilities & Services
+2026-08-02,2026-08-08,Public Utilities,56718.0,835.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Public Utilities & Services
+2025-09-21,2025-09-27,Recreation and Culture,378978.0,4010.0,POS_Report_18_Oct_2025.pdf,Recreation & Culture
+2025-09-28,2025-10-04,Recreation and Culture,436247.0,4900.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Recreation & Culture
+2025-10-05,2025-10-11,Recreation and Culture,338632.0,4408.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Recreation & Culture
+2025-10-12,2025-10-18,Recreation and Culture,289322.0,4268.0,POS_Report_08_Nov_2025.pdf,Recreation & Culture
+2025-10-19,2025-10-25,Recreation and Culture,268533.0,3824.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Recreation & Culture
+2025-10-26,2025-11-01,Recreation and Culture,372251.0,4555.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Recreation & Culture
+2025-11-02,2025-11-08,Recreation and Culture,324394.0,4094.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Recreation & Culture
+2025-11-09,2025-11-15,Recreation and Culture,301902.0,3988.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Recreation & Culture
+2025-11-16,2025-11-22,Recreation and Culture,301647.0,3544.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Recreation & Culture
+2025-11-23,2025-11-29,Recreation and Culture,384344.0,4022.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Recreation & Culture
+2025-11-30,2025-12-06,Recreation and Culture,359769.0,4211.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Recreation & Culture
+2025-12-07,2025-12-13,Recreation and Culture,326345.0,4036.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Recreation & Culture
+2025-12-14,2025-12-20,Recreation and Culture,287818.0,3543.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Recreation & Culture
+2025-12-21,2025-12-27,Recreation and Culture,322816.0,3699.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Recreation & Culture
+2025-12-28,2026-01-03,Recreation and Culture,450519.0,4997.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Recreation & Culture
+2026-01-04,2026-01-10,Recreation and Culture,375245.0,4026.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Recreation & Culture
+2026-01-11,2026-01-17,Recreation and Culture,365428.0,3865.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Recreation & Culture
+2026-01-18,2026-01-24,Recreation and Culture,320019.0,3958.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Recreation & Culture
+2026-01-25,2026-01-31,Recreation and Culture,401138.0,4680.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Recreation & Culture
+2026-02-01,2026-02-07,Recreation and Culture,385337.0,4661.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Recreation & Culture
+2026-02-08,2026-02-14,Recreation and Culture,358140.0,4457.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Recreation & Culture
+2026-02-15,2026-02-21,Recreation and Culture,296196.0,3452.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Recreation & Culture
+2026-02-22,2026-02-28,Recreation and Culture,323434.0,3618.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Recreation & Culture
+2026-03-01,2026-03-07,Recreation and Culture,338554.0,3582.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Recreation & Culture
+2026-03-08,2026-03-14,Recreation and Culture,331426.0,3467.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Recreation & Culture
+2026-03-15,2026-03-21,Recreation and Culture,339198.0,3685.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Recreation & Culture
+2026-04-05,2026-04-11,Recreation and Culture,344516.0,4226.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Recreation & Culture
+2026-04-12,2026-04-18,Recreation and Culture,295463.0,3795.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Recreation & Culture
+2026-04-19,2026-04-25,Recreation and Culture,278693.0,3582.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Recreation & Culture
+2026-04-26,2026-05-02,Recreation and Culture,394383.0,4716.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Recreation & Culture
+2026-05-03,2026-05-09,Recreation and Culture,345215.0,4367.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Recreation & Culture
+2026-05-10,2026-05-16,Recreation and Culture,320475.0,4135.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Recreation & Culture
+2026-05-17,2026-05-23,Recreation and Culture,341452.0,3749.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Recreation & Culture
+2026-05-24,2026-05-30,Recreation and Culture,389883.0,4080.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Recreation & Culture
+2026-05-31,2026-06-06,Recreation and Culture,357785.0,3973.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Recreation & Culture
+2026-06-07,2026-06-13,Recreation and Culture,328382.0,4306.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Recreation & Culture
+2026-06-14,2026-06-20,Recreation and Culture,308023.0,3825.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Recreation & Culture
+2026-06-21,2026-06-27,Recreation and Culture,329927.0,3462.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Recreation & Culture
+2026-06-28,2026-07-04,Recreation and Culture,450558.0,4400.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Recreation & Culture
+2026-07-05,2026-07-11,Recreation and Culture,360460.0,3932.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Recreation & Culture
+2026-07-12,2026-07-18,Recreation and Culture,319281.0,3636.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Recreation & Culture
+2026-07-19,2026-07-25,Recreation and Culture,297210.0,3451.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Recreation & Culture
+2026-07-26,2026-08-01,Recreation and Culture,412907.0,4408.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Recreation & Culture
+2026-08-02,2026-08-08,Recreation and Culture,369746.0,4169.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Recreation & Culture
+2025-09-21,2025-09-27,Restaurants & Café,1587866.0,54782.0,POS_Report_18_Oct_2025.pdf,Restaurants & Cafés
+2025-09-28,2025-10-04,Restaurants & Café,1779726.0,60598.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Restaurants & Cafés
+2025-10-05,2025-10-11,Restaurants & Café,1680005.0,59029.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Restaurants & Cafés
+2025-10-12,2025-10-18,Restaurants & Café,1523287.0,55226.0,POS_Report_08_Nov_2025.pdf,Restaurants & Cafés
+2025-10-19,2025-10-25,Restaurants & Café,1452342.0,53044.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Restaurants & Cafés
+2025-10-26,2025-11-01,Restaurants & Café,1836404.0,61281.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Restaurants & Cafés
+2025-11-02,2025-11-08,Restaurants & Café,1643329.0,57945.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Restaurants & Cafés
+2025-11-09,2025-11-15,Restaurants & Café,1616841.0,57540.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Restaurants & Cafés
+2025-11-16,2025-11-22,Restaurants & Café,1555869.0,54469.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Restaurants & Cafés
+2025-11-23,2025-11-29,Restaurants & Café,1903262.0,58125.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Restaurants & Cafés
+2025-11-30,2025-12-06,Restaurants & Café,1662675.0,56677.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Restaurants & Cafés
+2025-12-07,2025-12-13,Restaurants & Café,1723668.0,58489.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Restaurants & Cafés
+2025-12-14,2025-12-20,Restaurants & Café,1571718.0,54029.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Restaurants & Cafés
+2025-12-21,2025-12-27,Restaurants & Café,1573046.0,54191.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Restaurants & Cafés
+2025-12-28,2026-01-03,Restaurants & Café,1901774.0,60568.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Restaurants & Cafés
+2026-01-04,2026-01-10,Restaurants & Café,1763663.0,58514.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Restaurants & Cafés
+2026-01-11,2026-01-17,Restaurants & Café,1847414.0,58763.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Restaurants & Cafés
+2026-01-18,2026-01-24,Restaurants & Café,1504825.0,52920.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Restaurants & Cafés
+2026-01-25,2026-01-31,Restaurants & Café,1811178.0,60365.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Restaurants & Cafés
+2026-02-01,2026-02-07,Restaurants & Café,1815367.0,61915.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Restaurants & Cafés
+2026-02-08,2026-02-14,Restaurants & Café,1729862.0,60374.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Restaurants & Cafés
+2026-02-15,2026-02-21,Restaurants & Café,1239502.0,44009.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Restaurants & Cafés
+2026-02-22,2026-02-28,Restaurants & Café,1216931.0,38178.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Restaurants & Cafés
+2026-03-01,2026-03-07,Restaurants & Café,1395723.0,42427.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Restaurants & Cafés
+2026-03-08,2026-03-14,Restaurants & Café,1392442.0,42398.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Restaurants & Cafés
+2026-03-15,2026-03-21,Restaurants & Café,1601667.0,43956.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Restaurants & Cafés
+2026-04-05,2026-04-11,Restaurants & Café,1780565.0,61778.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Restaurants & Cafés
+2026-04-12,2026-04-18,Restaurants & Café,1663083.0,58986.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Restaurants & Cafés
+2026-04-19,2026-04-25,Restaurants & Café,1611004.0,57160.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Restaurants & Cafés
+2026-04-26,2026-05-02,Restaurants & Café,1987443.0,65663.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Restaurants & Cafés
+2026-05-03,2026-05-09,Restaurants & Café,1768456.0,61655.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Restaurants & Cafés
+2026-05-10,2026-05-16,Restaurants & Café,1729401.0,61221.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Restaurants & Cafés
+2026-05-17,2026-05-23,Restaurants & Café,1726050.0,58824.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Restaurants & Cafés
+2026-05-24,2026-05-30,Restaurants & Café,1968185.0,55946.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Restaurants & Cafés
+2026-05-31,2026-06-06,Restaurants & Café,1713132.0,58050.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Restaurants & Cafés
+2026-06-07,2026-06-13,Restaurants & Café,1635603.0,58363.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Restaurants & Cafés
+2026-06-14,2026-06-20,Restaurants & Café,1552223.0,56005.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Restaurants & Cafés
+2026-06-21,2026-06-27,Restaurants & Café,1578012.0,54592.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Restaurants & Cafés
+2026-06-28,2026-07-04,Restaurants & Café,2018337.0,64006.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Restaurants & Cafés
+2026-07-05,2026-07-11,Restaurants & Café,1846589.0,60940.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Restaurants & Cafés
+2026-07-12,2026-07-18,Restaurants & Café,1720622.0,57863.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Restaurants & Cafés
+2026-07-19,2026-07-25,Restaurants & Café,1644006.0,55554.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Restaurants & Cafés
+2026-07-26,2026-08-01,Restaurants & Café,2044388.0,63676.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Restaurants & Cafés
+2026-08-02,2026-08-08,Restaurants & Café,1899926.0,61232.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Restaurants & Cafés
+2025-09-21,2025-09-27,Telecommunication,155734.0,3815.0,POS_Report_18_Oct_2025.pdf,Telecommunication
+2025-09-28,2025-10-04,Telecommunication,227012.0,4695.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Telecommunication
+2025-10-05,2025-10-11,Telecommunication,176135.0,4216.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Telecommunication
+2025-10-12,2025-10-18,Telecommunication,153085.0,3907.0,POS_Report_08_Nov_2025.pdf,Telecommunication
+2025-10-19,2025-10-25,Telecommunication,150761.0,3832.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Telecommunication
+2025-10-26,2025-11-01,Telecommunication,242157.0,4897.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Telecommunication
+2025-11-02,2025-11-08,Telecommunication,183170.0,4281.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Telecommunication
+2025-11-09,2025-11-15,Telecommunication,173941.0,4093.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Telecommunication
+2025-11-16,2025-11-22,Telecommunication,165127.0,3849.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Telecommunication
+2025-11-23,2025-11-29,Telecommunication,210962.0,4434.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Telecommunication
+2025-11-30,2025-12-06,Telecommunication,206821.0,4480.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Telecommunication
+2025-12-07,2025-12-13,Telecommunication,174666.0,4258.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Telecommunication
+2025-12-14,2025-12-20,Telecommunication,155715.0,3852.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Telecommunication
+2025-12-21,2025-12-27,Telecommunication,171588.0,4132.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Telecommunication
+2025-12-28,2026-01-03,Telecommunication,255415.0,5053.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Telecommunication
+2026-01-04,2026-01-10,Telecommunication,188419.0,4391.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Telecommunication
+2026-01-11,2026-01-17,Telecommunication,180567.0,4261.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Telecommunication
+2026-01-18,2026-01-24,Telecommunication,155433.0,4003.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Telecommunication
+2026-01-25,2026-01-31,Telecommunication,228613.0,4930.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Telecommunication
+2026-02-01,2026-02-07,Telecommunication,214298.0,4991.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Telecommunication
+2026-02-08,2026-02-14,Telecommunication,173599.0,4606.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Telecommunication
+2026-02-15,2026-02-21,Telecommunication,160148.0,4108.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Telecommunication
+2026-02-22,2026-02-28,Telecommunication,196318.0,4250.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Telecommunication
+2026-03-01,2026-03-07,Telecommunication,212814.0,4477.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Telecommunication
+2026-03-08,2026-03-14,Telecommunication,188900.0,4276.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Telecommunication
+2026-03-15,2026-03-21,Telecommunication,173596.0,4165.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Telecommunication
+2026-04-05,2026-04-11,Telecommunication,182950.0,4738.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Telecommunication
+2026-04-12,2026-04-18,Telecommunication,159088.0,4463.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Telecommunication
+2026-04-19,2026-04-25,Telecommunication,154216.0,4446.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Telecommunication
+2026-04-26,2026-05-02,Telecommunication,243602.0,5538.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Telecommunication
+2026-05-03,2026-05-09,Telecommunication,184891.0,4996.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Telecommunication
+2026-05-10,2026-05-16,Telecommunication,173014.0,4799.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Telecommunication
+2026-05-17,2026-05-23,Telecommunication,175246.0,4623.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Telecommunication
+2026-05-24,2026-05-30,Telecommunication,205364.0,5125.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Telecommunication
+2026-05-31,2026-06-06,Telecommunication,191214.0,4871.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Telecommunication
+2026-06-07,2026-06-13,Telecommunication,177482.0,4756.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Telecommunication
+2026-06-14,2026-06-20,Telecommunication,162013.0,4526.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Telecommunication
+2026-06-21,2026-06-27,Telecommunication,179782.0,4767.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Telecommunication
+2026-06-28,2026-07-04,Telecommunication,264425.0,5687.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Telecommunication
+2026-07-05,2026-07-11,Telecommunication,194956.0,5073.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Telecommunication
+2026-07-12,2026-07-18,Telecommunication,168791.0,4738.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Telecommunication
+2026-07-19,2026-07-25,Telecommunication,160791.0,4680.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Telecommunication
+2026-07-26,2026-08-01,Telecommunication,246158.0,5704.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Telecommunication
+2026-08-02,2026-08-08,Telecommunication,192466.0,5225.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Telecommunication
+2025-09-21,2025-09-27,Transportation,917253.0,5286.0,POS_Report_18_Oct_2025.pdf,Transportation
+2025-09-28,2025-10-04,Transportation,1181980.0,6647.0,Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf,Transportation
+2025-10-05,2025-10-11,Transportation,994785.0,6035.0,Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf,Transportation
+2025-10-12,2025-10-18,Transportation,914860.0,5465.0,POS_Report_08_Nov_2025.pdf,Transportation
+2025-10-19,2025-10-25,Transportation,922375.0,5090.0,Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf,Transportation
+2025-10-26,2025-11-01,Transportation,1170250.0,6839.0,Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf,Transportation
+2025-11-02,2025-11-08,Transportation,1003212.0,5991.0,Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf,Transportation
+2025-11-09,2025-11-15,Transportation,989631.0,5820.0,Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf,Transportation
+2025-11-16,2025-11-22,Transportation,961726.0,5550.0,Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf,Transportation
+2025-11-23,2025-11-29,Transportation,1051614.0,6289.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Transportation
+2025-11-30,2025-12-06,Transportation,1017079.0,6308.0,Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf,Transportation
+2025-12-07,2025-12-13,Transportation,919571.0,5962.0,Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf,Transportation
+2025-12-14,2025-12-20,Transportation,875735.0,5412.0,Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf,Transportation
+2025-12-21,2025-12-27,Transportation,943183.0,5591.0,Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf,Transportation
+2025-12-28,2026-01-03,Transportation,1215782.0,7092.0,Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf,Transportation
+2026-01-04,2026-01-10,Transportation,972517.0,6155.0,Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf,Transportation
+2026-01-11,2026-01-17,Transportation,944092.0,6015.0,Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf,Transportation
+2026-01-18,2026-01-24,Transportation,845487.0,5157.0,Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf,Transportation
+2026-01-25,2026-01-31,Transportation,1078158.0,6890.0,Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf,Transportation
+2026-02-01,2026-02-07,Transportation,1053068.0,7316.0,Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf,Transportation
+2026-02-08,2026-02-14,Transportation,1032893.0,7166.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Transportation
+2026-02-15,2026-02-21,Transportation,981020.0,6401.0,Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf,Transportation
+2026-02-22,2026-02-28,Transportation,1167294.0,6820.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Transportation
+2026-03-01,2026-03-07,Transportation,1128721.0,7047.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Transportation
+2026-03-08,2026-03-14,Transportation,1080732.0,6727.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Transportation
+2026-03-15,2026-03-21,Transportation,777435.0,6177.0,Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf,Transportation
+2026-04-05,2026-04-11,Transportation,975531.0,6568.0,Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf,Transportation
+2026-04-12,2026-04-18,Transportation,911744.0,6000.0,Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf,Transportation
+2026-04-19,2026-04-25,Transportation,911904.0,5841.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Transportation
+2026-04-26,2026-05-02,Transportation,1234762.0,8018.0,Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf,Transportation
+2026-05-03,2026-05-09,Transportation,1045981.0,6990.0,Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf,Transportation
+2026-05-10,2026-05-16,Transportation,1047540.0,6840.0,Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf,Transportation
+2026-05-17,2026-05-23,Transportation,1066402.0,6581.0,Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf,Transportation
+2026-05-24,2026-05-30,Transportation,743145.0,6462.0,Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf,Transportation
+2026-05-31,2026-06-06,Transportation,1031145.0,6851.0,Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf,Transportation
+2026-06-07,2026-06-13,Transportation,1024036.0,6491.0,Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf,Transportation
+2026-06-14,2026-06-20,Transportation,945061.0,6004.0,Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf,Transportation
+2026-06-21,2026-06-27,Transportation,950562.0,6007.0,Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf,Transportation
+2026-06-28,2026-07-04,Transportation,1284945.0,8065.0,Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf,Transportation
+2026-07-05,2026-07-11,Transportation,1075944.0,7087.0,Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf,Transportation
+2026-07-12,2026-07-18,Transportation,995477.0,6529.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Transportation
+2026-07-19,2026-07-25,Transportation,953638.0,6132.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Transportation
+2026-07-26,2026-08-01,Transportation,1255052.0,7992.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Transportation
+2026-08-02,2026-08-08,Transportation,1086225.0,7293.0,Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf,Transportation

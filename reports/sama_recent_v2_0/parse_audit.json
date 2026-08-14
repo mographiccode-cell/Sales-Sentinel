@@ -1,0 +1,1454 @@
+{
+  "version": "SAMA-RECENT-HOLDOUT-2.0",
+  "source_boundary": "Official SAMA weekly POS PDFs. Only safe cross-taxonomy sector mappings are retained.",
+  "pdfs_found": 35,
+  "pdfs_parsed": 35,
+  "pdf_failures": [],
+  "parsed_files": [
+    {
+      "file": "POS_Report_08_Nov_2025.pdf",
+      "week_ranges": [
+        [
+          "2025-10-12",
+          "2025-10-18"
+        ],
+        [
+          "2025-10-19",
+          "2025-10-25"
+        ],
+        [
+          "2025-10-26",
+          "2025-11-01"
+        ],
+        [
+          "2025-11-02",
+          "2025-11-08"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "POS_Report_18_Oct_2025.pdf",
+      "week_ranges": [
+        [
+          "2025-09-21",
+          "2025-09-27"
+        ],
+        [
+          "2025-09-28",
+          "2025-10-04"
+        ],
+        [
+          "2025-10-05",
+          "2025-10-11"
+        ],
+        [
+          "2025-10-12",
+          "2025-10-18"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_03_Jan_2026.pdf",
+      "week_ranges": [
+        [
+          "2025-12-07",
+          "2025-12-13"
+        ],
+        [
+          "2025-12-14",
+          "2025-12-20"
+        ],
+        [
+          "2025-12-21",
+          "2025-12-27"
+        ],
+        [
+          "2025-12-28",
+          "2026-01-03"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_07_Mar_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-02-08",
+          "2026-02-14"
+        ],
+        [
+          "2026-02-15",
+          "2026-02-21"
+        ],
+        [
+          "2026-02-22",
+          "2026-02-28"
+        ],
+        [
+          "2026-03-01",
+          "2026-03-07"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_10_Jan_2026.pdf",
+      "week_ranges": [
+        [
+          "2025-12-14",
+          "2025-12-20"
+        ],
+        [
+          "2025-12-21",
+          "2025-12-27"
+        ],
+        [
+          "2025-12-28",
+          "2026-01-03"
+        ],
+        [
+          "2026-01-04",
+          "2026-01-10"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_11th-Jul-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-06-14",
+          "2026-06-20"
+        ],
+        [
+          "2026-06-21",
+          "2026-06-27"
+        ],
+        [
+          "2026-06-28",
+          "2026-07-04"
+        ],
+        [
+          "2026-07-05",
+          "2026-07-11"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_13_Jun_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-05-17",
+          "2026-05-23"
+        ],
+        [
+          "2026-05-24",
+          "2026-05-30"
+        ],
+        [
+          "2026-05-31",
+          "2026-06-06"
+        ],
+        [
+          "2026-06-07",
+          "2026-06-13"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_13th_Dec_2025.pdf",
+      "week_ranges": [
+        [
+          "2025-11-16",
+          "2025-11-22"
+        ],
+        [
+          "2025-11-23",
+          "2025-11-29"
+        ],
+        [
+          "2025-11-30",
+          "2025-12-06"
+        ],
+        [
+          "2025-12-07",
+          "2025-12-13"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_14th_Feb_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-01-18",
+          "2026-01-24"
+        ],
+        [
+          "2026-01-25",
+          "2026-01-31"
+        ],
+        [
+          "2026-02-01",
+          "2026-02-07"
+        ],
+        [
+          "2026-02-08",
+          "2026-02-14"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_15th-nov-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-10-19",
+          "2025-10-25"
+        ],
+        [
+          "2025-10-26",
+          "2025-11-01"
+        ],
+        [
+          "2025-11-02",
+          "2025-11-08"
+        ],
+        [
+          "2025-11-09",
+          "2025-11-15"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_16th_May_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-04-19",
+          "2026-04-25"
+        ],
+        [
+          "2026-04-26",
+          "2026-05-02"
+        ],
+        [
+          "2026-05-03",
+          "2026-05-09"
+        ],
+        [
+          "2026-05-10",
+          "2026-05-16"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_17th-Jan-2026.pdf",
+      "week_ranges": [
+        [
+          "2025-12-21",
+          "2025-12-27"
+        ],
+        [
+          "2025-12-28",
+          "2026-01-03"
+        ],
+        [
+          "2026-01-04",
+          "2026-01-10"
+        ],
+        [
+          "2026-01-11",
+          "2026-01-17"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_18_Jul_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-06-21",
+          "2026-06-27"
+        ],
+        [
+          "2026-06-28",
+          "2026-07-04"
+        ],
+        [
+          "2026-07-05",
+          "2026-07-11"
+        ],
+        [
+          "2026-07-12",
+          "2026-07-18"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_1st-nov-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-10-05",
+          "2025-10-11"
+        ],
+        [
+          "2025-10-12",
+          "2025-10-18"
+        ],
+        [
+          "2025-10-19",
+          "2025-10-25"
+        ],
+        [
+          "2025-10-26",
+          "2025-11-01"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-07-05",
+          "2026-07-11"
+        ],
+        [
+          "2026-07-12",
+          "2026-07-18"
+        ],
+        [
+          "2026-07-19",
+          "2026-07-25"
+        ],
+        [
+          "2026-07-26",
+          "2026-08-01"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_20-Jun_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-05-24",
+          "2026-05-30"
+        ],
+        [
+          "2026-05-31",
+          "2026-06-06"
+        ],
+        [
+          "2026-06-07",
+          "2026-06-13"
+        ],
+        [
+          "2026-06-14",
+          "2026-06-20"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_20th-Dec-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-11-23",
+          "2025-11-29"
+        ],
+        [
+          "2025-11-30",
+          "2025-12-06"
+        ],
+        [
+          "2025-12-07",
+          "2025-12-13"
+        ],
+        [
+          "2025-12-14",
+          "2025-12-20"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_21-Mar-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-02-22",
+          "2026-02-28"
+        ],
+        [
+          "2026-03-01",
+          "2026-03-07"
+        ],
+        [
+          "2026-03-08",
+          "2026-03-14"
+        ],
+        [
+          "2026-03-15",
+          "2026-03-21"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_21st-Feb-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-01-25",
+          "2026-01-31"
+        ],
+        [
+          "2026-02-01",
+          "2026-02-07"
+        ],
+        [
+          "2026-02-08",
+          "2026-02-14"
+        ],
+        [
+          "2026-02-15",
+          "2026-02-21"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_22th_Nov_2025.pdf",
+      "week_ranges": [
+        [
+          "2025-10-26",
+          "2025-11-01"
+        ],
+        [
+          "2025-11-02",
+          "2025-11-08"
+        ],
+        [
+          "2025-11-09",
+          "2025-11-15"
+        ],
+        [
+          "2025-11-16",
+          "2025-11-22"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_24-Jan-2026.pdf",
+      "week_ranges": [
+        [
+          "2025-12-28",
+          "2026-01-03"
+        ],
+        [
+          "2026-01-04",
+          "2026-01-10"
+        ],
+        [
+          "2026-01-11",
+          "2026-01-17"
+        ],
+        [
+          "2026-01-18",
+          "2026-01-24"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_25th-Jul-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-06-28",
+          "2026-07-04"
+        ],
+        [
+          "2026-07-05",
+          "2026-07-11"
+        ],
+        [
+          "2026-07-12",
+          "2026-07-18"
+        ],
+        [
+          "2026-07-19",
+          "2026-07-25"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_25th-Oct-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-09-28",
+          "2025-10-04"
+        ],
+        [
+          "2025-10-05",
+          "2025-10-11"
+        ],
+        [
+          "2025-10-12",
+          "2025-10-18"
+        ],
+        [
+          "2025-10-19",
+          "2025-10-25"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_27th-Jun-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-05-31",
+          "2026-06-06"
+        ],
+        [
+          "2026-06-07",
+          "2026-06-13"
+        ],
+        [
+          "2026-06-14",
+          "2026-06-20"
+        ],
+        [
+          "2026-06-21",
+          "2026-06-27"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_28th-Feb-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-02-01",
+          "2026-02-07"
+        ],
+        [
+          "2026-02-08",
+          "2026-02-14"
+        ],
+        [
+          "2026-02-15",
+          "2026-02-21"
+        ],
+        [
+          "2026-02-22",
+          "2026-02-28"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_29th-Nov-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-11-02",
+          "2025-11-08"
+        ],
+        [
+          "2025-11-09",
+          "2025-11-15"
+        ],
+        [
+          "2025-11-16",
+          "2025-11-22"
+        ],
+        [
+          "2025-11-23",
+          "2025-11-29"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_2nd-May-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-04-05",
+          "2026-04-11"
+        ],
+        [
+          "2026-04-12",
+          "2026-04-18"
+        ],
+        [
+          "2026-04-19",
+          "2026-04-25"
+        ],
+        [
+          "2026-04-26",
+          "2026-05-02"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_30-May-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-05-03",
+          "2026-05-09"
+        ],
+        [
+          "2026-05-10",
+          "2026-05-16"
+        ],
+        [
+          "2026-05-17",
+          "2026-05-23"
+        ],
+        [
+          "2026-05-24",
+          "2026-05-30"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_31-Jan-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-01-04",
+          "2026-01-10"
+        ],
+        [
+          "2026-01-11",
+          "2026-01-17"
+        ],
+        [
+          "2026-01-18",
+          "2026-01-24"
+        ],
+        [
+          "2026-01-25",
+          "2026-01-31"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_4th-Jul-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-06-07",
+          "2026-06-13"
+        ],
+        [
+          "2026-06-14",
+          "2026-06-20"
+        ],
+        [
+          "2026-06-21",
+          "2026-06-27"
+        ],
+        [
+          "2026-06-28",
+          "2026-07-04"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_6-Jun_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-05-10",
+          "2026-05-16"
+        ],
+        [
+          "2026-05-17",
+          "2026-05-23"
+        ],
+        [
+          "2026-05-24",
+          "2026-05-30"
+        ],
+        [
+          "2026-05-31",
+          "2026-06-06"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_6th-Dec-2025.pdf",
+      "week_ranges": [
+        [
+          "2025-11-09",
+          "2025-11-15"
+        ],
+        [
+          "2025-11-16",
+          "2025-11-22"
+        ],
+        [
+          "2025-11-23",
+          "2025-11-29"
+        ],
+        [
+          "2025-11-30",
+          "2025-12-06"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_7th_Feb_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-01-11",
+          "2026-01-17"
+        ],
+        [
+          "2026-01-18",
+          "2026-01-24"
+        ],
+        [
+          "2026-01-25",
+          "2026-01-31"
+        ],
+        [
+          "2026-02-01",
+          "2026-02-07"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_8th_Aug_2026.pdf",
+      "week_ranges": [
+        [
+          "2026-07-12",
+          "2026-07-18"
+        ],
+        [
+          "2026-07-19",
+          "2026-07-25"
+        ],
+        [
+          "2026-07-26",
+          "2026-08-01"
+        ],
+        [
+          "2026-08-02",
+          "2026-08-08"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_9th-May-2026.pdf",
+      "week_ranges": [
+        [
+          "2026-04-12",
+          "2026-04-18"
+        ],
+        [
+          "2026-04-19",
+          "2026-04-25"
+        ],
+        [
+          "2026-04-26",
+          "2026-05-02"
+        ],
+        [
+          "2026-05-03",
+          "2026-05-09"
+        ]
+      ],
+      "mapped_sectors": [
+        "Beverage and Food",
+        "Clothing and Footwear",
+        "Construction & Building Materials",
+        "Education",
+        "Electronic & Electric Devices",
+        "Furniture",
+        "Gas Stations",
+        "Health",
+        "Hotels",
+        "Jewelry",
+        "Other",
+        "Public Utilities",
+        "Recreation and Culture",
+        "Restaurants & Caf\u00e9",
+        "Telecommunication",
+        "Transportation"
+      ],
+      "mapped_sector_count": 16
+    }
+  ],
+  "holdout_rows": 704,
+  "holdout_weeks": 44,
+  "holdout_sectors": [
+    "Beverage and Food",
+    "Clothing and Footwear",
+    "Construction & Building Materials",
+    "Education",
+    "Electronic & Electric Devices",
+    "Furniture",
+    "Gas Stations",
+    "Health",
+    "Hotels",
+    "Jewelry",
+    "Other",
+    "Public Utilities",
+    "Recreation and Culture",
+    "Restaurants & Caf\u00e9",
+    "Telecommunication",
+    "Transportation"
+  ],
+  "holdout_sector_count": 16,
+  "date_start": "2025-09-21",
+  "date_end": "2026-08-02",
+  "week_sector_coverage": {
+    "min": 16,
+    "median": 16.0,
+    "max": 16
+  },
+  "max_overlap_value_relative_spread": 0.0,
+  "max_overlap_count_relative_spread": 0.0,
+  "checks": {
+    "at_least_20_pdfs_parsed": true,
+    "pdf_failure_rate_below_10pct": true,
+    "at_least_12_safe_sectors": true,
+    "at_least_40_holdout_weeks": true,
+    "covers_2026": true,
+    "no_duplicate_week_sector": true,
+    "positive_values": true,
+    "positive_counts": true,
+    "median_week_sector_coverage_at_least_12": true,
+    "overlap_value_revisions_below_1pct": true,
+    "overlap_count_revisions_below_1pct": true,
+    "ambiguous_miscellaneous_sector_excluded": true
+  },
+  "all_checks_passed": true
+}
