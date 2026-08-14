@@ -28,4 +28,15 @@ def _safe_dumps(obj, *args, **kwargs):
 pipeline.json.dumps = _safe_dumps
 
 if __name__ == "__main__":
-    pipeline.main()
+    try:
+        pipeline.main()
+    except Exception:
+        if pipeline.AUDIT_JSON.exists():
+            audit = json.loads(pipeline.AUDIT_JSON.read_text(encoding="utf-8"))
+            print("\n=== SAUDI V1.2 QUALITY GATE DETAILS ===")
+            print(json.dumps(audit.get("checks", {}), indent=2))
+            print("all_tests_passed =", audit.get("all_tests_passed"))
+            print("cleaning =", json.dumps(audit.get("cleaning", {}), indent=2))
+            print("localization =", json.dumps(audit.get("localization", {}), indent=2))
+            print("calendar_repair =", json.dumps(audit.get("calendar_repair", {}), indent=2))
+        raise
