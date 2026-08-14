@@ -1,0 +1,47 @@
+{
+  "engine_version": "SALES-SENTINEL-CITY-RISK-ENGINE-2.4.1",
+  "status": "NO_DECISION",
+  "state": "AMBER",
+  "reason": "SOURCE_QC_FAILED",
+  "source_qc": {
+    "latest_week": "2026-08-02 00:00:00",
+    "expected_cities": [
+      "ABHA",
+      "BURAIDAH",
+      "DAMMAM",
+      "HAIL",
+      "JEDDAH",
+      "KHOBAR",
+      "MADINA",
+      "MAKKAH",
+      "OTHER",
+      "RIYADH",
+      "TABOUK",
+      "decline_rate_104",
+      "decline_rate_13",
+      "decline_rate_26",
+      "decline_rate_52"
+    ],
+    "actual_cities": [
+      "ABHA",
+      "BURAIDAH",
+      "DAMMAM",
+      "HAIL",
+      "JEDDAH",
+      "KHOBAR",
+      "MADINA",
+      "MAKKAH",
+      "OTHER",
+      "RIYADH",
+      "TABOUK"
+    ],
+    "checks": {
+      "latest_has_exact_expected_cities": false,
+      "one_row_per_latest_city": false,
+      "positive_latest_values": true,
+      "positive_latest_counts": true,
+      "at_least_104_weeks_history_per_city": true
+    },
+    "passed": false
+  }
+}

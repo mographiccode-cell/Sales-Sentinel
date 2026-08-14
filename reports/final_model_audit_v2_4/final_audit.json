@@ -1,0 +1,225 @@
+{
+  "version": "SALES-SENTINEL-V2.4-FINAL-AUDIT-1",
+  "decision": "NOT_FINAL_APPROVED",
+  "reason": "Leakage controls are audited separately from generalization. A high development score alone is not sufficient for final approval.",
+  "development_point_metrics": {
+    "red_precision": 0.95,
+    "red_fpr": 0.004,
+    "alert_recall": 1.0,
+    "green_npv": 1.0
+  },
+  "stress_point_metrics": {
+    "red_precision": 0.24444444444444444,
+    "red_fpr": 0.05782312925170068,
+    "alert_recall": 0.9411764705882353,
+    "green_npv": 0.9933774834437086,
+    "roc_auc": 0.8620448179271709,
+    "pr_auc": 0.2987426184562571
+  },
+  "leakage_audit": {
+    "forbidden_features": [],
+    "source_duplicate_week_city_rows": 0,
+    "exact_duplicate_feature_rows": 0,
+    "fold_audit": {
+      "folds": [
+        {
+          "validation_start": "2023-01-01",
+          "validation_end": "2023-03-31",
+          "index_overlap": 0,
+          "train_max_origin": "2022-12-18",
+          "validation_min_origin": "2023-01-01",
+          "purge_gap_days": 14,
+          "passed": true
+        },
+        {
+          "validation_start": "2023-07-01",
+          "validation_end": "2023-09-30",
+          "index_overlap": 0,
+          "train_max_origin": "2023-06-11",
+          "validation_min_origin": "2023-07-02",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2024-01-01",
+          "validation_end": "2024-03-31",
+          "index_overlap": 0,
+          "train_max_origin": "2023-12-17",
+          "validation_min_origin": "2024-01-07",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2024-04-01",
+          "validation_end": "2024-06-30",
+          "index_overlap": 0,
+          "train_max_origin": "2024-03-17",
+          "validation_min_origin": "2024-04-07",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2024-07-01",
+          "validation_end": "2024-09-30",
+          "index_overlap": 0,
+          "train_max_origin": "2024-06-16",
+          "validation_min_origin": "2024-07-07",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2024-10-01",
+          "validation_end": "2024-12-31",
+          "index_overlap": 0,
+          "train_max_origin": "2024-09-15",
+          "validation_min_origin": "2024-10-06",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2025-01-01",
+          "validation_end": "2025-03-31",
+          "index_overlap": 0,
+          "train_max_origin": "2024-12-15",
+          "validation_min_origin": "2025-01-05",
+          "purge_gap_days": 21,
+          "passed": true
+        },
+        {
+          "validation_start": "2025-04-01",
+          "validation_end": "2025-06-29",
+          "index_overlap": 0,
+          "train_max_origin": "2025-03-16",
+          "validation_min_origin": "2025-04-06",
+          "purge_gap_days": 21,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "future_perturbation_invariance": {
+      "cases": [
+        {
+          "origin": "2024-06-30",
+          "rows": 11,
+          "features_identical_after_destroying_future": true
+        },
+        {
+          "origin": "2025-01-05",
+          "rows": 11,
+          "features_identical_after_destroying_future": true
+        },
+        {
+          "origin": "2025-06-29",
+          "rows": 11,
+          "features_identical_after_destroying_future": true
+        }
+      ],
+      "passed": true
+    },
+    "permutation_sanity": {
+      "n_permutations": 8,
+      "mean_auc_against_true_labels": 0.47757865928094195,
+      "max_auc_against_true_labels": 0.6047149626557106,
+      "all_aucs": [
+        0.43885118727275113,
+        0.5414068755496633,
+        0.4677552734862108,
+        0.40842445164931807,
+        0.6047149626557106,
+        0.5112951708386386,
+        0.38777680059855874,
+        0.4604045521966843
+      ],
+      "passed": true
+    },
+    "gates": {
+      "no_forbidden_target_future_feature_names": true,
+      "source_week_city_unique": true,
+      "frozen_feature_schema_exact": true,
+      "chronological_folds_have_no_overlap_and_purge": true,
+      "future_perturbation_does_not_change_origin_features": true,
+      "permuted_label_sanity_collapses_signal": true,
+      "trainer_declares_no_fresh_2025_2026_use": true,
+      "policy_declares_no_fresh_parameter_fitting": true
+    },
+    "all_passed": true
+  },
+  "statistical_reliability": {
+    "historical_red_precision": {
+      "point": 0.95,
+      "n_alerts": 20,
+      "wilson95": [
+        0.763868806553258,
+        0.9911185511992047
+      ]
+    },
+    "historical_green_npv": {
+      "point": 1.0,
+      "n_green": 78,
+      "wilson95": [
+        0.9530621902878059,
+        1.0
+      ]
+    },
+    "stress_red_precision": {
+      "point": 0.24444444444444444,
+      "n_alerts": 45,
+      "wilson95": [
+        0.1423547943377172,
+        0.3867338005702035
+      ]
+    },
+    "stress_green_npv": {
+      "point": 0.9933774834437086,
+      "n_green": 151,
+      "wilson95": [
+        0.9634445765212873,
+        0.9988300050721444
+      ]
+    },
+    "historical_red_precision_ci_lower_meets_70pct": true,
+    "historical_green_npv_ci_lower_meets_99pct": false,
+    "stress_red_precision_meets_contract": false,
+    "stress_red_fpr_meets_contract": false,
+    "stress_alert_recall_meets_contract": true,
+    "stress_green_npv_meets_contract": true
+  },
+  "generalization_gates": {
+    "stress_red_precision": false,
+    "stress_red_fpr": false,
+    "stress_alert_recall": true,
+    "stress_green_npv": true,
+    "stress_roc_auc": false,
+    "stress_pr_auc": false,
+    "independent_post_design_holdout_exists": false,
+    "historical_green_npv_99pct_supported_by_95pct_ci": false
+  },
+  "all_generalization_gates_passed": false,
+  "final_approval": false,
+  "app_test_fixture": {
+    "input_path": "tests/fixtures/sales_sentinel_v2_4/app_test_input_sama_real_130_weeks.csv",
+    "expected_path": "tests/fixtures/sales_sentinel_v2_4/app_test_expected_predictions.json",
+    "manifest_path": "tests/fixtures/sales_sentinel_v2_4/app_test_manifest.json",
+    "purpose": "Functional/regression test input for the Sales Sentinel v2.4 production engine. Not an independent scientific holdout.",
+    "source": "Official SAMA city-total weekly POS panel already versioned in this repository.",
+    "input_has_target_or_future_label": false,
+    "rows": 1430,
+    "cities": 11,
+    "weeks": 130,
+    "period_start": "2024-02-11",
+    "period_end": "2026-08-02",
+    "columns": [
+      "week_start",
+      "week_end",
+      "city",
+      "value_thousand_sar",
+      "transaction_count_thousand"
+    ],
+    "input_sha256": "14b9d03f22652a8011a22fa36f34ba3988f5625cd5586f4e371e19a398f9b15c",
+    "expected_sha256": "6fc5d917dd0f7389bfd7f2aa061ae574390367962a1932a481b1626a3db41de8",
+    "expected_engine_status": "NO_DECISION",
+    "expected_prediction_rows": 0
+  },
+  "required_next_evidence": "Prospective outcomes published after the v2.4 architecture/policy freeze must be evaluated without changing model weights, features, policy parameters, or thresholds."
+}
