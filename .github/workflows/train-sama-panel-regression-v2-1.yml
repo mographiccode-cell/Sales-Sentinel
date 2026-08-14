@@ -1,0 +1,48 @@
+name: Train SAMA panel regression v2.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_panel_regression_v2_1.py'
+      - '.github/workflows/train-sama-panel-regression-v2-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib xgboost
+      - name: Train continuous SAMA panel model and backtest
+        run: python scripts/train_sama_panel_regression_v2_1.py
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sama-panel-regression-v2-1
+          if-no-files-found: warn
+          path: |
+            models/sama_panel_v2_1/**
+            reports/sama_panel_v2_1/**
+      - name: Persist results
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/sama_panel_v2_1 reports/sama_panel_v2_1
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist SAMA panel regression v2.1 [skip ci]'
+            git push origin main
+          fi
