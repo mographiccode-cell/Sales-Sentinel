@@ -1,0 +1,58 @@
+name: Evaluate SAMA City Risk v2.1 Fresh Holdout
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2026_extended.csv'
+      - 'data/sama_pos/sama_city_weekly_value_count_2025_2026_holdout.csv'
+      - 'models/sama_city_v2_1/city_market_risk_v2_1.joblib'
+      - 'scripts/evaluate_sama_city_risk_v2_1_fresh.py'
+      - '.github/workflows/evaluate-sama-city-risk-v2-1-fresh.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Verify frozen model and fresh source
+        run: |
+          python - <<'PY'
+          import json, os
+          assert os.path.exists('models/sama_city_v2_1/city_market_risk_v2_1.joblib')
+          h=json.load(open('reports/sama_city_v2_1/history_audit.json',encoding='utf-8'))
+          f=json.load(open('reports/sama_city_v2_1/fresh_holdout_audit.json',encoding='utf-8'))
+          d=json.load(open('reports/sama_city_v2_1/development_report.json',encoding='utf-8'))
+          assert h['all_checks_passed'] and f['all_checks_passed'] and d['leakage_controls']['fresh_2025_2026_holdout_used'] is False
+          PY
+      - name: Open sealed holdout with frozen model and thresholds
+        run: python scripts/evaluate_sama_city_risk_v2_1_fresh.py
+      - name: Show final evidence
+        run: cat reports/sama_city_v2_1/fresh_evaluation_summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sama-city-risk-v2-1-fresh-evaluation
+          path: reports/sama_city_v2_1/**
+          retention-days: 30
+      - name: Persist final evaluation only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_1/fresh_evaluation.json reports/sama_city_v2_1/fresh_evaluation_summary.md
+          git diff --cached --quiet || git commit -m 'ml: persist sealed fresh evaluation for SAMA city risk v2.1'
+          git pull --rebase origin main
+          git push origin HEAD:main
