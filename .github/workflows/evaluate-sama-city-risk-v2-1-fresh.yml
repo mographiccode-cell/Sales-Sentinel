@@ -1,5 +1,6 @@
 name: Evaluate SAMA City Risk v2.1 Fresh Holdout
 
+# SEALED EVALUATION: this workflow must not alter model weights, calibration, or thresholds.
 on:
   workflow_dispatch:
   push:
