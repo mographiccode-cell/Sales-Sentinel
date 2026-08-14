@@ -1,0 +1,337 @@
+{
+  "development_only": true,
+  "rows_total": 604,
+  "development_cutoff_index": 453,
+  "development_end_date": "2024-03-28",
+  "holdout_not_used": true,
+  "criteria": {
+    "positive_rate_range": [
+      0.15,
+      0.4
+    ],
+    "minimum_positives_per_development_segment": 10,
+    "preference": "7-day horizon first; highest meaningful threshold that satisfies learnability/stability criteria"
+  },
+  "candidates": [
+    {
+      "horizon_days": 1,
+      "decline_threshold": 0.05,
+      "origins": 397,
+      "positive_count": 187,
+      "positive_rate": 0.47103274559193953,
+      "segment_positive_rates": [
+        0.4772727272727273,
+        0.5,
+        0.43609022556390975
+      ],
+      "segment_positive_counts": [
+        63,
+        66,
+        58
+      ],
+      "segment_rate_range": 0.06390977443609025,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 1,
+      "decline_threshold": 0.1,
+      "origins": 397,
+      "positive_count": 162,
+      "positive_rate": 0.4080604534005038,
+      "segment_positive_rates": [
+        0.4015151515151515,
+        0.42424242424242425,
+        0.39849624060150374
+      ],
+      "segment_positive_counts": [
+        53,
+        56,
+        53
+      ],
+      "segment_rate_range": 0.025746183640920517,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 1,
+      "decline_threshold": 0.15,
+      "origins": 397,
+      "positive_count": 133,
+      "positive_rate": 0.3350125944584383,
+      "segment_positive_rates": [
+        0.3409090909090909,
+        0.32575757575757575,
+        0.3383458646616541
+      ],
+      "segment_positive_counts": [
+        45,
+        43,
+        45
+      ],
+      "segment_rate_range": 0.015151515151515138,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 1,
+      "decline_threshold": 0.2,
+      "origins": 397,
+      "positive_count": 111,
+      "positive_rate": 0.2795969773299748,
+      "segment_positive_rates": [
+        0.26515151515151514,
+        0.2727272727272727,
+        0.3007518796992481
+      ],
+      "segment_positive_counts": [
+        35,
+        36,
+        40
+      ],
+      "segment_rate_range": 0.035600364547732966,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 1,
+      "decline_threshold": 0.25,
+      "origins": 397,
+      "positive_count": 97,
+      "positive_rate": 0.24433249370277077,
+      "segment_positive_rates": [
+        0.25,
+        0.20454545454545456,
+        0.2781954887218045
+      ],
+      "segment_positive_counts": [
+        33,
+        27,
+        37
+      ],
+      "segment_rate_range": 0.07365003417634994,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 3,
+      "decline_threshold": 0.05,
+      "origins": 397,
+      "positive_count": 175,
+      "positive_rate": 0.44080604534005036,
+      "segment_positive_rates": [
+        0.4318181818181818,
+        0.4696969696969697,
+        0.42105263157894735
+      ],
+      "segment_positive_counts": [
+        57,
+        62,
+        56
+      ],
+      "segment_rate_range": 0.04864433811802238,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 3,
+      "decline_threshold": 0.1,
+      "origins": 397,
+      "positive_count": 136,
+      "positive_rate": 0.3425692695214106,
+      "segment_positive_rates": [
+        0.3560606060606061,
+        0.3106060606060606,
+        0.3609022556390977
+      ],
+      "segment_positive_counts": [
+        47,
+        41,
+        48
+      ],
+      "segment_rate_range": 0.05029619503303712,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 3,
+      "decline_threshold": 0.15,
+      "origins": 397,
+      "positive_count": 96,
+      "positive_rate": 0.24181360201511334,
+      "segment_positive_rates": [
+        0.24242424242424243,
+        0.1893939393939394,
+        0.2932330827067669
+      ],
+      "segment_positive_counts": [
+        32,
+        25,
+        39
+      ],
+      "segment_rate_range": 0.10383914331282751,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 3,
+      "decline_threshold": 0.2,
+      "origins": 397,
+      "positive_count": 78,
+      "positive_rate": 0.1964735516372796,
+      "segment_positive_rates": [
+        0.19696969696969696,
+        0.15151515151515152,
+        0.24060150375939848
+      ],
+      "segment_positive_counts": [
+        26,
+        20,
+        32
+      ],
+      "segment_rate_range": 0.08908635224424696,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 3,
+      "decline_threshold": 0.25,
+      "origins": 397,
+      "positive_count": 51,
+      "positive_rate": 0.12846347607052896,
+      "segment_positive_rates": [
+        0.12121212121212122,
+        0.08333333333333333,
+        0.18045112781954886
+      ],
+      "segment_positive_counts": [
+        16,
+        11,
+        24
+      ],
+      "segment_rate_range": 0.09711779448621553,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 7,
+      "decline_threshold": 0.05,
+      "origins": 397,
+      "positive_count": 149,
+      "positive_rate": 0.37531486146095716,
+      "segment_positive_rates": [
+        0.38636363636363635,
+        0.3560606060606061,
+        0.38345864661654133
+      ],
+      "segment_positive_counts": [
+        51,
+        47,
+        51
+      ],
+      "segment_rate_range": 0.030303030303030276,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 7,
+      "decline_threshold": 0.1,
+      "origins": 397,
+      "positive_count": 86,
+      "positive_rate": 0.21662468513853905,
+      "segment_positive_rates": [
+        0.20454545454545456,
+        0.1893939393939394,
+        0.2556390977443609
+      ],
+      "segment_positive_counts": [
+        27,
+        25,
+        34
+      ],
+      "segment_rate_range": 0.0662451583504215,
+      "usable_15_to_40pct_positive": true,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 7,
+      "decline_threshold": 0.15,
+      "origins": 397,
+      "positive_count": 51,
+      "positive_rate": 0.12846347607052896,
+      "segment_positive_rates": [
+        0.09090909090909091,
+        0.11363636363636363,
+        0.18045112781954886
+      ],
+      "segment_positive_counts": [
+        12,
+        15,
+        24
+      ],
+      "segment_rate_range": 0.08954203691045795,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": true
+    },
+    {
+      "horizon_days": 7,
+      "decline_threshold": 0.2,
+      "origins": 397,
+      "positive_count": 22,
+      "positive_rate": 0.055415617128463476,
+      "segment_positive_rates": [
+        0.030303030303030304,
+        0.03787878787878788,
+        0.09774436090225563
+      ],
+      "segment_positive_counts": [
+        4,
+        5,
+        13
+      ],
+      "segment_rate_range": 0.06744133059922533,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": false
+    },
+    {
+      "horizon_days": 7,
+      "decline_threshold": 0.25,
+      "origins": 397,
+      "positive_count": 10,
+      "positive_rate": 0.02518891687657431,
+      "segment_positive_rates": [
+        0.007575757575757576,
+        0.015151515151515152,
+        0.05263157894736842
+      ],
+      "segment_positive_counts": [
+        1,
+        2,
+        7
+      ],
+      "segment_rate_range": 0.04505582137161084,
+      "usable_15_to_40pct_positive": false,
+      "each_segment_at_least_10_positives": false
+    }
+  ],
+  "recommended_target": {
+    "horizon_days": 7,
+    "decline_threshold": 0.1,
+    "origins": 397,
+    "positive_count": 86,
+    "positive_rate": 0.21662468513853905,
+    "segment_positive_rates": [
+      0.20454545454545456,
+      0.1893939393939394,
+      0.2556390977443609
+    ],
+    "segment_positive_counts": [
+      27,
+      25,
+      34
+    ],
+    "segment_rate_range": 0.0662451583504215,
+    "usable_15_to_40pct_positive": true,
+    "each_segment_at_least_10_positives": true
+  }
+}
