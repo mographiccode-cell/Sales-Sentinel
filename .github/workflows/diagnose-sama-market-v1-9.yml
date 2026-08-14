@@ -1,0 +1,28 @@
+name: Diagnose SAMA Market v1.9
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_sama_market_candidates_v1_9.py'
+      - '.github/workflows/diagnose-sama-market-v1-9.yml'
+permissions:
+  contents: write
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib xgboost
+      - run: python scripts/diagnose_sama_market_candidates_v1_9.py
+      - name: Persist diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_market_v1_9/candidate_test_diagnosis_v1_9.json
+          git diff --cached --quiet || git commit -m 'debug: persist SAMA market candidate diagnosis'
+          git pull --rebase origin main
+          git push origin HEAD:main
