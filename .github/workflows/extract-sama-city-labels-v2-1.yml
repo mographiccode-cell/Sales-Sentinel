@@ -1,0 +1,38 @@
+name: Extract SAMA City Labels v2.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/extract_sama_city_labels_v2_1.py'
+      - '.github/workflows/extract-sama-city-labels-v2-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          pip install requests==2.32.5
+      - name: Extract observed city labels
+        run: python scripts/extract_sama_city_labels_v2_1.py
+      - name: Show labels
+        run: cat reports/sama_city_v2_1/observed_city_labels.json
+      - name: Persist evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_1/observed_city_labels.json
+          git diff --cached --quiet || git commit -m 'data: persist observed SAMA city labels'
+          git pull --rebase origin main
+          git push origin HEAD:main
