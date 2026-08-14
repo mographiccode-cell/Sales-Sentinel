@@ -1,0 +1,52 @@
+name: Train SAMA market forecaster v1.6
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_market_forecaster_v1_6.py'
+      - '.github/workflows/train-sama-market-forecaster-v1-6.yml'
+      - 'data/sama_pos/sama_pos_national_weekly_value_2020_2025.csv'
+      - 'data/sama_pos/sama_pos_national_weekly_count_2020_2025.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Train expanding walk-forward SAMA forecaster
+        run: python scripts/train_sama_market_forecaster_v1_6.py
+      - name: Upload SAMA forecasting evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sama-market-forecaster-v1-6
+          if-no-files-found: warn
+          path: |
+            data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
+            models/sama_market_v1_6/**
+            reports/sama_market_v1_6/**
+      - name: Persist SAMA forecast products
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv models/sama_market_v1_6 reports/sama_market_v1_6
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist SAMA market forecaster v1.6 [skip ci]'
+            git push origin main
+          fi
