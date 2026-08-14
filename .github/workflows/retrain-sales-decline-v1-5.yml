@@ -1,0 +1,51 @@
+name: Retrain sales decline v1.5
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/retrain_sales_decline_v1_5.py'
+      - '.github/workflows/retrain-sales-decline-v1-5.yml'
+      - 'reports/saudi_v1_5/target_diagnosis_preholdout.json'
+
+permissions:
+  contents: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install joblib
+      - name: Retrain stable-target sales decline model
+        run: python scripts/retrain_sales_decline_v1_5.py
+      - name: Upload v1.5 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-sales-decline-v1-5
+          if-no-files-found: warn
+          path: |
+            models/saudi_v1_5/**
+            reports/saudi_v1_5/**
+      - name: Persist v1.5 model and report
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/saudi_v1_5 reports/saudi_v1_5
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist stable-target sales decline v1.5 [skip ci]'
+            git push origin main
+          fi
