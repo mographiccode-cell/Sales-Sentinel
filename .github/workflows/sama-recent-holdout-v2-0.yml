@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/scrape_sama_recent_pos_reports_v2_0.py'
+      - 'scripts/scrape_sama_gap_2025_v2_0.py'
       - 'scripts/parse_sama_recent_pos_reports_v2_0.py'
       - 'scripts/parse_sama_recent_national_totals_v2_0.py'
       - '.github/workflows/sama-recent-holdout-v2-0.yml'
@@ -31,6 +32,8 @@ jobs:
           pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
       - name: Scrape and download recent official SAMA reports
         run: python scripts/scrape_sama_recent_pos_reports_v2_0.py
+      - name: Fill July-September 2025 continuity gap
+        run: python scripts/scrape_sama_gap_2025_v2_0.py
       - name: Parse and quality-gate unseen sector holdout
         run: python scripts/parse_sama_recent_pos_reports_v2_0.py
       - name: Parse and quality-gate national totals
@@ -40,11 +43,14 @@ jobs:
           python - <<'PY'
           import json
           s=json.load(open('reports/sama_recent_v2_0/source_manifest.json',encoding='utf-8'))
+          g=json.load(open('reports/sama_recent_v2_0/gap_2025_manifest.json',encoding='utf-8'))
           p=json.load(open('reports/sama_recent_v2_0/parse_audit.json',encoding='utf-8'))
           n=json.load(open('reports/sama_recent_v2_0/national_parse_audit.json',encoding='utf-8'))
           assert p['all_checks_passed'] is True and n['all_checks_passed'] is True
           print(json.dumps({
-            'downloaded_pdfs':s['downloaded_pdfs'],
+            'main_downloaded_pdfs':s['downloaded_pdfs'],
+            'gap_new_pdfs':g['new_pdf_count'],
+            'total_pdfs_after_gap':g['total_pdf_count'],
             'pdfs_parsed':p['pdfs_parsed'],
             'holdout_rows':p['holdout_rows'],
             'holdout_weeks':p['holdout_weeks'],
@@ -72,7 +78,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add reports/sama_recent_v2_0/source_manifest.json reports/sama_recent_v2_0/parse_audit.json reports/sama_recent_v2_0/national_parse_audit.json data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv data/sama_pos/sama_national_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv
-          git diff --cached --quiet || git commit -m 'data: persist quality-gated unseen SAMA holdout with national totals'
+          git add reports/sama_recent_v2_0/source_manifest.json reports/sama_recent_v2_0/gap_2025_manifest.json reports/sama_recent_v2_0/parse_audit.json reports/sama_recent_v2_0/national_parse_audit.json data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv data/sama_pos/sama_national_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv
+          git diff --cached --quiet || git commit -m 'data: persist continuous quality-gated unseen SAMA holdout'
           git pull --rebase origin main
           git push origin HEAD:main
