@@ -1,0 +1,107 @@
+{
+  "version": "SAMA-SECTOR-DECLINE-1.8",
+  "source": "Official SAMA national sector weekly POS value; predictions are leakage-safe walk-forward forecasts",
+  "target": "next official SAMA sector week is >=20% below trailing 4 completed weeks mean",
+  "prediction_rule": "predicted h1 sector value is >=20% below the same known trailing-4-week baseline",
+  "fixed_rule_no_test_threshold_tuning": true,
+  "periods": {
+    "2023": {
+      "rows": 901,
+      "positive_rate": 0.08990011098779134,
+      "metrics": {
+        "Accuracy": 0.9167591564927858,
+        "BalancedAccuracy": 0.6649879554351099,
+        "Precision": 0.5576923076923077,
+        "Recall": 0.35802469135802467,
+        "F1": 0.43609022556390975,
+        "ROC_AUC": 0.7626769045468234,
+        "ConfusionMatrix": [
+          [
+            797,
+            23
+          ],
+          [
+            52,
+            29
+          ]
+        ]
+      }
+    },
+    "2024": {
+      "rows": 884,
+      "positive_rate": 0.09954751131221719,
+      "metrics": {
+        "Accuracy": 0.9128959276018099,
+        "BalancedAccuracy": 0.6484125171311101,
+        "Precision": 0.6222222222222222,
+        "Recall": 0.3181818181818182,
+        "F1": 0.42105263157894735,
+        "ROC_AUC": 0.849474645957058,
+        "ConfusionMatrix": [
+          [
+            779,
+            17
+          ],
+          [
+            60,
+            28
+          ]
+        ]
+      }
+    },
+    "2025": {
+      "rows": 442,
+      "positive_rate": 0.13122171945701358,
+      "metrics": {
+        "Accuracy": 0.8936651583710408,
+        "BalancedAccuracy": 0.6753322557471264,
+        "Precision": 0.6666666666666666,
+        "Recall": 0.3793103448275862,
+        "F1": 0.4835164835164835,
+        "ROC_AUC": 0.888604525862069,
+        "ConfusionMatrix": [
+          [
+            373,
+            11
+          ],
+          [
+            36,
+            22
+          ]
+        ]
+      }
+    },
+    "2024_2025": {
+      "rows": 1326,
+      "positive_rate": 0.11010558069381599,
+      "metrics": {
+        "Accuracy": 0.9064856711915535,
+        "BalancedAccuracy": 0.6593684699326677,
+        "Precision": 0.6410256410256411,
+        "Recall": 0.3424657534246575,
+        "F1": 0.44642857142857145,
+        "ROC_AUC": 0.8661887624796842,
+        "ConfusionMatrix": [
+          [
+            1152,
+            28
+          ],
+          [
+            96,
+            50
+          ]
+        ]
+      }
+    }
+  },
+  "combined_2024_2025_majority_accuracy": 0.889894419306184,
+  "acceptance_gates": {
+    "accuracy_at_least_90pct": true,
+    "balanced_accuracy_at_least_80pct": false,
+    "recall_at_least_70pct": false,
+    "f1_at_least_65pct": false,
+    "roc_auc_at_least_85pct": true,
+    "beats_majority": true
+  },
+  "all_gates_passed": false
+}
