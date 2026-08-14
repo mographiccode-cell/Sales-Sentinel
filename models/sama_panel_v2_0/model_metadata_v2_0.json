@@ -1,0 +1,415 @@
+{
+  "version": "SAMA-PANEL-DECLINE-2.0",
+  "source": "Official Saudi Central Bank (SAMA) Point of Sale Transactions by Sector and City",
+  "scientific_scope": "Saudi market segment risk using two real aggregation panels: city totals and national sector totals; no invented city-sector intersections and no merchant-level claim",
+  "panel": {
+    "rows": 6076,
+    "entities": 28,
+    "city_entities": 11,
+    "sector_entities": 17,
+    "start": "2021-05-09",
+    "end": "2025-06-29"
+  },
+  "target_selection": {
+    "development_only_before_2024": true,
+    "chosen_decline_threshold": 0.1,
+    "chosen": {
+      "threshold": 0.1,
+      "rows": 3892,
+      "positive_rate": 0.2289311408016444,
+      "positive_count": 891,
+      "year_rates": [
+        {
+          "year": 2021,
+          "rows": 952,
+          "positive_rate": 0.21008403361344538,
+          "positives": 200
+        },
+        {
+          "year": 2022,
+          "rows": 1456,
+          "positive_rate": 0.25892857142857145,
+          "positives": 377
+        },
+        {
+          "year": 2023,
+          "rows": 1484,
+          "positive_rate": 0.21159029649595687,
+          "positives": 314
+        }
+      ],
+      "eligible": true
+    },
+    "candidates": [
+      {
+        "threshold": 0.05,
+        "rows": 3892,
+        "positive_rate": 0.35868448098663924,
+        "positive_count": 1396,
+        "year_rates": [
+          {
+            "year": 2021,
+            "rows": 952,
+            "positive_rate": 0.33718487394957986,
+            "positives": 321
+          },
+          {
+            "year": 2022,
+            "rows": 1456,
+            "positive_rate": 0.3866758241758242,
+            "positives": 563
+          },
+          {
+            "year": 2023,
+            "rows": 1484,
+            "positive_rate": 0.3450134770889488,
+            "positives": 512
+          }
+        ],
+        "eligible": true
+      },
+      {
+        "threshold": 0.1,
+        "rows": 3892,
+        "positive_rate": 0.2289311408016444,
+        "positive_count": 891,
+        "year_rates": [
+          {
+            "year": 2021,
+            "rows": 952,
+            "positive_rate": 0.21008403361344538,
+            "positives": 200
+          },
+          {
+            "year": 2022,
+            "rows": 1456,
+            "positive_rate": 0.25892857142857145,
+            "positives": 377
+          },
+          {
+            "year": 2023,
+            "rows": 1484,
+            "positive_rate": 0.21159029649595687,
+            "positives": 314
+          }
+        ],
+        "eligible": true
+      },
+      {
+        "threshold": 0.15,
+        "rows": 3892,
+        "positive_rate": 0.13232271325796505,
+        "positive_count": 515,
+        "year_rates": [
+          {
+            "year": 2021,
+            "rows": 952,
+            "positive_rate": 0.12605042016806722,
+            "positives": 120
+          },
+          {
+            "year": 2022,
+            "rows": 1456,
+            "positive_rate": 0.15315934065934067,
+            "positives": 223
+          },
+          {
+            "year": 2023,
+            "rows": 1484,
+            "positive_rate": 0.11590296495956873,
+            "positives": 172
+          }
+        ],
+        "eligible": false
+      },
+      {
+        "threshold": 0.2,
+        "rows": 3892,
+        "positive_rate": 0.07579650565262076,
+        "positive_count": 295,
+        "year_rates": [
+          {
+            "year": 2021,
+            "rows": 952,
+            "positive_rate": 0.07773109243697479,
+            "positives": 74
+          },
+          {
+            "year": 2022,
+            "rows": 1456,
+            "positive_rate": 0.08653846153846154,
+            "positives": 126
+          },
+          {
+            "year": 2023,
+            "rows": 1484,
+            "positive_rate": 0.06401617250673855,
+            "positives": 95
+          }
+        ],
+        "eligible": false
+      },
+      {
+        "threshold": 0.25,
+        "rows": 3892,
+        "positive_rate": 0.05369989722507708,
+        "positive_count": 209,
+        "year_rates": [
+          {
+            "year": 2021,
+            "rows": 952,
+            "positive_rate": 0.059873949579831935,
+            "positives": 57
+          },
+          {
+            "year": 2022,
+            "rows": 1456,
+            "positive_rate": 0.06387362637362637,
+            "positives": 93
+          },
+          {
+            "year": 2023,
+            "rows": 1484,
+            "positive_rate": 0.03975741239892183,
+            "positives": 59
+          }
+        ],
+        "eligible": false
+      }
+    ]
+  },
+  "splits": {
+    "train_rows": 3892,
+    "validation_rows": 1456,
+    "test_rows": 728,
+    "train_end": "2023-12-31",
+    "validation_year": "2024",
+    "test_start": "2025-01-05"
+  },
+  "features": [
+    "week_gap_days",
+    "log_value_t0",
+    "log_value_lag_1",
+    "log_value_lag_2",
+    "log_value_lag_3",
+    "log_value_lag_4",
+    "log_value_lag_8",
+    "log_value_lag_13",
+    "log_value_lag_26",
+    "log_value_lag_52",
+    "value_mean_4",
+    "value_std_4",
+    "value_mean_8",
+    "value_std_8",
+    "value_mean_13",
+    "value_std_13",
+    "value_mean_26",
+    "value_std_26",
+    "value_mean_52",
+    "value_std_52",
+    "value_ratio_mean4",
+    "value_ratio_mean13",
+    "value_ratio_mean52",
+    "value_pct_change1",
+    "value_pct_change4",
+    "value_pct_change13",
+    "log_count_t0",
+    "log_count_lag_1",
+    "log_count_lag_2",
+    "log_count_lag_3",
+    "log_count_lag_4",
+    "log_count_lag_8",
+    "log_count_lag_13",
+    "log_count_lag_26",
+    "log_count_lag_52",
+    "count_mean_4",
+    "count_std_4",
+    "count_mean_8",
+    "count_std_8",
+    "count_mean_13",
+    "count_std_13",
+    "count_mean_26",
+    "count_std_26",
+    "count_mean_52",
+    "count_std_52",
+    "count_ratio_mean4",
+    "count_ratio_mean13",
+    "count_ratio_mean52",
+    "count_pct_change1",
+    "count_pct_change4",
+    "count_pct_change13",
+    "national_value",
+    "national_count",
+    "national_value_pct1",
+    "national_value_pct4",
+    "national_value_mean13",
+    "national_value_ratio13",
+    "national_count_pct1",
+    "national_count_pct4",
+    "national_count_mean13",
+    "national_count_ratio13",
+    "week_sin",
+    "week_cos",
+    "year_trend",
+    "baseline4",
+    "type_City",
+    "type_Sector",
+    "entity_ABHA",
+    "entity_BURAIDAH",
+    "entity_Beverage and Food",
+    "entity_Clothing and Footwear",
+    "entity_Construction & Building Materials",
+    "entity_DAMMAM",
+    "entity_Education",
+    "entity_Electronic & Electric Devices",
+    "entity_Furniture",
+    "entity_Gas Stations",
+    "entity_HAIL",
+    "entity_Health",
+    "entity_Hotels",
+    "entity_JEDDAH",
+    "entity_Jewelry",
+    "entity_KHOBAR",
+    "entity_MADINA",
+    "entity_MAKKAH",
+    "entity_Miscellaneous Goods and Services",
+    "entity_OTHER",
+    "entity_Other",
+    "entity_Public Utilities",
+    "entity_RIYADH",
+    "entity_Recreation and Culture",
+    "entity_Restaurants & Caf\u00e9",
+    "entity_TABOUK",
+    "entity_Telecommunication",
+    "entity_Transportation"
+  ],
+  "selection": {
+    "LogisticRegression": {
+      "probability_threshold": 0.6199999999999998,
+      "validation_metrics": {
+        "Accuracy": 0.8502747252747253,
+        "BalancedAccuracy": 0.8196840334433777,
+        "Precision": 0.6765432098765433,
+        "Recall": 0.7590027700831025,
+        "F1": 0.7154046997389034,
+        "ROC_AUC": 0.8791383650185304,
+        "ConfusionMatrix": [
+          [
+            964,
+            131
+          ],
+          [
+            87,
+            274
+          ]
+        ]
+      },
+      "score": 0.8025823617837741
+    },
+    "RandomForest": {
+      "probability_threshold": 0.22999999999999993,
+      "validation_metrics": {
+        "Accuracy": 0.7623626373626373,
+        "BalancedAccuracy": 0.7649502270456241,
+        "Precision": 0.5138632162661737,
+        "Recall": 0.7700831024930748,
+        "F1": 0.6164079822616408,
+        "ROC_AUC": 0.8350598919794079,
+        "ConfusionMatrix": [
+          [
+            832,
+            263
+          ],
+          [
+            83,
+            278
+          ]
+        ]
+      },
+      "score": 0.7383268851978435
+    },
+    "ExtraTrees": {
+      "probability_threshold": 0.28499999999999986,
+      "validation_metrics": {
+        "Accuracy": 0.7788461538461539,
+        "BalancedAccuracy": 0.7517701969415247,
+        "Precision": 0.5419354838709678,
+        "Recall": 0.6980609418282548,
+        "F1": 0.6101694915254238,
+        "ROC_AUC": 0.8302558848454952,
+        "ConfusionMatrix": [
+          [
+            882,
+            213
+          ],
+          [
+            109,
+            252
+          ]
+        ]
+      },
+      "score": 0.7277993280083449
+    },
+    "HistGradientBoosting": {
+      "probability_threshold": 0.08499999999999999,
+      "validation_metrics": {
+        "Accuracy": 0.7788461538461539,
+        "BalancedAccuracy": 0.7694101873284509,
+        "Precision": 0.5387673956262425,
+        "Recall": 0.7506925207756233,
+        "F1": 0.6273148148148148,
+        "ROC_AUC": 0.8518018188947496,
+        "ConfusionMatrix": [
+          [
+            863,
+            232
+          ],
+          [
+            90,
+            271
+          ]
+        ]
+      },
+      "score": 0.7462605155832446
+    }
+  },
+  "selected_model": "LogisticRegression",
+  "selected_probability_threshold": 0.6199999999999998,
+  "test_positive_rate": 0.3228021978021978,
+  "test_metrics": {
+    "Accuracy": 0.7527472527472527,
+    "BalancedAccuracy": 0.7172327478313409,
+    "Precision": 0.6170212765957447,
+    "Recall": 0.6170212765957447,
+    "F1": 0.6170212765957447,
+    "ROC_AUC": 0.8052738336713996,
+    "ConfusionMatrix": [
+      [
+        403,
+        90
+      ],
+      [
+        90,
+        145
+      ]
+    ]
+  },
+  "majority_test_accuracy": 0.6771978021978022,
+  "acceptance_gates": {
+    "accuracy_at_least_90pct": false,
+    "balanced_accuracy_at_least_80pct": false,
+    "recall_at_least_75pct": false,
+    "f1_at_least_70pct": false,
+    "roc_auc_at_least_85pct": false,
+    "beats_majority_accuracy": true
+  },
+  "all_acceptance_gates_passed": false,
+  "leakage_controls": {
+    "shuffle": false,
+    "target_threshold_selected_without_2024_or_2025": true,
+    "model_and_probability_threshold_selected_on_2024_only": true,
+    "2025_test_used_only_once_after_selection": true,
+    "next_gap_days_excluded_from_features": true,
+    "all_features_current_or_lagged_at_origin_week": true
+  }
+}
