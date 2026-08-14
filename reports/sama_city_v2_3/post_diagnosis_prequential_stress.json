@@ -1,0 +1,917 @@
+{
+  "version": "SAMA-CITY-RISK-2.3-PREQUENTIAL-STRESS",
+  "independence_status": "NOT AN INDEPENDENT HOLDOUT: the v2.3 architecture was designed after diagnosing aggregate v2.1/v2.2 behavior on this period. Policy parameters themselves were selected only on historical OOF, not on these fresh labels.",
+  "base_model": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "policy": "SAMA-CITY-RISK-2.3.3-ROLLING-CONFORMAL",
+  "rows": 605,
+  "weeks": 55,
+  "period": {
+    "start": "2025-07-13",
+    "end": "2026-07-26"
+  },
+  "prequential_semantics": "Each week is classified first. Only after that prediction is recorded is its realized label appended for use by later weeks.",
+  "feature_contract": {
+    "frozen_feature_count": 110,
+    "only_reconstructable_missing_features": [
+      "market_decline_rate_13",
+      "market_decline_rate_26",
+      "market_decline_rate_4",
+      "market_decline_rate_52"
+    ],
+    "unexpected_missing_features_allowed": false
+  },
+  "metrics": {
+    "rows": 605,
+    "declines": 17,
+    "decline_rate": 0.02809917355371901,
+    "RED": {
+      "rows": 30,
+      "TP": 8,
+      "FP": 22,
+      "precision": 0.26666666666666666,
+      "FPR": 0.03741496598639456,
+      "recall_contribution": 0.47058823529411764
+    },
+    "AMBER": {
+      "rows": 346,
+      "declines": 8
+    },
+    "GREEN": {
+      "rows": 229,
+      "TN": 228,
+      "FN": 1,
+      "NPV": 0.9956331877729258,
+      "miss_rate": 0.058823529411764705
+    },
+    "RED_plus_AMBER": {
+      "rows": 376,
+      "TP": 16,
+      "FP": 360,
+      "precision": 0.0425531914893617,
+      "recall": 0.9411764705882353
+    }
+  },
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "gates": {
+    "red_precision": false,
+    "red_fpr": false,
+    "alert_recall": true,
+    "green_npv": true,
+    "has_red_alerts": true
+  },
+  "all_operational_gates_passed": false,
+  "by_city": {
+    "ABHA": {
+      "rows": 55,
+      "declines": 3,
+      "decline_rate": 0.05454545454545454,
+      "RED": {
+        "rows": 8,
+        "TP": 3,
+        "FP": 5,
+        "precision": 0.375,
+        "FPR": 0.09615384615384616,
+        "recall_contribution": 1.0
+      },
+      "AMBER": {
+        "rows": 32,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 15,
+        "TN": 15,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 40,
+        "TP": 3,
+        "FP": 37,
+        "precision": 0.075,
+        "recall": 1.0
+      }
+    },
+    "BURAIDAH": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 1,
+        "TP": 0,
+        "FP": 1,
+        "precision": 0.0,
+        "FPR": 0.01818181818181818,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 34,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 20,
+        "TN": 20,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 35,
+        "TP": 0,
+        "FP": 35,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "DAMMAM": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 0,
+        "TP": 0,
+        "FP": 0,
+        "precision": 0.0,
+        "FPR": 0.0,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 28,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 27,
+        "TN": 27,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 28,
+        "TP": 0,
+        "FP": 28,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "HAIL": {
+      "rows": 55,
+      "declines": 4,
+      "decline_rate": 0.07272727272727272,
+      "RED": {
+        "rows": 6,
+        "TP": 1,
+        "FP": 5,
+        "precision": 0.16666666666666666,
+        "FPR": 0.09803921568627451,
+        "recall_contribution": 0.25
+      },
+      "AMBER": {
+        "rows": 41,
+        "declines": 3
+      },
+      "GREEN": {
+        "rows": 8,
+        "TN": 8,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 47,
+        "TP": 4,
+        "FP": 43,
+        "precision": 0.0851063829787234,
+        "recall": 1.0
+      }
+    },
+    "JEDDAH": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 1,
+        "TP": 0,
+        "FP": 1,
+        "precision": 0.0,
+        "FPR": 0.01818181818181818,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 29,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 25,
+        "TN": 25,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 30,
+        "TP": 0,
+        "FP": 30,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "KHOBAR": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 0,
+        "TP": 0,
+        "FP": 0,
+        "precision": 0.0,
+        "FPR": 0.0,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 25,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 30,
+        "TN": 30,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 25,
+        "TP": 0,
+        "FP": 25,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "MADINA": {
+      "rows": 55,
+      "declines": 2,
+      "decline_rate": 0.03636363636363636,
+      "RED": {
+        "rows": 4,
+        "TP": 1,
+        "FP": 3,
+        "precision": 0.25,
+        "FPR": 0.05660377358490566,
+        "recall_contribution": 0.5
+      },
+      "AMBER": {
+        "rows": 37,
+        "declines": 1
+      },
+      "GREEN": {
+        "rows": 14,
+        "TN": 14,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 41,
+        "TP": 2,
+        "FP": 39,
+        "precision": 0.04878048780487805,
+        "recall": 1.0
+      }
+    },
+    "MAKKAH": {
+      "rows": 55,
+      "declines": 5,
+      "decline_rate": 0.09090909090909091,
+      "RED": {
+        "rows": 3,
+        "TP": 3,
+        "FP": 0,
+        "precision": 1.0,
+        "FPR": 0.0,
+        "recall_contribution": 0.6
+      },
+      "AMBER": {
+        "rows": 15,
+        "declines": 1
+      },
+      "GREEN": {
+        "rows": 37,
+        "TN": 36,
+        "FN": 1,
+        "NPV": 0.972972972972973,
+        "miss_rate": 0.2
+      },
+      "RED_plus_AMBER": {
+        "rows": 18,
+        "TP": 4,
+        "FP": 14,
+        "precision": 0.2222222222222222,
+        "recall": 0.8
+      }
+    },
+    "OTHER": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 4,
+        "TP": 0,
+        "FP": 4,
+        "precision": 0.0,
+        "FPR": 0.07272727272727272,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 40,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 11,
+        "TN": 11,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 44,
+        "TP": 0,
+        "FP": 44,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "RIYADH": {
+      "rows": 55,
+      "declines": 0,
+      "decline_rate": 0.0,
+      "RED": {
+        "rows": 0,
+        "TP": 0,
+        "FP": 0,
+        "precision": 0.0,
+        "FPR": 0.0,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 28,
+        "declines": 0
+      },
+      "GREEN": {
+        "rows": 27,
+        "TN": 27,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 28,
+        "TP": 0,
+        "FP": 28,
+        "precision": 0.0,
+        "recall": 0.0
+      }
+    },
+    "TABOUK": {
+      "rows": 55,
+      "declines": 3,
+      "decline_rate": 0.05454545454545454,
+      "RED": {
+        "rows": 3,
+        "TP": 0,
+        "FP": 3,
+        "precision": 0.0,
+        "FPR": 0.057692307692307696,
+        "recall_contribution": 0.0
+      },
+      "AMBER": {
+        "rows": 37,
+        "declines": 3
+      },
+      "GREEN": {
+        "rows": 15,
+        "TN": 15,
+        "FN": 0,
+        "NPV": 1.0,
+        "miss_rate": 0.0
+      },
+      "RED_plus_AMBER": {
+        "rows": 40,
+        "TP": 3,
+        "FP": 37,
+        "precision": 0.075,
+        "recall": 1.0
+      }
+    }
+  },
+  "weekly_diagnostics": [
+    {
+      "week_start": "2025-07-13",
+      "rows": 11,
+      "red": 0,
+      "amber": 5,
+      "green": 6,
+      "calibration_rows_before_prediction": 1144,
+      "calibration_positive_before_prediction": 71
+    },
+    {
+      "week_start": "2025-07-20",
+      "rows": 11,
+      "red": 0,
+      "amber": 2,
+      "green": 9,
+      "calibration_rows_before_prediction": 1155,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-07-27",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1166,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-08-03",
+      "rows": 11,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "calibration_rows_before_prediction": 1177,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-08-10",
+      "rows": 11,
+      "red": 1,
+      "amber": 9,
+      "green": 1,
+      "calibration_rows_before_prediction": 1188,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-08-17",
+      "rows": 11,
+      "red": 1,
+      "amber": 1,
+      "green": 9,
+      "calibration_rows_before_prediction": 1199,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-08-24",
+      "rows": 11,
+      "red": 1,
+      "amber": 0,
+      "green": 10,
+      "calibration_rows_before_prediction": 1210,
+      "calibration_positive_before_prediction": 72
+    },
+    {
+      "week_start": "2025-08-31",
+      "rows": 11,
+      "red": 1,
+      "amber": 6,
+      "green": 4,
+      "calibration_rows_before_prediction": 1221,
+      "calibration_positive_before_prediction": 73
+    },
+    {
+      "week_start": "2025-09-07",
+      "rows": 11,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "calibration_rows_before_prediction": 1232,
+      "calibration_positive_before_prediction": 74
+    },
+    {
+      "week_start": "2025-09-14",
+      "rows": 11,
+      "red": 0,
+      "amber": 5,
+      "green": 6,
+      "calibration_rows_before_prediction": 1243,
+      "calibration_positive_before_prediction": 75
+    },
+    {
+      "week_start": "2025-09-21",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1254,
+      "calibration_positive_before_prediction": 75
+    },
+    {
+      "week_start": "2025-09-28",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1265,
+      "calibration_positive_before_prediction": 75
+    },
+    {
+      "week_start": "2025-10-05",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1276,
+      "calibration_positive_before_prediction": 75
+    },
+    {
+      "week_start": "2025-10-12",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1287,
+      "calibration_positive_before_prediction": 75
+    },
+    {
+      "week_start": "2025-10-19",
+      "rows": 11,
+      "red": 0,
+      "amber": 4,
+      "green": 7,
+      "calibration_rows_before_prediction": 1298,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-10-26",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1309,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-11-02",
+      "rows": 11,
+      "red": 0,
+      "amber": 5,
+      "green": 6,
+      "calibration_rows_before_prediction": 1320,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-11-09",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1331,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-11-16",
+      "rows": 11,
+      "red": 0,
+      "amber": 4,
+      "green": 7,
+      "calibration_rows_before_prediction": 1342,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-11-23",
+      "rows": 11,
+      "red": 0,
+      "amber": 1,
+      "green": 10,
+      "calibration_rows_before_prediction": 1353,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-11-30",
+      "rows": 11,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "calibration_rows_before_prediction": 1364,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-12-07",
+      "rows": 11,
+      "red": 3,
+      "amber": 8,
+      "green": 0,
+      "calibration_rows_before_prediction": 1375,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-12-14",
+      "rows": 11,
+      "red": 1,
+      "amber": 9,
+      "green": 1,
+      "calibration_rows_before_prediction": 1386,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-12-21",
+      "rows": 11,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "calibration_rows_before_prediction": 1397,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2025-12-28",
+      "rows": 11,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "calibration_rows_before_prediction": 1408,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2026-01-04",
+      "rows": 11,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "calibration_rows_before_prediction": 1419,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2026-01-11",
+      "rows": 11,
+      "red": 5,
+      "amber": 6,
+      "green": 0,
+      "calibration_rows_before_prediction": 1430,
+      "calibration_positive_before_prediction": 77
+    },
+    {
+      "week_start": "2026-01-18",
+      "rows": 11,
+      "red": 0,
+      "amber": 8,
+      "green": 3,
+      "calibration_rows_before_prediction": 1441,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-01-25",
+      "rows": 11,
+      "red": 0,
+      "amber": 6,
+      "green": 5,
+      "calibration_rows_before_prediction": 1452,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-02-01",
+      "rows": 11,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "calibration_rows_before_prediction": 1463,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-02-08",
+      "rows": 11,
+      "red": 7,
+      "amber": 4,
+      "green": 0,
+      "calibration_rows_before_prediction": 1474,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-02-15",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1485,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-02-22",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1496,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-03-01",
+      "rows": 11,
+      "red": 0,
+      "amber": 8,
+      "green": 3,
+      "calibration_rows_before_prediction": 1507,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-03-08",
+      "rows": 11,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "calibration_rows_before_prediction": 1518,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-03-15",
+      "rows": 11,
+      "red": 4,
+      "amber": 7,
+      "green": 0,
+      "calibration_rows_before_prediction": 1529,
+      "calibration_positive_before_prediction": 78
+    },
+    {
+      "week_start": "2026-03-22",
+      "rows": 11,
+      "red": 1,
+      "amber": 10,
+      "green": 0,
+      "calibration_rows_before_prediction": 1540,
+      "calibration_positive_before_prediction": 79
+    },
+    {
+      "week_start": "2026-03-29",
+      "rows": 11,
+      "red": 1,
+      "amber": 6,
+      "green": 4,
+      "calibration_rows_before_prediction": 1551,
+      "calibration_positive_before_prediction": 80
+    },
+    {
+      "week_start": "2026-04-05",
+      "rows": 11,
+      "red": 2,
+      "amber": 9,
+      "green": 0,
+      "calibration_rows_before_prediction": 1562,
+      "calibration_positive_before_prediction": 82
+    },
+    {
+      "week_start": "2026-04-12",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1573,
+      "calibration_positive_before_prediction": 84
+    },
+    {
+      "week_start": "2026-04-19",
+      "rows": 11,
+      "red": 0,
+      "amber": 7,
+      "green": 4,
+      "calibration_rows_before_prediction": 1584,
+      "calibration_positive_before_prediction": 85
+    },
+    {
+      "week_start": "2026-04-26",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1595,
+      "calibration_positive_before_prediction": 85
+    },
+    {
+      "week_start": "2026-05-03",
+      "rows": 11,
+      "red": 0,
+      "amber": 5,
+      "green": 6,
+      "calibration_rows_before_prediction": 1606,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-05-10",
+      "rows": 11,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "calibration_rows_before_prediction": 1617,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-05-17",
+      "rows": 11,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "calibration_rows_before_prediction": 1628,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-05-24",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1639,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-05-31",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1650,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-06-07",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1661,
+      "calibration_positive_before_prediction": 86
+    },
+    {
+      "week_start": "2026-06-14",
+      "rows": 11,
+      "red": 0,
+      "amber": 11,
+      "green": 0,
+      "calibration_rows_before_prediction": 1672,
+      "calibration_positive_before_prediction": 87
+    },
+    {
+      "week_start": "2026-06-21",
+      "rows": 11,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "calibration_rows_before_prediction": 1683,
+      "calibration_positive_before_prediction": 87
+    },
+    {
+      "week_start": "2026-06-28",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1694,
+      "calibration_positive_before_prediction": 87
+    },
+    {
+      "week_start": "2026-07-05",
+      "rows": 11,
+      "red": 0,
+      "amber": 10,
+      "green": 1,
+      "calibration_rows_before_prediction": 1705,
+      "calibration_positive_before_prediction": 87
+    },
+    {
+      "week_start": "2026-07-12",
+      "rows": 11,
+      "red": 0,
+      "amber": 9,
+      "green": 2,
+      "calibration_rows_before_prediction": 1716,
+      "calibration_positive_before_prediction": 87
+    },
+    {
+      "week_start": "2026-07-19",
+      "rows": 11,
+      "red": 0,
+      "amber": 3,
+      "green": 8,
+      "calibration_rows_before_prediction": 1727,
+      "calibration_positive_before_prediction": 88
+    },
+    {
+      "week_start": "2026-07-26",
+      "rows": 11,
+      "red": 0,
+      "amber": 0,
+      "green": 11,
+      "calibration_rows_before_prediction": 1738,
+      "calibration_positive_before_prediction": 88
+    }
+  ],
+  "anti_leakage": {
+    "current_or_future_label_used_before_its_prediction": false,
+    "fresh_labels_used_only_after_prediction_for_later_weeks": true,
+    "base_model_retrained_on_fresh": false,
+    "conformal_alpha_parameters_fitted_on_fresh": false,
+    "market_prevalence_features_shifted_one_completed_origin": true
+  }
+}
