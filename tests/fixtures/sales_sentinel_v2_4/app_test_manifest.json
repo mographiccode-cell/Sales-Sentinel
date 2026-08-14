@@ -15,7 +15,7 @@
     "transaction_count_thousand"
   ],
   "input_sha256": "14b9d03f22652a8011a22fa36f34ba3988f5625cd5586f4e371e19a398f9b15c",
-  "expected_sha256": "6fc5d917dd0f7389bfd7f2aa061ae574390367962a1932a481b1626a3db41de8",
-  "expected_engine_status": "NO_DECISION",
-  "expected_prediction_rows": 0
+  "expected_sha256": "2976c49c53508e1bd634183d1b03af2280f6b1dec362cd1e769fbf30af7c72c6",
+  "expected_engine_status": "OK",
+  "expected_prediction_rows": 11
 }

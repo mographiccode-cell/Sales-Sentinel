@@ -1,8 +1,8 @@
 {
-  "engine_version": "SALES-SENTINEL-CITY-RISK-ENGINE-2.4.1",
-  "status": "NO_DECISION",
-  "state": "AMBER",
-  "reason": "SOURCE_QC_FAILED",
+  "engine_version": "SALES-SENTINEL-CITY-RISK-ENGINE-2.4.2",
+  "base_model_version": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "policy_version": "SAMA-CITY-RISK-2.4-PRIOR-SHIFT",
+  "status": "OK",
   "source_qc": {
     "latest_week": "2026-08-02 00:00:00",
     "expected_cities": [
@@ -16,11 +16,7 @@
       "MAKKAH",
       "OTHER",
       "RIYADH",
-      "TABOUK",
-      "decline_rate_104",
-      "decline_rate_13",
-      "decline_rate_26",
-      "decline_rate_52"
+      "TABOUK"
     ],
     "actual_cities": [
       "ABHA",
@@ -36,12 +32,131 @@
       "TABOUK"
     ],
     "checks": {
-      "latest_has_exact_expected_cities": false,
-      "one_row_per_latest_city": false,
+      "nonempty_expected_city_contract": true,
+      "latest_has_exact_expected_cities": true,
+      "one_row_per_latest_city": true,
       "positive_latest_values": true,
       "positive_latest_counts": true,
       "at_least_104_weeks_history_per_city": true
     },
-    "passed": false
+    "passed": true
+  },
+  "predictions": [
+    {
+      "week_start": "2026-08-02",
+      "city": "ABHA",
+      "base_probability": 0.018320825536511074,
+      "adjusted_probability": 0.017060416217166467,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.05174825174825175,
+      "effective_prior": 0.038046071353106135,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "BURAIDAH",
+      "base_probability": 0.017867902957616828,
+      "adjusted_probability": 0.010508774885721273,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.02097902097902098,
+      "effective_prior": 0.024224486819145137,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "DAMMAM",
+      "base_probability": 0.01786728960281204,
+      "adjusted_probability": 0.01050841144615415,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.02097902097902098,
+      "effective_prior": 0.024224486819145137,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "HAIL",
+      "base_probability": 0.017907116916939497,
+      "adjusted_probability": 0.02217370820488453,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.09020979020979021,
+      "effective_prior": 0.050232965023966354,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "JEDDAH",
+      "base_probability": 0.017871396344144263,
+      "adjusted_probability": 0.010510844873702064,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.02097902097902098,
+      "effective_prior": 0.024224486819145137,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "KHOBAR",
+      "base_probability": 0.017864705709129253,
+      "adjusted_probability": 0.010506880378108189,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.02097902097902098,
+      "effective_prior": 0.024224486819145137,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "MADINA",
+      "base_probability": 0.01787260619395678,
+      "adjusted_probability": 0.019014448548182666,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.06713286713286713,
+      "effective_prior": 0.04333407939812495,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "MAKKAH",
+      "base_probability": 0.01786315928051373,
+      "adjusted_probability": 0.02112816438221225,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.08251748251748252,
+      "effective_prior": 0.04804353576872075,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "OTHER",
+      "base_probability": 0.01789557422988526,
+      "adjusted_probability": 0.015349209002914725,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.044055944055944055,
+      "effective_prior": 0.03510461649793324,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "RIYADH",
+      "base_probability": 0.0178645340081235,
+      "adjusted_probability": 0.010506778638001257,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.02097902097902098,
+      "effective_prior": 0.024224486819145137,
+      "state": "GREEN"
+    },
+    {
+      "week_start": "2026-08-02",
+      "city": "TABOUK",
+      "base_probability": 0.01786667233542417,
+      "adjusted_probability": 0.016636977673219044,
+      "global_prior": 0.027972027972027972,
+      "city_prior": 0.05174825174825175,
+      "effective_prior": 0.038046071353106135,
+      "state": "GREEN"
+    }
+  ],
+  "safety": {
+    "future_label_used": false,
+    "latest_unknown_target_required": false,
+    "schema_fail_closed_to_amber": true,
+    "insufficient_history_fail_closed_to_amber": true
   }
 }

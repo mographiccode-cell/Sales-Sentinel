@@ -119,17 +119,17 @@
     },
     "permutation_sanity": {
       "n_permutations": 8,
-      "mean_auc_against_true_labels": 0.47757865928094195,
-      "max_auc_against_true_labels": 0.6047149626557106,
+      "mean_auc_against_true_labels": 0.477591785568959,
+      "max_auc_against_true_labels": 0.6047018363676936,
       "all_aucs": [
         0.43885118727275113,
         0.5414068755496633,
         0.4677552734862108,
         0.40842445164931807,
-        0.6047149626557106,
-        0.5112951708386386,
-        0.38777680059855874,
-        0.4604045521966843
+        0.6047018363676936,
+        0.5112820445506215,
+        0.3878161794626098,
+        0.4604964362128034
       ],
       "passed": true
     },
@@ -217,9 +217,9 @@
       "transaction_count_thousand"
     ],
     "input_sha256": "14b9d03f22652a8011a22fa36f34ba3988f5625cd5586f4e371e19a398f9b15c",
-    "expected_sha256": "6fc5d917dd0f7389bfd7f2aa061ae574390367962a1932a481b1626a3db41de8",
-    "expected_engine_status": "NO_DECISION",
-    "expected_prediction_rows": 0
+    "expected_sha256": "2976c49c53508e1bd634183d1b03af2280f6b1dec362cd1e769fbf30af7c72c6",
+    "expected_engine_status": "OK",
+    "expected_prediction_rows": 11
   },
   "required_next_evidence": "Prospective outcomes published after the v2.4 architecture/policy freeze must be evaluated without changing model weights, features, policy parameters, or thresholds."
 }
