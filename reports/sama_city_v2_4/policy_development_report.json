@@ -1,0 +1,118 @@
+{
+  "version": "SAMA-CITY-RISK-2.4-PRIOR-SHIFT",
+  "base_model": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "scientific_boundary": "Prior-shift method and thresholds are evaluated on historical OOF only through 2025-06-29. Consumed 2025-2026 stress outcomes are not used to estimate parameters or thresholds.",
+  "reference_prior": 0.04079254079254079,
+  "parameters": {
+    "global_lookback_weeks": 52,
+    "city_lookback_weeks": 104,
+    "city_prior_strength": 26.0,
+    "prior_floor": 0.003,
+    "prior_ceil": 0.2
+  },
+  "policy_rows": 286,
+  "policy_decline_rate": 0.1258741258741259,
+  "observed_prior_range": {
+    "global_min": 0.050699300699300696,
+    "global_max": 0.07867132867132867,
+    "city_min": 0.022506619593998238,
+    "city_max": 0.12135506003430531,
+    "effective_min": 0.03377972579108495,
+    "effective_max": 0.09530125695446148
+  },
+  "thresholds": {
+    "watch": 0.023979822506159636,
+    "red": 0.163
+  },
+  "historical_RED": {
+    "TP": 19,
+    "FP": 1,
+    "FN": 17,
+    "TN": 249,
+    "precision": 0.95,
+    "recall": 0.5277777777777778,
+    "FPR": 0.004,
+    "NPV": 0.9360902255639098
+  },
+  "historical_RED_plus_AMBER": {
+    "TP": 36,
+    "FP": 172,
+    "FN": 0,
+    "TN": 78,
+    "precision": 0.17307692307692307,
+    "recall": 1.0,
+    "FPR": 0.688,
+    "NPV": 1.0
+  },
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "gates": {
+    "red_precision": true,
+    "red_fpr": true,
+    "alert_recall": true,
+    "green_npv": true
+  },
+  "all_gates_passed": true,
+  "folds": [
+    {
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "train_rows": 935,
+      "validation_rows": 143
+    },
+    {
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "train_rows": 1210,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "train_rows": 1507,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "train_rows": 1650,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "train_rows": 1793,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "train_rows": 1936,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "train_rows": 2079,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "train_rows": 2222,
+      "validation_rows": 143
+    }
+  ],
+  "controls": {
+    "prior_estimate_uses_only_past_realized_labels": true,
+    "city_prior_shrunk_to_current_global_prior": true,
+    "no_fresh_2025_2026_labels_used": true,
+    "no_base_model_retraining": true
+  }
+}
