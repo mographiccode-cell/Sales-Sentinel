@@ -1,0 +1,55 @@
+name: Retrain sales decline v1.6 with SAMA forecast
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/retrain_sales_decline_with_sama_forecast_v1_6.py'
+      - '.github/workflows/retrain-sales-decline-v1-6.yml'
+      - 'data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv'
+      - 'reports/sama_market_v1_6/sama_market_forecaster_report_v1_6.json'
+
+permissions:
+  contents: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Verify SAMA forecast products
+        run: |
+          test -f data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
+          test -f reports/sama_market_v1_6/sama_market_forecaster_report_v1_6.json
+      - name: Nested walk-forward decline retraining
+        run: python scripts/retrain_sales_decline_with_sama_forecast_v1_6.py
+      - name: Upload v1.6 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-decline-v1-6-sama-forecast
+          if-no-files-found: warn
+          path: |
+            models/saudi_v1_6/**
+            reports/saudi_v1_6/**
+      - name: Persist v1.6 model and reports
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/saudi_v1_6 reports/saudi_v1_6
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist SAMA-forecast-augmented decline v1.6 [skip ci]'
+            git push origin main
+          fi
