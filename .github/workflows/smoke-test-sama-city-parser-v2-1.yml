@@ -1,0 +1,35 @@
+name: Smoke Test SAMA City Parser v2.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/smoke_test_sama_city_parser_v2_1.py'
+      - '.github/workflows/smoke-test-sama-city-parser-v2-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
+      - run: |
+          python scripts/build_sama_city_history_v2_1.py
+          python scripts/smoke_test_sama_city_parser_v2_1.py
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_1/city_parser_smoke_test.json
+          git diff --cached --quiet || git commit -m 'test: persist SAMA city parser smoke result'
+          git pull --rebase origin main
+          git push origin HEAD:main
