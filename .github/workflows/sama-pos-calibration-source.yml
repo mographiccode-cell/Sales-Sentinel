@@ -1,0 +1,43 @@
+name: SAMA POS official calibration source
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch_sama_pos_calibration.py'
+      - '.github/workflows/sama-pos-calibration-source.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pandas==2.2.3 requests
+      - name: Download and validate SAMA weekly POS data
+        run: python scripts/fetch_sama_pos_calibration.py
+      - name: Upload SAMA source evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sama-pos-official-calibration-source
+          path: |
+            data/sama_pos/**
+            reports/sama_pos/**
+      - name: Persist normalized SAMA calibration tables
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/sama_pos/sama_pos_2023_2025_normalized.csv data/sama_pos/sama_pos_national_weekly_total_2023_2025.csv data/sama_pos/sama_pos_national_weekly_by_sector_2023_2025.csv reports/sama_pos/source_manifest.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: persist verified SAMA POS calibration source [skip ci]'
+            git push origin main
+          fi
