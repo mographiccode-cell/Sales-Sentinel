@@ -1,0 +1,41 @@
+name: Diagnose Stress Conformal v2.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/run_stress_test_conformal_policy_v2_3_diagnostic.py'
+      - '.github/workflows/diagnose-stress-conformal-v2-3.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Run diagnostic wrapper
+        run: python scripts/run_stress_test_conformal_policy_v2_3_diagnostic.py
+      - name: Persist status and any stress report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_3/stress_execution_status.json
+          if [ -f reports/sama_city_v2_3/post_diagnosis_prequential_stress.json ]; then git add reports/sama_city_v2_3/post_diagnosis_prequential_stress.json; fi
+          if [ -f reports/sama_city_v2_3/post_diagnosis_prequential_stress.md ]; then git add reports/sama_city_v2_3/post_diagnosis_prequential_stress.md; fi
+          git diff --cached --quiet || git commit -m 'test: persist v2.3 stress execution diagnostics'
+          git stash push --include-untracked -m 'ci-generated-nondiagnostic-artifacts' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
