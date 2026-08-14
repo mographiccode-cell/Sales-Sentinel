@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/scrape_sama_recent_pos_reports_v2_0.py'
       - 'scripts/parse_sama_recent_pos_reports_v2_0.py'
+      - 'scripts/parse_sama_recent_national_totals_v2_0.py'
       - '.github/workflows/sama-recent-holdout-v2-0.yml'
 
 permissions:
@@ -30,15 +31,18 @@ jobs:
           pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
       - name: Scrape and download recent official SAMA reports
         run: python scripts/scrape_sama_recent_pos_reports_v2_0.py
-      - name: Parse and quality-gate unseen holdout
+      - name: Parse and quality-gate unseen sector holdout
         run: python scripts/parse_sama_recent_pos_reports_v2_0.py
+      - name: Parse and quality-gate national totals
+        run: python scripts/parse_sama_recent_national_totals_v2_0.py
       - name: Show evidence
         run: |
           python - <<'PY'
           import json
           s=json.load(open('reports/sama_recent_v2_0/source_manifest.json',encoding='utf-8'))
           p=json.load(open('reports/sama_recent_v2_0/parse_audit.json',encoding='utf-8'))
-          assert p['all_checks_passed'] is True
+          n=json.load(open('reports/sama_recent_v2_0/national_parse_audit.json',encoding='utf-8'))
+          assert p['all_checks_passed'] is True and n['all_checks_passed'] is True
           print(json.dumps({
             'downloaded_pdfs':s['downloaded_pdfs'],
             'pdfs_parsed':p['pdfs_parsed'],
@@ -47,7 +51,9 @@ jobs:
             'holdout_sectors':p['holdout_sector_count'],
             'date_start':p['date_start'],
             'date_end':p['date_end'],
-            'checks':p['checks'],
+            'national_weeks':n['weeks'],
+            'sector_checks':p['checks'],
+            'national_checks':n['checks'],
           },indent=2))
           PY
       - uses: actions/upload-artifact@v4
@@ -58,12 +64,15 @@ jobs:
             reports/sama_recent_v2_0/**
             data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv
             data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv
+            data/sama_pos/sama_national_weekly_value_count_2025_2026_holdout.csv
+            data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv
+            data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv
           retention-days: 30
       - name: Persist compact evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add reports/sama_recent_v2_0/source_manifest.json reports/sama_recent_v2_0/parse_audit.json data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv
-          git diff --cached --quiet || git commit -m 'data: persist quality-gated unseen SAMA holdout'
+          git add reports/sama_recent_v2_0/source_manifest.json reports/sama_recent_v2_0/parse_audit.json reports/sama_recent_v2_0/national_parse_audit.json data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv data/sama_pos/sama_national_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv
+          git diff --cached --quiet || git commit -m 'data: persist quality-gated unseen SAMA holdout with national totals'
           git pull --rebase origin main
           git push origin HEAD:main
