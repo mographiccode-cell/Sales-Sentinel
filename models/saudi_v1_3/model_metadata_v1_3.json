@@ -1,5 +1,5 @@
 {
-  "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+  "version": "SA-LOCALIZATION-1.3.1-SAMA-SAFE",
   "training_target_sales": "base_net_sales_sar",
   "scenario_sales_is_not_a_training_target": true,
   "customer_target_uses_only_observed_source_customer_ids": true,
@@ -64,32 +64,32 @@
     "selected_ml_model": "ExtraTrees",
     "validation": {
       "SeasonalNaive7": {
-        "WAPE": 0.5717690193848368,
-        "MAE": 92953.76033333335
+        "WAPE": 0.5398214736939534,
+        "MAE": 85835.3255
       },
       "Ridge": {
-        "WAPE": 0.5667816115064247,
-        "MAE": 92142.94634919465
+        "WAPE": 0.38762242917861983,
+        "MAE": 61634.63107899743
       },
       "ExtraTrees": {
-        "WAPE": 0.3758835415644095,
-        "MAE": 61108.22281594445
+        "WAPE": 0.3758342454851934,
+        "MAE": 59760.22882994443
       },
       "HistGradientBoosting": {
-        "WAPE": 0.3998014612852117,
-        "MAE": 64996.612186518156
+        "WAPE": 0.41293917970044947,
+        "MAE": 65660.16846040872
       }
     },
     "test": {
-      "MAE": 51990.033087944474,
-      "RMSE": 110806.23027224011,
-      "WAPE": 0.30168794873174587,
-      "R2": -0.022266723964430968
+      "MAE": 41867.19475866668,
+      "RMSE": 53812.018785428816,
+      "WAPE": 0.2638205540767736,
+      "R2": 0.08366460168669021
     }
   },
   "classification": {
     "selected_model": "LogisticRegression",
-    "selected_threshold": 0.3999999999999999,
+    "selected_threshold": 0.44499999999999995,
     "validation": {
       "Dummy": {
         "Accuracy": 0.8,
@@ -97,9 +97,9 @@
         "F1": 0.0
       },
       "LogisticRegression": {
-        "Accuracy": 0.8166666666666667,
-        "BalancedAccuracy": 0.6666666666666666,
-        "F1": 0.47619047619047616
+        "Accuracy": 0.8333333333333334,
+        "BalancedAccuracy": 0.7708333333333333,
+        "F1": 0.6153846153846154
       },
       "ExtraTrees": {
         "Accuracy": 0.8166666666666667,
@@ -107,21 +107,27 @@
         "F1": 0.15384615384615385
       },
       "HistGradientBoosting": {
-        "Accuracy": 0.7833333333333333,
-        "BalancedAccuracy": 0.5208333333333334,
-        "F1": 0.13333333333333333
+        "Accuracy": 0.8166666666666667,
+        "BalancedAccuracy": 0.5729166666666666,
+        "F1": 0.26666666666666666
       }
     },
     "test": {
-      "Accuracy": 0.6666666666666666,
-      "BalancedAccuracy": 0.76,
-      "Precision": 0.32142857142857145,
-      "Recall": 0.9,
-      "F1": 0.47368421052631576,
-      "ROC_AUC": 0.862
+      "Accuracy": 0.75,
+      "BalancedAccuracy": 0.73,
+      "Precision": 0.3684210526315789,
+      "Recall": 0.7,
+      "F1": 0.4827586206896552,
+      "ROC_AUC": 0.834
     }
   },
   "sales_target": "sama_calibrated_net_sales_sar",
   "SAMA_same_week_indicator_used_as_model_feature": false,
-  "SAMA_role": "historical aggregate target calibration only; future SAMA values are unavailable at prediction time"
+  "SAMA_role": "historical aggregate target calibration only; future SAMA values are unavailable at prediction time",
+  "safe_sector_tilt": {
+    "power": 0.15,
+    "min": 0.8,
+    "max": 1.25
+  },
+  "partial_week_coverage_scaling": true
 }

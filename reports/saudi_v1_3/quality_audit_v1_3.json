@@ -1,6 +1,6 @@
 {
   "dataset": "Saudi-localized synthetic merchant microdata calibrated to official SAMA weekly POS aggregates",
-  "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+  "version": "SA-LOCALIZATION-1.3.1-SAMA-SAFE",
   "scientific_boundary": "Row-level transactions originate from UCI Online Retail II. SAMA provides official aggregate Saudi market calibration only; rows are not observed Saudi merchant transactions.",
   "sources": {
     "UCI_Online_Retail_II_DOI": "10.24432/C5CG6D",
@@ -40,10 +40,11 @@
   "method": {
     "calendar": "604 observed UCI business dates are mapped chronologically to consecutive Saudi training-safe dates starting 2023-01-01; inherited UK closed days are not retained as zero-sales Saudi days.",
     "national_weekly_calibration": "Scale merchant weekly sales to the relative week-to-week shape of official SAMA national POS transaction value, while preserving merchant-sized median scale.",
-    "sector_calibration": "Blend 35% official SAMA mapped-sector share with 65% localized merchant category share, then normalize within each week.",
+    "sector_calibration": "SAMA mapped-sector relative tilt uses power=0.15, clipped to 0.80\u20131.25, then normalized within each week so official SAMA national weekly shape is preserved without extreme category inflation.",
     "payment": "Rank invoices deterministically within each year and assign exactly round(target_share * invoices) as Electronic, avoiding Monte-Carlo/hash-share drift.",
     "customer_decline": "Counts only ObservedSourceCustomerID / ObservedSaudiCustomerID; invoice fallback identities are excluded.",
-    "leakage": "Same-week SAMA official values construct historical targets but are not model features. Forecast features are lagged historical merchant observations only."
+    "leakage": "Same-week SAMA official values construct historical targets but are not model features. Forecast features are lagged historical merchant observations only.",
+    "partial_weeks": "Partial final SAMA weeks are scaled by observed-day coverage rather than being forced to a full-week target."
   },
   "cleaning": {
     "raw_rows": 1067371,
@@ -109,11 +110,11 @@
         "absolute_difference": 9.824706551531115e-06
       }
     },
-    "factor_min": 0.227682636421467,
-    "factor_p01": 0.27075482732280237,
-    "factor_median": 0.8185749406570509,
-    "factor_p99": 4.579675440284365,
-    "factor_max": 5576.266891781241
+    "factor_min": 0.26814327639729457,
+    "factor_p01": 0.31023095221819114,
+    "factor_median": 0.899806590787831,
+    "factor_p99": 1.7986642087756852,
+    "factor_max": 2.4232204519403906
   },
   "exact_payment_precheck": {
     "2023": {
@@ -133,20 +134,23 @@
   },
   "weekly_match": {
     "full_weeks_checked": 86,
-    "max_relative_error_full_week": 1.6876020984510912e-08,
-    "median_relative_error_full_week": 4.764975960333558e-09
+    "max_relative_error_full_week": 1.6821721520284992e-08,
+    "median_relative_error_full_week": 4.818163230933307e-09
   },
   "sector_factor_distribution": {
     "count": 696.0,
-    "mean": 15.749813792953958,
-    "std": 212.75504064736063,
-    "min": 0.227682636421467,
-    "1%": 0.33817694426726375,
-    "5%": 0.4431218413851369,
-    "50%": 1.0653621459714138,
-    "95%": 39.09058830425146,
-    "99%": 143.08307814913658,
-    "max": 5576.266891781241
+    "mean": 1.0631188787820025,
+    "std": 0.3699767203654454,
+    "min": 0.26814327639729457,
+    "1%": 0.3528883636633504,
+    "5%": 0.48725824386082023,
+    "50%": 1.0520621582603584,
+    "95%": 1.6718152622205653,
+    "99%": 2.0597142023393302,
+    "max": 2.4232204519403906,
+    "partial_weeks": 1,
+    "tilt_min_bound": 0.8,
+    "tilt_max_bound": 1.25
   },
   "checks": {
     "sama_source_passed": true,
@@ -160,17 +164,21 @@
     "training_period_has_at_least_500_days": true,
     "observed_customers_only_for_customer_target": true,
     "scenario_multiplier_not_sales_training_target": true,
-    "same_week_sama_not_used_as_prediction_feature": true
+    "same_week_sama_not_used_as_prediction_feature": true,
+    "factor_max_below_10": true,
+    "factor_p99_below_5": true,
+    "partial_week_scaled_by_coverage": true,
+    "sector_tilt_is_bounded": true
   },
   "all_tests_passed": true,
   "artifacts": {
-    "full_microdata_sha256": "01121db1e39e9ef665c46de3bbc5472dc55c856ef4022cdd2de0bf6fdacccfd6",
-    "daily_sha256": "4d08d392944acdef2f8ef67ddc7d7882c06c421af8e00a5335c66be03e0ef266",
-    "weekly_calibration_sha256": "7318c91fb464b603c1ab26607206f24743fc0afd06284feaa61e80bd9060fdd9",
-    "sector_calibration_sha256": "ca742d1ce2c37b435cc6e307a3102e3bfab5371555306ba7992afef3df97a7a1"
+    "full_microdata_sha256": "e5bc4bf0181c067e05a516393f6f50e4739122bc8348ce045bdcf27c2ea9f524",
+    "daily_sha256": "a74a5bb0e0a0046a74c9537c5d33feb36ebb0ce348c25a6380bac41c2075a95b",
+    "weekly_calibration_sha256": "086145b5848a399816a568ffb8b3bf9401cfd0d960b9e1790d4df5f43d7a6f4b",
+    "sector_calibration_sha256": "6d43fd269b574b1ca3949cdb9bece7455639acfb472d9060f72a04f41879619e"
   },
   "model_training": {
-    "version": "SA-LOCALIZATION-1.3-SAMA-CALIBRATED",
+    "version": "SA-LOCALIZATION-1.3.1-SAMA-SAFE",
     "training_target_sales": "base_net_sales_sar",
     "scenario_sales_is_not_a_training_target": true,
     "customer_target_uses_only_observed_source_customer_ids": true,
@@ -235,32 +243,32 @@
       "selected_ml_model": "ExtraTrees",
       "validation": {
         "SeasonalNaive7": {
-          "WAPE": 0.5717690193848368,
-          "MAE": 92953.76033333335
+          "WAPE": 0.5398214736939534,
+          "MAE": 85835.3255
         },
         "Ridge": {
-          "WAPE": 0.5667816115064247,
-          "MAE": 92142.94634919465
+          "WAPE": 0.38762242917861983,
+          "MAE": 61634.63107899743
         },
         "ExtraTrees": {
-          "WAPE": 0.3758835415644095,
-          "MAE": 61108.22281594445
+          "WAPE": 0.3758342454851934,
+          "MAE": 59760.22882994443
         },
         "HistGradientBoosting": {
-          "WAPE": 0.3998014612852117,
-          "MAE": 64996.612186518156
+          "WAPE": 0.41293917970044947,
+          "MAE": 65660.16846040872
         }
       },
       "test": {
-        "MAE": 51990.033087944474,
-        "RMSE": 110806.23027224011,
-        "WAPE": 0.30168794873174587,
-        "R2": -0.022266723964430968
+        "MAE": 41867.19475866668,
+        "RMSE": 53812.018785428816,
+        "WAPE": 0.2638205540767736,
+        "R2": 0.08366460168669021
       }
     },
     "classification": {
       "selected_model": "LogisticRegression",
-      "selected_threshold": 0.3999999999999999,
+      "selected_threshold": 0.44499999999999995,
       "validation": {
         "Dummy": {
           "Accuracy": 0.8,
@@ -268,9 +276,9 @@
           "F1": 0.0
         },
         "LogisticRegression": {
-          "Accuracy": 0.8166666666666667,
-          "BalancedAccuracy": 0.6666666666666666,
-          "F1": 0.47619047619047616
+          "Accuracy": 0.8333333333333334,
+          "BalancedAccuracy": 0.7708333333333333,
+          "F1": 0.6153846153846154
         },
         "ExtraTrees": {
           "Accuracy": 0.8166666666666667,
@@ -278,18 +286,18 @@
           "F1": 0.15384615384615385
         },
         "HistGradientBoosting": {
-          "Accuracy": 0.7833333333333333,
-          "BalancedAccuracy": 0.5208333333333334,
-          "F1": 0.13333333333333333
+          "Accuracy": 0.8166666666666667,
+          "BalancedAccuracy": 0.5729166666666666,
+          "F1": 0.26666666666666666
         }
       },
       "test": {
-        "Accuracy": 0.6666666666666666,
-        "BalancedAccuracy": 0.76,
-        "Precision": 0.32142857142857145,
-        "Recall": 0.9,
-        "F1": 0.47368421052631576,
-        "ROC_AUC": 0.862
+        "Accuracy": 0.75,
+        "BalancedAccuracy": 0.73,
+        "Precision": 0.3684210526315789,
+        "Recall": 0.7,
+        "F1": 0.4827586206896552,
+        "ROC_AUC": 0.834
       }
     },
     "sales_target": "sama_calibrated_net_sales_sar",

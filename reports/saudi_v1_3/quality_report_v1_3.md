@@ -1,6 +1,6 @@
 # Sales Sentinel — Saudi v1.3 SAMA-Calibrated Quality Report
 
-- Version: **SA-LOCALIZATION-1.3-SAMA-CALIBRATED**
+- Version: **SA-LOCALIZATION-1.3.1-SAMA-SAFE**
 - UCI raw rows: **1,067,371**
 - Clean/localized rows: **1,049,042**
 - Unique observed source customers: **5,939**
