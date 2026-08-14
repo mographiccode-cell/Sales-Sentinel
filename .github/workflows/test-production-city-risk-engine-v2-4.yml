@@ -1,0 +1,32 @@
+name: Test Production City Risk Engine v2.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/production_city_risk_engine_v2_4.py'
+      - 'tests/test_production_city_risk_engine_v2_4.py'
+      - '.github/workflows/test-production-city-risk-engine-v2-4.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Run production inference parity and leakage tests
+        run: pytest -q tests/test_production_city_risk_engine_v2_4.py
+      - name: Smoke-run latest-week production inference
+        run: python scripts/production_city_risk_engine_v2_4.py
