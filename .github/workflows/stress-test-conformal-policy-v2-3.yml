@@ -1,0 +1,60 @@
+name: Stress Test Conformal Policy v2.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'models/sama_city_v2_3/conformal_policy_v2_3.joblib'
+      - 'scripts/stress_test_conformal_policy_v2_3.py'
+      - '.github/workflows/stress-test-conformal-policy-v2-3.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  stress:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Verify frozen base and historical-only conformal policy
+        run: |
+          python - <<'PY'
+          import json, joblib
+          b=json.load(open('reports/sama_city_v2_2/development_report.json',encoding='utf-8'))
+          p=json.load(open('reports/sama_city_v2_3/policy_development_report.json',encoding='utf-8'))
+          a=joblib.load('models/sama_city_v2_3/conformal_policy_v2_3.joblib')
+          assert b['all_gates_passed'] is True
+          assert b['leakage_controls']['fresh_2025_2026_used'] is False
+          assert p['all_policy_gates_passed'] is True
+          assert p['controls']['fresh_2025_2026_used_to_select_policy_parameters'] is False
+          assert str(a['version']).startswith('SAMA-CITY-RISK-2.3')
+          PY
+      - name: Run prequential post-diagnosis stress test
+        run: python scripts/stress_test_conformal_policy_v2_3.py
+      - name: Show evidence
+        run: cat reports/sama_city_v2_3/post_diagnosis_prequential_stress.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sama-city-risk-v2-3-prequential-stress
+          path: reports/sama_city_v2_3/**
+          retention-days: 30
+      - name: Persist stress-test evidence only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_3/post_diagnosis_prequential_stress.json reports/sama_city_v2_3/post_diagnosis_prequential_stress.md
+          git diff --cached --quiet || git commit -m 'ml: persist v2.3 prequential stress-test evidence'
+          git stash push --include-untracked -m 'ci-generated-nonstress-artifacts' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
