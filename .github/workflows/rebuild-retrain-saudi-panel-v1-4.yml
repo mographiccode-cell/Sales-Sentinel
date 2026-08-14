@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'requirements-training.txt'
       - 'scripts/build_train_saudi_panel_v1_4.py'
       - 'scripts/build_train_saudi_panel_v1_4_1.py'
       - '.github/workflows/rebuild-retrain-saudi-panel-v1-4.yml'
