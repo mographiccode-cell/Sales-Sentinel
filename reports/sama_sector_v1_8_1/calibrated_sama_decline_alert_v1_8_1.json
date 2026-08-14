@@ -1,0 +1,66 @@
+{
+  "version": "SAMA-SECTOR-DECLINE-1.8.1",
+  "true_target": "actual next official SAMA sector week >=20% below trailing four-week baseline",
+  "alert_threshold_selected_on_2023_only": 0.14500000000000018,
+  "interpretation": "Raise a decline alert when forecasted sector decline is >= 14.50%; the true event remains fixed at >=20%.",
+  "validation_2023": {
+    "rows": 901,
+    "positive_rate": 0.08990011098779134,
+    "metrics": {
+      "Accuracy": 0.9012208657047724,
+      "BalancedAccuracy": 0.7065191207467629,
+      "Precision": 0.4523809523809524,
+      "Recall": 0.4691358024691358,
+      "F1": 0.46060606060606063,
+      "ROC_AUC": 0.7626769045468234,
+      "ConfusionMatrix": [
+        [
+          774,
+          46
+        ],
+        [
+          43,
+          38
+        ]
+      ]
+    }
+  },
+  "test_2024_2025": {
+    "rows": 1326,
+    "positive_rate": 0.11010558069381599,
+    "metrics": {
+      "Accuracy": 0.8996983408748115,
+      "BalancedAccuracy": 0.7485837009519387,
+      "Precision": 0.5436241610738255,
+      "Recall": 0.5547945205479452,
+      "F1": 0.5491525423728814,
+      "ROC_AUC": 0.8661887624796842,
+      "ConfusionMatrix": [
+        [
+          1112,
+          68
+        ],
+        [
+          65,
+          81
+        ]
+      ]
+    }
+  },
+  "majority_test_accuracy": 0.889894419306184,
+  "acceptance_gates": {
+    "accuracy_at_least_90pct": false,
+    "balanced_accuracy_at_least_75pct": false,
+    "recall_at_least_55pct": true,
+    "f1_at_least_55pct": false,
+    "roc_auc_at_least_85pct": true,
+    "beats_majority": true
+  },
+  "all_gates_passed": false,
+  "leakage_controls": {
+    "target_never_changed": true,
+    "alert_threshold_selected_only_on_2023": true,
+    "2024_2025_not_used_for_threshold": true,
+    "forecast_is_walk_forward": true
+  }
+}
