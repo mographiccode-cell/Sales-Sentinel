@@ -1,0 +1,743 @@
+{
+  "version": "SAMA-CITY-RISK-2.1-FRESH-EVAL",
+  "frozen_model_version": "SAMA-CITY-MARKET-RISK-2.1-FROZEN",
+  "model_frozen_before_holdout": true,
+  "holdout_source": "Official SAMA City Total weekly POS PDFs, post-development",
+  "rows": 605,
+  "cities": 11,
+  "origin_start": "2025-07-13",
+  "origin_end": "2026-07-26",
+  "fixed_thresholds": {
+    "watch": 0.02541296508586037,
+    "red": 0.36622600430367996
+  },
+  "triage": {
+    "rows": 605,
+    "declines": 17,
+    "decline_rate": 0.02809917355371901,
+    "RED": {
+      "rows": 24,
+      "TP": 8,
+      "FP": 16,
+      "precision": 0.3333333333333333,
+      "precision_wilson95": [
+        0.17971978688379642,
+        0.5329404050591954
+      ],
+      "FPR": 0.027210884353741496,
+      "recall_contribution": 0.47058823529411764
+    },
+    "AMBER": {
+      "rows": 149,
+      "declines": 7,
+      "positive_rate": 0.04697986577181208
+    },
+    "GREEN": {
+      "rows": 432,
+      "TN": 430,
+      "FN": 2,
+      "NPV": 0.9953703703703703,
+      "NPV_wilson95": [
+        0.9832786467146731,
+        0.9987294956930272
+      ],
+      "miss_rate": 0.11764705882352941
+    },
+    "RED_plus_AMBER": {
+      "rows": 173,
+      "TP": 15,
+      "FP": 158,
+      "precision": 0.08670520231213873,
+      "recall": 0.8823529411764706,
+      "recall_wilson95": [
+        0.6566315750229009,
+        0.967120919987079
+      ]
+    }
+  },
+  "ranking": {
+    "ROC_AUC": 0.8621448579431773,
+    "PR_AUC": 0.3724115876373336
+  },
+  "calibration": {
+    "Brier": 0.027150689828099994
+  },
+  "acceptance": {
+    "red_precision_min": 0.7,
+    "red_false_positive_rate_max": 0.05,
+    "alert_recall_min": 0.9,
+    "green_npv_min": 0.98,
+    "roc_auc_min": 0.85,
+    "pr_auc_min": 0.4
+  },
+  "gates": {
+    "red_precision": false,
+    "red_fpr": true,
+    "alert_recall": false,
+    "green_npv": true,
+    "roc_auc": true,
+    "pr_auc": false
+  },
+  "all_gates_passed": false,
+  "temporal_stability": {
+    "FIRST": {
+      "rows": 308,
+      "triage": {
+        "rows": 308,
+        "declines": 7,
+        "decline_rate": 0.022727272727272728,
+        "RED": {
+          "rows": 6,
+          "TP": 3,
+          "FP": 3,
+          "precision": 0.5,
+          "precision_wilson95": [
+            0.18761280689940868,
+            0.8123871931005913
+          ],
+          "FPR": 0.009966777408637873,
+          "recall_contribution": 0.42857142857142855
+        },
+        "AMBER": {
+          "rows": 53,
+          "declines": 3,
+          "positive_rate": 0.05660377358490566
+        },
+        "GREEN": {
+          "rows": 249,
+          "TN": 248,
+          "FN": 1,
+          "NPV": 0.9959839357429718,
+          "NPV_wilson95": [
+            0.9776054747856011,
+            0.9992907321676849
+          ],
+          "miss_rate": 0.14285714285714285
+        },
+        "RED_plus_AMBER": {
+          "rows": 59,
+          "TP": 6,
+          "FP": 53,
+          "precision": 0.1016949152542373,
+          "recall": 0.8571428571428571,
+          "recall_wilson95": [
+            0.48686549668097007,
+            0.9743210440510253
+          ]
+        }
+      },
+      "ROC_AUC": 0.9193165638348362,
+      "PR_AUC": 0.5573488339617372
+    },
+    "SECOND": {
+      "rows": 297,
+      "triage": {
+        "rows": 297,
+        "declines": 10,
+        "decline_rate": 0.03367003367003367,
+        "RED": {
+          "rows": 18,
+          "TP": 5,
+          "FP": 13,
+          "precision": 0.2777777777777778,
+          "precision_wilson95": [
+            0.12499569146355474,
+            0.5087307754619452
+          ],
+          "FPR": 0.04529616724738676,
+          "recall_contribution": 0.5
+        },
+        "AMBER": {
+          "rows": 96,
+          "declines": 4,
+          "positive_rate": 0.041666666666666664
+        },
+        "GREEN": {
+          "rows": 183,
+          "TN": 182,
+          "FN": 1,
+          "NPV": 0.994535519125683,
+          "NPV_wilson95": [
+            0.9697002564186018,
+            0.9990347576253801
+          ],
+          "miss_rate": 0.1
+        },
+        "RED_plus_AMBER": {
+          "rows": 114,
+          "TP": 9,
+          "FP": 105,
+          "precision": 0.07894736842105263,
+          "recall": 0.9,
+          "recall_wilson95": [
+            0.5958436145024278,
+            0.9821242504842788
+          ]
+        }
+      },
+      "ROC_AUC": 0.8195121951219512,
+      "PR_AUC": 0.2348624995116307
+    }
+  },
+  "by_city": {
+    "ABHA": {
+      "rows": 55,
+      "declines": 3,
+      "triage": {
+        "rows": 55,
+        "declines": 3,
+        "decline_rate": 0.05454545454545454,
+        "RED": {
+          "rows": 4,
+          "TP": 2,
+          "FP": 2,
+          "precision": 0.5,
+          "precision_wilson95": [
+            0.15003570882017148,
+            0.8499642911798285
+          ],
+          "FPR": 0.038461538461538464,
+          "recall_contribution": 0.6666666666666666
+        },
+        "AMBER": {
+          "rows": 19,
+          "declines": 1,
+          "positive_rate": 0.05263157894736842
+        },
+        "GREEN": {
+          "rows": 32,
+          "TN": 32,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.8928172849426366,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 23,
+          "TP": 3,
+          "FP": 20,
+          "precision": 0.13043478260869565,
+          "recall": 1.0,
+          "recall_wilson95": [
+            0.43849391955098227,
+            1
+          ]
+        }
+      },
+      "ROC_AUC": 0.9807692307692307,
+      "PR_AUC": 0.8333333333333333
+    },
+    "BURAIDAH": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 0,
+          "TP": 0,
+          "FP": 0,
+          "precision": 0.0,
+          "precision_wilson95": [
+            null,
+            null
+          ],
+          "FPR": 0.0,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 10,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 45,
+          "TN": 45,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9213457380593594,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 10,
+          "TP": 0,
+          "FP": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "DAMMAM": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 1,
+          "TP": 0,
+          "FP": 1,
+          "precision": 0.0,
+          "precision_wilson95": [
+            0,
+            0.7934567085261071
+          ],
+          "FPR": 0.01818181818181818,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 9,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 45,
+          "TN": 45,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9213457380593594,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 10,
+          "TP": 0,
+          "FP": 10,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "HAIL": {
+      "rows": 55,
+      "declines": 4,
+      "triage": {
+        "rows": 55,
+        "declines": 4,
+        "decline_rate": 0.07272727272727272,
+        "RED": {
+          "rows": 3,
+          "TP": 1,
+          "FP": 2,
+          "precision": 0.3333333333333333,
+          "precision_wilson95": [
+            0.0614903152761605,
+            0.7923450448735121
+          ],
+          "FPR": 0.0392156862745098,
+          "recall_contribution": 0.25
+        },
+        "AMBER": {
+          "rows": 25,
+          "declines": 3,
+          "positive_rate": 0.12
+        },
+        "GREEN": {
+          "rows": 27,
+          "TN": 27,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.8754409628553641,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 28,
+          "TP": 4,
+          "FP": 24,
+          "precision": 0.14285714285714285,
+          "recall": 1.0,
+          "recall_wilson95": [
+            0.5100999795960008,
+            1
+          ]
+        }
+      },
+      "ROC_AUC": 0.8284313725490196,
+      "PR_AUC": 0.25443510737628383
+    },
+    "JEDDAH": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 2,
+          "TP": 0,
+          "FP": 2,
+          "precision": 0.0,
+          "precision_wilson95": [
+            0,
+            0.6576280471103807
+          ],
+          "FPR": 0.03636363636363636,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 10,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 43,
+          "TN": 43,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9179874299767729,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 12,
+          "TP": 0,
+          "FP": 12,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "KHOBAR": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 0,
+          "TP": 0,
+          "FP": 0,
+          "precision": 0.0,
+          "precision_wilson95": [
+            null,
+            null
+          ],
+          "FPR": 0.0,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 5,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 50,
+          "TN": 50,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9286499658256813,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 5,
+          "TP": 0,
+          "FP": 5,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "MADINA": {
+      "rows": 55,
+      "declines": 2,
+      "triage": {
+        "rows": 55,
+        "declines": 2,
+        "decline_rate": 0.03636363636363636,
+        "RED": {
+          "rows": 3,
+          "TP": 1,
+          "FP": 2,
+          "precision": 0.3333333333333333,
+          "precision_wilson95": [
+            0.0614903152761605,
+            0.7923450448735121
+          ],
+          "FPR": 0.03773584905660377,
+          "recall_contribution": 0.5
+        },
+        "AMBER": {
+          "rows": 16,
+          "declines": 1,
+          "positive_rate": 0.0625
+        },
+        "GREEN": {
+          "rows": 36,
+          "TN": 36,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9035781695514236,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 19,
+          "TP": 2,
+          "FP": 17,
+          "precision": 0.10526315789473684,
+          "recall": 1.0,
+          "recall_wilson95": [
+            0.34237195288961925,
+            1
+          ]
+        }
+      },
+      "ROC_AUC": 0.9622641509433962,
+      "PR_AUC": 0.41666666666666663
+    },
+    "MAKKAH": {
+      "rows": 55,
+      "declines": 5,
+      "triage": {
+        "rows": 55,
+        "declines": 5,
+        "decline_rate": 0.09090909090909091,
+        "RED": {
+          "rows": 4,
+          "TP": 4,
+          "FP": 0,
+          "precision": 1.0,
+          "precision_wilson95": [
+            0.5100999795960008,
+            1
+          ],
+          "FPR": 0.0,
+          "recall_contribution": 0.8
+        },
+        "AMBER": {
+          "rows": 8,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 43,
+          "TN": 42,
+          "FN": 1,
+          "NPV": 0.9767441860465116,
+          "NPV_wilson95": [
+            0.8794073213878312,
+            0.9958830188225801
+          ],
+          "miss_rate": 0.2
+        },
+        "RED_plus_AMBER": {
+          "rows": 12,
+          "TP": 4,
+          "FP": 8,
+          "precision": 0.3333333333333333,
+          "recall": 0.8,
+          "recall_wilson95": [
+            0.3755282641185388,
+            0.9637768390302125
+          ]
+        }
+      },
+      "ROC_AUC": 0.8280000000000001,
+      "PR_AUC": 0.8208333333333333
+    },
+    "OTHER": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 3,
+          "TP": 0,
+          "FP": 3,
+          "precision": 0.0,
+          "precision_wilson95": [
+            0,
+            0.5615060804490177
+          ],
+          "FPR": 0.05454545454545454,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 18,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 34,
+          "TN": 34,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.8984820937803899,
+            1
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 21,
+          "TP": 0,
+          "FP": 21,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "RIYADH": {
+      "rows": 55,
+      "declines": 0,
+      "triage": {
+        "rows": 55,
+        "declines": 0,
+        "decline_rate": 0.0,
+        "RED": {
+          "rows": 1,
+          "TP": 0,
+          "FP": 1,
+          "precision": 0.0,
+          "precision_wilson95": [
+            0,
+            0.7934567085261071
+          ],
+          "FPR": 0.01818181818181818,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 10,
+          "declines": 0,
+          "positive_rate": 0.0
+        },
+        "GREEN": {
+          "rows": 44,
+          "TN": 44,
+          "FN": 0,
+          "NPV": 1.0,
+          "NPV_wilson95": [
+            0.9197016822179859,
+            0.9999999999999999
+          ],
+          "miss_rate": 0.0
+        },
+        "RED_plus_AMBER": {
+          "rows": 11,
+          "TP": 0,
+          "FP": 11,
+          "precision": 0.0,
+          "recall": 0.0,
+          "recall_wilson95": [
+            null,
+            null
+          ]
+        }
+      },
+      "ROC_AUC": null,
+      "PR_AUC": null
+    },
+    "TABOUK": {
+      "rows": 55,
+      "declines": 3,
+      "triage": {
+        "rows": 55,
+        "declines": 3,
+        "decline_rate": 0.05454545454545454,
+        "RED": {
+          "rows": 3,
+          "TP": 0,
+          "FP": 3,
+          "precision": 0.0,
+          "precision_wilson95": [
+            0,
+            0.5615060804490177
+          ],
+          "FPR": 0.057692307692307696,
+          "recall_contribution": 0.0
+        },
+        "AMBER": {
+          "rows": 19,
+          "declines": 2,
+          "positive_rate": 0.10526315789473684
+        },
+        "GREEN": {
+          "rows": 33,
+          "TN": 32,
+          "FN": 1,
+          "NPV": 0.9696969696969697,
+          "NPV_wilson95": [
+            0.8468093832683193,
+            0.9946307279103482
+          ],
+          "miss_rate": 0.3333333333333333
+        },
+        "RED_plus_AMBER": {
+          "rows": 22,
+          "TP": 2,
+          "FP": 20,
+          "precision": 0.09090909090909091,
+          "recall": 0.6666666666666666,
+          "recall_wilson95": [
+            0.2076549551264879,
+            0.9385096847238394
+          ]
+        }
+      },
+      "ROC_AUC": 0.5833333333333334,
+      "PR_AUC": 0.08372183372183373
+    }
+  },
+  "anti_leakage": {
+    "fresh_holdout_not_used_for_training": true,
+    "fresh_holdout_not_used_for_model_selection": true,
+    "fresh_holdout_not_used_for_calibration": true,
+    "fresh_holdout_not_used_for_threshold_selection": true,
+    "static_frozen_model_weights": true,
+    "actual_prior_holdout_weeks_used_only_as_operational_lag_features": true,
+    "shuffle": false
+  }
+}
