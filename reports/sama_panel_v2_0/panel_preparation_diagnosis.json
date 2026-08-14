@@ -1,0 +1,26 @@
+{
+  "raw_rows": 31262,
+  "indicator_unique": [
+    "Number of Transactions (In Thousand)",
+    "Number of Transactions Change %",
+    "Value of Transactions (In Thousand SAR)",
+    "Value of Transactions Change %"
+  ],
+  "value_rows": 7830,
+  "number_rows": 7830,
+  "merged_value_number_rows": 7830,
+  "concrete_city_sector_rows": 0,
+  "positive_concrete_rows": 0,
+  "entities_total": 0,
+  "entities_ge_80_rows": 0,
+  "top_entity_counts": [],
+  "retained_rows_ge80": 0,
+  "rows_after_52week_and_target_nonnull": 0,
+  "rows_after_next_gap_eq_7": 0,
+  "gap_distribution": {},
+  "next_gap_distribution": {},
+  "date_min": null,
+  "date_max": null,
+  "cities": [],
+  "sector_count": 0
+}
