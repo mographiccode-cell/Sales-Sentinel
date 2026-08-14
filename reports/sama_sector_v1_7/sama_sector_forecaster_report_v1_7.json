@@ -1,0 +1,39 @@
+{
+  "version": "SAMA-SECTOR-FORECASTER-1.7",
+  "official_panel_rows": 4590,
+  "sectors": 17,
+  "source_start": "2020-05-10",
+  "source_end": "2025-07-06",
+  "walkforward_rows": 2261,
+  "metrics": {
+    "value_h1": {
+      "rows": 2227,
+      "MAE": 74462.6986984538,
+      "WAPE": 0.10117241680949965,
+      "correlation": 0.9783740457493053
+    },
+    "value_h2": {
+      "rows": 2210,
+      "MAE": 83989.11898176197,
+      "WAPE": 0.1139871414589805,
+      "correlation": 0.9738930459400779
+    },
+    "count_h1": {
+      "rows": 2227,
+      "MAE": 798.6456722942507,
+      "WAPE": 0.07098140531360833,
+      "correlation": 0.9942829799040029
+    },
+    "count_h2": {
+      "rows": 2210,
+      "MAE": 894.3850507869271,
+      "WAPE": 0.07937729947598972,
+      "correlation": 0.9935094984806758
+    }
+  },
+  "leakage_controls": {
+    "four_week_refit_batches_use_only_data_known_at_batch_anchor": true,
+    "future_actual_SAMA_not_features": true,
+    "h1_h2_targets_known_by_training_anchor_only": true
+  }
+}

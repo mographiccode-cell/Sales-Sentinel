@@ -1,0 +1,21 @@
+# Saudi Sector Retraining v1.5
+
+- Dataset quality: **PASS**
+- Source rows: **1,049,042**
+- Sectors: **8**
+- Panel rows: **4,832**
+- Supervised rows: **4,328**
+- Structural-zero rate: **4.30%**
+- Fixed target: **20% decline**, next 7 calendar days vs trailing 28 days
+- Synthetic Region used: **No**
+- Selected classifier: **ExtraTrees**
+- Selected regressor: **HistGradientBoostingRegressor**
+- Accuracy: **47.60%**
+- Balanced Accuracy: **58.80%**
+- Precision: **25.19%**
+- Recall: **77.91%**
+- F1: **38.07%**
+- ROC-AUC: **63.63%**
+- Majority baseline: **79.33%**
+- 90% goal met: **False**
+- Scientific acceptance gates: **False**
