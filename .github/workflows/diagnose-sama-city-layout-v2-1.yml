@@ -1,0 +1,42 @@
+name: Diagnose SAMA City PDF Layout v2.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_sama_city_pdf_layout_v2_1.py'
+      - '.github/workflows/diagnose-sama-city-layout-v2-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
+      - name: Download fresh SAMA PDFs
+        run: |
+          python scripts/scrape_sama_recent_pos_reports_v2_0.py
+          python scripts/scrape_sama_gap_2025_v2_0.py
+      - name: Inspect city table layout
+        run: python scripts/diagnose_sama_city_pdf_layout_v2_1.py
+      - name: Persist diagnostic
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_1/pdf_layout_diagnostics.json
+          git diff --cached --quiet || git commit -m 'data: persist fresh SAMA city PDF layout diagnostic'
+          git stash push --include-untracked -m 'ci-pdf-leftovers' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
