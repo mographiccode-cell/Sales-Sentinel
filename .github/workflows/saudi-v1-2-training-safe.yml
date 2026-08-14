@@ -29,7 +29,7 @@ jobs:
       - name: Install training dependencies
         run: |
           pip install -r requirements-training.txt
-          pip install requests joblib
+          pip install requests joblib beautifulsoup4 pypdf
 
       - name: Rebuild Saudi v1.2, audit all rows, and train models
         run: python scripts/run_saudi_v1_2_fixed.py
