@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
-      - name: Verify SAMA forecast products
+      - name: Verify persisted SAMA forecast products
         run: |
           test -f data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
           test -f reports/sama_market_v1_6/sama_market_forecaster_report_v1_6.json
