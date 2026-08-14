@@ -1,0 +1,210 @@
+{
+  "version": "SAMA-MARKET-DECLINE-1.9",
+  "source": "Official SAMA sector POS history + leakage-safe sector forecasts",
+  "target": "next official sector week >=20% below trailing four-week known baseline",
+  "features": [
+    "forecast_value_h1_ratio_baseline4",
+    "forecast_value_h2_ratio_baseline4",
+    "forecast_value_h1_ratio_origin",
+    "forecast_value_h2_ratio_origin",
+    "forecast_count_h1_ratio_origin",
+    "forecast_count_h2_ratio_origin",
+    "predicted_value_h1_index_52median",
+    "predicted_value_h2_index_52median",
+    "predicted_count_h1_index_52median",
+    "predicted_count_h2_index_52median",
+    "predicted_value_h1_change_vs_last",
+    "predicted_value_h2_change_vs_last",
+    "predicted_count_h1_change_vs_last",
+    "predicted_count_h2_change_vs_last",
+    "origin_value_ratio_base4",
+    "origin_value_ratio_base8",
+    "origin_value_ratio_base13",
+    "value_cv4",
+    "value_cv13",
+    "count_cv4",
+    "value_change1",
+    "value_change4",
+    "count_change1",
+    "count_change4",
+    "week_sin",
+    "week_cos",
+    "sector_Beverage and Food",
+    "sector_Clothing and Footwear",
+    "sector_Construction & Building Materials",
+    "sector_Education",
+    "sector_Electronic & Electric Devices",
+    "sector_Furniture",
+    "sector_Gas Stations",
+    "sector_Health",
+    "sector_Hotels",
+    "sector_Jewelry",
+    "sector_Miscellaneous Goods and Services",
+    "sector_Other",
+    "sector_Public Utilities",
+    "sector_Recreation and Culture",
+    "sector_Restaurants & Caf\u00e9",
+    "sector_Telecommunication",
+    "sector_Transportation"
+  ],
+  "split": {
+    "train": "2023-01-01..2023-06-30",
+    "validation": "2023-07-01..2023-12-31",
+    "test": "2024-01-01 onward",
+    "train_rows": 442,
+    "validation_rows": 459,
+    "test_rows": 1326,
+    "train_positive_rate": 0.1085972850678733,
+    "validation_positive_rate": 0.0718954248366013,
+    "test_positive_rate": 0.11010558069381599
+  },
+  "candidate_models": {
+    "LogisticRegression": {
+      "threshold": 0.545,
+      "validation_metrics": {
+        "Accuracy": 0.9324618736383442,
+        "BalancedAccuracy": 0.7120145113102859,
+        "Precision": 0.5357142857142857,
+        "Recall": 0.45454545454545453,
+        "F1": 0.4918032786885246,
+        "ROC_AUC": 0.7900128040973112,
+        "ConfusionMatrix": [
+          [
+            413,
+            13
+          ],
+          [
+            18,
+            15
+          ]
+        ]
+      },
+      "selection_score": 0.6282018103216508
+    },
+    "RandomForest": {
+      "threshold": 0.25,
+      "validation_metrics": {
+        "Accuracy": 0.8649237472766884,
+        "BalancedAccuracy": 0.8433632095603927,
+        "Precision": 0.3253012048192771,
+        "Recall": 0.8181818181818182,
+        "F1": 0.46551724137931033,
+        "ROC_AUC": 0.898989898989899,
+        "ConfusionMatrix": [
+          [
+            370,
+            56
+          ],
+          [
+            6,
+            27
+          ]
+        ]
+      },
+      "selection_score": 0.7354731980164086
+    },
+    "ExtraTrees": {
+      "threshold": 0.29500000000000004,
+      "validation_metrics": {
+        "Accuracy": 0.8779956427015251,
+        "BalancedAccuracy": 0.8783610755441742,
+        "Precision": 0.35802469135802467,
+        "Recall": 0.8787878787878788,
+        "F1": 0.5087719298245614,
+        "ROC_AUC": 0.9218950064020486,
+        "ConfusionMatrix": [
+          [
+            374,
+            52
+          ],
+          [
+            4,
+            29
+          ]
+        ]
+      },
+      "selection_score": 0.7740632388214475
+    },
+    "HistGradientBoosting": {
+      "threshold": 0.125,
+      "validation_metrics": {
+        "Accuracy": 0.8801742919389978,
+        "BalancedAccuracy": 0.7956679470763979,
+        "Precision": 0.3382352941176471,
+        "Recall": 0.696969696969697,
+        "F1": 0.45544554455445546,
+        "ROC_AUC": 0.8797837530231897,
+        "ConfusionMatrix": [
+          [
+            381,
+            45
+          ],
+          [
+            10,
+            23
+          ]
+        ]
+      },
+      "selection_score": 0.6949295816767538
+    },
+    "XGBoost": {
+      "threshold": 0.39,
+      "validation_metrics": {
+        "Accuracy": 0.9084967320261438,
+        "BalancedAccuracy": 0.768992744344857,
+        "Precision": 0.40816326530612246,
+        "Recall": 0.6060606060606061,
+        "F1": 0.4878048780487805,
+        "ROC_AUC": 0.8605064731825296,
+        "ConfusionMatrix": [
+          [
+            397,
+            29
+          ],
+          [
+            13,
+            20
+          ]
+        ]
+      },
+      "selection_score": 0.6797274148929634
+    }
+  },
+  "selected_model": "ExtraTrees",
+  "selected_probability_threshold": 0.29500000000000004,
+  "test_metrics": {
+    "Accuracy": 0.7843137254901961,
+    "BalancedAccuracy": 0.7707801253772928,
+    "Precision": 0.3055555555555556,
+    "Recall": 0.7534246575342466,
+    "F1": 0.43478260869565216,
+    "ROC_AUC": 0.8449094497329928,
+    "ConfusionMatrix": [
+      [
+        930,
+        250
+      ],
+      [
+        36,
+        110
+      ]
+    ]
+  },
+  "majority_test_accuracy": 0.889894419306184,
+  "acceptance_gates": {
+    "accuracy_at_least_90pct": false,
+    "balanced_accuracy_at_least_75pct": true,
+    "recall_at_least_60pct": true,
+    "f1_at_least_60pct": false,
+    "roc_auc_at_least_85pct": false,
+    "beats_majority": false
+  },
+  "all_gates_passed": false,
+  "leakage_controls": {
+    "target_fixed_20pct_before_training": true,
+    "future_actual_SAMA_not_feature": true,
+    "forecast_features_walk_forward_only": true,
+    "model_and_threshold_selected_without_2024_2025": true,
+    "test_2024_2025_opened_after_selection": true
+  }
+}
