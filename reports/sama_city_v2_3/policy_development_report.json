@@ -1,11 +1,48 @@
 {
-  "version": "SAMA-CITY-RISK-2.3-ROLLING-CONFORMAL",
+  "version": "SAMA-CITY-RISK-2.3.3-ROLLING-CONFORMAL",
   "base_model": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
-  "scientific_boundary": "Conformal policy parameters are fixed from desired class-conditional error budgets and evaluated only on historical 2025-H1 OOF. Fresh 2025-2026 outcomes are not used to choose alphas.",
-  "parameters": {
-    "alpha_red_global": 0.0075,
-    "alpha_red_city": 0.05,
-    "alpha_green_decline": 0.08,
+  "scientific_boundary": "Alpha grid selection uses historical 2025-H1 OOF only. No 2025-2026 fresh labels are used. City identity is bound directly inside each OOF prediction.",
+  "grid": {
+    "red_global": [
+      0.005,
+      0.0075,
+      0.01,
+      0.015,
+      0.02,
+      0.03,
+      0.05
+    ],
+    "red_city": [
+      0.03,
+      0.05,
+      0.08,
+      0.1,
+      0.15,
+      0.2
+    ],
+    "green": [
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.025,
+      0.03,
+      0.04,
+      0.05,
+      0.08,
+      0.1,
+      0.12,
+      0.15,
+      0.2,
+      0.25
+    ],
+    "candidate_count": 588,
+    "valid_count": 190
+  },
+  "selected_parameters": {
+    "alpha_red_global": 0.015,
+    "alpha_red_city": 0.08,
+    "alpha_green_decline": 0.04,
     "lookback_weeks": 104
   },
   "historical_policy_evaluation": {
@@ -13,30 +50,30 @@
     "declines": 36,
     "decline_rate": 0.1258741258741259,
     "RED": {
-      "rows": 15,
-      "TP": 15,
-      "FP": 0,
-      "precision": 1.0,
-      "FPR": 0.0,
-      "recall_contribution": 0.4166666666666667
+      "rows": 20,
+      "TP": 19,
+      "FP": 1,
+      "precision": 0.95,
+      "FPR": 0.004,
+      "recall_contribution": 0.5277777777777778
     },
     "AMBER": {
-      "rows": 84,
-      "declines": 18
+      "rows": 152,
+      "declines": 17
     },
     "GREEN": {
-      "rows": 187,
-      "TN": 184,
-      "FN": 3,
-      "NPV": 0.983957219251337,
-      "miss_rate": 0.08333333333333333
+      "rows": 114,
+      "TN": 114,
+      "FN": 0,
+      "NPV": 1.0,
+      "miss_rate": 0.0
     },
     "RED_plus_AMBER": {
-      "rows": 99,
-      "TP": 33,
-      "FP": 66,
-      "precision": 0.3333333333333333,
-      "recall": 0.9166666666666666
+      "rows": 172,
+      "TP": 36,
+      "FP": 136,
+      "precision": 0.20930232558139536,
+      "recall": 1.0
     }
   },
   "contract": {
@@ -50,17 +87,65 @@
   "gates": {
     "red_precision": true,
     "red_fpr": true,
-    "alert_recall": false,
-    "green_npv": false,
+    "alert_recall": true,
+    "green_npv": true,
     "has_nonzero_red_alerts": true
   },
-  "all_policy_gates_passed": false,
+  "all_policy_gates_passed": true,
+  "oof_folds": [
+    {
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "train_rows": 935,
+      "validation_rows": 143
+    },
+    {
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "train_rows": 1210,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "train_rows": 1507,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "train_rows": 1650,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "train_rows": 1793,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "train_rows": 1936,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "train_rows": 2079,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "train_rows": 2222,
+      "validation_rows": 143
+    }
+  ],
   "controls": {
-    "class_conditional_conformal": true,
     "rolling_only_past_realized_labels": true,
     "city_specific_negative_calibration": true,
     "abstention_state_AMBER": true,
-    "fixed_probability_thresholds_for_red_green": false,
     "fresh_2025_2026_used_to_select_policy_parameters": false
   }
 }
