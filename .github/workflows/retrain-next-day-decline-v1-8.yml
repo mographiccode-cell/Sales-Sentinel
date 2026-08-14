@@ -1,0 +1,52 @@
+name: Retrain next-day decline v1.8
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/retrain_next_day_decline_v1_8.py'
+      - '.github/workflows/retrain-next-day-decline-v1-8.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Verify inputs
+        run: |
+          test -f data/saudi_v1_3/saudi_daily_sama_calibrated_v1_3.csv
+          test -f data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
+      - name: Train nested walk-forward next-day classifier
+        run: python scripts/retrain_next_day_decline_v1_8.py
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-decline-next-day-v1-8
+          if-no-files-found: warn
+          path: |
+            models/saudi_v1_8/**
+            reports/saudi_v1_8/**
+      - name: Persist results
+        if: success()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add models/saudi_v1_8 reports/saudi_v1_8
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist next-day decline v1.8 [skip ci]'
+            git push origin main
+          fi
