@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+      - 'scripts/build_sama_city_history_v2_1.py'
       - 'scripts/train_sama_city_risk_v2_1.py'
       - 'scripts/run_sama_city_risk_v2_1.py'
       - '.github/workflows/train-sama-city-risk-v2-1.yml'
@@ -28,7 +28,9 @@ jobs:
         run: |
           pip install -r requirements-training.txt
           pip install xgboost
-      - name: Verify city source audit
+      - name: Rebuild historical SAMA city source only
+        run: python scripts/build_sama_city_history_v2_1.py
+      - name: Verify historical source audit
         run: |
           python - <<'PY'
           import json
@@ -37,22 +39,34 @@ jobs:
           assert d['checks']['city_values_reconcile_to_national_below_0_01pct'] is True
           assert d['checks']['city_counts_reconcile_to_national_below_0_01pct'] is True
           PY
-      - name: Train frozen city market-risk model
+      - name: Train frozen city market-risk model without fresh holdout
         run: python scripts/run_sama_city_risk_v2_1.py
+      - name: Assert no fresh data dependency
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('reports/sama_city_v2_1/development_report.json',encoding='utf-8'))
+          assert d['leakage_controls']['fresh_2025_2026_holdout_used'] is False
+          assert d['leakage_controls']['future_values_as_features'] is False
+          print(json.dumps({'selected':d['selected'],'triage':d['policy_triage'],'ranking':d['policy_ranking'],'gates':d['gates'],'all':d['all_gates_passed']},indent=2))
+          PY
       - name: Show development evidence
         run: cat reports/sama_city_v2_1/development_summary.md
       - uses: actions/upload-artifact@v4
         with:
           name: sama-city-risk-v2-1-frozen
           path: |
-            reports/sama_city_v2_1/**
+            data/sama_pos/sama_city_weekly_value_count_2020_2025.csv
+            reports/sama_city_v2_1/history_audit.json
+            reports/sama_city_v2_1/development_report.json
+            reports/sama_city_v2_1/development_summary.md
             models/sama_city_v2_1/**
           retention-days: 30
-      - name: Persist frozen model and evidence
+      - name: Persist frozen historical source, model and evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add reports/sama_city_v2_1 models/sama_city_v2_1
+          git add data/sama_pos/sama_city_weekly_value_count_2020_2025.csv reports/sama_city_v2_1/history_audit.json reports/sama_city_v2_1/development_report.json reports/sama_city_v2_1/development_summary.md models/sama_city_v2_1
           git diff --cached --quiet || git commit -m 'ml: persist frozen SAMA city market-risk v2.1 model'
           git pull --rebase origin main
           git push origin HEAD:main
