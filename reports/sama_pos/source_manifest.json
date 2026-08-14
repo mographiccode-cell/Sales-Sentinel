@@ -1,0 +1,32 @@
+{
+  "dataset": "Point of Sale Transactions by Sector and City",
+  "publisher": "Saudi Central Bank (SAMA)",
+  "distribution": "KAPSARC Data Portal Opendatasoft export",
+  "sama_official_page": "https://www.sama.gov.sa/en-US/Statistics/Indices/Pages/POS.aspx",
+  "dataset_page": "https://data.kapsarc.org/explore/dataset/point-of-sale-transactions-by-sector-and-city/analyze/?flg=en-gb",
+  "export_url": "https://data.kapsarc.org/api/explore/v2.1/catalog/datasets/point-of-sale-transactions-by-sector-and-city/exports/csv",
+  "download_sha256": "4f569cffc3bdbf9bd38474aac904f0de0ac1592045e00b8f6fbf2ea055b7924e",
+  "download_bytes": 2480242,
+  "raw_rows": 31262,
+  "normalized_rows_2023_2025": 15312,
+  "national_week_rows": 132,
+  "national_sector_week_rows": 2244,
+  "national_weeks_by_year": {
+    "2023": 53,
+    "2024": 52,
+    "2025": 27
+  },
+  "date_min": "2023-01-01",
+  "date_max": "2025-07-06",
+  "checks": {
+    "download_nonempty": true,
+    "normalized_rows_positive": true,
+    "national_total_rows_positive": true,
+    "contains_2023": true,
+    "contains_2024": true,
+    "no_duplicate_national_weeks": true,
+    "national_values_positive": true
+  },
+  "all_tests_passed": true,
+  "scientific_boundary": "Official Saudi aggregate POS data are used only as external calibration targets; they are not copied as merchant-level transactions."
+}
