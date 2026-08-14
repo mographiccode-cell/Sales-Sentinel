@@ -1,0 +1,145 @@
+{
+  "results": [
+    {
+      "file": "POS_Report_26_Jul_2025.pdf",
+      "rows": 44,
+      "cities": [
+        "ABHA",
+        "BURAIDAH",
+        "DAMMAM",
+        "HAIL",
+        "JEDDAH",
+        "KHOBAR",
+        "MADINA",
+        "MAKKAH",
+        "OTHER",
+        "RIYADH",
+        "TABOUK"
+      ],
+      "city_count": 11,
+      "weeks": 4,
+      "info": {
+        "file": "POS_Report_26_Jul_2025.pdf",
+        "week_ranges": [
+          [
+            "2025-06-29",
+            "2025-07-05"
+          ],
+          [
+            "2025-07-06",
+            "2025-07-12"
+          ],
+          [
+            "2025-07-13",
+            "2025-07-19"
+          ],
+          [
+            "2025-07-20",
+            "2025-07-26"
+          ]
+        ],
+        "cities_found": [
+          "ABHA",
+          "BURAIDAH",
+          "DAMMAM",
+          "HAIL",
+          "JEDDAH",
+          "KHOBAR",
+          "MADINA",
+          "MAKKAH",
+          "OTHER",
+          "RIYADH",
+          "TABOUK"
+        ],
+        "city_count": 11,
+        "matched_aliases": {
+          "ABHA": "Abha",
+          "KHOBAR": "Al-Khubar",
+          "DAMMAM": "Dammam",
+          "RIYADH": "Riyadh",
+          "MADINA": "Al-Madinah",
+          "BURAIDAH": "Buraidah",
+          "TABOUK": "Tabouk",
+          "JEDDAH": "Jeddah",
+          "HAIL": "Hayel",
+          "MAKKAH": "Makkah",
+          "OTHER": "Others"
+        }
+      }
+    },
+    {
+      "file": "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+      "rows": 44,
+      "cities": [
+        "ABHA",
+        "BURAIDAH",
+        "DAMMAM",
+        "HAIL",
+        "JEDDAH",
+        "KHOBAR",
+        "MADINA",
+        "MAKKAH",
+        "OTHER",
+        "RIYADH",
+        "TABOUK"
+      ],
+      "city_count": 11,
+      "weeks": 4,
+      "info": {
+        "file": "Weekly_Points_of_Sale_Transactions_Report_1st_Aug_2026.pdf",
+        "week_ranges": [
+          [
+            "2026-07-05",
+            "2026-07-11"
+          ],
+          [
+            "2026-07-12",
+            "2026-07-18"
+          ],
+          [
+            "2026-07-19",
+            "2026-07-25"
+          ],
+          [
+            "2026-07-26",
+            "2026-08-01"
+          ]
+        ],
+        "cities_found": [
+          "ABHA",
+          "BURAIDAH",
+          "DAMMAM",
+          "HAIL",
+          "JEDDAH",
+          "KHOBAR",
+          "MADINA",
+          "MAKKAH",
+          "OTHER",
+          "RIYADH",
+          "TABOUK"
+        ],
+        "city_count": 11,
+        "matched_aliases": {
+          "ABHA": "Abha",
+          "KHOBAR": "Al-Khubar",
+          "DAMMAM": "Dammam",
+          "RIYADH": "Riyadh",
+          "MADINA": "Al-Madinah",
+          "BURAIDAH": "Buraidah",
+          "TABOUK": "Tabouk",
+          "JEDDAH": "Jeddah",
+          "HAIL": "Hayel",
+          "MAKKAH": "Makkah",
+          "OTHER": "Others"
+        }
+      }
+    }
+  ],
+  "checks": {
+    "two_reports": true,
+    "44_rows_each": true,
+    "11_cities_each": true,
+    "4_weeks_each": true
+  },
+  "all_checks_passed": true
+}
