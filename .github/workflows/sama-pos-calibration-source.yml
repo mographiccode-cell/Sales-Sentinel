@@ -36,8 +36,15 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/sama_pos/sama_pos_2023_2025_normalized.csv data/sama_pos/sama_pos_national_weekly_total_2023_2025.csv data/sama_pos/sama_pos_national_weekly_by_sector_2023_2025.csv reports/sama_pos/source_manifest.json
+          git add \
+            data/sama_pos/sama_pos_2023_2025_normalized.csv \
+            data/sama_pos/sama_pos_national_weekly_total_2023_2025.csv \
+            data/sama_pos/sama_pos_national_weekly_by_sector_2023_2025.csv \
+            data/sama_pos/sama_pos_2020_2025_normalized.csv \
+            data/sama_pos/sama_pos_national_weekly_value_2020_2025.csv \
+            data/sama_pos/sama_pos_national_weekly_count_2020_2025.csv \
+            reports/sama_pos/source_manifest.json
           if ! git diff --cached --quiet; then
-            git commit -m 'data: persist verified SAMA POS calibration source [skip ci]'
+            git commit -m 'data: persist verified extended SAMA POS history [skip ci]'
             git push origin main
           fi
