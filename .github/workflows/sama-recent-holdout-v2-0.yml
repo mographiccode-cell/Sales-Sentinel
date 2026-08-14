@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/scrape_sama_recent_pos_reports_v2_0.py'
+      - 'scripts/parse_sama_recent_pos_reports_v2_0.py'
       - '.github/workflows/sama-recent-holdout-v2-0.yml'
 
 permissions:
@@ -14,7 +15,7 @@ permissions:
 jobs:
   acquire:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
@@ -23,17 +24,31 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install
-        run: pip install requests==2.32.5
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
       - name: Scrape and download recent official SAMA reports
         run: python scripts/scrape_sama_recent_pos_reports_v2_0.py
-      - name: Show manifest summary
+      - name: Parse and quality-gate unseen holdout
+        run: python scripts/parse_sama_recent_pos_reports_v2_0.py
+      - name: Show evidence
         run: |
           python - <<'PY'
           import json
-          p='reports/sama_recent_v2_0/source_manifest.json'
-          d=json.load(open(p,encoding='utf-8'))
-          print('downloaded_pdfs=',d['downloaded_pdfs'])
-          for x in d['downloads'][:20]: print(x)
+          s=json.load(open('reports/sama_recent_v2_0/source_manifest.json',encoding='utf-8'))
+          p=json.load(open('reports/sama_recent_v2_0/parse_audit.json',encoding='utf-8'))
+          assert p['all_checks_passed'] is True
+          print(json.dumps({
+            'downloaded_pdfs':s['downloaded_pdfs'],
+            'pdfs_parsed':p['pdfs_parsed'],
+            'holdout_rows':p['holdout_rows'],
+            'holdout_weeks':p['holdout_weeks'],
+            'holdout_sectors':p['holdout_sector_count'],
+            'date_start':p['date_start'],
+            'date_end':p['date_end'],
+            'checks':p['checks'],
+          },indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -41,12 +56,14 @@ jobs:
           path: |
             artifacts/sama_recent_v2_0/**
             reports/sama_recent_v2_0/**
+            data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv
+            data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv
           retention-days: 30
-      - name: Persist manifest only
+      - name: Persist compact evidence
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add reports/sama_recent_v2_0/source_manifest.json
-          git diff --cached --quiet || git commit -m 'data: persist SAMA recent holdout manifest'
+          git add reports/sama_recent_v2_0/source_manifest.json reports/sama_recent_v2_0/parse_audit.json data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv
+          git diff --cached --quiet || git commit -m 'data: persist quality-gated unseen SAMA holdout'
           git pull --rebase origin main
           git push origin HEAD:main
