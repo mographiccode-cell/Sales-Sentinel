@@ -28,6 +28,10 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1 joblib
+      - name: Verify extended SAMA history exists
+        run: |
+          test -f data/sama_pos/sama_pos_national_weekly_value_2020_2025.csv
+          test -f data/sama_pos/sama_pos_national_weekly_count_2020_2025.csv
       - name: Train expanding walk-forward SAMA forecaster
         run: python scripts/train_sama_market_forecaster_v1_6.py
       - name: Upload SAMA forecasting evidence
