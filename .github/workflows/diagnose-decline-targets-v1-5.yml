@@ -1,0 +1,37 @@
+name: Diagnose decline targets v1.5
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_decline_targets_v1_5.py'
+      - '.github/workflows/diagnose-decline-targets-v1-5.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install pandas==2.2.3 numpy==2.2.4
+      - name: Diagnose target prevalence and stability
+        run: python scripts/diagnose_decline_targets_v1_5.py
+      - name: Persist diagnosis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/saudi_v1_5/target_diagnosis_preholdout.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'ml: persist pre-holdout target diagnosis v1.5 [skip ci]'
+            git push origin main
+          fi
