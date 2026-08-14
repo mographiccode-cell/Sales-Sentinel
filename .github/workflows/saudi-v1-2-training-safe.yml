@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_saudi_training_safe_v1_2.py'
+      - 'scripts/run_saudi_v1_2_fixed.py'
       - '.github/workflows/saudi-v1-2-training-safe.yml'
 
 permissions:
@@ -31,7 +32,7 @@ jobs:
           pip install requests joblib
 
       - name: Rebuild Saudi v1.2, audit all rows, and train models
-        run: python scripts/build_saudi_training_safe_v1_2.py
+        run: python scripts/run_saudi_v1_2_fixed.py
 
       - name: Upload full v1.2 evidence bundle
         uses: actions/upload-artifact@v4
