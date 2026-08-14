@@ -1,0 +1,90 @@
+{
+  "version": "SAMA-SECTOR-DECLINE-1.8",
+  "source": "Saudi Central Bank (SAMA) official weekly POS sector aggregates",
+  "target": "next official sector week value is >=20% below trailing four official weeks mean",
+  "split": {
+    "train_rows": 918,
+    "val_rows": 289,
+    "test_rows": 1037,
+    "train_end": "2023-12-31",
+    "validation": "2024-01-01..2024-04-30",
+    "test_start": "2024-05-01",
+    "shuffle": false
+  },
+  "positive_rates": {
+    "train": 0.08932461873638345,
+    "validation": 0.16262975778546712,
+    "test": 0.09546769527483125
+  },
+  "validation_candidates": {
+    "LogisticRegression": {
+      "threshold": 0.4599999999999999,
+      "metrics": {
+        "Accuracy": 0.7889273356401384,
+        "BalancedAccuracy": 0.8139616669597327,
+        "Precision": 0.425531914893617,
+        "Recall": 0.851063829787234,
+        "F1": 0.5673758865248227,
+        "ROC_AUC": 0.8524705468612626
+      },
+      "selection_score": 0.7496131528046421
+    },
+    "ExtraTrees": {
+      "threshold": 0.295,
+      "metrics": {
+        "Accuracy": 0.8166089965397924,
+        "BalancedAccuracy": 0.7876296817302619,
+        "Precision": 0.4605263157894737,
+        "Recall": 0.7446808510638298,
+        "F1": 0.5691056910569106,
+        "ROC_AUC": 0.8669773166871813
+      },
+      "selection_score": 0.7419093932674864
+    },
+    "HistGradientBoosting": {
+      "threshold": 0.08,
+      "metrics": {
+        "Accuracy": 0.8200692041522492,
+        "BalancedAccuracy": 0.7725514330930192,
+        "Precision": 0.4647887323943662,
+        "Recall": 0.7021276595744681,
+        "F1": 0.559322033898305,
+        "ROC_AUC": 0.8423597678916828
+      },
+      "selection_score": 0.7260346970342708
+    }
+  },
+  "selected_model": "LogisticRegression",
+  "selected_threshold": 0.4599999999999999,
+  "test_metrics": {
+    "Accuracy": 0.7714561234329798,
+    "BalancedAccuracy": 0.7742833451788675,
+    "Precision": 0.2636986301369863,
+    "Recall": 0.7777777777777778,
+    "F1": 0.3938618925831202,
+    "ROC_AUC": 0.8670823372315909
+  },
+  "majority_test_accuracy": 0.9045323047251688,
+  "direct_forecast_rule_test": {
+    "Accuracy": 0.9170684667309547,
+    "BalancedAccuracy": 0.6650405978764188,
+    "Precision": 0.6140350877192983,
+    "Recall": 0.35353535353535354,
+    "F1": 0.44871794871794873
+  },
+  "accuracy_90_goal_met": false,
+  "scientific_gates": {
+    "beats_majority_by_3pp": false,
+    "balanced_accuracy_75": true,
+    "recall_70": true,
+    "f1_65": false,
+    "roc_auc_82": true
+  },
+  "leakage_controls": {
+    "walkforward_forecasts_only": true,
+    "future_actual_SAMA_not_feature": true,
+    "test_not_used_for_model_or_threshold_selection": true,
+    "synthetic_merchant_region_not_used": true
+  },
+  "all_scientific_gates_passed": false
+}
