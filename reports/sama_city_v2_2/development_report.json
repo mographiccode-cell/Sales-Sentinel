@@ -1,0 +1,162 @@
+{
+  "version": "SAMA-CITY-RISK-2.2-STATIONARY-FROZEN",
+  "scientific_boundary": "Official SAMA City Total only. All model/threshold decisions use data ending 2025-07-06. Fresh 2025-2026 outcomes are not read by this trainer.",
+  "rows": 2387,
+  "decline_rate": 0.05571847507331378,
+  "feature_count": 110,
+  "absolute_level_features_forbidden": true,
+  "folds": [
+    {
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "train_rows": 935,
+      "validation_rows": 143,
+      "train_rate": 0.05561497326203209,
+      "validation_rate": 0.006993006993006993
+    },
+    {
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "train_rows": 1210,
+      "validation_rows": 143,
+      "train_rate": 0.0512396694214876,
+      "validation_rate": 0.02097902097902098
+    },
+    {
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "train_rows": 1507,
+      "validation_rows": 143,
+      "train_rate": 0.043795620437956206,
+      "validation_rate": 0.055944055944055944
+    },
+    {
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "train_rows": 1650,
+      "validation_rows": 143,
+      "train_rate": 0.04303030303030303,
+      "validation_rate": 0.13986013986013987
+    },
+    {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "train_rows": 1793,
+      "validation_rows": 143,
+      "train_rate": 0.05242610150585611,
+      "validation_rate": 0.006993006993006993
+    },
+    {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "train_rows": 1936,
+      "validation_rows": 143,
+      "train_rate": 0.0490702479338843,
+      "validation_rate": 0.013986013986013986
+    },
+    {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "train_rows": 2079,
+      "validation_rows": 143,
+      "train_rate": 0.046657046657046654,
+      "validation_rate": 0.1258741258741259
+    },
+    {
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "train_rows": 2222,
+      "validation_rows": 143,
+      "train_rate": 0.04590459045904591,
+      "validation_rate": 0.1258741258741259
+    }
+  ],
+  "selection_metrics": {
+    "Logistic": {
+      "ROC_AUC": 0.9302204478389169,
+      "PR_AUC": 0.6502348269479699
+    },
+    "ExtraTrees": {
+      "ROC_AUC": 0.9261586530116299,
+      "PR_AUC": 0.460412750924542
+    },
+    "HistGB": {
+      "ROC_AUC": 0.8881444193716368,
+      "PR_AUC": 0.38232731884596605
+    },
+    "XGBoost": {
+      "ROC_AUC": 0.9318173928137475,
+      "PR_AUC": 0.5530911897163755
+    }
+  },
+  "selected": "Logistic",
+  "policy_window": "2025-01-01..2025-06-29",
+  "thresholds": {
+    "watch": 0.018046935784638247,
+    "red": 0.095
+  },
+  "policy_triage": {
+    "RED": {
+      "TP": 19,
+      "FP": 1,
+      "FN": 17,
+      "TN": 249,
+      "precision": 0.95,
+      "recall": 0.5277777777777778,
+      "FPR": 0.004,
+      "NPV": 0.9360902255639098
+    },
+    "RED_plus_AMBER": {
+      "TP": 35,
+      "FP": 84,
+      "FN": 1,
+      "TN": 166,
+      "precision": 0.29411764705882354,
+      "recall": 0.9722222222222222,
+      "FPR": 0.336,
+      "NPV": 0.9940119760479041
+    },
+    "GREEN": {
+      "NPV": 0.9940119760479041,
+      "missed_declines": 1
+    }
+  },
+  "policy_ranking": {
+    "ROC_AUC": 0.9410000000000001,
+    "PR_AUC": 0.7909129749986024
+  },
+  "Brier": 0.07424750605462117,
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "gates": {
+    "red_precision": true,
+    "red_fpr": true,
+    "alert_recall": true,
+    "green_npv": true,
+    "roc_auc": true,
+    "pr_auc": true
+  },
+  "all_gates_passed": true,
+  "leakage_controls": {
+    "future_values_features": false,
+    "target_derived_prevalence_features_are_shifted_one_completed_week": true,
+    "one_week_purge": true,
+    "chronological_expanding_folds": true,
+    "shuffle": false,
+    "fresh_2025_2026_used": false
+  },
+  "stationarity_controls": {
+    "raw_value_or_count_levels_as_features": false,
+    "ratios_to_rolling_trends": true,
+    "growth_rates": true,
+    "rolling_coefficients_of_variation": true,
+    "city_market_share_ratios": true,
+    "lagged_city_and_market_decline_rates": true
+  }
+}
