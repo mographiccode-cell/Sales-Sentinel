@@ -1,0 +1,39 @@
+name: Diagnose Conformal Grid v2.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_conformal_grid_v2_3.py'
+      - '.github/workflows/diagnose-conformal-grid-v2-3.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Diagnose historical policy frontier
+        run: python scripts/diagnose_conformal_grid_v2_3.py
+      - name: Persist diagnostic
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v2_3/conformal_grid_diagnostics.json
+          git diff --cached --quiet || git commit -m 'ml: persist conformal policy frontier diagnostic'
+          git stash push --include-untracked -m 'ci-generated-nondiagnostic' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
