@@ -1,0 +1,833 @@
+{
+  "version": "SALES-DECLINE-1.8-NEXT-DAY",
+  "target": "next-day SAMA-calibrated merchant sales at least 20% below trailing 28-day mean",
+  "evaluation": "nested expanding walk-forward backtest",
+  "aggregate": {
+    "Accuracy": 0.5094339622641509,
+    "BalancedAccuracy": 0.5707665828147757,
+    "Precision": 0.3609467455621302,
+    "Recall": 0.7349397590361446,
+    "F1": 0.48412698412698413,
+    "ROC_AUC": 0.6717860452800212,
+    "ConfusionMatrix": [
+      [
+        74,
+        108
+      ],
+      [
+        22,
+        61
+      ]
+    ],
+    "Rows": 265,
+    "PositiveRate": 0.3132075471698113
+  },
+  "majority_accuracy": 0.6867924528301887,
+  "folds": [
+    {
+      "fold": 1,
+      "train_end": "2023-12-03",
+      "test_start": "2023-12-05",
+      "test_end": "2024-01-18",
+      "model": "ExtraTrees",
+      "threshold": 0.18999999999999995,
+      "metrics": {
+        "Accuracy": 0.4888888888888889,
+        "BalancedAccuracy": 0.640625,
+        "Precision": 0.3611111111111111,
+        "Recall": 1.0,
+        "F1": 0.5306122448979592,
+        "ROC_AUC": 0.7403846153846154,
+        "ConfusionMatrix": [
+          [
+            9,
+            23
+          ],
+          [
+            0,
+            13
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.13499999999999995,
+          "metrics": {
+            "Accuracy": 0.5333333333333333,
+            "BalancedAccuracy": 0.5641025641025641,
+            "Precision": 0.4,
+            "Recall": 0.6666666666666666,
+            "F1": 0.5,
+            "ROC_AUC": 0.5921855921855921,
+            "ConfusionMatrix": [
+              [
+                18,
+                21
+              ],
+              [
+                7,
+                14
+              ]
+            ]
+          },
+          "score": 0.5345970695970697
+        },
+        "RandomForest": {
+          "threshold": 0.2599999999999999,
+          "metrics": {
+            "Accuracy": 0.7,
+            "BalancedAccuracy": 0.6703296703296704,
+            "Precision": 0.5714285714285714,
+            "Recall": 0.5714285714285714,
+            "F1": 0.5714285714285714,
+            "ROC_AUC": 0.6495726495726495,
+            "ConfusionMatrix": [
+              [
+                30,
+                9
+              ],
+              [
+                9,
+                12
+              ]
+            ]
+          },
+          "score": 0.6113369963369963
+        },
+        "ExtraTrees": {
+          "threshold": 0.18999999999999995,
+          "metrics": {
+            "Accuracy": 0.6,
+            "BalancedAccuracy": 0.6483516483516484,
+            "Precision": 0.4594594594594595,
+            "Recall": 0.8095238095238095,
+            "F1": 0.5862068965517241,
+            "ROC_AUC": 0.6471306471306472,
+            "ConfusionMatrix": [
+              [
+                19,
+                20
+              ],
+              [
+                4,
+                17
+              ]
+            ]
+          },
+          "score": 0.6198547429581912
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.08499999999999999,
+          "metrics": {
+            "Accuracy": 0.5666666666666667,
+            "BalancedAccuracy": 0.5897435897435896,
+            "Precision": 0.42424242424242425,
+            "Recall": 0.6666666666666666,
+            "F1": 0.5185185185185185,
+            "ROC_AUC": 0.6068376068376069,
+            "ConfusionMatrix": [
+              [
+                20,
+                19
+              ],
+              [
+                7,
+                14
+              ]
+            ]
+          },
+          "score": 0.5579914529914529
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "train_end": "2024-01-17",
+      "test_start": "2024-01-19",
+      "test_end": "2024-03-03",
+      "model": "ExtraTrees",
+      "threshold": 0.23999999999999988,
+      "metrics": {
+        "Accuracy": 0.35555555555555557,
+        "BalancedAccuracy": 0.5735294117647058,
+        "Precision": 0.275,
+        "Recall": 1.0,
+        "F1": 0.43137254901960786,
+        "ROC_AUC": 0.7219251336898396,
+        "ConfusionMatrix": [
+          [
+            5,
+            29
+          ],
+          [
+            0,
+            11
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.065,
+          "metrics": {
+            "Accuracy": 0.43333333333333335,
+            "BalancedAccuracy": 0.5476190476190477,
+            "Precision": 0.32608695652173914,
+            "Recall": 0.8333333333333334,
+            "F1": 0.46875,
+            "ROC_AUC": 0.5714285714285714,
+            "ConfusionMatrix": [
+              [
+                11,
+                31
+              ],
+              [
+                3,
+                15
+              ]
+            ]
+          },
+          "score": 0.5046726190476191
+        },
+        "RandomForest": {
+          "threshold": 0.3099999999999999,
+          "metrics": {
+            "Accuracy": 0.7,
+            "BalancedAccuracy": 0.6746031746031746,
+            "Precision": 0.5,
+            "Recall": 0.6111111111111112,
+            "F1": 0.55,
+            "ROC_AUC": 0.6216931216931217,
+            "ConfusionMatrix": [
+              [
+                31,
+                11
+              ],
+              [
+                7,
+                11
+              ]
+            ]
+          },
+          "score": 0.6121428571428571
+        },
+        "ExtraTrees": {
+          "threshold": 0.23999999999999988,
+          "metrics": {
+            "Accuracy": 0.5666666666666667,
+            "BalancedAccuracy": 0.6587301587301587,
+            "Precision": 0.4,
+            "Recall": 0.8888888888888888,
+            "F1": 0.5517241379310345,
+            "ROC_AUC": 0.697089947089947,
+            "ConfusionMatrix": [
+              [
+                18,
+                24
+              ],
+              [
+                2,
+                16
+              ]
+            ]
+          },
+          "score": 0.6139696223316912
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.18499999999999994,
+          "metrics": {
+            "Accuracy": 0.6666666666666666,
+            "BalancedAccuracy": 0.6190476190476191,
+            "Precision": 0.45,
+            "Recall": 0.5,
+            "F1": 0.47368421052631576,
+            "ROC_AUC": 0.5740740740740741,
+            "ConfusionMatrix": [
+              [
+                31,
+                11
+              ],
+              [
+                9,
+                9
+              ]
+            ]
+          },
+          "score": 0.5282163742690058
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "train_end": "2024-03-02",
+      "test_start": "2024-03-04",
+      "test_end": "2024-04-17",
+      "model": "HistGradientBoosting",
+      "threshold": 0.32999999999999985,
+      "metrics": {
+        "Accuracy": 0.6444444444444445,
+        "BalancedAccuracy": 0.6296296296296297,
+        "Precision": 0.5555555555555556,
+        "Recall": 0.5555555555555556,
+        "F1": 0.5555555555555556,
+        "ROC_AUC": 0.6358024691358025,
+        "ConfusionMatrix": [
+          [
+            19,
+            8
+          ],
+          [
+            8,
+            10
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.8599999999999997,
+          "metrics": {
+            "Accuracy": 0.7833333333333333,
+            "BalancedAccuracy": 0.7528409090909092,
+            "Precision": 0.5789473684210527,
+            "Recall": 0.6875,
+            "F1": 0.6285714285714286,
+            "ROC_AUC": 0.7826704545454546,
+            "ConfusionMatrix": [
+              [
+                36,
+                8
+              ],
+              [
+                5,
+                11
+              ]
+            ]
+          },
+          "score": 0.7230079816017316
+        },
+        "RandomForest": {
+          "threshold": 0.3949999999999998,
+          "metrics": {
+            "Accuracy": 0.7333333333333333,
+            "BalancedAccuracy": 0.71875,
+            "Precision": 0.5,
+            "Recall": 0.6875,
+            "F1": 0.5789473684210527,
+            "ROC_AUC": 0.7286931818181819,
+            "ConfusionMatrix": [
+              [
+                33,
+                11
+              ],
+              [
+                5,
+                11
+              ]
+            ]
+          },
+          "score": 0.6780923544657098
+        },
+        "ExtraTrees": {
+          "threshold": 0.37499999999999983,
+          "metrics": {
+            "Accuracy": 0.6166666666666667,
+            "BalancedAccuracy": 0.71875,
+            "Precision": 0.40540540540540543,
+            "Recall": 0.9375,
+            "F1": 0.5660377358490566,
+            "ROC_AUC": 0.7286931818181818,
+            "ConfusionMatrix": [
+              [
+                22,
+                22
+              ],
+              [
+                1,
+                15
+              ]
+            ]
+          },
+          "score": 0.6540111313607776
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.32999999999999985,
+          "metrics": {
+            "Accuracy": 0.75,
+            "BalancedAccuracy": 0.7698863636363636,
+            "Precision": 0.52,
+            "Recall": 0.8125,
+            "F1": 0.6341463414634146,
+            "ROC_AUC": 0.7897727272727273,
+            "ConfusionMatrix": [
+              [
+                32,
+                12
+              ],
+              [
+                3,
+                13
+              ]
+            ]
+          },
+          "score": 0.7281700388026608
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "train_end": "2024-04-16",
+      "test_start": "2024-04-18",
+      "test_end": "2024-06-01",
+      "model": "HistGradientBoosting",
+      "threshold": 0.33999999999999986,
+      "metrics": {
+        "Accuracy": 0.6222222222222222,
+        "BalancedAccuracy": 0.569327731092437,
+        "Precision": 0.5,
+        "Recall": 0.35294117647058826,
+        "F1": 0.41379310344827586,
+        "ROC_AUC": 0.6890756302521008,
+        "ConfusionMatrix": [
+          [
+            22,
+            6
+          ],
+          [
+            11,
+            6
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.9199999999999996,
+          "metrics": {
+            "Accuracy": 0.5666666666666667,
+            "BalancedAccuracy": 0.6375,
+            "Precision": 0.425,
+            "Recall": 0.85,
+            "F1": 0.5666666666666667,
+            "ROC_AUC": 0.645,
+            "ConfusionMatrix": [
+              [
+                17,
+                23
+              ],
+              [
+                3,
+                17
+              ]
+            ]
+          },
+          "score": 0.6032083333333332
+        },
+        "RandomForest": {
+          "threshold": 0.37499999999999983,
+          "metrics": {
+            "Accuracy": 0.5,
+            "BalancedAccuracy": 0.5625,
+            "Precision": 0.375,
+            "Recall": 0.75,
+            "F1": 0.5,
+            "ROC_AUC": 0.5800000000000001,
+            "ConfusionMatrix": [
+              [
+                15,
+                25
+              ],
+              [
+                5,
+                15
+              ]
+            ]
+          },
+          "score": 0.533875
+        },
+        "ExtraTrees": {
+          "threshold": 0.4349999999999998,
+          "metrics": {
+            "Accuracy": 0.55,
+            "BalancedAccuracy": 0.5625,
+            "Precision": 0.3870967741935484,
+            "Recall": 0.6,
+            "F1": 0.47058823529411764,
+            "ROC_AUC": 0.52625,
+            "ConfusionMatrix": [
+              [
+                21,
+                19
+              ],
+              [
+                8,
+                12
+              ]
+            ]
+          },
+          "score": 0.5019889705882352
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.33999999999999986,
+          "metrics": {
+            "Accuracy": 0.6333333333333333,
+            "BalancedAccuracy": 0.6499999999999999,
+            "Precision": 0.4666666666666667,
+            "Recall": 0.7,
+            "F1": 0.56,
+            "ROC_AUC": 0.6249999999999999,
+            "ConfusionMatrix": [
+              [
+                24,
+                16
+              ],
+              [
+                6,
+                14
+              ]
+            ]
+          },
+          "score": 0.6159166666666667
+        }
+      }
+    },
+    {
+      "fold": 5,
+      "train_end": "2024-05-31",
+      "test_start": "2024-06-02",
+      "test_end": "2024-07-16",
+      "model": "LogisticRegression",
+      "threshold": 0.10999999999999997,
+      "metrics": {
+        "Accuracy": 0.4222222222222222,
+        "BalancedAccuracy": 0.55,
+        "Precision": 0.358974358974359,
+        "Recall": 0.9333333333333333,
+        "F1": 0.5185185185185185,
+        "ROC_AUC": 0.7155555555555556,
+        "ConfusionMatrix": [
+          [
+            5,
+            25
+          ],
+          [
+            1,
+            14
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.10999999999999997,
+          "metrics": {
+            "Accuracy": 0.6,
+            "BalancedAccuracy": 0.6514285714285715,
+            "Precision": 0.5106382978723404,
+            "Recall": 0.96,
+            "F1": 0.6666666666666666,
+            "ROC_AUC": 0.6662857142857144,
+            "ConfusionMatrix": [
+              [
+                12,
+                23
+              ],
+              [
+                1,
+                24
+              ]
+            ]
+          },
+          "score": 0.6479428571428572
+        },
+        "RandomForest": {
+          "threshold": 0.28499999999999986,
+          "metrics": {
+            "Accuracy": 0.6,
+            "BalancedAccuracy": 0.6342857142857142,
+            "Precision": 0.5121951219512195,
+            "Recall": 0.84,
+            "F1": 0.6363636363636364,
+            "ROC_AUC": 0.624,
+            "ConfusionMatrix": [
+              [
+                15,
+                20
+              ],
+              [
+                4,
+                21
+              ]
+            ]
+          },
+          "score": 0.6265090909090909
+        },
+        "ExtraTrees": {
+          "threshold": 0.2699999999999999,
+          "metrics": {
+            "Accuracy": 0.6,
+            "BalancedAccuracy": 0.6457142857142857,
+            "Precision": 0.5111111111111111,
+            "Recall": 0.92,
+            "F1": 0.6571428571428571,
+            "ROC_AUC": 0.630857142857143,
+            "ConfusionMatrix": [
+              [
+                13,
+                22
+              ],
+              [
+                2,
+                23
+              ]
+            ]
+          },
+          "score": 0.6377714285714287
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.07499999999999998,
+          "metrics": {
+            "Accuracy": 0.6166666666666667,
+            "BalancedAccuracy": 0.6485714285714286,
+            "Precision": 0.525,
+            "Recall": 0.84,
+            "F1": 0.6461538461538462,
+            "ROC_AUC": 0.6662857142857144,
+            "ConfusionMatrix": [
+              [
+                16,
+                19
+              ],
+              [
+                4,
+                21
+              ]
+            ]
+          },
+          "score": 0.6441223443223443
+        }
+      }
+    },
+    {
+      "fold": 6,
+      "train_end": "2024-07-15",
+      "test_start": "2024-07-17",
+      "test_end": "2024-08-25",
+      "model": "HistGradientBoosting",
+      "threshold": 0.17999999999999994,
+      "metrics": {
+        "Accuracy": 0.525,
+        "BalancedAccuracy": 0.6146953405017921,
+        "Precision": 0.2916666666666667,
+        "Recall": 0.7777777777777778,
+        "F1": 0.42424242424242425,
+        "ROC_AUC": 0.7275985663082437,
+        "ConfusionMatrix": [
+          [
+            14,
+            17
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      },
+      "selection": {
+        "LogisticRegression": {
+          "threshold": 0.6649999999999997,
+          "metrics": {
+            "Accuracy": 0.7,
+            "BalancedAccuracy": 0.6866028708133971,
+            "Precision": 0.5833333333333334,
+            "Recall": 0.6363636363636364,
+            "F1": 0.6086956521739131,
+            "ROC_AUC": 0.6985645933014354,
+            "ConfusionMatrix": [
+              [
+                28,
+                10
+              ],
+              [
+                8,
+                14
+              ]
+            ]
+          },
+          "score": 0.6517952985229873
+        },
+        "RandomForest": {
+          "threshold": 0.37499999999999983,
+          "metrics": {
+            "Accuracy": 0.6666666666666666,
+            "BalancedAccuracy": 0.6889952153110048,
+            "Precision": 0.53125,
+            "Recall": 0.7727272727272727,
+            "F1": 0.6296296296296297,
+            "ROC_AUC": 0.7200956937799043,
+            "ConfusionMatrix": [
+              [
+                23,
+                15
+              ],
+              [
+                5,
+                17
+              ]
+            ]
+          },
+          "score": 0.6713849016480595
+        },
+        "ExtraTrees": {
+          "threshold": 0.4199999999999998,
+          "metrics": {
+            "Accuracy": 0.7166666666666667,
+            "BalancedAccuracy": 0.7093301435406698,
+            "Precision": 0.6,
+            "Recall": 0.6818181818181818,
+            "F1": 0.6382978723404256,
+            "ROC_AUC": 0.7236842105263157,
+            "ConfusionMatrix": [
+              [
+                28,
+                10
+              ],
+              [
+                7,
+                15
+              ]
+            ]
+          },
+          "score": 0.6870954223081882
+        },
+        "HistGradientBoosting": {
+          "threshold": 0.17999999999999994,
+          "metrics": {
+            "Accuracy": 0.7,
+            "BalancedAccuracy": 0.715311004784689,
+            "Precision": 0.5666666666666667,
+            "Recall": 0.7727272727272727,
+            "F1": 0.6538461538461539,
+            "ROC_AUC": 0.7595693779904307,
+            "ConfusionMatrix": [
+              [
+                25,
+                13
+              ],
+              [
+                5,
+                17
+              ]
+            ]
+          },
+          "score": 0.7004481045270519
+        }
+      }
+    }
+  ],
+  "choices": {
+    "ExtraTrees": 2,
+    "HistGradientBoosting": 3,
+    "LogisticRegression": 1
+  },
+  "deployment": {
+    "model": "RandomForest",
+    "threshold": 0.5149999999999998,
+    "latest_selection": {
+      "LogisticRegression": {
+        "threshold": 0.5649999999999998,
+        "metrics": {
+          "Accuracy": 0.7666666666666667,
+          "BalancedAccuracy": 0.7291666666666666,
+          "Precision": 0.4444444444444444,
+          "Recall": 0.6666666666666666,
+          "F1": 0.5333333333333333,
+          "ROC_AUC": 0.7934027777777778,
+          "ConfusionMatrix": [
+            [
+              38,
+              10
+            ],
+            [
+              4,
+              8
+            ]
+          ]
+        },
+        "score": 0.67921875
+      },
+      "RandomForest": {
+        "threshold": 0.5149999999999998,
+        "metrics": {
+          "Accuracy": 0.8166666666666667,
+          "BalancedAccuracy": 0.7604166666666666,
+          "Precision": 0.5333333333333333,
+          "Recall": 0.6666666666666666,
+          "F1": 0.5925925925925926,
+          "ROC_AUC": 0.7708333333333333,
+          "ConfusionMatrix": [
+            [
+              41,
+              7
+            ],
+            [
+              4,
+              8
+            ]
+          ]
+        },
+        "score": 0.7145486111111111
+      },
+      "ExtraTrees": {
+        "threshold": 0.5149999999999998,
+        "metrics": {
+          "Accuracy": 0.8,
+          "BalancedAccuracy": 0.75,
+          "Precision": 0.5,
+          "Recall": 0.6666666666666666,
+          "F1": 0.5714285714285714,
+          "ROC_AUC": 0.7517361111111112,
+          "ConfusionMatrix": [
+            [
+              40,
+              8
+            ],
+            [
+              4,
+              8
+            ]
+          ]
+        },
+        "score": 0.6983556547619048
+      },
+      "HistGradientBoosting": {
+        "threshold": 0.4999999999999998,
+        "metrics": {
+          "Accuracy": 0.7666666666666667,
+          "BalancedAccuracy": 0.6979166666666667,
+          "Precision": 0.4375,
+          "Recall": 0.5833333333333334,
+          "F1": 0.5,
+          "ROC_AUC": 0.7135416666666667,
+          "ConfusionMatrix": [
+            [
+              39,
+              9
+            ],
+            [
+              5,
+              7
+            ]
+          ]
+        },
+        "score": 0.62546875
+      }
+    }
+  },
+  "gates": {
+    "accuracy_at_least_90pct": false,
+    "balanced_accuracy_at_least_80pct": false,
+    "recall_at_least_75pct": false,
+    "f1_at_least_70pct": false,
+    "roc_auc_at_least_85pct": false,
+    "beats_majority_accuracy": false
+  },
+  "all_gates_passed": false,
+  "leakage": "Tomorrow SAMA actual value is never used; only SAMA forecasts generated from the last completed official week are features."
+}
