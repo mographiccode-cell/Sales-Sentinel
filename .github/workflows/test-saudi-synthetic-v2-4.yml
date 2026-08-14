@@ -1,0 +1,53 @@
+name: Test Saudi Synthetic v2.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/test_saudi_synthetic_v2_4.py'
+      - 'scripts/production_city_risk_engine_v2_4.py'
+      - '.github/workflows/test-saudi-synthetic-v2-4.yml'
+      - 'models/sama_city_v2_2/**'
+      - 'models/sama_city_v2_4/**'
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Generate Saudi-like synthetic data and run frozen production engine
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/test_saudi_synthetic_v2_4.py
+      - name: Show results
+        run: cat reports/saudi_synthetic_v2_4/synthetic_test_summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-saudi-synthetic-v2-4-test
+          path: |
+            reports/saudi_synthetic_v2_4/**
+            tests/fixtures/saudi_synthetic_v2_4/**
+          retention-days: 90
+      - name: Persist synthetic test evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '4189824+github-actions[bot]@users.noreply.github.com'
+          git add reports/saudi_synthetic_v2_4 tests/fixtures/saudi_synthetic_v2_4
+          git diff --cached --quiet || git commit -m 'test: persist Saudi synthetic v2.4 results'
+          git pull --rebase origin main
+          git push origin HEAD:main
