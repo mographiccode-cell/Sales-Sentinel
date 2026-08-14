@@ -1,0 +1,91 @@
+name: Rebuild and Retrain Saudi Panel v1.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_train_saudi_panel_v1_4.py'
+      - '.github/workflows/rebuild-retrain-saudi-panel-v1-4.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild-audit-train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install training dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+
+      - name: Verify official SAMA inputs
+        run: |
+          test -f data/sama_pos/sama_pos_national_weekly_total_2023_2025.csv
+          test -f data/sama_pos/sama_pos_national_weekly_by_sector_2023_2025.csv
+          test -f data/sama_pos/sama_market_walkforward_forecasts_2023_2025.csv
+          test -f reports/sama_pos/source_manifest.json
+
+      - name: Rebuild v1.3.1 microdata from source and pass quality gates
+        run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
+
+      - name: Build panel v1.4, audit dataset, and retrain
+        run: python scripts/build_train_saudi_panel_v1_4.py
+
+      - name: Show final evidence
+        run: |
+          cat reports/saudi_v1_4/retraining_summary_v1_4.md
+          python - <<'PY'
+          import json
+          p='reports/saudi_v1_4/dataset_quality_audit_v1_4.json'
+          d=json.load(open(p,encoding='utf-8'))
+          assert d['dataset_quality_passed'] is True
+          print(json.dumps({
+            'panel_rows': d['panel']['panel_rows'],
+            'supervised_rows': d['supervised']['supervised_rows'],
+            'entities': d['panel']['entities'],
+            'dataset_checks': d['dataset_checks'],
+            'test_metrics': d['training']['test_metrics'],
+            'goal_90': d['training']['high_accuracy_90pct_goal_met'],
+            'acceptance': d['training']['all_acceptance_gates_passed'],
+          }, indent=2))
+          PY
+
+      - name: Upload complete v1.4 evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-saudi-panel-v1-4
+          path: |
+            data/saudi_v1_4/**
+            reports/saudi_v1_4/**
+            models/saudi_v1_4/**
+          retention-days: 30
+          compression-level: 6
+
+      - name: Persist audit, summary, metadata and compact dataset
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/saudi_v1_4 models/saudi_v1_4/model_metadata_v1_4.json
+          if [ -f data/saudi_v1_4/saudi_region_sector_daily_panel_v1_4.csv.gz ]; then
+            size=$(stat -c%s data/saudi_v1_4/saudi_region_sector_daily_panel_v1_4.csv.gz)
+            if [ "$size" -lt 90000000 ]; then git add data/saudi_v1_4/saudi_region_sector_daily_panel_v1_4.csv.gz; fi
+          fi
+          if [ -f models/saudi_v1_4/sales_decline_ensemble_v1_4.joblib ]; then
+            size=$(stat -c%s models/saudi_v1_4/sales_decline_ensemble_v1_4.joblib)
+            if [ "$size" -lt 90000000 ]; then git add models/saudi_v1_4/sales_decline_ensemble_v1_4.joblib; fi
+          fi
+          git diff --cached --quiet || git commit -m 'ml: persist Saudi panel v1.4 audit and retraining evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
