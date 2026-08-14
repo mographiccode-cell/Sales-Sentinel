@@ -1,0 +1,65 @@
+name: Build SAMA City Holdout v2.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_sama_city_history_v2_1.py'
+      - 'scripts/parse_sama_recent_cities_v2_1.py'
+      - '.github/workflows/build-sama-city-holdout-v2-1.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          pip install requests==2.32.5 pandas==2.2.3 numpy==2.2.4
+      - name: Build stable historical city panel
+        run: python scripts/build_sama_city_history_v2_1.py
+      - name: Download official fresh SAMA archive
+        run: |
+          python scripts/scrape_sama_recent_pos_reports_v2_0.py
+          python scripts/scrape_sama_gap_2025_v2_0.py
+      - name: Parse stable city totals from unseen PDFs
+        run: python scripts/parse_sama_recent_cities_v2_1.py
+      - name: Show evidence
+        run: |
+          python - <<'PY'
+          import json
+          h=json.load(open('reports/sama_city_v2_1/history_audit.json',encoding='utf-8'))
+          f=json.load(open('reports/sama_city_v2_1/fresh_holdout_audit.json',encoding='utf-8'))
+          assert h['all_checks_passed'] and f['all_checks_passed']
+          print(json.dumps({'history':{'rows':h['rows'],'weeks':h['weeks'],'cities':h['city_count'],'start':h['date_start'],'end':h['date_end']},'fresh':{'rows':f['rows'],'weeks':f['weeks'],'cities':f['city_count'],'start':f['date_start'],'end':f['date_end']},'fresh_checks':f['checks']},indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sama-city-v2-1-data
+          path: |
+            data/sama_pos/sama_city_weekly_value_count_2020_2025.csv
+            data/sama_pos/sama_city_weekly_value_count_2025_2026_holdout.csv
+            data/sama_pos/sama_city_weekly_value_count_2020_2026_extended.csv
+            reports/sama_city_v2_1/**
+          retention-days: 30
+      - name: Persist compact city datasets and audits
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/sama_pos/sama_city_weekly_value_count_2020_2025.csv data/sama_pos/sama_city_weekly_value_count_2025_2026_holdout.csv data/sama_pos/sama_city_weekly_value_count_2020_2026_extended.csv reports/sama_city_v2_1
+          git diff --cached --quiet || git commit -m 'data: persist stable SAMA city development and fresh holdout panels'
+          git stash push --include-untracked -m 'ci-generated-pdfs' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
