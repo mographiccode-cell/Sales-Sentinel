@@ -1,0 +1,54 @@
+name: Saudi v1.2 training-safe dataset and models
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_saudi_training_safe_v1_2.py'
+      - '.github/workflows/saudi-v1-2-training-safe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build-audit-train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install training dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install requests joblib
+
+      - name: Rebuild Saudi v1.2, audit all rows, and train models
+        run: python scripts/build_saudi_training_safe_v1_2.py
+
+      - name: Upload full v1.2 evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-saudi-v1-2-training-safe
+          path: |
+            data/saudi_v1_2/**
+            reports/saudi_v1_2/**
+            models/saudi_v1_2/**
+            artifacts/saudi_v1_2/**
+
+      - name: Persist review-sized artifacts
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/saudi_v1_2 reports/saudi_v1_2 models/saudi_v1_2
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: persist Saudi v1.2 training-safe audit and models [skip ci]'
+            git push origin main
+          fi
