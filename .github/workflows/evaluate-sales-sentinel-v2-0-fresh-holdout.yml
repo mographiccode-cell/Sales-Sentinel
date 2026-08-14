@@ -1,0 +1,65 @@
+name: Evaluate Sales Sentinel v2.0 Fresh Holdout
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv'
+      - 'data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv'
+      - 'data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv'
+      - 'data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Verify sealed model and holdout quality
+        run: |
+          test -f models/sales_sentinel_v2_0/sales_sentinel_market_risk_v2_0.joblib
+          python - <<'PY'
+          import json
+          d=json.load(open('reports/sales_sentinel_v2_0/development_report.json',encoding='utf-8'))
+          s=json.load(open('reports/sama_recent_v2_0/parse_audit.json',encoding='utf-8'))
+          n=json.load(open('reports/sama_recent_v2_0/national_parse_audit.json',encoding='utf-8'))
+          assert d['separation']['fresh_holdout_not_used'] is True
+          assert s['all_checks_passed'] is True and n['all_checks_passed'] is True
+          PY
+      - name: Generate operational walk-forward forecasts on extended history
+        run: python scripts/forecast_sama_extended_v2_0.py
+      - name: Open fresh holdout once with frozen thresholds
+        run: python scripts/evaluate_sales_sentinel_v2_0_fresh_holdout.py
+      - name: Show final evidence
+        run: |
+          cat reports/sales_sentinel_v2_0/fresh_holdout_summary.md
+          cat reports/sales_sentinel_v2_0/extended_forecaster_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v2-0-fresh-holdout-evidence
+          path: |
+            reports/sales_sentinel_v2_0/**
+            data/sama_pos/sama_sector_walkforward_forecasts_2025_2026_v2_0.csv
+            models/sales_sentinel_v2_0/**
+          retention-days: 30
+      - name: Persist final evaluation evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sales_sentinel_v2_0 data/sama_pos/sama_sector_walkforward_forecasts_2025_2026_v2_0.csv
+          git diff --cached --quiet || git commit -m 'ml: persist frozen v2.0 fresh SAMA holdout evaluation'
+          git pull --rebase origin main
+          git push origin HEAD:main
