@@ -1,0 +1,34 @@
+name: Evaluate SAMA Sector Decline v1.8
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/evaluate_sama_sector_decline_v1_8.py'
+      - '.github/workflows/evaluate-sama-sector-decline-v1-8.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install pandas==2.2.3 numpy==2.2.4 scikit-learn==1.6.1
+      - name: Evaluate fixed 20pct SAMA sector decline rule
+        run: python scripts/evaluate_sama_sector_decline_v1_8.py
+      - name: Show report
+        run: cat reports/sama_sector_v1_8/sama_sector_decline_v1_8.md
+      - name: Persist report
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_sector_v1_8
+          git diff --cached --quiet || git commit -m 'ml: persist SAMA sector decline v1.8 evaluation'
+          git pull --rebase origin main
+          git push origin HEAD:main
