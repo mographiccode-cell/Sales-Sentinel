@@ -1,0 +1,1608 @@
+{
+  "version": "SAMA-CITY-RISK-2.3-CONFORMAL-GRID-DIAGNOSIS",
+  "diagnostic_source": "historical OOF through 2025-06-29 only; no fresh 2025-2026 labels",
+  "rows": 286,
+  "declines": 36,
+  "decline_rate": 0.1258741258741259,
+  "contract": {
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.0075,
+    "alert_recall_min": 0.92,
+    "green_npv_min": 0.99,
+    "roc_auc_min": 0.87,
+    "pr_auc_min": 0.45
+  },
+  "grid_candidates": 294,
+  "fully_valid_candidates": 0,
+  "gate_pass_counts": {
+    "red_precision": 294,
+    "red_fpr": 266,
+    "alert_recall": 42,
+    "green_npv": 0,
+    "has_red": 294
+  },
+  "top_30": [
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.05,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.03,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 16,
+          "TP": 16,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4444444444444444
+        },
+        "AMBER": {
+          "rows": 115,
+          "declines": 18
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.05,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 15,
+          "TP": 15,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4166666666666667
+        },
+        "AMBER": {
+          "rows": 116,
+          "declines": 19
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 15,
+          "TP": 15,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4166666666666667
+        },
+        "AMBER": {
+          "rows": 116,
+          "declines": 19
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 15,
+          "TP": 15,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4166666666666667
+        },
+        "AMBER": {
+          "rows": 116,
+          "declines": 19
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 15,
+          "TP": 15,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4166666666666667
+        },
+        "AMBER": {
+          "rows": 116,
+          "declines": 19
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 15,
+          "TP": 15,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4166666666666667
+        },
+        "AMBER": {
+          "rows": 116,
+          "declines": 19
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.0075,
+      "alpha_red_city": 0.03,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 14,
+          "TP": 14,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3888888888888889
+        },
+        "AMBER": {
+          "rows": 117,
+          "declines": 20
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.03,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.05,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.015,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.015,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.015,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.015,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.02,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.02,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.02,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.02,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.03,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.03,
+      "alpha_red_city": 0.1,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.03,
+      "alpha_red_city": 0.15,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    {
+      "alpha_red_global": 0.03,
+      "alpha_red_city": 0.2,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 20,
+          "TP": 19,
+          "FP": 1,
+          "precision": 0.95,
+          "FPR": 0.004,
+          "recall_contribution": 0.5277777777777778
+        },
+        "AMBER": {
+          "rows": 111,
+          "declines": 15
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    }
+  ],
+  "frontier_examples": {
+    "best_red_precision": {
+      "alpha_red_global": 0.01,
+      "alpha_red_city": 0.05,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 17,
+          "TP": 17,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.4722222222222222
+        },
+        "AMBER": {
+          "rows": 114,
+          "declines": 17
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    "best_red_recall": {
+      "alpha_red_global": 0.05,
+      "alpha_red_city": 0.08,
+      "alpha_green": 0.05,
+      "passed": 3,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": false,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 22,
+          "TP": 20,
+          "FP": 2,
+          "precision": 0.9090909090909091,
+          "FPR": 0.008,
+          "recall_contribution": 0.5555555555555556
+        },
+        "AMBER": {
+          "rows": 109,
+          "declines": 14
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    "best_alert_recall": {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.03,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    },
+    "best_green_npv": {
+      "alpha_red_global": 0.005,
+      "alpha_red_city": 0.03,
+      "alpha_green": 0.05,
+      "passed": 4,
+      "all": false,
+      "gates": {
+        "red_precision": true,
+        "red_fpr": true,
+        "alert_recall": true,
+        "green_npv": false,
+        "has_red": true
+      },
+      "metrics": {
+        "rows": 286,
+        "declines": 36,
+        "decline_rate": 0.1258741258741259,
+        "RED": {
+          "rows": 11,
+          "TP": 11,
+          "FP": 0,
+          "precision": 1.0,
+          "FPR": 0.0,
+          "recall_contribution": 0.3055555555555556
+        },
+        "AMBER": {
+          "rows": 120,
+          "declines": 23
+        },
+        "GREEN": {
+          "rows": 155,
+          "TN": 153,
+          "FN": 2,
+          "NPV": 0.9870967741935484,
+          "miss_rate": 0.05555555555555555
+        },
+        "RED_plus_AMBER": {
+          "rows": 131,
+          "TP": 34,
+          "FP": 97,
+          "precision": 0.2595419847328244,
+          "recall": 0.9444444444444444
+        }
+      }
+    }
+  },
+  "folds": [
+    {
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "train_rows": 935,
+      "validation_rows": 143
+    },
+    {
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "train_rows": 1210,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "train_rows": 1507,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "train_rows": 1650,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "train_rows": 1793,
+      "validation_rows": 143
+    },
+    {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "train_rows": 1936,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "train_rows": 2079,
+      "validation_rows": 143
+    },
+    {
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "train_rows": 2222,
+      "validation_rows": 143
+    }
+  ]
+}
