@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/train_merchant_sama_hybrid_v4.py'
+      - 'scripts/run_merchant_sama_hybrid_v4_0_1.py'
       - '.github/workflows/train-merchant-sama-hybrid-v4.yml'
       - 'scripts/build_saudi_sama_calibrated_v1_3.py'
       - 'scripts/build_saudi_sama_calibrated_v1_3_safe.py'
@@ -30,10 +31,10 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
         run: python scripts/build_saudi_sama_calibrated_v1_3_safe.py
-      - name: Train Merchant + SAMA Hybrid v4
+      - name: Train Merchant + SAMA Hybrid v4.0.1
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
-        run: python scripts/train_merchant_sama_hybrid_v4.py
+        run: python scripts/run_merchant_sama_hybrid_v4_0_1.py
       - name: Show evidence
         if: always()
         run: |
@@ -49,9 +50,12 @@ jobs:
             data/merchant_v4/**
           if-no-files-found: warn
           retention-days: 90
-      - name: Remove large regenerated source artifact before git persist
+      - name: Restore regenerated legacy files and remove large source artifact
         if: always()
-        run: rm -f artifacts/saudi_v1_3/saudi_localized_transactions_v1_3_sama.csv.gz || true
+        run: |
+          rm -f artifacts/saudi_v1_3/saudi_localized_transactions_v1_3_sama.csv.gz || true
+          git restore data/saudi_v1_3 reports/saudi_v1_3 models/saudi_v1_3 2>/dev/null || true
+          git clean -fd artifacts/saudi_v1_3 .saudi_v1_2_work data/saudi_v1_2 reports/saudi_v1_2 models/saudi_v1_2 artifacts/saudi_v1_2 2>/dev/null || true
       - name: Persist compact v4 evidence/model
         if: always()
         run: |
