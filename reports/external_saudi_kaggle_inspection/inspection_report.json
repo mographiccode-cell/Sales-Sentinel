@@ -1,0 +1,106 @@
+{
+  "source": "Kaggle moha684/saudi-arabia-supermarket-data-expenses",
+  "downloaded_file_count": 1,
+  "tabular_file_count": 1,
+  "total_tabular_rows": 1220,
+  "has_parseable_date": false,
+  "has_transaction_or_sales_fields": false,
+  "files": [
+    {
+      "name": "tamimimarkets.csv",
+      "size_bytes": 62975,
+      "sha256": "7735fd7082b20faec1ca31be1905a25b210153791aa7bdcf3d9789047415aa19",
+      "status": "ok",
+      "rows": 1220,
+      "columns": 6,
+      "column_names": [
+        "Unnamed: 0",
+        "Company",
+        "Product",
+        "Size",
+        "Currency",
+        "Prices"
+      ],
+      "duplicate_rows": 0,
+      "missing_cells": 0,
+      "date_candidates": [],
+      "date_ranges": {},
+      "numeric_summary": {
+        "Unnamed: 0": {
+          "min": 0.0,
+          "max": 1219.0,
+          "mean": 609.5,
+          "unique": 1220
+        },
+        "Prices": {
+          "min": 0.3,
+          "max": 123.0,
+          "mean": 12.302049180327868,
+          "unique": 298
+        }
+      },
+      "semantic_columns": {
+        "transaction": [],
+        "invoice": [],
+        "customer": [],
+        "product": [
+          "Product"
+        ],
+        "category": [],
+        "price": [
+          "Prices"
+        ],
+        "quantity": [],
+        "sales": [],
+        "total": [],
+        "amount": [],
+        "city": [],
+        "branch": [],
+        "store": [],
+        "date": []
+      },
+      "sample_rows": [
+        {
+          "Unnamed: 0": "0",
+          "Company": "Goody ",
+          "Product": "Whole Kernel Golden Corn",
+          "Size": "340G",
+          "Currency": "SAR",
+          "Prices": "3.25"
+        },
+        {
+          "Unnamed: 0": "1",
+          "Company": "Goody ",
+          "Product": "Original Mayonnaise",
+          "Size": "332 Ml",
+          "Currency": "SAR",
+          "Prices": "7.75"
+        },
+        {
+          "Unnamed: 0": "2",
+          "Company": "Goody ",
+          "Product": "Ranch Dressing",
+          "Size": "237 Ml",
+          "Currency": "SAR",
+          "Prices": "7.95"
+        },
+        {
+          "Unnamed: 0": "3",
+          "Company": "Halwani Brothers ",
+          "Product": "AlNakhla Finest Halawa Plain",
+          "Size": "250G",
+          "Currency": "SAR",
+          "Prices": "9.4"
+        },
+        {
+          "Unnamed: 0": "4",
+          "Company": "7 UP ",
+          "Product": "Can",
+          "Size": "150 Ml",
+          "Currency": "SAR",
+          "Prices": "1.5"
+        }
+      ]
+    }
+  ]
+}
