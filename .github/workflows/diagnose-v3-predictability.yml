@@ -1,0 +1,44 @@
+name: Diagnose v3 Predictability
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/diagnose_v3_predictability.py'
+      - '.github/workflows/diagnose-v3-predictability.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Diagnose
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/diagnose_v3_predictability.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: v3-predictability-diagnostic
+          path: reports/sama_city_v3_predictability/**
+          retention-days: 90
+      - name: Persist
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3_predictability
+          git diff --cached --quiet || git commit -m 'diagnose: persist v3 predictability report'
+          git pull --rebase origin main
+          git push origin HEAD:main
