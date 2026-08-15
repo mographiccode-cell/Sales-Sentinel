@@ -84,7 +84,7 @@ class Branch(Base):
     region_id: Mapped[int] = mapped_column(ForeignKey("regions.id"), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     region: Mapped[Region] = relationship(back_populates="branches")
-    users: Mapped[list["User"]] = relationship(secondary=user_branches, back_populates="users")
+    users: Mapped[list["User"]] = relationship(secondary=user_branches, back_populates="branches")
     sales: Mapped[list["Sale"]] = relationship(back_populates="branch")
 
 
