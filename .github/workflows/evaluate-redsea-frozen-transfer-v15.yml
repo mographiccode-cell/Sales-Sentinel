@@ -1,0 +1,47 @@
+name: Evaluate Redsea Frozen Transfer V15
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/evaluate_redsea_frozen_transfer_v15.py'
+      - '.github/workflows/evaluate-redsea-frozen-transfer-v15.yml'
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn openpyxl
+      - name: Download official Mendeley Redsea file
+        run: |
+          mkdir -p /tmp/redsea_mendeley
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://data.mendeley.com/public-files/datasets/9c87bd42ct/files/deb8ee07-178b-43b3-8462-ad71ee417edb/file_downloaded' \
+            -o /tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx
+          echo "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645  /tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx" | sha256sum -c -
+      - name: Run frozen generic transfer evaluation
+        env:
+          REDSEA_FILE: /tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx
+        run: python scripts/evaluate_redsea_frozen_transfer_v15.py
+      - name: Show transfer summary
+        run: cat reports/redsea_frozen_transfer_v15/summary.md
+      - name: Upload transfer evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: redsea-frozen-transfer-v15
+          path: reports/redsea_frozen_transfer_v15/
+      - name: Persist transfer evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/redsea_frozen_transfer_v15
+          git diff --cached --quiet || git commit -m "Persist frozen Redsea transfer V15 evidence"
+          git push
