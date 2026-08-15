@@ -1,0 +1,299 @@
+{
+  "source": "Mendeley Data Redsea Dataset",
+  "doi": "10.17632/9c87bd42ct.1",
+  "files_downloaded": 1,
+  "usable_tabular_files": 1,
+  "files": [
+    {
+      "name": "RedSea_Data_Cleaned.xlsx",
+      "size_bytes": 354721,
+      "sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
+      "status": "ok",
+      "rows": 2700,
+      "columns": 23,
+      "column_names": [
+        "TRX DATE",
+        "TRX NUMBER",
+        "SALES CHANNEL",
+        "CUSTOMER NUMBER",
+        "ORG Name",
+        "Type",
+        "Month",
+        "Year",
+        "ORG",
+        "ITEM CODE",
+        "FRANCHISE",
+        "ITEM DESC",
+        "FAMILY",
+        "CLASS",
+        "SUBCLASS",
+        "UIS TYPE",
+        "QUANTITY",
+        "Unit Price",
+        "Discount Amount",
+        "Discount Amount(%)",
+        "Net Amount",
+        "Vat Amount",
+        "TOTAL AMOUNT"
+      ],
+      "duplicates": 5,
+      "missing_cells": 2700,
+      "date_ranges": {
+        "TRX DATE": {
+          "min": "2023-07-01 00:00:00",
+          "max": "2023-10-31 00:00:00",
+          "unique": 121,
+          "parsed": 2700
+        },
+        "Month": {
+          "min": "0001-07-01 00:00:00",
+          "max": "0001-10-01 00:00:00",
+          "unique": 4,
+          "parsed": 2700
+        },
+        "Year": {
+          "min": "1970-01-01 00:00:00.000002023",
+          "max": "1970-01-01 00:00:00.000002023",
+          "unique": 1,
+          "parsed": 2700
+        }
+      },
+      "semantic_columns": {
+        "transaction": [],
+        "invoice": [],
+        "customer": [
+          "CUSTOMER NUMBER"
+        ],
+        "product": [],
+        "category": [],
+        "sales": [
+          "SALES CHANNEL"
+        ],
+        "price": [
+          "Unit Price"
+        ],
+        "amount": [
+          "Discount Amount",
+          "Discount Amount(%)",
+          "Net Amount",
+          "Vat Amount",
+          "TOTAL AMOUNT"
+        ],
+        "quantity": [
+          "QUANTITY"
+        ],
+        "region": [],
+        "branch": [],
+        "store": [],
+        "showroom": [],
+        "city": [],
+        "date": [
+          "TRX DATE"
+        ],
+        "revenue": [],
+        "total": [
+          "TOTAL AMOUNT"
+        ]
+      },
+      "sample_rows": [
+        {
+          "TRX DATE": "2023-07-04",
+          "TRX NUMBER": "2311041359",
+          "SALES CHANNEL": "REEM",
+          "CUSTOMER NUMBER": "3032",
+          "ORG Name": NaN,
+          "Type": "INV",
+          "Month": "JUL",
+          "Year": "2023",
+          "ORG": "EAC",
+          "ITEM CODE": "WWS36G22I",
+          "FRANCHISE": "WHITE WESTINGHOUSE",
+          "ITEM DESC": "Indoor Split A/C 32200 BTU Cool",
+          "FAMILY": "HVPAC",
+          "CLASS": "WALL SPLITS",
+          "SUBCLASS": "SAC WALL ROTARY",
+          "UIS TYPE": "0-Month",
+          "QUANTITY": "1",
+          "Unit Price": "2173.48",
+          "Discount Amount": "0.0",
+          "Discount Amount(%)": "0.0",
+          "Net Amount": "2173.48",
+          "Vat Amount": "326.03",
+          "TOTAL AMOUNT": "2499.51"
+        },
+        {
+          "TRX DATE": "2023-07-04",
+          "TRX NUMBER": "2321015936",
+          "SALES CHANNEL": "RECA",
+          "CUSTOMER NUMBER": "7233",
+          "ORG Name": NaN,
+          "Type": "INV",
+          "Month": "JUL",
+          "Year": "2023",
+          "ORG": "TPC",
+          "ITEM CODE": "LTT7CBBSI",
+          "FRANCHISE": "LG",
+          "ITEM DESC": "Ref 1D 6.9 Cu. Ft / Pocket Handle / Inverter Compressor",
+          "FAMILY": "HA",
+          "CLASS": "REFRIGERATORS",
+          "SUBCLASS": "MINI BAR",
+          "UIS TYPE": "0-Month",
+          "QUANTITY": "1",
+          "Unit Price": "1477.0",
+          "Discount Amount": "0.0",
+          "Discount Amount(%)": "0.0",
+          "Net Amount": "1477.0",
+          "Vat Amount": "221.55",
+          "TOTAL AMOUNT": "1698.55"
+        },
+        {
+          "TRX DATE": "2023-07-08",
+          "TRX NUMBER": "2321016207",
+          "SALES CHANNEL": "RECA",
+          "CUSTOMER NUMBER": "7233",
+          "ORG Name": NaN,
+          "Type": "INV",
+          "Month": "JUL",
+          "Year": "2023",
+          "ORG": "TPC",
+          "ITEM CODE": "LTT7CBBWI",
+          "FRANCHISE": "LG",
+          "ITEM DESC": "Ref 1D 6.9 Cu. Ft / Pocket Handle / Inverter Compressor",
+          "FAMILY": "HA",
+          "CLASS": "REFRIGERATORS",
+          "SUBCLASS": "MINI BAR",
+          "UIS TYPE": "0-Month",
+          "QUANTITY": "1",
+          "Unit Price": "1390.0",
+          "Discount Amount": "0.0",
+          "Discount Amount(%)": "0.0",
+          "Net Amount": "1390.0",
+          "Vat Amount": "208.5",
+          "TOTAL AMOUNT": "1598.5"
+        },
+        {
+          "TRX DATE": "2023-07-09",
+          "TRX NUMBER": "2311041965",
+          "SALES CHANNEL": "RECA",
+          "CUSTOMER NUMBER": "7233",
+          "ORG Name": NaN,
+          "Type": "INV",
+          "Month": "JUL",
+          "Year": "2023",
+          "ORG": "EAC",
+          "ITEM CODE": "PIPE V-30/36",
+          "FRANCHISE": "WHITE WESTINGHOUSE",
+          "ITEM DESC": "5 Meter copper pipe for 30K/36K Split AC",
+          "FAMILY": "HVPAC",
+          "CLASS": "ACCESSORIES",
+          "SUBCLASS": "PIPE",
+          "UIS TYPE": "0-Month",
+          "QUANTITY": "1",
+          "Unit Price": "0.01",
+          "Discount Amount": "0.0",
+          "Discount Amount(%)": "0.0",
+          "Net Amount": "0.01",
+          "Vat Amount": "0.01",
+          "TOTAL AMOUNT": "0.02"
+        },
+        {
+          "TRX DATE": "2023-07-11",
+          "TRX NUMBER": "2311042182",
+          "SALES CHANNEL": "RECO",
+          "CUSTOMER NUMBER": "7183",
+          "ORG Name": NaN,
+          "Type": "INV",
+          "Month": "JUL",
+          "Year": "2023",
+          "ORG": "EAC",
+          "ITEM CODE": "WWS30G22C",
+          "FRANCHISE": "WHITE WESTINGHOUSE",
+          "ITEM DESC": "Outdoor Split A/C 27400 BTU Cool",
+          "FAMILY": "HVPAC",
+          "CLASS": "WALL SPLITS",
+          "SUBCLASS": "SAC WALL ROTARY",
+          "UIS TYPE": "0-Month",
+          "QUANTITY": "1",
+          "Unit Price": "1803.91",
+          "Discount Amount": "-118.01",
+          "Discount Amount(%)": "6.54",
+          "Net Amount": "1685.9",
+          "Vat Amount": "252.88",
+          "TOTAL AMOUNT": "1938.78"
+        }
+      ],
+      "numeric_summary": {
+        "TRX NUMBER": {
+          "min": 2311038606.0,
+          "max": 2328002002.0,
+          "mean": 2313400609.5885186,
+          "std": 4245565.521333715,
+          "unique": 1661
+        },
+        "CUSTOMER NUMBER": {
+          "min": 1879.0,
+          "max": 7596.0,
+          "mean": 6595.734074074074,
+          "std": 1470.8480749811906,
+          "unique": 23
+        },
+        "Year": {
+          "min": 2023.0,
+          "max": 2023.0,
+          "mean": 2023.0,
+          "std": 0.0,
+          "unique": 1
+        },
+        "QUANTITY": {
+          "min": -5.0,
+          "max": 800.0,
+          "mean": 1.6144444444444443,
+          "std": 15.889177572714733,
+          "unique": 18
+        },
+        "Unit Price": {
+          "min": 0.01,
+          "max": 14434.0,
+          "mean": 1616.2938925925926,
+          "std": 1332.9053815172254,
+          "unique": 180
+        },
+        "Discount Amount": {
+          "min": -79304.0,
+          "max": 5521.73,
+          "mean": -338.0677185185186,
+          "std": 2108.4919248973065,
+          "unique": 505
+        },
+        "Discount Amount(%)": {
+          "min": 0.0,
+          "max": 100.0,
+          "mean": 17.1682037037037,
+          "std": 25.791080393378472,
+          "unique": 377
+        },
+        "Net Amount": {
+          "min": -25213.05,
+          "max": 128696.0,
+          "mean": 1644.9748814814818,
+          "std": 3488.794237390605,
+          "unique": 622
+        },
+        "Vat Amount": {
+          "min": -3781.96,
+          "max": 19304.4,
+          "mean": 246.74684074074074,
+          "std": 523.319021194209,
+          "unique": 600
+        },
+        "TOTAL AMOUNT": {
+          "min": -28995.01,
+          "max": 148000.4,
+          "mean": 1891.7217222222223,
+          "std": 4012.1132585683786,
+          "unique": 673
+        }
+      }
+    }
+  ]
+}
