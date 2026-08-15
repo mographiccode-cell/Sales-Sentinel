@@ -1,0 +1,108 @@
+{
+  "version": "SAMA-CITY-V3.4-MULTIPATTERN-COUNTERFACTUAL-1",
+  "frozen_model": "SAMA-CITY-RISK-3.4-STRUCTURAL-HYBRID",
+  "model_development_end": "2025-06-29",
+  "test_type": "new multi-pattern counterfactual stress test on real SAMA-shaped covariates",
+  "scenario_count": 33,
+  "control_rows": 330,
+  "patterns": {
+    "balanced_gradual": {
+      "value": {
+        "-2": 0.97,
+        "-1": 0.92,
+        "0": 0.86
+      },
+      "count": {
+        "-2": 0.97,
+        "-1": 0.92,
+        "0": 0.86
+      },
+      "event_ratio": 0.7
+    },
+    "value_led": {
+      "value": {
+        "-2": 0.96,
+        "-1": 0.9,
+        "0": 0.82
+      },
+      "count": {
+        "-2": 0.99,
+        "-1": 0.95,
+        "0": 0.9
+      },
+      "event_ratio": 0.72
+    },
+    "count_led": {
+      "value": {
+        "-2": 0.99,
+        "-1": 0.95,
+        "0": 0.9
+      },
+      "count": {
+        "-2": 0.96,
+        "-1": 0.9,
+        "0": 0.82
+      },
+      "event_ratio": 0.68
+    }
+  },
+  "pattern_results": {
+    "balanced_gradual": {
+      "n": 11,
+      "alerted": 6,
+      "recall": 0.5454545454545454,
+      "red": 0,
+      "median_score_lift": 0.08534644767348507,
+      "structural_warnings": 2,
+      "ood_abstentions": 1
+    },
+    "count_led": {
+      "n": 11,
+      "alerted": 10,
+      "recall": 0.9090909090909091,
+      "red": 0,
+      "median_score_lift": 0.20143566029999693,
+      "structural_warnings": 1,
+      "ood_abstentions": 0
+    },
+    "value_led": {
+      "n": 11,
+      "alerted": 8,
+      "recall": 0.7272727272727273,
+      "red": 0,
+      "median_score_lift": 0.10778790904618266,
+      "structural_warnings": 4,
+      "ood_abstentions": 0
+    }
+  },
+  "overall": {
+    "alerted": 24,
+    "recall": 0.7272727272727273,
+    "RED": 0,
+    "AMBER": 24,
+    "GREEN": 9,
+    "median_score_lift": 0.12536427966034308,
+    "structural_warnings": 7,
+    "model_warnings": 16,
+    "ood_abstentions": 1,
+    "ood_rate": 0.030303030303030304
+  },
+  "controls": {
+    "new_red": 0,
+    "new_red_rate": 0.0,
+    "new_alert": 0,
+    "new_alert_rate": 0.0,
+    "max_abs_score_change": 0.1483576433366628
+  },
+  "acceptance": {
+    "overall_injected_alert_recall_ge_90pct": false,
+    "each_pattern_recall_ge_80pct": false,
+    "control_new_red_rate_le_1pct": true,
+    "control_new_alert_rate_le_5pct": true,
+    "injected_ood_abstain_rate_le_30pct": true,
+    "all_events_are_gt20pct_declines": true,
+    "serving_exact_v3_4_artifact": true
+  },
+  "all_acceptance_passed": false,
+  "scientific_boundary": "No model weight, feature, threshold, structural rule, or policy parameter is fit in this script. These three injection patterns were not used by v3.4 training."
+}
