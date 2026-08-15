@@ -1,0 +1,48 @@
+name: Inspect External Saudi Kaggle Dataset
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/inspect_external_saudi_kaggle_dataset.py'
+      - '.github/workflows/inspect-external-saudi-kaggle.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install inspection dependencies
+        run: pip install pandas numpy openpyxl pyarrow
+      - name: Download public Kaggle dataset
+        run: |
+          mkdir -p /tmp/saudi_kaggle
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://www.kaggle.com/api/v1/datasets/download/moha684/saudi-arabia-supermarket-data-expenses' \
+            -o /tmp/saudi_kaggle.zip
+          unzip -o /tmp/saudi_kaggle.zip -d /tmp/saudi_kaggle
+          find /tmp/saudi_kaggle -maxdepth 2 -type f -printf '%p %s bytes\n'
+      - name: Inspect downloaded dataset
+        env:
+          SAUDI_KAGGLE_DIR: /tmp/saudi_kaggle
+        run: python scripts/inspect_external_saudi_kaggle_dataset.py
+      - name: Show inspection summary
+        run: cat reports/external_saudi_kaggle_inspection/inspection_summary.md
+      - name: Upload inspection evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-saudi-kaggle-inspection
+          path: reports/external_saudi_kaggle_inspection/
+      - name: Persist inspection evidence only
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/external_saudi_kaggle_inspection
+          git diff --cached --quiet || git commit -m "Persist external Saudi Kaggle inspection"
+          git push
