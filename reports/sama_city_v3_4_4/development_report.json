@@ -1,0 +1,105 @@
+{
+  "version": "SAMA-CITY-RISK-3.4.4-SAUDI-SEASONAL-MULTIHORIZON",
+  "status": "NO_POLICY",
+  "feature_count": 67,
+  "best_feasible": {
+    "t2": 0.4266935478575196,
+    "t4": 0.5682051282051281,
+    "agreement_min": 1,
+    "metrics": {
+      "ok": false,
+      "RED_next1": {
+        "TP": 7,
+        "FP": 0,
+        "FN": 77,
+        "TN": 1170,
+        "precision": 1.0,
+        "recall": 0.08333333333333333,
+        "FPR": 0.0,
+        "NPV": 0.9382518043303929
+      },
+      "ALERT_next4": {
+        "TP": 155,
+        "FP": 180,
+        "FN": 77,
+        "TN": 842,
+        "precision": 0.4626865671641791,
+        "recall": 0.6681034482758621,
+        "FPR": 0.1761252446183953,
+        "NPV": 0.9162132752992383
+      },
+      "alert_rate": 0.2671451355661882,
+      "green_coverage": 0.7328548644338118,
+      "incremental_negative_alert_rate": 0.04858757062146893,
+      "horizon_incremental_alerts": 91,
+      "horizon_incremental_tp": 48,
+      "min_stable_fold_recall": 0.14285714285714285,
+      "folds": [
+        {
+          "fold_id": 0,
+          "positives": 20,
+          "recall": 0.85,
+          "precision": 0.29310344827586204,
+          "alert_rate": 0.40559440559440557
+        },
+        {
+          "fold_id": 1,
+          "positives": 5,
+          "recall": 0.0,
+          "precision": 0.0,
+          "alert_rate": 0.0979020979020979
+        },
+        {
+          "fold_id": 2,
+          "positives": 10,
+          "recall": 0.7,
+          "precision": 0.4375,
+          "alert_rate": 0.11188811188811189
+        },
+        {
+          "fold_id": 3,
+          "positives": 39,
+          "recall": 0.358974358974359,
+          "precision": 0.6086956521739131,
+          "alert_rate": 0.16083916083916083
+        },
+        {
+          "fold_id": 4,
+          "positives": 52,
+          "recall": 0.7115384615384616,
+          "precision": 0.6379310344827587,
+          "alert_rate": 0.40559440559440557
+        },
+        {
+          "fold_id": 5,
+          "positives": 6,
+          "recall": 1.0,
+          "precision": 0.17647058823529413,
+          "alert_rate": 0.23776223776223776
+        },
+        {
+          "fold_id": 6,
+          "positives": 14,
+          "recall": 0.14285714285714285,
+          "precision": 0.6666666666666666,
+          "alert_rate": 0.02097902097902098
+        },
+        {
+          "fold_id": 7,
+          "positives": 49,
+          "recall": 0.8571428571428571,
+          "precision": 0.6461538461538462,
+          "alert_rate": 0.45454545454545453
+        },
+        {
+          "fold_id": 8,
+          "positives": 37,
+          "recall": 0.8108108108108109,
+          "precision": 0.46875,
+          "alert_rate": 0.5818181818181818
+        }
+      ]
+    }
+  },
+  "scientific_boundary": "historical OOF only, 35-day purge; Saudi calendar and 52-week features known at origin; no recent/counterfactual labels used"
+}
