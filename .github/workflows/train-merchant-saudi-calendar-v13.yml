@@ -1,0 +1,38 @@
+name: Train Merchant Saudi Calendar V13
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/train_merchant_saudi_calendar_v13.py'
+      - '.github/workflows/train-merchant-saudi-calendar-v13.yml'
+
+jobs:
+  train-v13:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn xgboost catboost
+      - name: Train V13 Saudi calendar verifier
+        run: python scripts/train_merchant_saudi_calendar_v13.py
+      - name: Show V13 summary
+        run: cat reports/merchant_saudi_calendar_v13/development_summary.md
+      - name: Upload V13 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-saudi-calendar-v13
+          path: reports/merchant_saudi_calendar_v13/
+      - name: Persist V13 evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/merchant_saudi_calendar_v13
+          git diff --cached --quiet || git commit -m "Persist V13 Saudi calendar evidence"
+          git push
