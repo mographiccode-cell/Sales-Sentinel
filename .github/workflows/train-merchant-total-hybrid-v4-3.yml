@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/train_merchant_total_hybrid_v4_3.py'
+      - 'scripts/run_merchant_total_hybrid_v4_3_1.py'
       - '.github/workflows/train-merchant-total-hybrid-v4-3.yml'
       - 'data/saudi_v1_3/saudi_daily_sama_calibrated_v1_3.csv'
       - 'data/merchant_v4/merchant_sector_daily_features_v4.csv'
@@ -25,8 +26,8 @@ jobs:
           cache: pip
       - name: Install
         run: pip install -r requirements-training.txt
-      - name: Train v4.3 merchant total hybrid
-        run: python scripts/train_merchant_total_hybrid_v4_3.py
+      - name: Train v4.3.1 merchant total hybrid
+        run: python scripts/run_merchant_total_hybrid_v4_3_1.py
       - name: Show evidence
         if: always()
         run: |
