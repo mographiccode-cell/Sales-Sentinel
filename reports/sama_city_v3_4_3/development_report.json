@@ -1,0 +1,111 @@
+{
+  "version": "SAMA-CITY-RISK-3.4.3-MULTI-HORIZON",
+  "status": "NO_POLICY",
+  "best_feasible": {
+    "t2": 0.4964646464646464,
+    "t4": 0.5971444281139245,
+    "agreement_min": 2,
+    "metrics": {
+      "ok": false,
+      "RED_next1": {
+        "TP": 8,
+        "FP": 0,
+        "FN": 78,
+        "TN": 1311,
+        "precision": 1.0,
+        "recall": 0.09302325581395349,
+        "FPR": 0.0,
+        "NPV": 0.9438444924406048
+      },
+      "ALERT_next4": {
+        "TP": 168,
+        "FP": 251,
+        "FN": 68,
+        "TN": 910,
+        "precision": 0.4009546539379475,
+        "recall": 0.711864406779661,
+        "FPR": 0.21619293712316967,
+        "NPV": 0.9304703476482618
+      },
+      "alert_rate": 0.2999284180386543,
+      "green_coverage": 0.7000715819613457,
+      "incremental_negative_alert_rate": 0.04911180773249739,
+      "horizon_incremental_alerts": 94,
+      "horizon_incremental_tp": 47,
+      "min_stable_fold_recall": 0.14285714285714285,
+      "folds": [
+        {
+          "fold_id": 0,
+          "positives": 4,
+          "recall": 0.5,
+          "precision": 0.1111111111111111,
+          "alert_rate": 0.1258741258741259
+        },
+        {
+          "fold_id": 1,
+          "positives": 20,
+          "recall": 0.85,
+          "precision": 0.3090909090909091,
+          "alert_rate": 0.38461538461538464
+        },
+        {
+          "fold_id": 2,
+          "positives": 5,
+          "recall": 0.6,
+          "precision": 0.08333333333333333,
+          "alert_rate": 0.2517482517482518
+        },
+        {
+          "fold_id": 3,
+          "positives": 10,
+          "recall": 0.7,
+          "precision": 0.23333333333333334,
+          "alert_rate": 0.2097902097902098
+        },
+        {
+          "fold_id": 4,
+          "positives": 39,
+          "recall": 0.48717948717948717,
+          "precision": 0.6333333333333333,
+          "alert_rate": 0.2097902097902098
+        },
+        {
+          "fold_id": 5,
+          "positives": 52,
+          "recall": 0.8269230769230769,
+          "precision": 0.4942528735632184,
+          "alert_rate": 0.6083916083916084
+        },
+        {
+          "fold_id": 6,
+          "positives": 6,
+          "recall": 0.8333333333333334,
+          "precision": 0.14705882352941177,
+          "alert_rate": 0.23776223776223776
+        },
+        {
+          "fold_id": 7,
+          "positives": 14,
+          "recall": 0.14285714285714285,
+          "precision": 0.2857142857142857,
+          "alert_rate": 0.04895104895104895
+        },
+        {
+          "fold_id": 8,
+          "positives": 49,
+          "recall": 0.7959183673469388,
+          "precision": 0.6724137931034483,
+          "alert_rate": 0.40559440559440557
+        },
+        {
+          "fold_id": 9,
+          "positives": 37,
+          "recall": 0.8378378378378378,
+          "precision": 0.484375,
+          "alert_rate": 0.5818181818181818
+        }
+      ]
+    }
+  },
+  "scientific_boundary": "historical OOF only, 35-day purge; no recent/counterfactual labels used"
+}
