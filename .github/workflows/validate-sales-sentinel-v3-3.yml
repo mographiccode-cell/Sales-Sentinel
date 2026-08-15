@@ -1,0 +1,57 @@
+name: Validate Sales Sentinel v3.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/production_city_risk_engine_v3_3.py'
+      - 'scripts/evaluate_v3_3_recent_stress.py'
+      - 'scripts/test_v3_3_semi_synthetic_sama.py'
+      - '.github/workflows/validate-sales-sentinel-v3-3.yml'
+      - 'models/sama_city_v3_3/**'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Recent real SAMA diagnostic
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/evaluate_v3_3_recent_stress.py
+      - name: Fresh semi-synthetic SAMA stress
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/test_v3_3_semi_synthetic_sama.py
+      - name: Show evidence
+        run: |
+          cat reports/sama_city_v3_3/recent_stress_report.json
+          cat reports/sama_city_v3_3/semi_synthetic_fresh_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v3-3-validation
+          path: |
+            reports/sama_city_v3_3/**
+            tests/fixtures/sama_city_v3_3_semi_synthetic/**
+          retention-days: 90
+      - name: Persist validation evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3_3 tests/fixtures/sama_city_v3_3_semi_synthetic
+          git diff --cached --quiet || git commit -m 'test: persist Sales Sentinel v3.3 validation evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
