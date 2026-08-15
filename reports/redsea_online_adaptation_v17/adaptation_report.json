@@ -1,0 +1,75 @@
+{
+  "version": "SALES-SENTINEL-V17-CAUSAL-WEEKLY-MERCHANT-ADAPTATION",
+  "status": "POST_OPEN_CAUSAL_ADAPTATION_DIAGNOSTIC",
+  "scientific_boundary": "Redsea was already opened in earlier diagnostics; V17 is not independent validation. It tests a deployable prequential adaptation protocol. Every prediction is fit only with localized source data plus Redsea labels whose complete 7-day future was already observable before the prediction date. No current/future Redsea label enters its own or an earlier prediction.",
+  "protocol": {
+    "label_delay_days": 7,
+    "minimum_past_target_labels": 14,
+    "target_sample_weight": 4.0,
+    "retrain_every_new_labels": 7,
+    "model": "extra_trees inherited from V16.1",
+    "alert_budget_inherited_from_development": 0.4461942257217848,
+    "percentile_lookback": 112,
+    "percentile_warmup": 7
+  },
+  "evaluation": {
+    "rows": 40,
+    "date_start": "2023-09-15",
+    "date_end": "2023-10-24",
+    "positive_rate": 0.45,
+    "adapted": {
+      "accuracy": 0.525,
+      "balanced_accuracy": 0.5328282828282829,
+      "precision": 0.4782608695652174,
+      "recall": 0.6111111111111112,
+      "f1": 0.5365853658536586,
+      "roc_auc": 0.6464646464646465,
+      "pr_auc": 0.5504656597112214,
+      "alert_rate": 0.575,
+      "green_npv": 0.5882352941176471,
+      "tp": 11,
+      "fp": 12,
+      "fn": 7,
+      "tn": 10
+    },
+    "v16_1_static_same_rows": {
+      "accuracy": 0.625,
+      "balanced_accuracy": 0.654040404040404,
+      "precision": 0.5483870967741935,
+      "recall": 0.9444444444444444,
+      "f1": 0.6938775510204082,
+      "roc_auc": 0.7196969696969697,
+      "pr_auc": 0.6081311851680788,
+      "alert_rate": 0.775,
+      "green_npv": 0.8888888888888888,
+      "tp": 17,
+      "fp": 14,
+      "fn": 1,
+      "tn": 8
+    },
+    "v16_2_calibrated_same_rows": {
+      "accuracy": 0.675,
+      "balanced_accuracy": 0.6742424242424242,
+      "precision": 0.631578947368421,
+      "recall": 0.6666666666666666,
+      "f1": 0.6486486486486487,
+      "roc_auc": 0.7196969696969697,
+      "pr_auc": 0.6081311851680788,
+      "alert_rate": 0.475,
+      "green_npv": 0.7142857142857143,
+      "tp": 12,
+      "fp": 7,
+      "fn": 6,
+      "tn": 15
+    }
+  },
+  "deltas_vs_static": {
+    "auc": -0.0732323232323232,
+    "pr_auc": -0.057665525456857436,
+    "precision": -0.0701262272089761,
+    "recall": -0.33333333333333326,
+    "f1": -0.1572921851667496,
+    "alert_rate": -0.20000000000000007
+  },
+  "red_supported": false
+}
