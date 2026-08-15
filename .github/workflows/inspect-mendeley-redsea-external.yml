@@ -20,15 +20,15 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: pip install numpy pandas openpyxl pyreadstat pyarrow
-      - name: Download Mendeley Redsea DOI snapshot
+      - name: Download official Mendeley Redsea file
         run: |
           mkdir -p /tmp/redsea_mendeley
           curl -L --fail --retry 3 --retry-delay 2 \
-            'https://api.data.mendeley.com/datasets/9c87bd42ct/zip/file_downloaded?version=1' \
-            -o /tmp/redsea.zip
-          file /tmp/redsea.zip
-          unzip -o /tmp/redsea.zip -d /tmp/redsea_mendeley
-          find /tmp/redsea_mendeley -maxdepth 3 -type f -printf '%p %s bytes\n'
+            'https://data.mendeley.com/public-files/datasets/9c87bd42ct/files/deb8ee07-178b-43b3-8462-ad71ee417edb/file_downloaded' \
+            -o '/tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx'
+          file '/tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx'
+          sha256sum '/tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx'
+          test "$(stat -c%s '/tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx')" -eq 354721
       - name: Inspect Redsea files
         env:
           REDSEA_DIR: /tmp/redsea_mendeley
