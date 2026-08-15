@@ -1,0 +1,36 @@
+name: Test V18 Runtime Integration
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app/**'
+      - 'models/sales_sentinel_portable_v18.json.gz'
+      - 'tests/**'
+      - '.github/workflows/test-v18-runtime-integration.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install runtime and test dependencies
+        run: pip install -r requirements.txt pytest
+      - name: Run unit and integration tests
+        run: pytest -q tests/test_forecasting_engine.py tests/test_v18_runtime_and_import.py
+      - name: Smoke-create Flask application
+        env:
+          DATABASE_URL: sqlite:////tmp/sales-sentinel-smoke.sqlite3
+        run: |
+          python - <<'PY'
+          from app import create_app
+          app=create_app()
+          client=app.test_client()
+          r=client.get('/healthz')
+          print(r.status_code, r.get_json())
+          assert r.status_code == 200
+          PY
