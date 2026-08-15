@@ -1,0 +1,49 @@
+name: Inspect Mendeley Redsea External Dataset
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/inspect_mendeley_redsea_external.py'
+      - '.github/workflows/inspect-mendeley-redsea-external.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas openpyxl pyreadstat pyarrow
+      - name: Download Mendeley Redsea DOI snapshot
+        run: |
+          mkdir -p /tmp/redsea_mendeley
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://api.data.mendeley.com/datasets/9c87bd42ct/zip/file_downloaded?version=1' \
+            -o /tmp/redsea.zip
+          file /tmp/redsea.zip
+          unzip -o /tmp/redsea.zip -d /tmp/redsea_mendeley
+          find /tmp/redsea_mendeley -maxdepth 3 -type f -printf '%p %s bytes\n'
+      - name: Inspect Redsea files
+        env:
+          REDSEA_DIR: /tmp/redsea_mendeley
+        run: python scripts/inspect_mendeley_redsea_external.py
+      - name: Show Redsea inspection
+        run: cat reports/external_redsea_mendeley_inspection/inspection_summary.md
+      - name: Upload inspection evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-redsea-mendeley-inspection
+          path: reports/external_redsea_mendeley_inspection/
+      - name: Persist inspection evidence only
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/external_redsea_mendeley_inspection
+          git diff --cached --quiet || git commit -m "Persist Mendeley Redsea inspection"
+          git push
