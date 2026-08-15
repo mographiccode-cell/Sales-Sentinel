@@ -1,0 +1,46 @@
+name: Test Merchant Total Serving v4.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/serve_merchant_total_triage_v4_4.py'
+      - 'scripts/validate_real_merchant_dataset_v4.py'
+      - '.github/workflows/test-merchant-total-serving-v4-4.yml'
+      - 'models/merchant_total_triage_v4_4/merchant_total_triage_v4_4.joblib'
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-training.txt
+      - name: Run serving engine
+        run: python scripts/serve_merchant_total_triage_v4_4.py
+      - name: Enforce serving safety contract
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          import pandas as pd
+          import serve_merchant_total_triage_v4_4 as s
+          d=pd.read_csv('data/merchant_v4_3/merchant_total_feature_panel_v4_3.csv')
+          x=d.iloc[[-1]].drop(columns=['date','future_ratio','target'])
+          a=s.predict_features(x)
+          b=s.predict_features(x)
+          assert a['status']=='OK'
+          assert a['deployment_status']=='BLOCKED_PENDING_REAL_MERCHANT_VALIDATION'
+          assert a['rows']==b['rows'], 'Serving must be deterministic'
+          assert a['safety']['website_integration_allowed'] is False
+          assert a['safety']['stress_gate_passed'] is False
+          bad=s.predict_features(x.assign(target=0))
+          assert bad['status']=='NO_DECISION'
+          print(a)
+          PY
