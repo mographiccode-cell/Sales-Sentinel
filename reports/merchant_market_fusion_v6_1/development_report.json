@@ -1,0 +1,539 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-MARKET-FUSION-6.1-PRECISION-RECOVERY",
+  "status": "DEVELOPMENT_FROZEN_PENDING_EXTERNAL_MERCHANT_VALIDATION",
+  "scientific_boundary": "V6.1 changes the operational decision policy, not the merchant ranking model. All merchant scores are purged rolling-origin OOF. SAMA confirmation is prequential and shifted one week. Policy parameters are development-selected on OOF evidence only; no external real Saudi merchant longitudinal validation has yet occurred.",
+  "merchant_rows": 541,
+  "merchant_raw_features": 391,
+  "market_channel_features": 8,
+  "oof_rows": 381,
+  "early_positive_rate": 0.14602587800369685,
+  "severe_positive_rate": 0.07393715341959335,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2023-07-08",
+      "end": "2023-09-30",
+      "train_rows": 125,
+      "validation_rows": 85,
+      "validation_positives": 7
+    },
+    {
+      "fold_id": 1,
+      "start": "2023-10-08",
+      "end": "2023-12-31",
+      "train_rows": 217,
+      "validation_rows": 85,
+      "validation_positives": 15
+    },
+    {
+      "fold_id": 2,
+      "start": "2024-01-08",
+      "end": "2024-03-31",
+      "train_rows": 309,
+      "validation_rows": 84,
+      "validation_positives": 17
+    },
+    {
+      "fold_id": 3,
+      "start": "2024-04-08",
+      "end": "2024-06-30",
+      "train_rows": 400,
+      "validation_rows": 84,
+      "validation_positives": 19
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-07-08",
+      "end": "2024-08-19",
+      "train_rows": 491,
+      "validation_rows": 43,
+      "validation_positives": 5
+    }
+  ],
+  "market_snapshots": [
+    {
+      "month": "2023-02",
+      "train_rows": 1408,
+      "train_positives": 65,
+      "label_cutoff": "2023-01-18"
+    },
+    {
+      "month": "2023-03",
+      "train_rows": 1452,
+      "train_positives": 65,
+      "label_cutoff": "2023-02-15"
+    },
+    {
+      "month": "2023-04",
+      "train_rows": 1496,
+      "train_positives": 65,
+      "label_cutoff": "2023-03-18"
+    },
+    {
+      "month": "2023-05",
+      "train_rows": 1551,
+      "train_positives": 69,
+      "label_cutoff": "2023-04-17"
+    },
+    {
+      "month": "2023-06",
+      "train_rows": 1595,
+      "train_positives": 74,
+      "label_cutoff": "2023-05-18"
+    },
+    {
+      "month": "2023-07",
+      "train_rows": 1639,
+      "train_positives": 74,
+      "label_cutoff": "2023-06-17"
+    },
+    {
+      "month": "2023-08",
+      "train_rows": 1694,
+      "train_positives": 75,
+      "label_cutoff": "2023-07-18"
+    },
+    {
+      "month": "2023-09",
+      "train_rows": 1738,
+      "train_positives": 76,
+      "label_cutoff": "2023-08-18"
+    },
+    {
+      "month": "2023-10",
+      "train_rows": 1793,
+      "train_positives": 77,
+      "label_cutoff": "2023-09-17"
+    },
+    {
+      "month": "2023-11",
+      "train_rows": 1837,
+      "train_positives": 77,
+      "label_cutoff": "2023-10-18"
+    },
+    {
+      "month": "2023-12",
+      "train_rows": 1881,
+      "train_positives": 77,
+      "label_cutoff": "2023-11-17"
+    },
+    {
+      "month": "2024-01",
+      "train_rows": 1936,
+      "train_positives": 78,
+      "label_cutoff": "2023-12-18"
+    },
+    {
+      "month": "2024-02",
+      "train_rows": 1980,
+      "train_positives": 80,
+      "label_cutoff": "2024-01-18"
+    },
+    {
+      "month": "2024-03",
+      "train_rows": 2024,
+      "train_positives": 80,
+      "label_cutoff": "2024-02-16"
+    },
+    {
+      "month": "2024-04",
+      "train_rows": 2079,
+      "train_positives": 83,
+      "label_cutoff": "2024-03-18"
+    },
+    {
+      "month": "2024-05",
+      "train_rows": 2123,
+      "train_positives": 96,
+      "label_cutoff": "2024-04-17"
+    },
+    {
+      "month": "2024-06",
+      "train_rows": 2167,
+      "train_positives": 96,
+      "label_cutoff": "2024-05-18"
+    },
+    {
+      "month": "2024-07",
+      "train_rows": 2222,
+      "train_positives": 106,
+      "label_cutoff": "2024-06-17"
+    },
+    {
+      "month": "2024-08",
+      "train_rows": 2266,
+      "train_positives": 106,
+      "label_cutoff": "2024-07-18"
+    }
+  ],
+  "ranking": {
+    "roc_auc": 0.7583108715184187,
+    "pr_auc": 0.3872897299159076
+  },
+  "selected_policy": {
+    "supported": false,
+    "objective": 1.7258504970315833,
+    "params": {
+      "low_threshold": 0.38629789401495856,
+      "high_threshold": 0.6642351553124186,
+      "agreement_threshold": 0.24587718559041818,
+      "market_p90_threshold": 0.3889858782364058,
+      "max_model_disagreement": 0.10844771226946887
+    },
+    "metrics": {
+      "accuracy": 0.8110236220472441,
+      "balanced_accuracy": 0.734052111410602,
+      "precision": 0.4482758620689655,
+      "recall": 0.6190476190476191,
+      "f1": 0.52,
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076,
+      "alert_rate": 0.2283464566929134,
+      "green_npv": 0.9183673469387755,
+      "tp": 39,
+      "fp": 48,
+      "fn": 24,
+      "tn": 270,
+      "worst_fold_recall": 0.0,
+      "max_fold_alert_rate": 0.37209302325581395
+    },
+    "per_fold": [
+      {
+        "accuracy": 0.7647058823529411,
+        "balanced_accuracy": 0.8067765567765568,
+        "precision": 0.24,
+        "recall": 0.8571428571428571,
+        "f1": 0.375,
+        "roc_auc": 0.7985347985347986,
+        "pr_auc": 0.36675154910449026,
+        "alert_rate": 0.29411764705882354,
+        "green_npv": 0.9833333333333333,
+        "tp": 6,
+        "fp": 19,
+        "fn": 1,
+        "tn": 59,
+        "fold_id": 0,
+        "positives": 7
+      },
+      {
+        "accuracy": 0.8235294117647058,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "roc_auc": 0.8076190476190477,
+        "pr_auc": 0.3933696175880795,
+        "alert_rate": 0.0,
+        "green_npv": 0.8235294117647058,
+        "tp": 0,
+        "fp": 0,
+        "fn": 15,
+        "tn": 70,
+        "fold_id": 1,
+        "positives": 15
+      },
+      {
+        "accuracy": 0.7976190476190477,
+        "balanced_accuracy": 0.7853380158033363,
+        "precision": 0.5,
+        "recall": 0.7647058823529411,
+        "f1": 0.6046511627906976,
+        "roc_auc": 0.8121158911325724,
+        "pr_auc": 0.6722125331213774,
+        "alert_rate": 0.30952380952380953,
+        "green_npv": 0.9310344827586207,
+        "tp": 13,
+        "fp": 13,
+        "fn": 4,
+        "tn": 54,
+        "fold_id": 2,
+        "positives": 17
+      },
+      {
+        "accuracy": 0.9166666666666666,
+        "balanced_accuracy": 0.8902834008097166,
+        "precision": 0.8,
+        "recall": 0.8421052631578947,
+        "f1": 0.8205128205128205,
+        "roc_auc": 0.8275303643724696,
+        "pr_auc": 0.61988974018815,
+        "alert_rate": 0.23809523809523808,
+        "green_npv": 0.953125,
+        "tp": 16,
+        "fp": 4,
+        "fn": 3,
+        "tn": 61,
+        "fold_id": 3,
+        "positives": 19
+      },
+      {
+        "accuracy": 0.6976744186046512,
+        "balanced_accuracy": 0.7421052631578948,
+        "precision": 0.25,
+        "recall": 0.8,
+        "f1": 0.38095238095238093,
+        "roc_auc": 0.6631578947368421,
+        "pr_auc": 0.18175727780990938,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629,
+        "tp": 4,
+        "fp": 12,
+        "fn": 1,
+        "tn": 26,
+        "fold_id": 4,
+        "positives": 5
+      }
+    ],
+    "diagnostics": {
+      "high_alerts": 54,
+      "marginal_candidates": 129,
+      "merchant_confirmed_marginal": 18,
+      "market_confirmed_marginal": 24,
+      "final_alerts": 87
+    },
+    "feasible_candidates": 0,
+    "total_candidates": 1200
+  },
+  "red": {
+    "supported": false,
+    "objective": 0.5084180001693337,
+    "params": {
+      "low_threshold": 0.32490166982182717,
+      "high_threshold": 0.5556756570976635,
+      "agreement_threshold": 0.12105268141857285,
+      "market_p90_threshold": 0.3889858782364058,
+      "max_model_disagreement": 0.2327757049321677
+    },
+    "metrics": {
+      "accuracy": 0.7559055118110236,
+      "balanced_accuracy": 0.6404899135446687,
+      "precision": 0.1827956989247312,
+      "recall": 0.5,
+      "f1": 0.2677165354330709,
+      "roc_auc": 0.679437192744533,
+      "pr_auc": 0.2843013752021029,
+      "alert_rate": 0.2440944881889764,
+      "green_npv": 0.9409722222222222,
+      "tp": 17,
+      "fp": 76,
+      "fn": 17,
+      "tn": 271,
+      "worst_fold_recall": 0.2857142857142857,
+      "max_fold_alert_rate": 0.37209302325581395
+    },
+    "per_fold": [
+      {
+        "accuracy": 0.6705882352941176,
+        "balanced_accuracy": 0.8333333333333333,
+        "precision": 0.034482758620689655,
+        "recall": 1.0,
+        "f1": 0.06666666666666667,
+        "roc_auc": 0.9642857142857143,
+        "pr_auc": 0.25,
+        "alert_rate": 0.3411764705882353,
+        "green_npv": 1.0,
+        "tp": 1,
+        "fp": 28,
+        "fn": 0,
+        "tn": 56,
+        "fold_id": 0,
+        "positives": 1
+      },
+      {
+        "accuracy": 0.8941176470588236,
+        "balanced_accuracy": 0.6172161172161172,
+        "precision": 0.3333333333333333,
+        "recall": 0.2857142857142857,
+        "f1": 0.3076923076923077,
+        "roc_auc": 0.6575091575091575,
+        "pr_auc": 0.17734907888360574,
+        "alert_rate": 0.07058823529411765,
+        "green_npv": 0.9367088607594937,
+        "tp": 2,
+        "fp": 4,
+        "fn": 5,
+        "tn": 74,
+        "fold_id": 1,
+        "positives": 7
+      },
+      {
+        "accuracy": 0.7738095238095238,
+        "balanced_accuracy": 0.6554054054054055,
+        "precision": 0.2631578947368421,
+        "recall": 0.5,
+        "f1": 0.3448275862068966,
+        "roc_auc": 0.8054054054054054,
+        "pr_auc": 0.3877525048480931,
+        "alert_rate": 0.2261904761904762,
+        "green_npv": 0.9230769230769231,
+        "tp": 5,
+        "fp": 14,
+        "fn": 5,
+        "tn": 60,
+        "fold_id": 2,
+        "positives": 10
+      },
+      {
+        "accuracy": 0.7380952380952381,
+        "balanced_accuracy": 0.6579710144927536,
+        "precision": 0.34782608695652173,
+        "recall": 0.5333333333333333,
+        "f1": 0.42105263157894735,
+        "roc_auc": 0.7632850241545893,
+        "pr_auc": 0.5983122025110773,
+        "alert_rate": 0.27380952380952384,
+        "green_npv": 0.8852459016393442,
+        "tp": 8,
+        "fp": 15,
+        "fn": 7,
+        "tn": 54,
+        "fold_id": 3,
+        "positives": 15
+      },
+      {
+        "accuracy": 0.6511627906976745,
+        "balanced_accuracy": 0.8214285714285714,
+        "precision": 0.0625,
+        "recall": 1.0,
+        "f1": 0.11764705882352941,
+        "roc_auc": 0.8809523809523809,
+        "pr_auc": 0.16666666666666666,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 1.0,
+        "tp": 1,
+        "fp": 15,
+        "fn": 0,
+        "tn": 27,
+        "fold_id": 4,
+        "positives": 1
+      }
+    ],
+    "diagnostics": {
+      "high_alerts": 54,
+      "marginal_candidates": 99,
+      "merchant_confirmed_marginal": 35,
+      "market_confirmed_marginal": 5,
+      "final_alerts": 93
+    },
+    "feasible_candidates": 0,
+    "total_candidates": 1200
+  },
+  "red_supported": false,
+  "comparison_vs_v6": {
+    "v6": {
+      "accuracy": 0.6482939632545932,
+      "balanced_accuracy": 0.7383947289607666,
+      "precision": 0.30386740331491713,
+      "recall": 0.873015873015873,
+      "f1": 0.45081967213114754,
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076,
+      "alert_rate": 0.47506561679790027,
+      "green_npv": 0.96,
+      "tp": 55,
+      "fp": 126,
+      "fn": 8,
+      "tn": 192
+    },
+    "v6_1": {
+      "accuracy": 0.8110236220472441,
+      "balanced_accuracy": 0.734052111410602,
+      "precision": 0.4482758620689655,
+      "recall": 0.6190476190476191,
+      "f1": 0.52,
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076,
+      "alert_rate": 0.2283464566929134,
+      "green_npv": 0.9183673469387755,
+      "tp": 39,
+      "fp": 48,
+      "fn": 24,
+      "tn": 270,
+      "worst_fold_recall": 0.0,
+      "max_fold_alert_rate": 0.37209302325581395
+    },
+    "delta": {
+      "precision": 0.1444084587540484,
+      "recall": -0.25396825396825395,
+      "f1": 0.06918032786885248,
+      "alert_rate": -0.24671916010498687,
+      "green_npv": -0.041632653061224434
+    },
+    "false_positives_removed": 78,
+    "true_positives_changed": -16,
+    "missed_declines_changed": 16
+  },
+  "comparison_vs_v4_4": {
+    "v4_4": {
+      "accuracy": 0.6850393700787402,
+      "balanced_accuracy": 0.6967654986522911,
+      "precision": 0.30612244897959184,
+      "recall": 0.7142857142857143,
+      "f1": 0.42857142857142855,
+      "roc_auc": 0.7584107018069283,
+      "alert_rate": 0.3858267716535433,
+      "green_npv": 0.9230769230769231,
+      "tp": 45,
+      "fp": 102,
+      "fn": 18,
+      "tn": 216
+    },
+    "v6_1": {
+      "accuracy": 0.8110236220472441,
+      "balanced_accuracy": 0.734052111410602,
+      "precision": 0.4482758620689655,
+      "recall": 0.6190476190476191,
+      "f1": 0.52,
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076,
+      "alert_rate": 0.2283464566929134,
+      "green_npv": 0.9183673469387755,
+      "tp": 39,
+      "fp": 48,
+      "fn": 24,
+      "tn": 270,
+      "worst_fold_recall": 0.0,
+      "max_fold_alert_rate": 0.37209302325581395
+    },
+    "delta": {
+      "precision": 0.14215341308937368,
+      "recall": -0.09523809523809523,
+      "f1": 0.09142857142857147,
+      "alert_rate": -0.1574803149606299,
+      "green_npv": -0.004709576138147598
+    }
+  },
+  "contract": {
+    "ranking_roc_auc_min": 0.75,
+    "recall_min": 0.8,
+    "precision_min": 0.32,
+    "f1_min": 0.46,
+    "green_npv_min": 0.95,
+    "alert_rate_max": 0.43,
+    "worst_fold_recall_min": 0.5,
+    "max_fold_alert_rate_max": 0.6,
+    "must_reduce_false_positives_vs_v6": true,
+    "must_not_lose_more_than_5_tp_vs_v6": true
+  },
+  "gates": {
+    "merchant_rolling_origin_past_only": true,
+    "merchant_target_purge_7days": true,
+    "market_prequential_monthly_freeze": true,
+    "market_label_availability_gap_14days": true,
+    "market_week_shift_plus_7days": true,
+    "no_synthetic_oversampling": true,
+    "precision_recovery_policy_supported": false,
+    "ranking_roc_auc": true,
+    "recall": false,
+    "precision": true,
+    "f1": true,
+    "green_npv": false,
+    "alert_rate": true,
+    "worst_fold_recall": false,
+    "max_fold_alert_rate": true,
+    "false_positives_reduced_vs_v6": true,
+    "tp_loss_vs_v6_bounded": false
+  },
+  "all_development_gates_passed": false,
+  "next_required_evidence": "If V6.1 passes the operational gates, freeze the decision policy and validate it on a never-used real Saudi merchant time series. If it does not pass, do not relax the gates; the next improvement must come from richer merchant longitudinal data or new causal operational features."
+}
