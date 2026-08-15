@@ -25,6 +25,18 @@ def strict_contract(m,base):
     return bool(m["recall"]>=.80 and m["green_npv"]>=.95 and m["alert_rate"]<=base["alert_rate"] and m["worst_fold_recall"]>=.60 and m["fp"]<base["fp"] and m["f1"]>base["f1"])
 
 
+def prepare_with_meta(X):
+    tr=X.copy(); prep={}
+    for col in tr.columns:
+        a=pd.to_numeric(tr[col],errors="coerce").replace([np.inf,-np.inf],np.nan)
+        f=a.dropna()
+        if f.empty: lo=hi=med=0.0
+        else: lo=float(f.quantile(.01)); hi=float(f.quantile(.99)); med=float(f.median())
+        tr[col]=pd.to_numeric(tr[col],errors="coerce").clip(lo,hi).fillna(med)
+        prep[col]={"p01":lo,"p99":hi,"median":med}
+    return tr.astype(float),prep
+
+
 def main():
     rep=json.loads(V75_REPORT.read_text(encoding="utf-8")); sel=rep["selected"]; cfg=sel["config"]; sel_id=int(sel["config_id"])
     d=pd.read_csv(PANEL,parse_dates=["date"]).sort_values("date").reset_index(drop=True)
@@ -34,8 +46,6 @@ def main():
     if len(oo)!=381 or not np.array_equal(oo.target.to_numpy(int),y): raise RuntimeError("Selected V7.5 OOF mismatch")
     score=oo.rank_score.to_numpy(float)
 
-    # Select a single development rule on all existing OOF. Its metrics are tuning evidence only;
-    # the prequential metrics in V7.5 remain the primary performance evidence.
     best=None
     for rule in v75.rule_grid():
         p=v75.apply_rule(base_pred,strong,quiet,market,score,mm,mp,rule); m=v75.metrics(y,p,folds)
@@ -44,7 +54,6 @@ def main():
         if best is None or key>best[0]: best=(key,rule,m,feasible)
     _,final_rule,final_rule_metrics,rule_feasible=best
 
-    # Threshold-neighborhood sensitivity.
     s,qv,rs,qr=final_rule
     qv_vals=[qv] if s=="none" else sorted(set(float(np.clip(qv+x,0.01,.99)) for x in [-.10,-.05,0,.05,.10]))
     qr_vals=[qr] if rs=="none" else sorted(set(float(np.clip(qr+x,0.01,.99)) for x in [-.05,-.02,0,.02,.05]))
@@ -55,7 +64,6 @@ def main():
             neighbor.append({"rule":list(r),"metrics":m,"passes_contract":strict_contract(m,base)})
     neighbor_pass=sum(x["passes_contract"] for x in neighbor)
 
-    # Score-noise stress sensitivity; diagnostic, not validation.
     rng=np.random.default_rng(42); stress={}
     for sigma in [.01,.02,.04]:
         rows=[]
@@ -71,11 +79,10 @@ def main():
             "max_fp":int(max(m["fp"] for m in rows)),
         }
 
-    # Fit the final candidate ranking model on all 541 development rows.
     all_features=[c for c in d.columns if c not in META]
     if cfg["feature_mode"]=="merchant_regime": base_features=[c for c in all_features if c.startswith(("merchant__","market__","calendar__","catregime__"))]
     else: base_features=all_features
-    Xfull,_,prep=v75.prepare(d[base_features],d[base_features]); yfull=d.target.astype(int)
+    Xfull,prep=prepare_with_meta(d[base_features]); yfull=d.target.astype(int)
     if cfg["feature_mode"]=="top96": features=v75.stable_top(Xfull,yfull,96)
     else: features=list(Xfull.columns)
     Xfit=Xfull[features]
@@ -88,7 +95,7 @@ def main():
         "status":"DEVELOPMENT_FROZEN_PENDING_EXTERNAL_SAUDI_VALIDATION",
         "candidate_config":cfg,
         "feature_columns":features,
-        "preprocessing":{c:prep[c] if isinstance(prep,dict) and c in prep else None for c in features},
+        "preprocessing":{c:prep[c] for c in features},
         "model_object":model,
         "training_score_reference":score_reference,
         "decision_layer":{"base":"V6.1 three-branch regime policy","error_correction_rule":list(final_rule),"score_type":"percentile_against_training_score_reference"},
@@ -117,7 +124,7 @@ def main():
     }
     REPORT.write_text(json.dumps(report,indent=2),encoding="utf-8")
     m=primary
-    summary=["# Sales Sentinel V7.5 — Frozen Development Candidate","",f"- Status: **{artifact['status']}**",f"- Model: **{cfg['model']} / {cfg['feature_mode']} / weighted={cfg['weighted']}**",f"- Final features: **{len(features)}**","", "## Primary prequential evidence",f"- Precision: **{m['precision']:.2%}**",f"- Recall: **{m['recall']:.2%}**",f"- F1: **{m['f1']:.2%}**",f"- GREEN NPV: **{m['green_npv']:.2%}**",f"- Alert rate: **{m['alert_rate']:.2%}**",f"- TP/FP/FN/TN: **{m['tp']}/{m['fp']}/{m['fn']}/{m['tn']}**",f"- Worst-fold recall: **{m['worst_fold_recall']:.2%}**","",f"- Final development correction rule: **{list(final_rule)}**",f"- Threshold-neighbor robustness: **{neighbor_pass}/{len(neighbor)} pass**",f"- Score-noise sigma=0.01 contract pass rate: **{stress['0.01']['contract_pass_rate']:.0%}**",f"- Score-noise sigma=0.02 contract pass rate: **{stress['0.02']['contract_pass_rate']:.0%}**",f"- External Saudi merchant validation: **Pending**",f"- RED supported: **False**","","Important: final-rule tuning metrics are not independent evidence; use the prequential metrics above for academic reporting."]
+    summary=["# Sales Sentinel V7.5 — Frozen Development Candidate","",f"- Status: **{artifact['status']}**",f"- Model: **{cfg['model']} / {cfg['feature_mode']} / weighted={cfg['weighted']}**",f"- Final features: **{len(features)}**","","## Primary prequential evidence",f"- Precision: **{m['precision']:.2%}**",f"- Recall: **{m['recall']:.2%}**",f"- F1: **{m['f1']:.2%}**",f"- GREEN NPV: **{m['green_npv']:.2%}**",f"- Alert rate: **{m['alert_rate']:.2%}**",f"- TP/FP/FN/TN: **{m['tp']}/{m['fp']}/{m['fn']}/{m['tn']}**",f"- Worst-fold recall: **{m['worst_fold_recall']:.2%}**","",f"- Final development correction rule: **{list(final_rule)}**",f"- Threshold-neighbor robustness: **{neighbor_pass}/{len(neighbor)} pass**",f"- Score-noise sigma=0.01 contract pass rate: **{stress['0.01']['contract_pass_rate']:.0%}**",f"- Score-noise sigma=0.02 contract pass rate: **{stress['0.02']['contract_pass_rate']:.0%}**",f"- External Saudi merchant validation: **Pending**",f"- RED supported: **False**","","Important: final-rule tuning metrics are not independent evidence; use the prequential metrics above for academic reporting."]
     SUMMARY.write_text("\n".join(summary)+"\n",encoding="utf-8")
     print(json.dumps(report,indent=2))
 
