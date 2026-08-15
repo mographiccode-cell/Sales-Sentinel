@@ -1,0 +1,47 @@
+name: Diagnose External Saudi Temporal Signal
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/diagnose_external_saudi_temporal_signal.py'
+      - '.github/workflows/diagnose-external-saudi-temporal-signal.yml'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn openpyxl
+      - name: Download external Saudi-labeled store dataset
+        run: |
+          mkdir -p /tmp/saudi_store_sales
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://www.kaggle.com/api/v1/datasets/download/shilton123456/sales-in-saudi-arabia' \
+            -o /tmp/saudi_store_sales.zip
+          unzip -o /tmp/saudi_store_sales.zip -d /tmp/saudi_store_sales
+      - name: Diagnose temporal signal
+        env:
+          SAUDI_STORE_DIR: /tmp/saudi_store_sales
+        run: python scripts/diagnose_external_saudi_temporal_signal.py
+      - name: Show diagnostic summary
+        run: cat reports/external_saudi_temporal_signal/summary.md
+      - name: Upload diagnostics
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-saudi-temporal-signal
+          path: reports/external_saudi_temporal_signal/
+      - name: Persist diagnostics
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/external_saudi_temporal_signal
+          git diff --cached --quiet || git commit -m "Persist external Saudi temporal diagnostics"
+          git push
