@@ -1,0 +1,50 @@
+name: Train SAMA City Risk v3.4.1
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_city_risk_v3_4_1.py'
+      - '.github/workflows/train-sama-city-risk-v3-4-1.yml'
+      - 'models/sama_city_v3_3/**'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Train v3.4.1
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/train_sama_city_risk_v3_4_1.py
+      - name: Show evidence
+        run: cat reports/sama_city_v3_4_1/development_summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v3-4-1-training
+          path: |
+            reports/sama_city_v3_4_1/**
+            models/sama_city_v3_4_1/**
+          retention-days: 90
+      - name: Persist v3.4.1
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3_4_1 models/sama_city_v3_4_1
+          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel v3.4.1 trend classifier'
+          git pull --rebase origin main
+          git push origin HEAD:main
