@@ -1,0 +1,48 @@
+name: Train SAMA City Risk v3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_city_risk_v3.py'
+      - '.github/workflows/train-sama-city-risk-v3.yml'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+      - name: Train v3 with purged multi-regime OOF
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/train_sama_city_risk_v3.py
+      - name: Show evidence
+        run: cat reports/sama_city_v3/development_summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v3-generalization-first
+          path: |
+            reports/sama_city_v3/**
+            models/sama_city_v3/**
+          retention-days: 90
+      - name: Persist v3 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3 models/sama_city_v3
+          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel v3 generalization-first artifacts'
+          git pull --rebase origin main
+          git push origin HEAD:main
