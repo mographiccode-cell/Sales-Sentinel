@@ -1,0 +1,172 @@
+{
+  "version": "SALES-SENTINEL-V7-PANEL-BLIND-HOLDOUT",
+  "scientific_status": "EXPERIMENTAL_EXTERNAL_SAUDI_VALIDATION_STILL_REQUIRED",
+  "source_panel": "data/merchant_v4/merchant_sector_daily_features_v4.csv",
+  "panel_rows": 4328,
+  "feature_count": 136,
+  "early_decline_threshold": 0.15,
+  "purge_days": 7,
+  "blind_holdout_days": 84,
+  "blind_start": "2024-05-28",
+  "development_rows": 3600,
+  "blind_rows": 672,
+  "blind_positives": 200,
+  "folds": [
+    {
+      "fold": 0,
+      "train_end": "2023-09-08",
+      "val_start": "2023-09-16",
+      "val_end": "2023-11-08",
+      "train_rows": 1560,
+      "val_rows": 432,
+      "positives": 110
+    },
+    {
+      "fold": 1,
+      "train_end": "2023-11-02",
+      "val_start": "2023-11-10",
+      "val_end": "2024-01-02",
+      "train_rows": 2000,
+      "val_rows": 432,
+      "positives": 120
+    },
+    {
+      "fold": 2,
+      "train_end": "2023-12-28",
+      "val_start": "2024-01-05",
+      "val_end": "2024-02-27",
+      "train_rows": 2448,
+      "val_rows": 432,
+      "positives": 122
+    },
+    {
+      "fold": 3,
+      "train_end": "2024-02-22",
+      "val_start": "2024-03-01",
+      "val_end": "2024-04-23",
+      "train_rows": 2896,
+      "val_rows": 432,
+      "positives": 191
+    }
+  ],
+  "development_models": {
+    "logistic": {
+      "threshold": 0.2900000000000001,
+      "metrics": {
+        "accuracy": 0.5069444444444444,
+        "balanced_accuracy": 0.5826374804764902,
+        "precision": 0.36715391229578676,
+        "recall": 0.7863720073664825,
+        "f1": 0.5005861664712778,
+        "roc_auc": 0.5993006503951325,
+        "pr_auc": 0.3850480188249238,
+        "alert_rate": 0.6730324074074074,
+        "green_npv": 0.7946902654867256,
+        "tp": 427,
+        "fp": 736,
+        "fn": 116,
+        "tn": 449
+      }
+    },
+    "extra_trees": {
+      "threshold": 0.2900000000000001,
+      "metrics": {
+        "accuracy": 0.5306712962962963,
+        "balanced_accuracy": 0.6149031400797258,
+        "precision": 0.3866328257191201,
+        "recall": 0.8416206261510129,
+        "f1": 0.5298550724637681,
+        "roc_auc": 0.6325788128151931,
+        "pr_auc": 0.3954826473242858,
+        "alert_rate": 0.6840277777777778,
+        "green_npv": 0.8424908424908425,
+        "tp": 457,
+        "fp": 725,
+        "fn": 86,
+        "tn": 460
+      }
+    },
+    "random_forest": {
+      "threshold": 0.2800000000000001,
+      "metrics": {
+        "accuracy": 0.47685185185185186,
+        "balanced_accuracy": 0.5791547194442502,
+        "precision": 0.3599689681923972,
+        "recall": 0.85451197053407,
+        "f1": 0.5065502183406113,
+        "roc_auc": 0.6268876611418047,
+        "pr_auc": 0.4062269477409258,
+        "alert_rate": 0.7459490740740741,
+        "green_npv": 0.8200455580865603,
+        "tp": 464,
+        "fp": 825,
+        "fn": 79,
+        "tn": 360
+      }
+    },
+    "hist_gb": {
+      "threshold": 0.21000000000000002,
+      "metrics": {
+        "accuracy": 0.6076388888888888,
+        "balanced_accuracy": 0.5921999207403781,
+        "precision": 0.40791268758526605,
+        "recall": 0.5506445672191529,
+        "f1": 0.46865203761755486,
+        "roc_auc": 0.6164378239348517,
+        "pr_auc": 0.40160406391380177,
+        "alert_rate": 0.4241898148148148,
+        "green_npv": 0.7547738693467336,
+        "tp": 299,
+        "fp": 434,
+        "fn": 244,
+        "tn": 751
+      }
+    },
+    "mean_ensemble": {
+      "threshold": 0.26000000000000006,
+      "metrics": {
+        "accuracy": 0.515625,
+        "balanced_accuracy": 0.6079236310231485,
+        "precision": 0.3799019607843137,
+        "recall": 0.856353591160221,
+        "f1": 0.5263157894736842,
+        "roc_auc": 0.6476117210993777,
+        "pr_auc": 0.41392730460210225,
+        "alert_rate": 0.7083333333333334,
+        "green_npv": 0.8452380952380952,
+        "tp": 465,
+        "fp": 759,
+        "fn": 78,
+        "tn": 426
+      }
+    }
+  },
+  "selected_model": "extra_trees",
+  "selected_threshold": 0.2900000000000001,
+  "blind_metrics": {
+    "accuracy": 0.5372023809523809,
+    "balanced_accuracy": 0.6201271186440678,
+    "precision": 0.3741496598639456,
+    "recall": 0.825,
+    "f1": 0.514820592823713,
+    "roc_auc": 0.6708050847457627,
+    "pr_auc": 0.4341116910426535,
+    "alert_rate": 0.65625,
+    "green_npv": 0.8484848484848485,
+    "tp": 165,
+    "fp": 276,
+    "fn": 35,
+    "tn": 196
+  },
+  "leakage_controls": [
+    "future/target/actual columns excluded",
+    "7-day temporal purge",
+    "train-only robust clipping",
+    "blind holdout untouched until final selection",
+    "no SMOTE/synthetic oversampling"
+  ],
+  "limitations": [
+    "transaction microdata remain Saudi-localized rather than directly observed Saudi merchant transactions",
+    "external real Saudi merchant validation is still required"
+  ]
+}
