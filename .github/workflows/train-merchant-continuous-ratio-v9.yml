@@ -1,0 +1,38 @@
+name: Train Merchant Continuous Ratio V9
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/train_merchant_continuous_ratio_v9.py'
+      - '.github/workflows/train-merchant-continuous-ratio-v9.yml'
+
+jobs:
+  train-v9:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn xgboost catboost
+      - name: Train V9 continuous future-ratio verifier
+        run: python scripts/train_merchant_continuous_ratio_v9.py
+      - name: Show V9 summary
+        run: cat reports/merchant_continuous_ratio_v9/development_summary.md
+      - name: Upload V9 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-continuous-ratio-v9
+          path: reports/merchant_continuous_ratio_v9/
+      - name: Persist V9 evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/merchant_continuous_ratio_v9
+          git diff --cached --quiet || git commit -m "Persist V9 continuous ratio evidence"
+          git push
