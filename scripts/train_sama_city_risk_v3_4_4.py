@@ -24,27 +24,27 @@ VERSION='SAMA-CITY-RISK-3.4.4-SAUDI-SEASONAL-MULTIHORIZON'
 DEV_END=pd.Timestamp('2025-06-29')
 CONTRACT=dict(mh.CONTRACT)
 
-# Weekly-level Saudi season windows. These are calendar covariates known before the forecast origin.
-# Exact daily religious observance can vary by sighting; weekly flags deliberately use broad windows.
 RAMADAN=[('2020-04-24','2020-05-23'),('2021-04-13','2021-05-12'),('2022-04-02','2022-05-01'),('2023-03-23','2023-04-20'),('2024-03-11','2024-04-09'),('2025-03-01','2025-03-29'),('2026-02-18','2026-03-19')]
 EID_FITR=['2020-05-24','2021-05-13','2022-05-02','2023-04-21','2024-04-10','2025-03-30','2026-03-20']
 EID_ADHA=['2020-07-31','2021-07-20','2022-07-09','2023-06-28','2024-06-16','2025-06-06','2026-05-27']
 
-
-def known_window(week_start,starts_ends,pad_before=0,pad_after=0):
+def known_window(week_start,starts_ends):
     w=pd.to_datetime(week_start)
-    out=np.zeros(len(w),float)
+    out=np.zeros(len(w),dtype=bool)
     for s,e in starts_ends:
-        lo=pd.Timestamp(s)-pd.Timedelta(days=pad_before); hi=pd.Timestamp(e)+pd.Timedelta(days=pad_after)
-        # Weekly row represents [week_start, week_start+6]. Flag if intervals intersect.
-        out|=((w<=hi)&((w+pd.Timedelta(days=6))>=lo)).to_numpy()
+        lo=pd.Timestamp(s); hi=pd.Timestamp(e)
+        out |= ((w<=hi)&((w+pd.Timedelta(days=6))>=lo)).to_numpy(dtype=bool)
     return out.astype(float)
-
 
 def event_window(week_start,dates,before=7,after=7):
     pairs=[(str((pd.Timestamp(x)-pd.Timedelta(days=before)).date()),str((pd.Timestamp(x)+pd.Timedelta(days=after)).date())) for x in dates]
     return known_window(week_start,pairs)
 
+def pre_ramadan_pairs():
+    return [(str((pd.Timestamp(s)-pd.Timedelta(days=14)).date()),str((pd.Timestamp(s)-pd.Timedelta(days=1)).date())) for s,_ in RAMADAN]
+
+def post_ramadan_pairs():
+    return [(str((pd.Timestamp(e)+pd.Timedelta(days=1)).date()),str((pd.Timestamp(e)+pd.Timedelta(days=14)).date())) for _,e in RAMADAN]
 
 def augment(panel:pd.DataFrame, meta:pd.DataFrame, X:pd.DataFrame)->pd.DataFrame:
     p=panel.copy(); p['week_start']=pd.to_datetime(p.week_start); p=p.sort_values(['city','week_start']).reset_index(drop=True); g=p.groupby('city',sort=False)
@@ -55,27 +55,21 @@ def augment(panel:pd.DataFrame, meta:pd.DataFrame, X:pd.DataFrame)->pd.DataFrame
         A[f'{pre}_change_52']=g[col].pct_change(52)
     ticket=p.value_thousand_sar/p.transaction_count_thousand.replace(0,np.nan)
     A['ticket_change_52']=ticket.groupby(p.city,sort=False).pct_change(52)
-
     nat=p.groupby('week_start',as_index=False).agg(nvalue=('value_thousand_sar','sum'),ncount=('transaction_count_thousand','sum')).sort_values('week_start')
     nat['nvalue_change_52']=nat.nvalue.pct_change(52); nat['ncount_change_52']=nat.ncount.pct_change(52)
     A=A.merge(nat[['week_start','nvalue_change_52','ncount_change_52']],on='week_start',how='left',validate='many_to_one')
-
     w=A.week_start
     A['saudi_ramadan']=known_window(w,RAMADAN)
-    A['saudi_pre_ramadan_2w']=known_window(w,RAMADAN,pad_before=14,pad_after=-1)
+    A['saudi_pre_ramadan_2w']=known_window(w,pre_ramadan_pairs())
+    A['saudi_post_ramadan_2w']=known_window(w,post_ramadan_pairs())
     A['saudi_eid_fitr_window']=event_window(w,EID_FITR,before=7,after=10)
     A['saudi_hajj_eid_adha_window']=event_window(w,EID_ADHA,before=10,after=10)
     A['saudi_national_day_window']=event_window(w,[f'{y}-09-23' for y in range(2020,2027)],before=7,after=7)
     A['saudi_founding_day_window']=event_window(w,[f'{y}-02-22' for y in range(2022,2027)],before=7,after=7)
-    # Salary-week proxy: known Gregorian government-pay timing around the 27th; no outcome information is used.
-    A['saudi_salary_week']=(((w.dt.day<=27)&((w+pd.Timedelta(days=6)).dt.day>=27)) | ((w.dt.day>=24)&(w.dt.day<=31))).astype(float)
-    # Interactions help the model distinguish the week immediately after broad spending windows.
-    A['saudi_post_ramadan_2w']=known_window(w,RAMADAN,pad_before=-1,pad_after=14)
-
+    A['saudi_salary_week']=w.dt.day.between(21,27).astype(float)
     key=meta[['week_start','city']].copy(); key['city']=key.city.astype(str)
     Z=key.merge(A,on=['week_start','city'],how='left',validate='one_to_one').drop(columns=['week_start','city'])
     return pd.concat([X.reset_index(drop=True),Z.reset_index(drop=True)],axis=1).replace([np.inf,-np.inf],np.nan)
-
 
 def factories(seed):
     return {
@@ -97,8 +91,7 @@ def build_dataset(panel):
     good=d[['target_h1','target_h2','target_h4']].notna().all(axis=1)&X.notna().all(axis=1)
     return d.loc[good].reset_index(drop=True),X.loc[good].reset_index(drop=True),pc.loc[good].reset_index(drop=True)
 
-def folds(d):
-    return mh.horizon_folds(d)
+def folds(d): return mh.horizon_folds(d)
 
 def build_oof(d,X,pc):
     rows=[]; meta=[]
@@ -113,11 +106,9 @@ def build_oof(d,X,pc):
     return pd.concat(rows,ignore_index=True),meta
 
 def base_red_watch(q,a,d,Xbase):
-    red=np.zeros(len(q),bool); watch=np.zeros(len(q),bool); cursor=0
+    red=np.zeros(len(q),bool); watch=np.zeros(len(q),bool); cursor=0; orig=a['features']; xb=Xbase[orig]
     for fid,(st,en,tr,va) in enumerate(folds(d)):
       n=int(va.sum()); y=d.loc[tr,'target_h1'].astype(int); ps=[]
-      # Red/base-watch use only the original frozen v3 feature contract, preserving v3.3 semantics.
-      orig=a['features']; xb=Xbase[orig]
       for _,factory in base.model_factories().items():
         m=base.fit_one(clone(factory),xb.loc[tr],y); ps.append(m.predict_proba(xb.loc[va])[:,1])
       mat=np.column_stack(ps); sc=mat.mean(axis=1); ag=(mat>=.5).sum(axis=1); pv=q.loc[cursor:cursor+n-1,'precursor_count'].to_numpy(int)
@@ -146,7 +137,7 @@ def choose(q,red,bw):
           e=evaluate(q,red,bw,float(t2),float(t4),agree); basic=e['alert_rate']<=.30 and e['green_coverage']>=.70 and e['incremental_negative_alert_rate']<=.05 and e['ALERT_next4']['precision']>=.18
           if basic:
             obj=(e['ALERT_next4']['recall'],e['ALERT_next4']['NPV'],e['ALERT_next4']['precision'],-e['alert_rate'],-e['incremental_negative_alert_rate'])
-            if feasible is None or obj>feasible[0]:feasible=(obj,float(t2),float(t4),agree,e)
+            if feasible is None or obj>feasible[0]: feasible=(obj,float(t2),float(t4),agree,e)
           if e['ok']:
             obj=(e['ALERT_next4']['recall'],e['ALERT_next4']['NPV'],e['ALERT_next4']['precision'],-e['alert_rate'],-e['incremental_negative_alert_rate'],agree); valid.append((obj,float(t2),float(t4),agree,e))
     if not valid:return None,feasible
@@ -160,12 +151,12 @@ def main():
     if forbidden:raise RuntimeError(f'Forbidden {forbidden}')
     q,fm=build_oof(d,X,pc); red,bw=base_red_watch(q,a,d,X); best,feasible=choose(q,red,bw)
     if best is None:
-      rep={'version':VERSION,'status':'NO_POLICY','feature_count':len(X.columns),'best_feasible':None if feasible is None else {'t2':feasible[1],'t4':feasible[2],'agreement_min':feasible[3],'metrics':feasible[4]},'scientific_boundary':'historical OOF only, 35-day purge; Saudi calendar and 52-week features are known at origin; no recent/counterfactual labels used'}; REPORT.write_text(json.dumps(rep,indent=2),encoding='utf-8'); print(json.dumps(rep,indent=2)); raise SystemExit(2)
+      rep={'version':VERSION,'status':'NO_POLICY','feature_count':len(X.columns),'best_feasible':None if feasible is None else {'t2':feasible[1],'t4':feasible[2],'agreement_min':feasible[3],'metrics':feasible[4]},'scientific_boundary':'historical OOF only, 35-day purge; Saudi calendar and 52-week features known at origin; no recent/counterfactual labels used'}; REPORT.write_text(json.dumps(rep,indent=2),encoding='utf-8'); print(json.dumps(rep,indent=2)); raise SystemExit(2)
     _,t2,t4,agree,e=best; fitted={}
     for h in (2,4):
       y=d[f'target_h{h}'].astype(int); fitted[str(h)]={name:fit_cls(clone(factory),X,y) for name,factory in factories(400+h).items()}
     out=dict(a); out.update({'version':VERSION,'base_version':a['version'],'horizon_models':fitted,'horizon_features':list(X.columns),'h2_threshold':t2,'h4_threshold':t4,'horizon_agreement_min':agree,'development_end':str(DEV_END.date()),'purge_days':35,'saudi_calendar_features':True,'yoy_52_features':True,'scope':'v3.3 RED next-week plus Saudi-seasonal 2/4-week AMBER risk'})
     joblib.dump(out,MODEL)
-    rep={'version':VERSION,'base_version':a['version'],'rows':len(d),'feature_count':len(X.columns),'target_rates':{'h1':float(d.target_h1.mean()),'h2':float(d.target_h2.mean()),'h4':float(d.target_h4.mean())},'thresholds':{'h2':t2,'h4':t4,'agreement_min':agree},'metrics':e,'contract':CONTRACT,'all_gates_passed':bool(e['ok']),'folds':fm,'controls':{'35_day_horizon_purge':True,'saudi_calendar_known_at_origin':True,'52_week_yoy_source_only':True,'no_city_identity':True,'no_target_history_features':True,'no_future_features':True,'no_recent_or_counterfactual_labels_used':True},'scientific_boundary':'No outcome after 2025-06-29 is read; calendar covariates are deterministic from forecast date; four-week labels are purged 35 days.'}
+    rep={'version':VERSION,'base_version':a['version'],'rows':len(d),'feature_count':len(X.columns),'target_rates':{'h1':float(d.target_h1.mean()),'h2':float(d.target_h2.mean()),'h4':float(d.target_h4.mean())},'thresholds':{'h2':t2,'h4':t4,'agreement_min':agree},'metrics':e,'contract':CONTRACT,'all_gates_passed':bool(e['ok']),'folds':fm,'controls':{'35_day_horizon_purge':True,'saudi_calendar_known_at_origin':True,'52_week_yoy_source_only':True,'no_city_identity':True,'no_target_history_features':True,'no_future_features':True,'no_recent_or_counterfactual_labels_used':True},'scientific_boundary':'No outcome after 2025-06-29 is read; calendar covariates deterministic from forecast date; four-week labels purged 35 days.'}
     REPORT.write_text(json.dumps(rep,indent=2),encoding='utf-8'); (OUT/'development_summary.md').write_text('# Sales Sentinel v3.4.4 — Saudi Seasonal Multi-Horizon\n\n'+f"- Next-4-week recall **{e['ALERT_next4']['recall']:.2%}**\n- Alert precision **{e['ALERT_next4']['precision']:.2%}**\n- GREEN NPV **{e['ALERT_next4']['NPV']:.2%}**\n- Alert rate **{e['alert_rate']:.2%}**\n- GREEN coverage **{e['green_coverage']:.2%}**\n- Next-week RED precision **{e['RED_next1']['precision']:.2%}**\n- All gates **{e['ok']}**\n",encoding='utf-8'); print(json.dumps(rep,indent=2))
 if __name__=='__main__':main()
