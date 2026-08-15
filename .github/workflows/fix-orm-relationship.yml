@@ -1,0 +1,47 @@
+name: Fix ORM Relationship
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/fix-orm-relationship.yml'
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix Branch User reverse relationship and remove runtime patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('app/models.py')
+          s=p.read_text(encoding='utf-8')
+          old='users: Mapped[list["User"]] = relationship(secondary=user_branches, back_populates="users")'
+          new='users: Mapped[list["User"]] = relationship(secondary=user_branches, back_populates="branches")'
+          if old not in s:
+              raise SystemExit('Branch legacy relationship pattern not found')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('app/__init__.py')
+          s=p.read_text(encoding='utf-8')
+          block='''    # Correct the legacy many-to-many reverse names before SQLAlchemy configures mappers.\n    from .models import Branch, User\n    Branch.__mapper__.get_property("users", _configure_mappers=False).back_populates = "branches"\n    User.__mapper__.get_property("branches", _configure_mappers=False).back_populates = "users"\n\n'''
+          if block not in s:
+              raise SystemExit('Legacy mapper patch block not found')
+          p.write_text(s.replace(block,''),encoding='utf-8')
+          PY
+      - name: Verify exact relationship definitions
+        run: |
+          grep -n 'users: Mapped.*back_populates="branches"' app/models.py
+          grep -n 'branches: Mapped.*back_populates="users"' app/models.py
+          ! grep -q 'Correct the legacy many-to-many' app/__init__.py
+      - name: Commit repair
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add app/models.py app/__init__.py
+          git commit -m "Fix Branch User ORM relationship"
+          git push
