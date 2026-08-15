@@ -1,0 +1,129 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-SAMA-HYBRID-4.0.1",
+  "scientific_boundary": "The 1,049,042 transaction rows originate from UCI Online Retail II and are Saudi-localized/calibrated; they are not observed Saudi merchant transactions. SAMA contributes official aggregate market data and leakage-safe forecast signals.",
+  "source_rows": 1049042,
+  "eligible_rows": 1043290,
+  "panel_rows_before_features": 4832,
+  "supervised_rows": 4328,
+  "categories": 8,
+  "feature_count": 136,
+  "split": {
+    "train_rows": 1928,
+    "train_start": "2023-02-26",
+    "train_end": "2023-10-24",
+    "train_positive_rate": 0.19398340248962656,
+    "validation_rows": 680,
+    "validation_start": "2023-11-01",
+    "validation_end": "2024-01-24",
+    "validation_positive_rate": 0.2323529411764706,
+    "test_rows": 1608,
+    "test_start": "2024-02-01",
+    "test_end": "2024-08-19",
+    "test_positive_rate": 0.23445273631840796
+  },
+  "validation_model_auc": {
+    "logistic": {
+      "validation_roc_auc": 0.6454119986420292
+    },
+    "extra_trees": {
+      "validation_roc_auc": 0.6435205393084049
+    },
+    "hist_gb": {
+      "validation_roc_auc": 0.6315655463407537
+    }
+  },
+  "selected": {
+    "blend_weight_regression": 0.15,
+    "watch_threshold": 0.18082862411705156,
+    "red_threshold": 0.99,
+    "validation_metrics": {
+      "accuracy": 0.4514705882352941,
+      "balanced_accuracy": 0.6118264707308793,
+      "precision": 0.28628230616302186,
+      "recall": 0.9113924050632911,
+      "f1": 0.4357034795763994,
+      "roc_auc": 0.6608225423153402,
+      "alert_rate": 0.7397058823529412,
+      "green_npv": 0.9209039548022598,
+      "tp": 144,
+      "fp": 359,
+      "fn": 14,
+      "tn": 163
+    },
+    "validation_red_metrics": {
+      "accuracy": 0.7676470588235295,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.6608225423153402,
+      "alert_rate": 0.0,
+      "green_npv": 0.7676470588235295,
+      "tp": 0,
+      "fp": 0,
+      "fn": 158,
+      "tn": 522
+    },
+    "feasible_watch_thresholds": 0,
+    "feasible_red_thresholds": 0
+  },
+  "held_out_test": {
+    "accuracy": 0.3650497512437811,
+    "balanced_accuracy": 0.5650546126049641,
+    "precision": 0.2621861152141802,
+    "recall": 0.9416445623342176,
+    "f1": 0.4101675332177932,
+    "roc_auc": 0.6766770023724,
+    "alert_rate": 0.8420398009950248,
+    "green_npv": 0.9133858267716536,
+    "tp": 355,
+    "fp": 999,
+    "fn": 22,
+    "tn": 232
+  },
+  "held_out_test_red": {
+    "accuracy": 0.7655472636815921,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.6766770023724,
+    "alert_rate": 0.0,
+    "green_npv": 0.7655472636815921,
+    "tp": 0,
+    "fp": 0,
+    "fn": 377,
+    "tn": 1231
+  },
+  "contract": {
+    "test_roc_auc_min": 0.75,
+    "test_balanced_accuracy_min": 0.68,
+    "test_recall_min": 0.7,
+    "test_green_npv_min": 0.88,
+    "red_precision_min_if_red_exists": 0.6
+  },
+  "gates": {
+    "source_rows_exact_1049042": true,
+    "future_actual_sama_not_features": true,
+    "chronological_split_with_7day_gaps": true,
+    "threshold_selected_validation_only": true,
+    "test_not_used_for_model_or_threshold_selection": true,
+    "test_roc_auc": false,
+    "test_balanced_accuracy": false,
+    "test_recall": true,
+    "test_green_npv": true,
+    "red_precision": true
+  },
+  "all_gates_passed": false,
+  "leakage_controls": {
+    "future7_target_not_feature": true,
+    "actual_future_sama_columns_excluded": true,
+    "sama_forecast_origin_is_previous_completed_week": true,
+    "test_untouched_until_final_evaluation": true,
+    "entity_rows_split_by_global_date_not_randomly": true
+  },
+  "artifacts": {
+    "model": "models/merchant_sama_hybrid_v4/merchant_sama_hybrid_v4.joblib",
+    "feature_panel": "data/merchant_v4/merchant_sector_daily_features_v4.csv"
+  }
+}
