@@ -1,0 +1,176 @@
+{
+  "version": "SALES-SENTINEL-V16.1-COMPARABILITY-ABLATION",
+  "status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_COMPARABILITY_ABLATION",
+  "scientific_boundary": "Redsea was already opened before V16.1, so this is not a new blind validation. Feature exclusions are based on semantic non-comparability of observation-window-dependent customer-history features and year-cycle encodings, not on Redsea outcome labels. Model and threshold are still selected only from nested rolling-origin development data.",
+  "feature_ablation": {
+    "v16_feature_count": 116,
+    "v16_1_feature_count": 96,
+    "removed_count": 20,
+    "removed_features": [
+      "merchant__new_observed_customers__ratio_mean_7",
+      "merchant__new_observed_customers__ratio_mean_14",
+      "merchant__new_observed_customers__ratio_mean_28",
+      "merchant__new_observed_customers__ratio_mean_56",
+      "merchant__new_observed_customers__change_1",
+      "merchant__new_observed_customers__change_7",
+      "merchant__new_observed_customers__change_14",
+      "merchant__new_observed_customers__change_28",
+      "merchant__returning_observed_customers__ratio_mean_7",
+      "merchant__returning_observed_customers__ratio_mean_14",
+      "merchant__returning_observed_customers__ratio_mean_28",
+      "merchant__returning_observed_customers__ratio_mean_56",
+      "merchant__returning_observed_customers__change_1",
+      "merchant__returning_observed_customers__change_7",
+      "merchant__returning_observed_customers__change_14",
+      "merchant__returning_observed_customers__change_28",
+      "merchant__new_customer_share",
+      "merchant__returning_customer_share",
+      "calendar__year_sin",
+      "calendar__year_cos"
+    ]
+  },
+  "development": {
+    "rows": 541,
+    "positive_rate": 0.14602587800369685,
+    "selected_model": "extra_trees",
+    "threshold": 0.2419221254280302,
+    "nested_oof_metrics": {
+      "accuracy": 0.6036745406824147,
+      "balanced_accuracy": 0.6225666367175802,
+      "precision": 0.2411764705882353,
+      "recall": 0.6507936507936508,
+      "f1": 0.351931330472103,
+      "roc_auc": 0.6955176200459219,
+      "pr_auc": 0.29002401249139986,
+      "alert_rate": 0.4461942257217848,
+      "green_npv": 0.8957345971563981,
+      "tp": 41,
+      "fp": 129,
+      "fn": 22,
+      "tn": 189
+    },
+    "worst_fold_recall": 0.05263157894736842,
+    "max_fold_alert_rate": 0.6547619047619048
+  },
+  "redsea": {
+    "eligible_rows": 60,
+    "positive_rate": 0.5666666666666667,
+    "metrics": {
+      "accuracy": 0.65,
+      "balanced_accuracy": 0.6187782805429864,
+      "precision": 0.6444444444444445,
+      "recall": 0.8529411764705882,
+      "f1": 0.7341772151898734,
+      "roc_auc": 0.6572398190045249,
+      "pr_auc": 0.6679093345478804,
+      "alert_rate": 0.75,
+      "green_npv": 0.6666666666666666,
+      "tp": 29,
+      "fp": 16,
+      "fn": 5,
+      "tn": 10
+    },
+    "bootstrap_95pct_ci": {
+      "roc_auc": {
+        "low": 0.5005571428571428,
+        "high": 0.8057142857142856,
+        "n": 3000
+      },
+      "pr_auc": {
+        "low": 0.5120166753464765,
+        "high": 0.8416470565935004,
+        "n": 3000
+      },
+      "precision": {
+        "low": 0.4883720930232558,
+        "high": 0.7804878048780488,
+        "n": 3000
+      },
+      "recall": {
+        "low": 0.71875,
+        "high": 0.9655172413793104,
+        "n": 3000
+      },
+      "f1": {
+        "low": 0.6,
+        "high": 0.8333333333333334,
+        "n": 3000
+      }
+    }
+  },
+  "drift": {
+    "median_abs_smd": 0.15003723862295154,
+    "max_abs_smd": 1.1200220490695867,
+    "features_abs_smd_ge_1": 1,
+    "top_10": [
+      {
+        "feature": "merchant__sales__drawdown28",
+        "standardized_mean_difference": -1.1200220490695867,
+        "abs_smd": 1.1200220490695867,
+        "external_at_source_clip_boundary_share": 0.4166666666666667
+      },
+      {
+        "feature": "calendar__national_day_window",
+        "standardized_mean_difference": 0.6787846592900992,
+        "abs_smd": 0.6787846592900992,
+        "external_at_source_clip_boundary_share": 1.0
+      },
+      {
+        "feature": "merchant__sales__ma14_vs_ma56",
+        "standardized_mean_difference": -0.6772948129719756,
+        "abs_smd": 0.6772948129719756,
+        "external_at_source_clip_boundary_share": 0.55
+      },
+      {
+        "feature": "merchant__return_rate_value__change_28",
+        "standardized_mean_difference": -0.48284858599295954,
+        "abs_smd": 0.48284858599295954,
+        "external_at_source_clip_boundary_share": 0.16666666666666666
+      },
+      {
+        "feature": "merchant__return_rate_value__change_1",
+        "standardized_mean_difference": -0.4384179433748082,
+        "abs_smd": 0.4384179433748082,
+        "external_at_source_clip_boundary_share": 0.21666666666666667
+      },
+      {
+        "feature": "merchant__unique_products__ratio_mean_28",
+        "standardized_mean_difference": -0.4210655021282417,
+        "abs_smd": 0.4210655021282417,
+        "external_at_source_clip_boundary_share": 0.38333333333333336
+      },
+      {
+        "feature": "merchant__unique_products__ratio_mean_56",
+        "standardized_mean_difference": -0.41757196407529396,
+        "abs_smd": 0.41757196407529396,
+        "external_at_source_clip_boundary_share": 0.36666666666666664
+      },
+      {
+        "feature": "merchant__return_rate_value__change_7",
+        "standardized_mean_difference": -0.40509412215710966,
+        "abs_smd": 0.40509412215710966,
+        "external_at_source_clip_boundary_share": 0.21666666666666667
+      },
+      {
+        "feature": "merchant__gross_sales_sar__ratio_mean_56",
+        "standardized_mean_difference": -0.3685834989794446,
+        "abs_smd": 0.3685834989794446,
+        "external_at_source_clip_boundary_share": 0.2
+      },
+      {
+        "feature": "merchant__net_sales_sar__ratio_mean_56",
+        "standardized_mean_difference": -0.36727455164788586,
+        "abs_smd": 0.36727455164788586,
+        "external_at_source_clip_boundary_share": 0.21666666666666667
+      }
+    ]
+  },
+  "comparison_to_v16": {
+    "development_auc_delta": 0.035938903863432126,
+    "development_f1_delta": -0.023703187294394468,
+    "redsea_auc_delta": -0.010180995475113086,
+    "redsea_recall_delta": 0.32352941176470584,
+    "redsea_precision_delta": -0.13816425120772946
+  },
+  "red_supported": false
+}
