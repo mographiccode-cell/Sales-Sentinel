@@ -1,0 +1,44 @@
+{
+  "rows_tested": 3430,
+  "feasible_basic": 917,
+  "feasible_with_stability": 917,
+  "best_recall_basic": {
+    "threshold": 0.84744769874477,
+    "evidence_min": 5,
+    "recall": 0.9186046511627907,
+    "precision": 0.23723723723723725,
+    "NPV": 0.9936189608021878,
+    "alert_rate": 0.23286713286713287,
+    "green_coverage": 0.7671328671328671,
+    "inc_neg_rate": 0.009990917347865577,
+    "stable_min": 0.8333333333333334,
+    "inc_tp": 1,
+    "inc_alerts": 12
+  },
+  "best_recall_stable": {
+    "threshold": 0.84744769874477,
+    "evidence_min": 5,
+    "recall": 0.9186046511627907,
+    "precision": 0.23723723723723725,
+    "NPV": 0.9936189608021878,
+    "alert_rate": 0.23286713286713287,
+    "green_coverage": 0.7671328671328671,
+    "inc_neg_rate": 0.009990917347865577,
+    "stable_min": 0.8333333333333334,
+    "inc_tp": 1,
+    "inc_alerts": 12
+  },
+  "best_npv_stable": {
+    "threshold": 0.84744769874477,
+    "evidence_min": 5,
+    "recall": 0.9186046511627907,
+    "precision": 0.23723723723723725,
+    "NPV": 0.9936189608021878,
+    "alert_rate": 0.23286713286713287,
+    "green_coverage": 0.7671328671328671,
+    "inc_neg_rate": 0.009990917347865577,
+    "stable_min": 0.8333333333333334,
+    "inc_tp": 1,
+    "inc_alerts": 12
+  }
+}
