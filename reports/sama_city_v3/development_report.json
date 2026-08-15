@@ -1,0 +1,324 @@
+{
+  "version": "SAMA-CITY-RISK-3.0-GENERALIZATION-FIRST",
+  "rows": 2816,
+  "positives": 145,
+  "positive_rate": 0.05149147727272727,
+  "feature_count": 52,
+  "features": [
+    "value_ratio_mean_4",
+    "value_cv_4",
+    "value_ratio_mean_8",
+    "value_cv_8",
+    "value_ratio_mean_13",
+    "value_cv_13",
+    "value_change_1",
+    "value_change_2",
+    "value_change_4",
+    "value_change_8",
+    "value_change_13",
+    "value_slope_4",
+    "value_slope_8",
+    "value_drawdown_13",
+    "count_ratio_mean_4",
+    "count_cv_4",
+    "count_ratio_mean_8",
+    "count_cv_8",
+    "count_ratio_mean_13",
+    "count_cv_13",
+    "count_change_1",
+    "count_change_2",
+    "count_change_4",
+    "count_change_8",
+    "count_change_13",
+    "count_slope_4",
+    "count_slope_8",
+    "count_drawdown_13",
+    "value_share_ratio_13",
+    "value_share_change_4",
+    "count_share_ratio_13",
+    "count_share_change_4",
+    "nvalue_ratio_mean_4",
+    "nvalue_cv_4",
+    "nvalue_ratio_mean_13",
+    "nvalue_cv_13",
+    "nvalue_change_1",
+    "nvalue_change_4",
+    "nvalue_change_13",
+    "nvalue_slope_4",
+    "ncount_ratio_mean_4",
+    "ncount_cv_4",
+    "ncount_ratio_mean_13",
+    "ncount_cv_13",
+    "ncount_change_1",
+    "ncount_change_4",
+    "ncount_change_13",
+    "ncount_slope_4",
+    "ticket_ratio_mean_13",
+    "ticket_change_4",
+    "week_sin",
+    "week_cos"
+  ],
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2022-01-01",
+      "end": "2022-03-31",
+      "train_rows": 781,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04225352112676056,
+      "validation_positive_rate": 0.013986013986013986,
+      "validation_positives": 2
+    },
+    {
+      "fold_id": 1,
+      "start": "2022-07-01",
+      "end": "2022-09-30",
+      "train_rows": 1067,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04592314901593252,
+      "validation_positive_rate": 0.09090909090909091,
+      "validation_positives": 13
+    },
+    {
+      "fold_id": 2,
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "train_rows": 1364,
+      "validation_rows": 143,
+      "train_positive_rate": 0.0469208211143695,
+      "validation_positive_rate": 0.006993006993006993,
+      "validation_positives": 1
+    },
+    {
+      "fold_id": 3,
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "train_rows": 1639,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04514948139109213,
+      "validation_positive_rate": 0.02097902097902098,
+      "validation_positives": 3
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "train_rows": 1936,
+      "validation_rows": 143,
+      "train_positive_rate": 0.040289256198347105,
+      "validation_positive_rate": 0.055944055944055944,
+      "validation_positives": 8
+    },
+    {
+      "fold_id": 5,
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "train_rows": 2079,
+      "validation_rows": 143,
+      "train_positive_rate": 0.03992303992303992,
+      "validation_positive_rate": 0.13986013986013987,
+      "validation_positives": 20
+    },
+    {
+      "fold_id": 6,
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "train_rows": 2222,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04770477047704771,
+      "validation_positive_rate": 0.006993006993006993,
+      "validation_positives": 1
+    },
+    {
+      "fold_id": 7,
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "train_rows": 2365,
+      "validation_rows": 143,
+      "train_positive_rate": 0.045243128964059194,
+      "validation_positive_rate": 0.013986013986013986,
+      "validation_positives": 2
+    },
+    {
+      "fold_id": 8,
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "train_rows": 2508,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04346092503987241,
+      "validation_positive_rate": 0.1258741258741259,
+      "validation_positives": 18
+    },
+    {
+      "fold_id": 9,
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "train_rows": 2651,
+      "validation_rows": 143,
+      "train_positive_rate": 0.04300264051301396,
+      "validation_positive_rate": 0.1258741258741259,
+      "validation_positives": 18
+    }
+  ],
+  "pooled_ranking": {
+    "ROC_AUC": 0.9213558970099668,
+    "PR_AUC": 0.589168652181661
+  },
+  "policy": {
+    "watch_threshold": 0.002883706162781312,
+    "red_threshold": 0.8400000000000001,
+    "red_alerts": 8
+  },
+  "pooled_policy": {
+    "RED": {
+      "TP": 8,
+      "FP": 0,
+      "FN": 78,
+      "TN": 1344,
+      "precision": 1.0,
+      "recall": 0.09302325581395349,
+      "FPR": 0.0,
+      "NPV": 0.9451476793248945
+    },
+    "RED_plus_AMBER": {
+      "TP": 86,
+      "FP": 1330,
+      "FN": 0,
+      "TN": 14,
+      "precision": 0.06073446327683616,
+      "recall": 1.0,
+      "FPR": 0.9895833333333334,
+      "NPV": 1.0
+    },
+    "GREEN": {
+      "NPV": 1.0,
+      "missed_declines": 0
+    }
+  },
+  "fold_policy": [
+    {
+      "fold_id": 0,
+      "rows": 143,
+      "positives": 2,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 1.0
+    },
+    {
+      "fold_id": 1,
+      "rows": 143,
+      "positives": 13,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 2,
+      "rows": 143,
+      "positives": 1,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 1.0
+    },
+    {
+      "fold_id": 3,
+      "rows": 143,
+      "positives": 3,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 4,
+      "rows": 143,
+      "positives": 8,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 5,
+      "rows": 143,
+      "positives": 20,
+      "red_precision": 1.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 6,
+      "rows": 143,
+      "positives": 1,
+      "red_precision": 1.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 7,
+      "rows": 143,
+      "positives": 2,
+      "red_precision": 0.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 8,
+      "rows": 143,
+      "positives": 18,
+      "red_precision": 1.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    },
+    {
+      "fold_id": 9,
+      "rows": 143,
+      "positives": 18,
+      "red_precision": 1.0,
+      "red_fpr": 0.0,
+      "alert_recall": 1.0,
+      "green_npv": 0.0
+    }
+  ],
+  "contract": {
+    "pooled_red_precision_min": 0.7,
+    "pooled_red_fpr_max": 0.015,
+    "pooled_alert_recall_min": 0.85,
+    "pooled_green_npv_min": 0.985,
+    "pooled_roc_auc_min": 0.85,
+    "min_red_alerts": 8,
+    "worst_positive_fold_alert_recall_min": 0.55,
+    "worst_fold_red_fpr_max": 0.04
+  },
+  "gates": {
+    "roc_auc": true,
+    "red_precision": true,
+    "red_fpr": true,
+    "alert_recall": true,
+    "green_npv": true,
+    "feature_budget": true,
+    "no_city_identity": true,
+    "no_target_prevalence_features": true
+  },
+  "all_gates_passed": true,
+  "root_cause_controls": {
+    "city_identity_removed": true,
+    "target_prevalence_features_removed": true,
+    "absolute_levels_removed": true,
+    "compact_feature_budget": true,
+    "multi_regime_oof": true,
+    "worst_fold_constraints": true,
+    "red_requires_model_agreement": true,
+    "red_requires_observed_precursors": true,
+    "ood_fail_closed_profile_saved": true,
+    "surprise_shock_claim": "not predictable without leading information"
+  },
+  "scientific_boundary": "All model and threshold fitting ends 2025-06-29. Later data are diagnostics only and are not read here."
+}
