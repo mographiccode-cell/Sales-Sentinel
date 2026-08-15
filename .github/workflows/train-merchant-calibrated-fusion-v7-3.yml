@@ -1,0 +1,49 @@
+name: Train Merchant Calibrated Fusion V7.3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_merchant_calibrated_fusion_v7_3.py'
+      - '.github/workflows/train-merchant-calibrated-fusion-v7-3.yml'
+      - 'reports/merchant_market_fusion_v6_1/oof_policy_diagnostics.csv'
+      - 'reports/merchant_category_signals_v7_1/oof_predictions.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train-v7-3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-training.txt
+      - name: Evaluate V7.3 prequential calibrated fusion
+        run: python scripts/train_merchant_calibrated_fusion_v7_3.py
+      - name: Show V7.3 summary
+        run: cat reports/merchant_calibrated_fusion_v7_3/development_summary.md
+      - name: Upload V7.3 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-3-evidence
+          path: reports/merchant_calibrated_fusion_v7_3/
+      - name: Persist V7.3 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_calibrated_fusion_v7_3
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Persist Sales Sentinel V7.3 calibrated fusion evidence'
+            git push
+          fi
