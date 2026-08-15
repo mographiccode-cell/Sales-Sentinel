@@ -8,6 +8,7 @@ on:
       - 'scripts/train_merchant_market_fusion_v6_1.py'
       - 'scripts/train_merchant_market_fusion_v6_1_guarded.py'
       - 'scripts/train_merchant_market_fusion_v6_1_diagnostic.py'
+      - 'scripts/finalize_merchant_market_fusion_v6_1.py'
       - '.github/workflows/train-merchant-market-fusion-v6-1.yml'
       - 'scripts/train_merchant_market_fusion_v6.py'
       - 'scripts/train_merchant_total_triage_v5.py'
@@ -21,7 +22,7 @@ permissions:
 jobs:
   train:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,10 +33,10 @@ jobs:
         run: |
           pip install -r requirements-training.txt
           pip install xgboost
-      - name: Train v6.1
+      - name: Finalize v6.1 regime policy
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
-        run: python scripts/train_merchant_market_fusion_v6_1_diagnostic.py
+        run: python scripts/finalize_merchant_market_fusion_v6_1.py
       - name: Show evidence
         if: always()
         run: |
@@ -44,7 +45,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: sales-sentinel-merchant-market-fusion-v6-1
+          name: sales-sentinel-merchant-market-fusion-v6-1-final
           path: |
             reports/merchant_market_fusion_v6_1/**
             models/merchant_market_fusion_v6_1/**
@@ -56,7 +57,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add reports/merchant_market_fusion_v6_1 models/merchant_market_fusion_v6_1 2>/dev/null || true
-          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel v6.1 precision-recovery evidence'
+          git diff --cached --quiet || git commit -m 'model: persist final Sales Sentinel v6.1 regime-aware evidence'
           git pull --rebase origin main
           git push origin HEAD:main
       - name: Enforce development gate
