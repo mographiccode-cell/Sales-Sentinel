@@ -1,0 +1,38 @@
+name: Refine Merchant Consensus V9.1
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/refine_merchant_consensus_v9_1.py'
+      - '.github/workflows/refine-merchant-consensus-v9-1.yml'
+
+jobs:
+  refine-v9-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn
+      - name: Refine V9.1 consensus verifier
+        run: python scripts/refine_merchant_consensus_v9_1.py
+      - name: Show V9.1 summary
+        run: cat reports/merchant_consensus_v9_1/development_summary.md
+      - name: Upload V9.1 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-consensus-v9-1
+          path: reports/merchant_consensus_v9_1/
+      - name: Persist V9.1 evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/merchant_consensus_v9_1
+          git diff --cached --quiet || git commit -m "Persist V9.1 consensus evidence"
+          git push
