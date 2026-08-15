@@ -1,0 +1,32 @@
+name: Probe Redsea Public File UUIDs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-redsea-public-file-uuids.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Test public-file UUID candidates
+        run: |
+          set +e
+          mkdir -p /tmp/redsea_probe
+          for id in \
+            01d9c749-3c4d-4431-9df3-620b2dcfe144 \
+            22870d7c-9c2f-5d4e-8dcd-5b6048cdf205 \
+            7377952c-6404-4428-bbfc-77242cfc301e \
+            7f11f38c-2998-49b8-8b51-f1d64721c1a7 \
+            a2567f1b-8a60-4464-b725-6c59f84a5801
+          do
+            echo "=== $id ==="
+            url="https://data.mendeley.com/public-files/datasets/9c87bd42ct/files/$id/file_downloaded"
+            curl -L --max-time 30 -w '\nHTTP=%{http_code} SIZE=%{size_download} TYPE=%{content_type} FINAL=%{url_effective}\n' "$url" -o "/tmp/redsea_probe/$id.bin"
+            file "/tmp/redsea_probe/$id.bin"
+            ls -lh "/tmp/redsea_probe/$id.bin"
+            head -c 120 "/tmp/redsea_probe/$id.bin" | xxd | head -5
+          done
+          exit 0
