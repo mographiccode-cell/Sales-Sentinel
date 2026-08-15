@@ -1,0 +1,38 @@
+name: Refine Merchant Rebound Filter V8.1
+
+on:
+  push:
+    paths:
+      - 'scripts/refine_merchant_rebound_filter_v8_1.py'
+      - '.github/workflows/refine-merchant-rebound-filter-v8-1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refine-v8-1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn catboost xgboost
+      - name: Refine V8.1 rebound filter
+        run: python scripts/refine_merchant_rebound_filter_v8_1.py
+      - name: Show V8.1 summary
+        run: cat reports/merchant_rebound_filter_v8_1/development_summary.md
+      - name: Upload V8.1 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-rebound-filter-v8-1
+          path: reports/merchant_rebound_filter_v8_1/
+      - name: Persist V8.1 evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/merchant_rebound_filter_v8_1/
+          git diff --cached --quiet || git commit -m "Persist V8.1 rebound filter evidence"
+          git push
