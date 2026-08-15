@@ -1,0 +1,3496 @@
+{
+  "version": "SALES-SENTINEL-V9-CONTINUOUS-FUTURE-RATIO-VERIFIER",
+  "status": "DEVELOPMENT_BEST",
+  "scientific_boundary": "V9 uses continuous future-ratio regression as a causal prequential verifier over frozen V8.2 OOF decisions. Model/config selection still occurs on previously used development folds; external Saudi merchant validation remains required.",
+  "candidate_count": 30,
+  "v8_2": {
+    "precision": 0.4094488188976378,
+    "recall": 0.8253968253968254,
+    "f1": 0.5473684210526316,
+    "accuracy": 0.7742782152230971,
+    "balanced_accuracy": 0.794773884396526,
+    "alert_rate": 0.3333333333333333,
+    "green_npv": 0.9566929133858267,
+    "tp": 52,
+    "fp": 75,
+    "fn": 11,
+    "tn": 243,
+    "worst_fold_recall": 0.6,
+    "max_fold_alert_rate": 0.37209302325581395,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "recall": 0.8571428571428571,
+        "precision": 0.2,
+        "f1": 0.32432432432432434,
+        "alert_rate": 0.35294117647058826,
+        "green_npv": 0.9818181818181818,
+        "tp": 6,
+        "fp": 24,
+        "fn": 1,
+        "tn": 54
+      },
+      {
+        "fold_id": 1,
+        "recall": 0.6,
+        "precision": 0.42857142857142855,
+        "f1": 0.5,
+        "alert_rate": 0.24705882352941178,
+        "green_npv": 0.90625,
+        "tp": 9,
+        "fp": 12,
+        "fn": 6,
+        "tn": 58
+      },
+      {
+        "fold_id": 2,
+        "recall": 0.8823529411764706,
+        "precision": 0.5172413793103449,
+        "f1": 0.6521739130434783,
+        "alert_rate": 0.34523809523809523,
+        "green_npv": 0.9636363636363636,
+        "tp": 15,
+        "fp": 14,
+        "fn": 2,
+        "tn": 53
+      },
+      {
+        "fold_id": 3,
+        "recall": 0.9473684210526315,
+        "precision": 0.5806451612903226,
+        "f1": 0.72,
+        "alert_rate": 0.36904761904761907,
+        "green_npv": 0.9811320754716981,
+        "tp": 18,
+        "fp": 13,
+        "fn": 1,
+        "tn": 52
+      },
+      {
+        "fold_id": 4,
+        "recall": 0.8,
+        "precision": 0.25,
+        "f1": 0.38095238095238093,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629,
+        "tp": 4,
+        "fp": 12,
+        "fn": 1,
+        "tn": 26
+      }
+    ]
+  },
+  "selected": {
+    "config_id": 15,
+    "config": {
+      "model": "cb_rmse",
+      "topk": 96,
+      "target_mode": "log_ratio"
+    },
+    "regression_ranking": {
+      "roc_auc": 0.8037336527902565,
+      "pr_auc": 0.4579963493901946,
+      "mae_ratio": 0.10451361325289095,
+      "rmse_ratio": 0.13593769331237637,
+      "min_fold_auc": 0.7026315789473685,
+      "folds": [
+        {
+          "fold_id": 0,
+          "rows": 85,
+          "positives": 7,
+          "mae_ratio": 0.07667697654056764,
+          "rmse_ratio": 0.09521878246927076,
+          "roc_auc": 0.8003663003663003,
+          "pr_auc": 0.2940888476602762,
+          "feature_count": 96
+        },
+        {
+          "fold_id": 1,
+          "rows": 85,
+          "positives": 15,
+          "mae_ratio": 0.10896340052936579,
+          "rmse_ratio": 0.13913829187563917,
+          "roc_auc": 0.7480952380952381,
+          "pr_auc": 0.3835654216461022,
+          "feature_count": 96
+        },
+        {
+          "fold_id": 2,
+          "rows": 84,
+          "positives": 17,
+          "mae_ratio": 0.1357493064570775,
+          "rmse_ratio": 0.1710411629162081,
+          "roc_auc": 0.7642669007901669,
+          "pr_auc": 0.45000875655624484,
+          "feature_count": 96
+        },
+        {
+          "fold_id": 3,
+          "rows": 84,
+          "positives": 19,
+          "mae_ratio": 0.10940185109864589,
+          "rmse_ratio": 0.1436847983642153,
+          "roc_auc": 0.8870445344129554,
+          "pr_auc": 0.69810143810468,
+          "feature_count": 96
+        },
+        {
+          "fold_id": 4,
+          "rows": 43,
+          "positives": 5,
+          "mae_ratio": 0.08017575264479888,
+          "rmse_ratio": 0.1003099830601632,
+          "roc_auc": 0.7026315789473685,
+          "pr_auc": 0.24338935574229692,
+          "feature_count": 96
+        }
+      ]
+    },
+    "prequential_metrics": {
+      "precision": 0.41935483870967744,
+      "recall": 0.8253968253968254,
+      "f1": 0.5561497326203209,
+      "accuracy": 0.7821522309711286,
+      "balanced_accuracy": 0.7994908655286014,
+      "alert_rate": 0.32545931758530183,
+      "green_npv": 0.9571984435797666,
+      "tp": 52,
+      "fp": 72,
+      "fn": 11,
+      "tn": 246,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.37209302325581395,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "recall": 0.8571428571428571,
+          "precision": 0.2,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818,
+          "tp": 6,
+          "fp": 24,
+          "fn": 1,
+          "tn": 54
+        },
+        {
+          "fold_id": 1,
+          "recall": 0.6,
+          "precision": 0.45,
+          "f1": 0.5142857142857142,
+          "alert_rate": 0.23529411764705882,
+          "green_npv": 0.9076923076923077,
+          "tp": 9,
+          "fp": 11,
+          "fn": 6,
+          "tn": 59
+        },
+        {
+          "fold_id": 2,
+          "recall": 0.8823529411764706,
+          "precision": 0.5172413793103449,
+          "f1": 0.6521739130434783,
+          "alert_rate": 0.34523809523809523,
+          "green_npv": 0.9636363636363636,
+          "tp": 15,
+          "fp": 14,
+          "fn": 2,
+          "tn": 53
+        },
+        {
+          "fold_id": 3,
+          "recall": 0.9473684210526315,
+          "precision": 0.6206896551724138,
+          "f1": 0.75,
+          "alert_rate": 0.34523809523809523,
+          "green_npv": 0.9818181818181818,
+          "tp": 18,
+          "fp": 11,
+          "fn": 1,
+          "tn": 54
+        },
+        {
+          "fold_id": 4,
+          "recall": 0.8,
+          "precision": 0.25,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629,
+          "tp": 4,
+          "fp": 12,
+          "fn": 1,
+          "tn": 26
+        }
+      ]
+    },
+    "prequential_details": [
+      {
+        "fold_id": 0,
+        "mode": "v8_2_bootstrap"
+      },
+      {
+        "fold_id": 1,
+        "history_rule": [
+          "nonstrong",
+          0.4,
+          1.05,
+          1.01
+        ],
+        "history_feasible": true,
+        "history_metrics": {
+          "precision": 0.25,
+          "recall": 0.8571428571428571,
+          "f1": 0.3870967741935484,
+          "accuracy": 0.7764705882352941,
+          "balanced_accuracy": 0.8131868131868132,
+          "alert_rate": 0.2823529411764706,
+          "green_npv": 0.9836065573770492,
+          "tp": 6,
+          "fp": 18,
+          "fn": 1,
+          "tn": 60,
+          "worst_fold_recall": 0.8571428571428571,
+          "max_fold_alert_rate": 0.2823529411764706,
+          "per_fold": [
+            {
+              "fold_id": 0,
+              "recall": 0.8571428571428571,
+              "precision": 0.25,
+              "f1": 0.3870967741935484,
+              "alert_rate": 0.2823529411764706,
+              "green_npv": 0.9836065573770492,
+              "tp": 6,
+              "fp": 18,
+              "fn": 1,
+              "tn": 60
+            }
+          ]
+        }
+      },
+      {
+        "fold_id": 2,
+        "history_rule": [
+          "nonstrong",
+          0.4,
+          1.05,
+          1.01
+        ],
+        "history_feasible": true,
+        "history_metrics": {
+          "precision": 0.3409090909090909,
+          "recall": 0.6818181818181818,
+          "f1": 0.45454545454545453,
+          "accuracy": 0.788235294117647,
+          "balanced_accuracy": 0.7429361179361179,
+          "alert_rate": 0.25882352941176473,
+          "green_npv": 0.9444444444444444,
+          "tp": 15,
+          "fp": 29,
+          "fn": 7,
+          "tn": 119,
+          "worst_fold_recall": 0.6,
+          "max_fold_alert_rate": 0.2823529411764706,
+          "per_fold": [
+            {
+              "fold_id": 0,
+              "recall": 0.8571428571428571,
+              "precision": 0.25,
+              "f1": 0.3870967741935484,
+              "alert_rate": 0.2823529411764706,
+              "green_npv": 0.9836065573770492,
+              "tp": 6,
+              "fp": 18,
+              "fn": 1,
+              "tn": 60
+            },
+            {
+              "fold_id": 1,
+              "recall": 0.6,
+              "precision": 0.45,
+              "f1": 0.5142857142857142,
+              "alert_rate": 0.23529411764705882,
+              "green_npv": 0.9076923076923077,
+              "tp": 9,
+              "fp": 11,
+              "fn": 6,
+              "tn": 59
+            }
+          ]
+        }
+      },
+      {
+        "fold_id": 3,
+        "history_rule": [
+          "nonstrong",
+          0.4,
+          1.05,
+          1.01
+        ],
+        "history_feasible": true,
+        "history_metrics": {
+          "precision": 0.410958904109589,
+          "recall": 0.7692307692307693,
+          "f1": 0.5357142857142857,
+          "accuracy": 0.7952755905511811,
+          "balanced_accuracy": 0.7846153846153847,
+          "alert_rate": 0.2874015748031496,
+          "green_npv": 0.9502762430939227,
+          "tp": 30,
+          "fp": 43,
+          "fn": 9,
+          "tn": 172,
+          "worst_fold_recall": 0.6,
+          "max_fold_alert_rate": 0.34523809523809523,
+          "per_fold": [
+            {
+              "fold_id": 0,
+              "recall": 0.8571428571428571,
+              "precision": 0.25,
+              "f1": 0.3870967741935484,
+              "alert_rate": 0.2823529411764706,
+              "green_npv": 0.9836065573770492,
+              "tp": 6,
+              "fp": 18,
+              "fn": 1,
+              "tn": 60
+            },
+            {
+              "fold_id": 1,
+              "recall": 0.6,
+              "precision": 0.45,
+              "f1": 0.5142857142857142,
+              "alert_rate": 0.23529411764705882,
+              "green_npv": 0.9076923076923077,
+              "tp": 9,
+              "fp": 11,
+              "fn": 6,
+              "tn": 59
+            },
+            {
+              "fold_id": 2,
+              "recall": 0.8823529411764706,
+              "precision": 0.5172413793103449,
+              "f1": 0.6521739130434783,
+              "alert_rate": 0.34523809523809523,
+              "green_npv": 0.9636363636363636,
+              "tp": 15,
+              "fp": 14,
+              "fn": 2,
+              "tn": 53
+            }
+          ]
+        }
+      },
+      {
+        "fold_id": 4,
+        "history_rule": [
+          "nonstrong",
+          0.4,
+          1.05,
+          1.01
+        ],
+        "history_feasible": true,
+        "history_metrics": {
+          "precision": 0.47058823529411764,
+          "recall": 0.8275862068965517,
+          "f1": 0.6,
+          "accuracy": 0.8106508875739645,
+          "balanced_accuracy": 0.8173645320197045,
+          "alert_rate": 0.30177514792899407,
+          "green_npv": 0.9576271186440678,
+          "tp": 48,
+          "fp": 54,
+          "fn": 10,
+          "tn": 226,
+          "worst_fold_recall": 0.6,
+          "max_fold_alert_rate": 0.34523809523809523,
+          "per_fold": [
+            {
+              "fold_id": 0,
+              "recall": 0.8571428571428571,
+              "precision": 0.25,
+              "f1": 0.3870967741935484,
+              "alert_rate": 0.2823529411764706,
+              "green_npv": 0.9836065573770492,
+              "tp": 6,
+              "fp": 18,
+              "fn": 1,
+              "tn": 60
+            },
+            {
+              "fold_id": 1,
+              "recall": 0.6,
+              "precision": 0.45,
+              "f1": 0.5142857142857142,
+              "alert_rate": 0.23529411764705882,
+              "green_npv": 0.9076923076923077,
+              "tp": 9,
+              "fp": 11,
+              "fn": 6,
+              "tn": 59
+            },
+            {
+              "fold_id": 2,
+              "recall": 0.8823529411764706,
+              "precision": 0.5172413793103449,
+              "f1": 0.6521739130434783,
+              "alert_rate": 0.34523809523809523,
+              "green_npv": 0.9636363636363636,
+              "tp": 15,
+              "fp": 14,
+              "fn": 2,
+              "tn": 53
+            },
+            {
+              "fold_id": 3,
+              "recall": 0.9473684210526315,
+              "precision": 0.6206896551724138,
+              "f1": 0.75,
+              "alert_rate": 0.34523809523809523,
+              "green_npv": 0.9818181818181818,
+              "tp": 18,
+              "fp": 11,
+              "fn": 1,
+              "tn": 54
+            }
+          ]
+        }
+      }
+    ],
+    "strictly_dominates_v8_2": true
+  },
+  "top_candidates": [
+    {
+      "config_id": 15,
+      "config": {
+        "model": "cb_rmse",
+        "topk": 96,
+        "target_mode": "log_ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.8037336527902565,
+        "pr_auc": 0.4579963493901946,
+        "mae_ratio": 0.10451361325289095,
+        "rmse_ratio": 0.13593769331237637,
+        "min_fold_auc": 0.7026315789473685,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07667697654056764,
+            "rmse_ratio": 0.09521878246927076,
+            "roc_auc": 0.8003663003663003,
+            "pr_auc": 0.2940888476602762,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.10896340052936579,
+            "rmse_ratio": 0.13913829187563917,
+            "roc_auc": 0.7480952380952381,
+            "pr_auc": 0.3835654216461022,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.1357493064570775,
+            "rmse_ratio": 0.1710411629162081,
+            "roc_auc": 0.7642669007901669,
+            "pr_auc": 0.45000875655624484,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.10940185109864589,
+            "rmse_ratio": 0.1436847983642153,
+            "roc_auc": 0.8870445344129554,
+            "pr_auc": 0.69810143810468,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.08017575264479888,
+            "rmse_ratio": 0.1003099830601632,
+            "roc_auc": 0.7026315789473685,
+            "pr_auc": 0.24338935574229692,
+            "feature_count": 96
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.41935483870967744,
+        "recall": 0.8253968253968254,
+        "f1": 0.5561497326203209,
+        "accuracy": 0.7821522309711286,
+        "balanced_accuracy": 0.7994908655286014,
+        "alert_rate": 0.32545931758530183,
+        "green_npv": 0.9571984435797666,
+        "tp": 52,
+        "fp": 72,
+        "fn": 11,
+        "tn": 246,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.45,
+            "f1": 0.5142857142857142,
+            "alert_rate": 0.23529411764705882,
+            "green_npv": 0.9076923076923077,
+            "tp": 9,
+            "fp": 11,
+            "fn": 6,
+            "tn": 59
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.6206896551724138,
+            "f1": 0.75,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9818181818181818,
+            "tp": 18,
+            "fp": 11,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.25,
+            "recall": 0.8571428571428571,
+            "f1": 0.3870967741935484,
+            "accuracy": 0.7764705882352941,
+            "balanced_accuracy": 0.8131868131868132,
+            "alert_rate": 0.2823529411764706,
+            "green_npv": 0.9836065573770492,
+            "tp": 6,
+            "fp": 18,
+            "fn": 1,
+            "tn": 60,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3409090909090909,
+            "recall": 0.6818181818181818,
+            "f1": 0.45454545454545453,
+            "accuracy": 0.788235294117647,
+            "balanced_accuracy": 0.7429361179361179,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9444444444444444,
+            "tp": 15,
+            "fp": 29,
+            "fn": 7,
+            "tn": 119,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.410958904109589,
+            "recall": 0.7692307692307693,
+            "f1": 0.5357142857142857,
+            "accuracy": 0.7952755905511811,
+            "balanced_accuracy": 0.7846153846153847,
+            "alert_rate": 0.2874015748031496,
+            "green_npv": 0.9502762430939227,
+            "tp": 30,
+            "fp": 43,
+            "fn": 9,
+            "tn": 172,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.47058823529411764,
+            "recall": 0.8275862068965517,
+            "f1": 0.6,
+            "accuracy": 0.8106508875739645,
+            "balanced_accuracy": 0.8173645320197045,
+            "alert_rate": 0.30177514792899407,
+            "green_npv": 0.9576271186440678,
+            "tp": 48,
+            "fp": 54,
+            "fn": 10,
+            "tn": 226,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.6206896551724138,
+                "f1": 0.75,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9818181818181818,
+                "tp": 18,
+                "fp": 11,
+                "fn": 1,
+                "tn": 54
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 13,
+      "config": {
+        "model": "cb_rmse",
+        "topk": 64,
+        "target_mode": "log_ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.7962214235799141,
+        "pr_auc": 0.46138936415260523,
+        "mae_ratio": 0.10631964436533331,
+        "rmse_ratio": 0.13719715247336758,
+        "min_fold_auc": 0.7209523809523809,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.0813365859737675,
+            "rmse_ratio": 0.09846389339643737,
+            "roc_auc": 0.8113553113553114,
+            "pr_auc": 0.3065519136947708,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.11144547262360896,
+            "rmse_ratio": 0.14157997199604436,
+            "roc_auc": 0.7209523809523809,
+            "pr_auc": 0.3134216522746811,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.13653805837831956,
+            "rmse_ratio": 0.17156974587755464,
+            "roc_auc": 0.7647058823529412,
+            "pr_auc": 0.47536074496075487,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.10982640392600963,
+            "rmse_ratio": 0.1440876801338062,
+            "roc_auc": 0.8829959514170039,
+            "pr_auc": 0.6967718292608209,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.07969057415933337,
+            "rmse_ratio": 0.09966202634537114,
+            "roc_auc": 0.7263157894736842,
+            "pr_auc": 0.315,
+            "feature_count": 64
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.41935483870967744,
+        "recall": 0.8253968253968254,
+        "f1": 0.5561497326203209,
+        "accuracy": 0.7821522309711286,
+        "balanced_accuracy": 0.7994908655286014,
+        "alert_rate": 0.32545931758530183,
+        "green_npv": 0.9571984435797666,
+        "tp": 52,
+        "fp": 72,
+        "fn": 11,
+        "tn": 246,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.45,
+            "f1": 0.5142857142857142,
+            "alert_rate": 0.23529411764705882,
+            "green_npv": 0.9076923076923077,
+            "tp": 9,
+            "fp": 11,
+            "fn": 6,
+            "tn": 59
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.6206896551724138,
+            "f1": 0.75,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9818181818181818,
+            "tp": 18,
+            "fp": 11,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "any",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3157894736842105,
+            "recall": 0.8571428571428571,
+            "f1": 0.46153846153846156,
+            "accuracy": 0.8352941176470589,
+            "balanced_accuracy": 0.8452380952380952,
+            "alert_rate": 0.2235294117647059,
+            "green_npv": 0.9848484848484849,
+            "tp": 6,
+            "fp": 13,
+            "fn": 1,
+            "tn": 65,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.2235294117647059,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3157894736842105,
+                "f1": 0.46153846153846156,
+                "alert_rate": 0.2235294117647059,
+                "green_npv": 0.9848484848484849,
+                "tp": 6,
+                "fp": 13,
+                "fn": 1,
+                "tn": 65
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "any",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.38461538461538464,
+            "recall": 0.6818181818181818,
+            "f1": 0.4918032786885246,
+            "accuracy": 0.8176470588235294,
+            "balanced_accuracy": 0.7598280098280098,
+            "alert_rate": 0.22941176470588234,
+            "green_npv": 0.9465648854961832,
+            "tp": 15,
+            "fp": 24,
+            "fn": 7,
+            "tn": 124,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.23529411764705882,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3157894736842105,
+                "f1": 0.46153846153846156,
+                "alert_rate": 0.2235294117647059,
+                "green_npv": 0.9848484848484849,
+                "tp": 6,
+                "fp": 13,
+                "fn": 1,
+                "tn": 65
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "any",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.4411764705882353,
+            "recall": 0.7692307692307693,
+            "f1": 0.5607476635514018,
+            "accuracy": 0.8149606299212598,
+            "balanced_accuracy": 0.7962432915921288,
+            "alert_rate": 0.2677165354330709,
+            "green_npv": 0.9516129032258065,
+            "tp": 30,
+            "fp": 38,
+            "fn": 9,
+            "tn": 177,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3157894736842105,
+                "f1": 0.46153846153846156,
+                "alert_rate": 0.2235294117647059,
+                "green_npv": 0.9848484848484849,
+                "tp": 6,
+                "fp": 13,
+                "fn": 1,
+                "tn": 65
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "any",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.4948453608247423,
+            "recall": 0.8275862068965517,
+            "f1": 0.6193548387096774,
+            "accuracy": 0.8254437869822485,
+            "balanced_accuracy": 0.8262931034482759,
+            "alert_rate": 0.2869822485207101,
+            "green_npv": 0.9585062240663901,
+            "tp": 48,
+            "fp": 49,
+            "fn": 10,
+            "tn": 231,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3157894736842105,
+                "f1": 0.46153846153846156,
+                "alert_rate": 0.2235294117647059,
+                "green_npv": 0.9848484848484849,
+                "tp": 6,
+                "fp": 13,
+                "fn": 1,
+                "tn": 65
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.6206896551724138,
+                "f1": 0.75,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9818181818181818,
+                "tp": 18,
+                "fp": 11,
+                "fn": 1,
+                "tn": 54
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 16,
+      "config": {
+        "model": "cb_rmse",
+        "topk": 128,
+        "target_mode": "ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.8022361984626135,
+        "pr_auc": 0.48927686438481427,
+        "mae_ratio": 0.1047968288265358,
+        "rmse_ratio": 0.1360288039194141,
+        "min_fold_auc": 0.7257142857142856,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07877283752567966,
+            "rmse_ratio": 0.09782749370295588,
+            "roc_auc": 0.8241758241758241,
+            "pr_auc": 0.3053803339517625,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.10972832076630706,
+            "rmse_ratio": 0.13801873762063935,
+            "roc_auc": 0.7257142857142856,
+            "pr_auc": 0.35988729154263954,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.13551146206650785,
+            "rmse_ratio": 0.16945575736882706,
+            "roc_auc": 0.7686567164179103,
+            "pr_auc": 0.5250277669019644,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.11138779609608239,
+            "rmse_ratio": 0.14727373867126164,
+            "roc_auc": 0.8651821862348178,
+            "pr_auc": 0.6722184782386054,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.07361524749845792,
+            "rmse_ratio": 0.09441487849044722,
+            "roc_auc": 0.7684210526315789,
+            "pr_auc": 0.33444444444444443,
+            "feature_count": 128
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.416,
+        "recall": 0.8253968253968254,
+        "f1": 0.5531914893617021,
+        "accuracy": 0.7795275590551181,
+        "balanced_accuracy": 0.7979185384845762,
+        "alert_rate": 0.32808398950131235,
+        "green_npv": 0.95703125,
+        "tp": 52,
+        "fp": 73,
+        "fn": 11,
+        "tn": 245,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.42857142857142855,
+            "f1": 0.5,
+            "alert_rate": 0.24705882352941178,
+            "green_npv": 0.90625,
+            "tp": 9,
+            "fp": 12,
+            "fn": 6,
+            "tn": 58
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.6206896551724138,
+            "f1": 0.75,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9818181818181818,
+            "tp": 18,
+            "fp": 11,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3,
+            "recall": 0.8571428571428571,
+            "f1": 0.4444444444444444,
+            "accuracy": 0.8235294117647058,
+            "balanced_accuracy": 0.8388278388278387,
+            "alert_rate": 0.23529411764705882,
+            "green_npv": 0.9846153846153847,
+            "tp": 6,
+            "fp": 14,
+            "fn": 1,
+            "tn": 64,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.23529411764705882,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3,
+                "f1": 0.4444444444444444,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9846153846153847,
+                "tp": 6,
+                "fp": 14,
+                "fn": 1,
+                "tn": 64
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.36585365853658536,
+            "recall": 0.6818181818181818,
+            "f1": 0.47619047619047616,
+            "accuracy": 0.8058823529411765,
+            "balanced_accuracy": 0.7530712530712531,
+            "alert_rate": 0.2411764705882353,
+            "green_npv": 0.9457364341085271,
+            "tp": 15,
+            "fp": 26,
+            "fn": 7,
+            "tn": 122,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.24705882352941178,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3,
+                "f1": 0.4444444444444444,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9846153846153847,
+                "tp": 6,
+                "fp": 14,
+                "fn": 1,
+                "tn": 64
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.42857142857142855,
+            "recall": 0.7692307692307693,
+            "f1": 0.5504587155963303,
+            "accuracy": 0.8070866141732284,
+            "balanced_accuracy": 0.7915921288014311,
+            "alert_rate": 0.2755905511811024,
+            "green_npv": 0.9510869565217391,
+            "tp": 30,
+            "fp": 40,
+            "fn": 9,
+            "tn": 175,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3,
+                "f1": 0.4444444444444444,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9846153846153847,
+                "tp": 6,
+                "fp": 14,
+                "fn": 1,
+                "tn": 64
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.4,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.48484848484848486,
+            "recall": 0.8275862068965517,
+            "f1": 0.6114649681528662,
+            "accuracy": 0.8195266272189349,
+            "balanced_accuracy": 0.8227216748768473,
+            "alert_rate": 0.29289940828402367,
+            "green_npv": 0.9581589958158996,
+            "tp": 48,
+            "fp": 51,
+            "fn": 10,
+            "tn": 229,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.3,
+                "f1": 0.4444444444444444,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9846153846153847,
+                "tp": 6,
+                "fp": 14,
+                "fn": 1,
+                "tn": 64
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.6206896551724138,
+                "f1": 0.75,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9818181818181818,
+                "tp": 18,
+                "fp": 11,
+                "fn": 1,
+                "tn": 54
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 14,
+      "config": {
+        "model": "cb_rmse",
+        "topk": 96,
+        "target_mode": "ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.7923529999001697,
+        "pr_auc": 0.4416052998486237,
+        "mae_ratio": 0.10548523469839367,
+        "rmse_ratio": 0.13717894455827995,
+        "min_fold_auc": 0.731904761904762,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07712135886362925,
+            "rmse_ratio": 0.09549923431139548,
+            "roc_auc": 0.804029304029304,
+            "pr_auc": 0.31785714285714284,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.11163098948361276,
+            "rmse_ratio": 0.14086105844027164,
+            "roc_auc": 0.731904761904762,
+            "pr_auc": 0.3422161668426524,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.13790868666465492,
+            "rmse_ratio": 0.17212375683481979,
+            "roc_auc": 0.757243195785777,
+            "pr_auc": 0.4215741644478844,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.11187356436315116,
+            "rmse_ratio": 0.14878805195608144,
+            "roc_auc": 0.8623481781376519,
+            "pr_auc": 0.6518670536268991,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.0735864121915514,
+            "rmse_ratio": 0.09146116896605716,
+            "roc_auc": 0.7736842105263159,
+            "pr_auc": 0.37681159420289856,
+            "feature_count": 96
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.416,
+        "recall": 0.8253968253968254,
+        "f1": 0.5531914893617021,
+        "accuracy": 0.7795275590551181,
+        "balanced_accuracy": 0.7979185384845762,
+        "alert_rate": 0.32808398950131235,
+        "green_npv": 0.95703125,
+        "tp": 52,
+        "fp": 73,
+        "fn": 11,
+        "tn": 245,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.45,
+            "f1": 0.5142857142857142,
+            "alert_rate": 0.23529411764705882,
+            "green_npv": 0.9076923076923077,
+            "tp": 9,
+            "fp": 11,
+            "fn": 6,
+            "tn": 59
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.6,
+            "f1": 0.7346938775510204,
+            "alert_rate": 0.35714285714285715,
+            "green_npv": 0.9814814814814815,
+            "tp": 18,
+            "fp": 12,
+            "fn": 1,
+            "tn": 53
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.2608695652173913,
+            "recall": 0.8571428571428571,
+            "f1": 0.4,
+            "accuracy": 0.788235294117647,
+            "balanced_accuracy": 0.8195970695970696,
+            "alert_rate": 0.27058823529411763,
+            "green_npv": 0.9838709677419355,
+            "tp": 6,
+            "fp": 17,
+            "fn": 1,
+            "tn": 61,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.27058823529411763,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3488372093023256,
+            "recall": 0.6818181818181818,
+            "f1": 0.46153846153846156,
+            "accuracy": 0.7941176470588235,
+            "balanced_accuracy": 0.7463144963144963,
+            "alert_rate": 0.2529411764705882,
+            "green_npv": 0.9448818897637795,
+            "tp": 15,
+            "fp": 28,
+            "fn": 7,
+            "tn": 120,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.27058823529411763,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.4166666666666667,
+            "recall": 0.7692307692307693,
+            "f1": 0.5405405405405406,
+            "accuracy": 0.7992125984251969,
+            "balanced_accuracy": 0.7869409660107335,
+            "alert_rate": 0.28346456692913385,
+            "green_npv": 0.9505494505494505,
+            "tp": 30,
+            "fp": 42,
+            "fn": 9,
+            "tn": 173,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.47058823529411764,
+            "recall": 0.8275862068965517,
+            "f1": 0.6,
+            "accuracy": 0.8106508875739645,
+            "balanced_accuracy": 0.8173645320197045,
+            "alert_rate": 0.30177514792899407,
+            "green_npv": 0.9576271186440678,
+            "tp": 48,
+            "fp": 54,
+            "fn": 10,
+            "tn": 226,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.35714285714285715,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.6,
+                "f1": 0.7346938775510204,
+                "alert_rate": 0.35714285714285715,
+                "green_npv": 0.9814814814814815,
+                "tp": 18,
+                "fp": 12,
+                "fn": 1,
+                "tn": 53
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 20,
+      "config": {
+        "model": "cb_q35",
+        "topk": 96,
+        "target_mode": "ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.8223270440251572,
+        "pr_auc": 0.44714952380855066,
+        "mae_ratio": 0.10501536982550352,
+        "rmse_ratio": 0.13592767532482838,
+        "min_fold_auc": 0.769047619047619,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.075502167845769,
+            "rmse_ratio": 0.09324040773569706,
+            "roc_auc": 0.7756410256410257,
+            "pr_auc": 0.2899420637820346,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.10623630721763311,
+            "rmse_ratio": 0.13869622314287977,
+            "roc_auc": 0.769047619047619,
+            "pr_auc": 0.3882221514481684,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.1392718733931093,
+            "rmse_ratio": 0.17384428937966134,
+            "roc_auc": 0.7743634767339772,
+            "pr_auc": 0.4637693946893586,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.1094387223169396,
+            "rmse_ratio": 0.13865418534765517,
+            "roc_auc": 0.9044534412955466,
+            "pr_auc": 0.6549650655612904,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.08538129031357097,
+            "rmse_ratio": 0.10910466504270835,
+            "roc_auc": 0.85,
+            "pr_auc": 0.4854901960784314,
+            "feature_count": 96
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.4126984126984127,
+        "recall": 0.8253968253968254,
+        "f1": 0.5502645502645502,
+        "accuracy": 0.7769028871391076,
+        "balanced_accuracy": 0.7963462114405511,
+        "alert_rate": 0.33070866141732286,
+        "green_npv": 0.9568627450980393,
+        "tp": 52,
+        "fp": 74,
+        "fn": 11,
+        "tn": 244,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.45,
+            "f1": 0.5142857142857142,
+            "alert_rate": 0.23529411764705882,
+            "green_npv": 0.9076923076923077,
+            "tp": 9,
+            "fp": 11,
+            "fn": 6,
+            "tn": 59
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.5806451612903226,
+            "f1": 0.72,
+            "alert_rate": 0.36904761904761907,
+            "green_npv": 0.9811320754716981,
+            "tp": 18,
+            "fp": 13,
+            "fn": 1,
+            "tn": 52
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.25,
+            "recall": 0.8571428571428571,
+            "f1": 0.3870967741935484,
+            "accuracy": 0.7764705882352941,
+            "balanced_accuracy": 0.8131868131868132,
+            "alert_rate": 0.2823529411764706,
+            "green_npv": 0.9836065573770492,
+            "tp": 6,
+            "fp": 18,
+            "fn": 1,
+            "tn": 60,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3409090909090909,
+            "recall": 0.6818181818181818,
+            "f1": 0.45454545454545453,
+            "accuracy": 0.788235294117647,
+            "balanced_accuracy": 0.7429361179361179,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9444444444444444,
+            "tp": 15,
+            "fp": 29,
+            "fn": 7,
+            "tn": 119,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.410958904109589,
+            "recall": 0.7692307692307693,
+            "f1": 0.5357142857142857,
+            "accuracy": 0.7952755905511811,
+            "balanced_accuracy": 0.7846153846153847,
+            "alert_rate": 0.2874015748031496,
+            "green_npv": 0.9502762430939227,
+            "tp": 30,
+            "fp": 43,
+            "fn": 9,
+            "tn": 172,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.46153846153846156,
+            "recall": 0.8275862068965517,
+            "f1": 0.5925925925925926,
+            "accuracy": 0.8047337278106509,
+            "balanced_accuracy": 0.8137931034482759,
+            "alert_rate": 0.3076923076923077,
+            "green_npv": 0.9572649572649573,
+            "tp": 48,
+            "fp": 56,
+            "fn": 10,
+            "tn": 224,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.36904761904761907,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.45,
+                "f1": 0.5142857142857142,
+                "alert_rate": 0.23529411764705882,
+                "green_npv": 0.9076923076923077,
+                "tp": 9,
+                "fp": 11,
+                "fn": 6,
+                "tn": 59
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.5806451612903226,
+                "f1": 0.72,
+                "alert_rate": 0.36904761904761907,
+                "green_npv": 0.9811320754716981,
+                "tp": 18,
+                "fp": 13,
+                "fn": 1,
+                "tn": 52
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 17,
+      "config": {
+        "model": "cb_rmse",
+        "topk": 128,
+        "target_mode": "log_ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.80083857442348,
+        "pr_auc": 0.4547640221257173,
+        "mae_ratio": 0.10461810331225972,
+        "rmse_ratio": 0.13597662295135396,
+        "min_fold_auc": 0.7131578947368422,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07642829140481161,
+            "rmse_ratio": 0.09547021257401389,
+            "roc_auc": 0.8076923076923077,
+            "pr_auc": 0.303484179424029,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.10929771142848754,
+            "rmse_ratio": 0.13844053442522278,
+            "roc_auc": 0.7342857142857143,
+            "pr_auc": 0.3630720394050743,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.1355890733680801,
+            "rmse_ratio": 0.1710787968633195,
+            "roc_auc": 0.7664618086040386,
+            "pr_auc": 0.4644289720987118,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.10979317373990784,
+            "rmse_ratio": 0.14400139187910405,
+            "roc_auc": 0.8757085020242915,
+            "pr_auc": 0.6617419576164372,
+            "feature_count": 128
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.08048089218766362,
+            "rmse_ratio": 0.1011973167432326,
+            "roc_auc": 0.7131578947368422,
+            "pr_auc": 0.27976190476190477,
+            "feature_count": 128
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.4126984126984127,
+        "recall": 0.8253968253968254,
+        "f1": 0.5502645502645502,
+        "accuracy": 0.7769028871391076,
+        "balanced_accuracy": 0.7963462114405511,
+        "alert_rate": 0.33070866141732286,
+        "green_npv": 0.9568627450980393,
+        "tp": 52,
+        "fp": 74,
+        "fn": 11,
+        "tn": 244,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.42857142857142855,
+            "f1": 0.5,
+            "alert_rate": 0.24705882352941178,
+            "green_npv": 0.90625,
+            "tp": 9,
+            "fp": 12,
+            "fn": 6,
+            "tn": 58
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.6,
+            "f1": 0.7346938775510204,
+            "alert_rate": 0.35714285714285715,
+            "green_npv": 0.9814814814814815,
+            "tp": 18,
+            "fp": 12,
+            "fn": 1,
+            "tn": 53
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.25,
+            "recall": 0.8571428571428571,
+            "f1": 0.3870967741935484,
+            "accuracy": 0.7764705882352941,
+            "balanced_accuracy": 0.8131868131868132,
+            "alert_rate": 0.2823529411764706,
+            "green_npv": 0.9836065573770492,
+            "tp": 6,
+            "fp": 18,
+            "fn": 1,
+            "tn": 60,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3333333333333333,
+            "recall": 0.6818181818181818,
+            "f1": 0.44776119402985076,
+            "accuracy": 0.7823529411764706,
+            "balanced_accuracy": 0.7395577395577395,
+            "alert_rate": 0.2647058823529412,
+            "green_npv": 0.944,
+            "tp": 15,
+            "fp": 30,
+            "fn": 7,
+            "tn": 118,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.2823529411764706,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.40540540540540543,
+            "recall": 0.7692307692307693,
+            "f1": 0.5309734513274337,
+            "accuracy": 0.7913385826771654,
+            "balanced_accuracy": 0.7822898032200358,
+            "alert_rate": 0.29133858267716534,
+            "green_npv": 0.95,
+            "tp": 30,
+            "fp": 44,
+            "fn": 9,
+            "tn": 171,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.46153846153846156,
+            "recall": 0.8275862068965517,
+            "f1": 0.5925925925925926,
+            "accuracy": 0.8047337278106509,
+            "balanced_accuracy": 0.8137931034482759,
+            "alert_rate": 0.3076923076923077,
+            "green_npv": 0.9572649572649573,
+            "tp": 48,
+            "fp": 56,
+            "fn": 10,
+            "tn": 224,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.35714285714285715,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.25,
+                "f1": 0.3870967741935484,
+                "alert_rate": 0.2823529411764706,
+                "green_npv": 0.9836065573770492,
+                "tp": 6,
+                "fp": 18,
+                "fn": 1,
+                "tn": 60
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.6,
+                "f1": 0.7346938775510204,
+                "alert_rate": 0.35714285714285715,
+                "green_npv": 0.9814814814814815,
+                "tp": 18,
+                "fp": 12,
+                "fn": 1,
+                "tn": 53
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": true
+    },
+    {
+      "config_id": 19,
+      "config": {
+        "model": "cb_q35",
+        "topk": 64,
+        "target_mode": "log_ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.8263951282819207,
+        "pr_auc": 0.4842457028371139,
+        "mae_ratio": 0.10462260054669197,
+        "rmse_ratio": 0.13534104480595457,
+        "min_fold_auc": 0.7719047619047619,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07353591325960186,
+            "rmse_ratio": 0.08944228700462231,
+            "roc_auc": 0.7912087912087912,
+            "pr_auc": 0.3756127117259408,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.10829443868678942,
+            "rmse_ratio": 0.14021127718095405,
+            "roc_auc": 0.7719047619047619,
+            "pr_auc": 0.47038465043530897,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.13835423339941724,
+            "rmse_ratio": 0.1738302467584637,
+            "roc_auc": 0.7796312554872695,
+            "pr_auc": 0.4123523726206626,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.1080803062354786,
+            "rmse_ratio": 0.13636589995502785,
+            "roc_auc": 0.9097165991902834,
+            "pr_auc": 0.7068651579119005,
+            "feature_count": 64
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.08616580380267752,
+            "rmse_ratio": 0.11076556541704113,
+            "roc_auc": 0.7842105263157895,
+            "pr_auc": 0.4399159663865546,
+            "feature_count": 64
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.4094488188976378,
+        "recall": 0.8253968253968254,
+        "f1": 0.5473684210526316,
+        "accuracy": 0.7742782152230971,
+        "balanced_accuracy": 0.794773884396526,
+        "alert_rate": 0.3333333333333333,
+        "green_npv": 0.9566929133858267,
+        "tp": 52,
+        "fp": 75,
+        "fn": 11,
+        "tn": 243,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.42857142857142855,
+            "f1": 0.5,
+            "alert_rate": 0.24705882352941178,
+            "green_npv": 0.90625,
+            "tp": 9,
+            "fp": 12,
+            "fn": 6,
+            "tn": 58
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.5806451612903226,
+            "f1": 0.72,
+            "alert_rate": 0.36904761904761907,
+            "green_npv": 0.9811320754716981,
+            "tp": 18,
+            "fp": 13,
+            "fn": 1,
+            "tn": 52
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "any",
+            0.3,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.21428571428571427,
+            "recall": 0.8571428571428571,
+            "f1": 0.34285714285714286,
+            "accuracy": 0.7294117647058823,
+            "balanced_accuracy": 0.7875457875457875,
+            "alert_rate": 0.32941176470588235,
+            "green_npv": 0.9824561403508771,
+            "tp": 6,
+            "fp": 22,
+            "fn": 1,
+            "tn": 56,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.32941176470588235,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.21428571428571427,
+                "f1": 0.34285714285714286,
+                "alert_rate": 0.32941176470588235,
+                "green_npv": 0.9824561403508771,
+                "tp": 6,
+                "fp": 22,
+                "fn": 1,
+                "tn": 56
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "any",
+            0.3,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.30612244897959184,
+            "recall": 0.6818181818181818,
+            "f1": 0.4225352112676056,
+            "accuracy": 0.7588235294117647,
+            "balanced_accuracy": 0.726044226044226,
+            "alert_rate": 0.28823529411764703,
+            "green_npv": 0.9421487603305785,
+            "tp": 15,
+            "fp": 34,
+            "fn": 7,
+            "tn": 114,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.32941176470588235,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.21428571428571427,
+                "f1": 0.34285714285714286,
+                "alert_rate": 0.32941176470588235,
+                "green_npv": 0.9824561403508771,
+                "tp": 6,
+                "fp": 22,
+                "fn": 1,
+                "tn": 56
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "any",
+            0.3,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.38461538461538464,
+            "recall": 0.7692307692307693,
+            "f1": 0.5128205128205128,
+            "accuracy": 0.7755905511811023,
+            "balanced_accuracy": 0.7729874776386405,
+            "alert_rate": 0.30708661417322836,
+            "green_npv": 0.9488636363636364,
+            "tp": 30,
+            "fp": 48,
+            "fn": 9,
+            "tn": 167,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.21428571428571427,
+                "f1": 0.34285714285714286,
+                "alert_rate": 0.32941176470588235,
+                "green_npv": 0.9824561403508771,
+                "tp": 6,
+                "fp": 22,
+                "fn": 1,
+                "tn": 56
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "any",
+            0.3,
+            1.05,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.44036697247706424,
+            "recall": 0.8275862068965517,
+            "f1": 0.5748502994011976,
+            "accuracy": 0.7899408284023669,
+            "balanced_accuracy": 0.8048645320197044,
+            "alert_rate": 0.3224852071005917,
+            "green_npv": 0.9563318777292577,
+            "tp": 48,
+            "fp": 61,
+            "fn": 10,
+            "tn": 219,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.36904761904761907,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.21428571428571427,
+                "f1": 0.34285714285714286,
+                "alert_rate": 0.32941176470588235,
+                "green_npv": 0.9824561403508771,
+                "tp": 6,
+                "fp": 22,
+                "fn": 1,
+                "tn": 56
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.5806451612903226,
+                "f1": 0.72,
+                "alert_rate": 0.36904761904761907,
+                "green_npv": 0.9811320754716981,
+                "tp": 18,
+                "fp": 13,
+                "fn": 1,
+                "tn": 52
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": false
+    },
+    {
+      "config_id": 26,
+      "config": {
+        "model": "cb_q50",
+        "topk": 96,
+        "target_mode": "ratio"
+      },
+      "regression_ranking": {
+        "roc_auc": 0.8225267046021764,
+        "pr_auc": 0.4635416771697946,
+        "mae_ratio": 0.10356922214249649,
+        "rmse_ratio": 0.13435191508584798,
+        "min_fold_auc": 0.7426739926739927,
+        "folds": [
+          {
+            "fold_id": 0,
+            "rows": 85,
+            "positives": 7,
+            "mae_ratio": 0.07598854769034231,
+            "rmse_ratio": 0.09415341670152123,
+            "roc_auc": 0.7426739926739927,
+            "pr_auc": 0.28231988447552936,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 1,
+            "rows": 85,
+            "positives": 15,
+            "mae_ratio": 0.1050844573118731,
+            "rmse_ratio": 0.1356273130927811,
+            "roc_auc": 0.7747619047619047,
+            "pr_auc": 0.3871763745080028,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 2,
+            "rows": 84,
+            "positives": 17,
+            "mae_ratio": 0.13619126278963878,
+            "rmse_ratio": 0.17060831219954098,
+            "roc_auc": 0.7677787532923618,
+            "pr_auc": 0.41391940813530403,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 3,
+            "rows": 84,
+            "positives": 19,
+            "mae_ratio": 0.1091887241957169,
+            "rmse_ratio": 0.14189605215048745,
+            "roc_auc": 0.9044534412955466,
+            "pr_auc": 0.6905051629149774,
+            "feature_count": 96
+          },
+          {
+            "fold_id": 4,
+            "rows": 43,
+            "positives": 5,
+            "mae_ratio": 0.08038951870541813,
+            "rmse_ratio": 0.09928184429392457,
+            "roc_auc": 0.7947368421052632,
+            "pr_auc": 0.33666666666666667,
+            "feature_count": 96
+          }
+        ]
+      },
+      "prequential_metrics": {
+        "precision": 0.4094488188976378,
+        "recall": 0.8253968253968254,
+        "f1": 0.5473684210526316,
+        "accuracy": 0.7742782152230971,
+        "balanced_accuracy": 0.794773884396526,
+        "alert_rate": 0.3333333333333333,
+        "green_npv": 0.9566929133858267,
+        "tp": 52,
+        "fp": 75,
+        "fn": 11,
+        "tn": 243,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.37209302325581395,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818,
+            "tp": 6,
+            "fp": 24,
+            "fn": 1,
+            "tn": 54
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.42857142857142855,
+            "f1": 0.5,
+            "alert_rate": 0.24705882352941178,
+            "green_npv": 0.90625,
+            "tp": 9,
+            "fp": 12,
+            "fn": 6,
+            "tn": 58
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.8823529411764706,
+            "precision": 0.5172413793103449,
+            "f1": 0.6521739130434783,
+            "alert_rate": 0.34523809523809523,
+            "green_npv": 0.9636363636363636,
+            "tp": 15,
+            "fp": 14,
+            "fn": 2,
+            "tn": 53
+          },
+          {
+            "fold_id": 3,
+            "recall": 0.9473684210526315,
+            "precision": 0.5806451612903226,
+            "f1": 0.72,
+            "alert_rate": 0.36904761904761907,
+            "green_npv": 0.9811320754716981,
+            "tp": 18,
+            "fp": 13,
+            "fn": 1,
+            "tn": 52
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629,
+            "tp": 4,
+            "fp": 12,
+            "fn": 1,
+            "tn": 26
+          }
+        ]
+      },
+      "prequential_details": [
+        {
+          "fold_id": 0,
+          "mode": "v8_2_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.2608695652173913,
+            "recall": 0.8571428571428571,
+            "f1": 0.4,
+            "accuracy": 0.788235294117647,
+            "balanced_accuracy": 0.8195970695970696,
+            "alert_rate": 0.27058823529411763,
+            "green_npv": 0.9838709677419355,
+            "tp": 6,
+            "fp": 17,
+            "fn": 1,
+            "tn": 61,
+            "worst_fold_recall": 0.8571428571428571,
+            "max_fold_alert_rate": 0.27058823529411763,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.3409090909090909,
+            "recall": 0.6818181818181818,
+            "f1": 0.45454545454545453,
+            "accuracy": 0.788235294117647,
+            "balanced_accuracy": 0.7429361179361179,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9444444444444444,
+            "tp": 15,
+            "fp": 29,
+            "fn": 7,
+            "tn": 119,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.27058823529411763,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.410958904109589,
+            "recall": 0.7692307692307693,
+            "f1": 0.5357142857142857,
+            "accuracy": 0.7952755905511811,
+            "balanced_accuracy": 0.7846153846153847,
+            "alert_rate": 0.2874015748031496,
+            "green_npv": 0.9502762430939227,
+            "tp": 30,
+            "fp": 43,
+            "fn": 9,
+            "tn": 172,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.34523809523809523,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              }
+            ]
+          }
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "nonstrong",
+            0.3,
+            0.9,
+            1.01
+          ],
+          "history_feasible": true,
+          "history_metrics": {
+            "precision": 0.46153846153846156,
+            "recall": 0.8275862068965517,
+            "f1": 0.5925925925925926,
+            "accuracy": 0.8047337278106509,
+            "balanced_accuracy": 0.8137931034482759,
+            "alert_rate": 0.3076923076923077,
+            "green_npv": 0.9572649572649573,
+            "tp": 48,
+            "fp": 56,
+            "fn": 10,
+            "tn": 224,
+            "worst_fold_recall": 0.6,
+            "max_fold_alert_rate": 0.36904761904761907,
+            "per_fold": [
+              {
+                "fold_id": 0,
+                "recall": 0.8571428571428571,
+                "precision": 0.2608695652173913,
+                "f1": 0.4,
+                "alert_rate": 0.27058823529411763,
+                "green_npv": 0.9838709677419355,
+                "tp": 6,
+                "fp": 17,
+                "fn": 1,
+                "tn": 61
+              },
+              {
+                "fold_id": 1,
+                "recall": 0.6,
+                "precision": 0.42857142857142855,
+                "f1": 0.5,
+                "alert_rate": 0.24705882352941178,
+                "green_npv": 0.90625,
+                "tp": 9,
+                "fp": 12,
+                "fn": 6,
+                "tn": 58
+              },
+              {
+                "fold_id": 2,
+                "recall": 0.8823529411764706,
+                "precision": 0.5172413793103449,
+                "f1": 0.6521739130434783,
+                "alert_rate": 0.34523809523809523,
+                "green_npv": 0.9636363636363636,
+                "tp": 15,
+                "fp": 14,
+                "fn": 2,
+                "tn": 53
+              },
+              {
+                "fold_id": 3,
+                "recall": 0.9473684210526315,
+                "precision": 0.5806451612903226,
+                "f1": 0.72,
+                "alert_rate": 0.36904761904761907,
+                "green_npv": 0.9811320754716981,
+                "tp": 18,
+                "fp": 13,
+                "fn": 1,
+                "tn": 52
+              }
+            ]
+          }
+        }
+      ],
+      "strictly_dominates_v8_2": false
+    }
+  ]
+}
