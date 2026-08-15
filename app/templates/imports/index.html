@@ -1,1 +1,42 @@
-{% extends 'base.html' %}{% block content %}<section class="page-heading"><div><span class="eyebrow">DATA QUALITY</span><h1>{{ t('imports') }}</h1><p>{{ 'CSV أو XLSX، بحد أقصى 10MB' if locale=='ar' else 'CSV or XLSX, maximum 10MB' }}</p></div></section><div class="grid-2"><article class="panel"><h2>{{ 'استيراد المبيعات' if locale=='ar' else 'Import sales' }}</h2><form method="post" enctype="multipart/form-data" class="stacked-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="file" name="file" accept=".csv,.xlsx" required><button class="primary-button">{{ 'تحقق واستورد' if locale=='ar' else 'Validate and import' }}</button></form></article><article class="panel"><h2>{{ 'سجل الاستيراد' if locale=='ar' else 'Import history' }}</h2><table><tr><th>File</th><th>Status</th><th>Accepted</th><th>Rejected</th></tr>{% for j in jobs %}<tr><td>{{ j.filename }}</td><td>{{ j.status }}</td><td>{{ j.accepted_rows }}</td><td>{{ j.rejected_rows }}</td></tr>{% else %}<tr><td colspan="4">—</td></tr>{% endfor %}</table></article></div>{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">DATA QUALITY + INGESTION</span>
+    <h1>{{ t('imports') }}</h1>
+    <p>{{ 'CSV حتى 10MB — يتم التحقق ثم الحفظ فعليًا في قاعدة المبيعات' if locale=='ar' else 'CSV up to 10MB — validated and then physically ingested into the sales database' }}</p>
+  </div>
+</section>
+
+<div class="grid-2">
+  <article class="panel">
+    <h2>{{ 'استيراد المبيعات' if locale=='ar' else 'Import sales' }}</h2>
+    <form method="post" enctype="multipart/form-data" class="stacked-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="file" name="file" accept=".csv" required>
+      <button class="primary-button">{{ 'تحقق واحفظ المعاملات' if locale=='ar' else 'Validate and ingest transactions' }}</button>
+    </form>
+    <p class="footer-note">{{ 'إعادة رفع نفس الصفوف لا يكرر المبيعات؛ يستخدم النظام بصمة SHA-256 لكل صف.' if locale=='ar' else 'Re-uploading identical rows does not duplicate sales; each source row is protected by a SHA-256 fingerprint.' }}</p>
+  </article>
+
+  <article class="panel">
+    <h2>{{ 'الصيغ المدعومة' if locale=='ar' else 'Supported schemas' }}</h2>
+    <p><strong>UCI transaction CSV</strong><br>{{ 'InvoiceNo، StockCode، Quantity، InvoiceDate، UnitPrice، CustomerID… — يشغّل V18 بعد توفر 56 يومًا على الأقل.' if locale=='ar' else 'InvoiceNo, StockCode, Quantity, InvoiceDate, UnitPrice, CustomerID… — eligible for V18 after at least 56 days.' }}</p>
+    <p><strong>Redsea transaction CSV</strong><br>{{ 'TRX DATE، TRX NUMBER، CUSTOMER NUMBER، ITEM CODE، Net Amount… — معاملات غنية صالحة لمحرك V18.' if locale=='ar' else 'TRX DATE, TRX NUMBER, CUSTOMER NUMBER, ITEM CODE, Net Amount… — rich transaction input for V18.' }}</p>
+    <p><strong>date, net_sales</strong><br>{{ 'وضع مبسط للتوقع الزمني فقط؛ لا نختلق عملاء أو منتجات، لذلك لا يُفعّل V18.' if locale=='ar' else 'Minimal time-series mode only; customers/products are not fabricated, so V18 remains disabled.' }}</p>
+  </article>
+</div>
+
+<article class="panel">
+  <h2>{{ 'سجل الاستيراد' if locale=='ar' else 'Import history' }}</h2>
+  <table>
+    <tr><th>{{ 'الملف' if locale=='ar' else 'File' }}</th><th>{{ 'الحالة' if locale=='ar' else 'Status' }}</th><th>{{ 'أُضيف فعليًا' if locale=='ar' else 'Inserted' }}</th><th>{{ 'مرفوض' if locale=='ar' else 'Rejected' }}</th><th>{{ 'الوضع' if locale=='ar' else 'Mode' }}</th></tr>
+    {% for j in jobs %}
+      <tr>
+        <td>{{ j.filename }}</td><td>{{ j.status }}</td><td>{{ j.accepted_rows }}</td><td>{{ j.rejected_rows }}</td>
+        <td>{{ (j.error_details or {}).get('mode','—') }}</td>
+      </tr>
+    {% else %}<tr><td colspan="5">—</td></tr>{% endfor %}
+  </table>
+</article>
+{% endblock %}
