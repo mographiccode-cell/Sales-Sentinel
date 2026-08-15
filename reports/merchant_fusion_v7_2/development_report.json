@@ -1,0 +1,319 @@
+{
+  "version": "SALES-SENTINEL-V7.2-V6.1-PLUS-V7.1-RANK-FUSION",
+  "status": "EXPERIMENTAL_FUSION_NOT_ADOPTED",
+  "scientific_boundary": "V7.2 is a constrained decision-fusion development experiment on the same 381 purged rolling-origin OOF rows already used during V6.1/V7.1 development. V6.1 is kept frozen as the base decision policy. The V7.1 merchant-plus-category mean-ensemble OOF ranking score is used only to veto weak non-market-confirmed V6.1 alerts and rescue high-confidence non-alerts. This is not independent validation and must not be described as production performance.",
+  "rows": 381,
+  "positives": 63,
+  "positive_rate": 0.16535433070866143,
+  "alignment": {
+    "method": "fold_id + chronological row_in_fold",
+    "target_sequence_exact_match": true
+  },
+  "ranking": {
+    "v6_1_merchant_mean": {
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076
+    },
+    "v7_1_category_ensemble": {
+      "roc_auc": 0.7818708196066686,
+      "pr_auc": 0.43258958345035264
+    },
+    "rank_blends": [
+      {
+        "v71_weight": 0.0,
+        "roc_auc": 0.7583108715184187,
+        "pr_auc": 0.3872897299159076
+      },
+      {
+        "v71_weight": 0.25,
+        "roc_auc": 0.77727862633523,
+        "pr_auc": 0.44018604406612677
+      },
+      {
+        "v71_weight": 0.5,
+        "roc_auc": 0.787810721772986,
+        "pr_auc": 0.4713302739121452
+      },
+      {
+        "v71_weight": 0.75,
+        "roc_auc": 0.7890336428072277,
+        "pr_auc": 0.4759986944110517
+      },
+      {
+        "v71_weight": 1.0,
+        "roc_auc": 0.7818708196066686,
+        "pr_auc": 0.43258958345035264
+      }
+    ],
+    "best_rank_blend": {
+      "v71_weight": 0.75,
+      "roc_auc": 0.7890336428072277,
+      "pr_auc": 0.4759986944110517
+    }
+  },
+  "base_v6_1": {
+    "metrics": {
+      "accuracy": 0.7559055118110236,
+      "balanced_accuracy": 0.7837675950883498,
+      "precision": 0.3880597014925373,
+      "recall": 0.8253968253968254,
+      "f1": 0.5279187817258884,
+      "alert_rate": 0.35170603674540685,
+      "green_npv": 0.9554655870445344,
+      "tp": 52,
+      "fp": 82,
+      "fn": 11,
+      "tn": 236,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.40476190476190477,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "rows": 85,
+          "positives": 7,
+          "tp": 6,
+          "fp": 24,
+          "fn": 1,
+          "tn": 54,
+          "precision": 0.2,
+          "recall": 0.8571428571428571,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818
+        },
+        {
+          "fold_id": 1,
+          "rows": 85,
+          "positives": 15,
+          "tp": 9,
+          "fp": 13,
+          "fn": 6,
+          "tn": 57,
+          "precision": 0.4090909090909091,
+          "recall": 0.6,
+          "f1": 0.4864864864864865,
+          "alert_rate": 0.25882352941176473,
+          "green_npv": 0.9047619047619048
+        },
+        {
+          "fold_id": 2,
+          "rows": 84,
+          "positives": 17,
+          "tp": 14,
+          "fp": 18,
+          "fn": 3,
+          "tn": 49,
+          "precision": 0.4375,
+          "recall": 0.8235294117647058,
+          "f1": 0.5714285714285714,
+          "alert_rate": 0.38095238095238093,
+          "green_npv": 0.9423076923076923
+        },
+        {
+          "fold_id": 3,
+          "rows": 84,
+          "positives": 19,
+          "tp": 19,
+          "fp": 15,
+          "fn": 0,
+          "tn": 50,
+          "precision": 0.5588235294117647,
+          "recall": 1.0,
+          "f1": 0.7169811320754716,
+          "alert_rate": 0.40476190476190477,
+          "green_npv": 1.0
+        },
+        {
+          "fold_id": 4,
+          "rows": 43,
+          "positives": 5,
+          "tp": 4,
+          "fp": 12,
+          "fn": 1,
+          "tn": 26,
+          "precision": 0.25,
+          "recall": 0.8,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629
+        }
+      ]
+    },
+    "diagnostics": {
+      "strong_merchant_alerts": 38,
+      "quiet_market_asymmetric_alerts": 42,
+      "market_confirmed_alerts": 73,
+      "final_alerts": 134
+    },
+    "report_metrics": {
+      "accuracy": 0.7559055118110236,
+      "balanced_accuracy": 0.7837675950883498,
+      "precision": 0.3880597014925373,
+      "recall": 0.8253968253968254,
+      "f1": 0.5279187817258884,
+      "roc_auc": 0.7583108715184187,
+      "pr_auc": 0.3872897299159076,
+      "alert_rate": 0.35170603674540685,
+      "green_npv": 0.9554655870445344,
+      "tp": 52,
+      "fp": 82,
+      "fn": 11,
+      "tn": 236,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.40476190476190477
+    }
+  },
+  "v7_1_reference": {
+    "version": "SALES-SENTINEL-V7.1-MERCHANT-CATEGORY-SIGNALS-NESTED",
+    "ablation": {
+      "best_merchant_only_model": "hist_gb",
+      "best_full_model": "hist_gb",
+      "merchant_only_roc_auc": 0.7628531496456025,
+      "merchant_plus_category_roc_auc": 0.7692922032544673,
+      "category_signal_delta_roc_auc": 0.006439053608864875
+    }
+  },
+  "search": {
+    "candidate_count": 3920,
+    "strict_dominance_candidates": 0,
+    "bounded_contract_candidates": 0,
+    "selection_mode": "best_experimental_candidate_contract_failed"
+  },
+  "selected_policy": {
+    "logic": {
+      "base": "start from frozen V6.1 three-branch regime policy",
+      "veto": "remove a V6.1 alert only when V7.1 rank score is below veto_v71_max, merchant_mean is below veto_merchant_mean_max, and SAMA risk p90 < 0.20",
+      "rescue": "add a non-alert only when V7.1 rank score >= rescue_v71_min, merchant_mean >= rescue_merchant_mean_min, and (merchant Logistic >= 0.45 OR SAMA risk p90 >= 0.20)"
+    },
+    "parameters": {
+      "veto_v71_max": -1.0,
+      "veto_merchant_mean_max": 0.45,
+      "rescue_v71_min": 1.01,
+      "rescue_merchant_mean_min": 0.2
+    },
+    "vetoed_alerts": 0,
+    "rescued_alerts": 0,
+    "metrics": {
+      "accuracy": 0.7559055118110236,
+      "balanced_accuracy": 0.7837675950883498,
+      "precision": 0.3880597014925373,
+      "recall": 0.8253968253968254,
+      "f1": 0.5279187817258884,
+      "alert_rate": 0.35170603674540685,
+      "green_npv": 0.9554655870445344,
+      "tp": 52,
+      "fp": 82,
+      "fn": 11,
+      "tn": 236,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.40476190476190477,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "rows": 85,
+          "positives": 7,
+          "tp": 6,
+          "fp": 24,
+          "fn": 1,
+          "tn": 54,
+          "precision": 0.2,
+          "recall": 0.8571428571428571,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818
+        },
+        {
+          "fold_id": 1,
+          "rows": 85,
+          "positives": 15,
+          "tp": 9,
+          "fp": 13,
+          "fn": 6,
+          "tn": 57,
+          "precision": 0.4090909090909091,
+          "recall": 0.6,
+          "f1": 0.4864864864864865,
+          "alert_rate": 0.25882352941176473,
+          "green_npv": 0.9047619047619048
+        },
+        {
+          "fold_id": 2,
+          "rows": 84,
+          "positives": 17,
+          "tp": 14,
+          "fp": 18,
+          "fn": 3,
+          "tn": 49,
+          "precision": 0.4375,
+          "recall": 0.8235294117647058,
+          "f1": 0.5714285714285714,
+          "alert_rate": 0.38095238095238093,
+          "green_npv": 0.9423076923076923
+        },
+        {
+          "fold_id": 3,
+          "rows": 84,
+          "positives": 19,
+          "tp": 19,
+          "fp": 15,
+          "fn": 0,
+          "tn": 50,
+          "precision": 0.5588235294117647,
+          "recall": 1.0,
+          "f1": 0.7169811320754716,
+          "alert_rate": 0.40476190476190477,
+          "green_npv": 1.0
+        },
+        {
+          "fold_id": 4,
+          "rows": 43,
+          "positives": 5,
+          "tp": 4,
+          "fp": 12,
+          "fn": 1,
+          "tn": 26,
+          "precision": 0.25,
+          "recall": 0.8,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629
+        }
+      ]
+    }
+  },
+  "comparison_vs_v6_1": {
+    "precision_delta": 0.0,
+    "recall_delta": 0.0,
+    "f1_delta": 0.0,
+    "npv_delta": 0.0,
+    "alert_rate_delta": 0.0,
+    "fp_removed": 0,
+    "tp_change": 0
+  },
+  "robustness": {
+    "local_perturbations": 81,
+    "passing_perturbations": 0,
+    "passing_share": 0.0
+  },
+  "gates": {
+    "oof_alignment_exact": true,
+    "v61_policy_frozen_as_base": true,
+    "v71_channel_is_nested_oof_ranking": true,
+    "no_new_blind_holdout_claim": true,
+    "no_smote_or_synthetic_oversampling": true,
+    "recall_ge_080": true,
+    "precision_ge_v61": true,
+    "f1_gt_v61": false,
+    "green_npv_ge_095": true,
+    "alert_rate_le_v61": true,
+    "false_positives_lt_v61": false,
+    "tp_loss_max_1": true,
+    "worst_fold_recall_ge_060": true,
+    "max_fold_alert_rate_le_043": true,
+    "local_perturbation_support": false
+  },
+  "all_development_gates_passed": false,
+  "adopt_over_v6_1": false,
+  "red_supported": false,
+  "next_required_evidence": "Independent real Saudi merchant longitudinal validation on never-used data."
+}
