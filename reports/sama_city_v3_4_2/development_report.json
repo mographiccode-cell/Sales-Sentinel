@@ -1,0 +1,207 @@
+{
+  "version": "SAMA-CITY-RISK-3.4.2-DOWNSIDE-RATIO",
+  "base_version": "SAMA-CITY-RISK-3.3-DUAL-CHANNEL",
+  "rows": 2816,
+  "positives": 145,
+  "positive_rate": 0.05149147727272727,
+  "ratio_feature_count": 17,
+  "ratio_threshold": 0.8878995433789955,
+  "ratio_evidence_min": 5,
+  "valid_policy_count": 48,
+  "metrics": {
+    "ok": true,
+    "RED": {
+      "TP": 8,
+      "FP": 0,
+      "FN": 78,
+      "TN": 1344,
+      "precision": 1.0,
+      "recall": 0.09302325581395349,
+      "FPR": 0.0,
+      "NPV": 0.9451476793248945
+    },
+    "RED_plus_AMBER": {
+      "TP": 82,
+      "FP": 298,
+      "FN": 4,
+      "TN": 1046,
+      "precision": 0.21578947368421053,
+      "recall": 0.9534883720930233,
+      "FPR": 0.22172619047619047,
+      "NPV": 0.9961904761904762
+    },
+    "alert_rate": 0.26573426573426573,
+    "green_coverage": 0.7342657342657343,
+    "incremental_negative_alert_rate": 0.049954586739327886,
+    "ratio_incremental_alerts": 59,
+    "ratio_incremental_tp": 4,
+    "min_recall_folds_5plus": 0.875,
+    "folds": [
+      {
+        "fold_id": 0,
+        "positives": 2,
+        "recall": 0.0,
+        "precision": 0.0,
+        "alert_rate": 0.13986013986013987
+      },
+      {
+        "fold_id": 1,
+        "positives": 13,
+        "recall": 1.0,
+        "precision": 0.24528301886792453,
+        "alert_rate": 0.3706293706293706
+      },
+      {
+        "fold_id": 2,
+        "positives": 1,
+        "recall": 1.0,
+        "precision": 0.030303030303030304,
+        "alert_rate": 0.23076923076923078
+      },
+      {
+        "fold_id": 3,
+        "positives": 3,
+        "recall": 1.0,
+        "precision": 0.12,
+        "alert_rate": 0.17482517482517482
+      },
+      {
+        "fold_id": 4,
+        "positives": 8,
+        "recall": 0.875,
+        "precision": 0.2413793103448276,
+        "alert_rate": 0.20279720279720279
+      },
+      {
+        "fold_id": 5,
+        "positives": 20,
+        "recall": 1.0,
+        "precision": 0.3333333333333333,
+        "alert_rate": 0.4195804195804196
+      },
+      {
+        "fold_id": 6,
+        "positives": 1,
+        "recall": 1.0,
+        "precision": 0.029411764705882353,
+        "alert_rate": 0.23776223776223776
+      },
+      {
+        "fold_id": 7,
+        "positives": 2,
+        "recall": 1.0,
+        "precision": 0.13333333333333333,
+        "alert_rate": 0.1048951048951049
+      },
+      {
+        "fold_id": 8,
+        "positives": 18,
+        "recall": 1.0,
+        "precision": 0.32727272727272727,
+        "alert_rate": 0.38461538461538464
+      },
+      {
+        "fold_id": 9,
+        "positives": 18,
+        "recall": 0.9444444444444444,
+        "precision": 0.30357142857142855,
+        "alert_rate": 0.3916083916083916
+      }
+    ]
+  },
+  "contract": {
+    "alert_recall_min": 0.94,
+    "green_npv_min": 0.992,
+    "alert_precision_min": 0.18,
+    "alert_rate_max": 0.3,
+    "green_coverage_min": 0.7,
+    "incremental_negative_alert_rate_max": 0.05,
+    "min_recall_folds_with_5plus_positives": 0.7,
+    "red_precision_min": 0.7,
+    "red_fpr_max": 0.015
+  },
+  "all_gates_passed": true,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2022-01-01",
+      "end": "2022-03-31",
+      "rows": 143,
+      "positives": 2
+    },
+    {
+      "fold_id": 1,
+      "start": "2022-07-01",
+      "end": "2022-09-30",
+      "rows": 143,
+      "positives": 13
+    },
+    {
+      "fold_id": 2,
+      "start": "2023-01-01",
+      "end": "2023-03-31",
+      "rows": 143,
+      "positives": 1
+    },
+    {
+      "fold_id": 3,
+      "start": "2023-07-01",
+      "end": "2023-09-30",
+      "rows": 143,
+      "positives": 3
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-01-01",
+      "end": "2024-03-31",
+      "rows": 143,
+      "positives": 8
+    },
+    {
+      "fold_id": 5,
+      "start": "2024-04-01",
+      "end": "2024-06-30",
+      "rows": 143,
+      "positives": 20
+    },
+    {
+      "fold_id": 6,
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "rows": 143,
+      "positives": 1
+    },
+    {
+      "fold_id": 7,
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "rows": 143,
+      "positives": 2
+    },
+    {
+      "fold_id": 8,
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "rows": 143,
+      "positives": 18
+    },
+    {
+      "fold_id": 9,
+      "start": "2025-04-01",
+      "end": "2025-06-29",
+      "rows": 143,
+      "positives": 18
+    }
+  ],
+  "controls": {
+    "base_red_policy_unchanged": true,
+    "ratio_channel_only_adds_amber": true,
+    "dense_continuous_target_used_for_ratio_channel": true,
+    "no_city_identity": true,
+    "no_target_history": true,
+    "no_future_features": true,
+    "selection_historical_oof_only": true,
+    "no_recent_sama_or_counterfactual_labels_used": true
+  },
+  "scientific_boundary": "No outcome after 2025-06-29 and no prior semi-synthetic/counterfactual test result is read by this trainer."
+}
