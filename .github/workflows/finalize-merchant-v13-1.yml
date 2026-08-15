@@ -1,0 +1,38 @@
+name: Finalize Merchant V13.1
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/finalize_merchant_v13_1.py'
+      - '.github/workflows/finalize-merchant-v13-1.yml'
+
+jobs:
+  finalize-v13-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn xgboost catboost
+      - name: Finalize V13.1 and audit robustness
+        run: python scripts/finalize_merchant_v13_1.py
+      - name: Show V13.1 finalization summary
+        run: cat reports/merchant_v13_1_final/finalization_summary.md
+      - name: Upload V13.1 final evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-v13-1-final
+          path: reports/merchant_v13_1_final/
+      - name: Persist V13.1 final evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/merchant_v13_1_final
+          git diff --cached --quiet || git commit -m "Persist V13.1 final robustness evidence"
+          git push
