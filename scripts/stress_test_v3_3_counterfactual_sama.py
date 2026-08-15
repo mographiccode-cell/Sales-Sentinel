@@ -17,20 +17,9 @@ OUT.mkdir(parents=True, exist_ok=True)
 # Fixed before scoring. The event happens one week AFTER the prediction origin.
 # The model is allowed to see only the three completed precursor weeks.
 PRECURSOR_FACTORS = {-2: 0.95, -1: 0.90, 0: 0.84}
-EVENT_FACTOR = 0.60
+EVENT_TARGET_RATIO = 0.65
 EXPECTED_MODEL_VERSION = 'SAMA-CITY-RISK-3.3-DUAL-CHANNEL'
 CITIES = ['ABHA','BURAIDAH','DAMMAM','HAIL','JEDDAH','KHOBAR','MADINA','MAKKAH','OTHER','RIYADH','TABOUK']
-
-
-def metric(y: np.ndarray, p: np.ndarray) -> dict:
-    y = np.asarray(y, int); p = np.asarray(p, bool)
-    tp = int(((y == 1) & p).sum()); fp = int(((y == 0) & p).sum())
-    fn = int(((y == 1) & ~p).sum()); tn = int(((y == 0) & ~p).sum())
-    return {
-        'TP': tp, 'FP': fp, 'FN': fn, 'TN': tn,
-        'precision': tp / max(tp + fp, 1), 'recall': tp / max(tp + fn, 1),
-        'FPR': fp / max(fp + tn, 1), 'NPV': tn / max(tn + fn, 1),
-    }
 
 
 def inject_one(panel: pd.DataFrame, city: str, origin: pd.Timestamp) -> tuple[pd.DataFrame, dict]:
@@ -50,22 +39,33 @@ def inject_one(panel: pd.DataFrame, city: str, origin: pd.Timestamp) -> tuple[pd
         d.loc[m, 'value_thousand_sar'] *= factor
         d.loc[m, 'transaction_count_thousand'] *= factor
 
-    # Inject the actual decline in next week. This row is NEVER passed to predict_latest.
+    # Calculate the target from the visible history ONLY, then define the synthetic next week.
+    # This avoids a calendar-specific future spike weakening the intended >20% decline.
+    city_hist = d[(d.city.eq(city)) & (d.week_start <= origin)].sort_values('week_start')
+    if len(city_hist) < 4:
+        raise RuntimeError('Insufficient city history for injected target')
+    trailing4 = float(city_hist.tail(4).value_thousand_sar.mean())
+    if not np.isfinite(trailing4) or trailing4 <= 0:
+        raise RuntimeError('Invalid trailing4 for injected target')
+
     m = d.week_start.eq(event_week) & d.city.eq(city)
     if int(m.sum()) != 1:
         raise RuntimeError(f'Missing event city-week for {city} {event_week.date()}')
-    d.loc[m, 'value_thousand_sar'] *= EVENT_FACTOR
-    d.loc[m, 'transaction_count_thousand'] *= EVENT_FACTOR
+    original_event_value = float(d.loc[m, 'value_thousand_sar'].iloc[0])
+    original_event_count = float(d.loc[m, 'transaction_count_thousand'].iloc[0])
+    desired_value = EVENT_TARGET_RATIO * trailing4
+    scale = desired_value / max(original_event_value, 1e-12)
+    d.loc[m, 'value_thousand_sar'] = desired_value
+    d.loc[m, 'transaction_count_thousand'] = original_event_count * scale
 
     city_rows = d[d.city.eq(city)].sort_values('week_start').reset_index(drop=True)
     pos = int(city_rows.index[city_rows.week_start.eq(origin)][0])
-    if pos < 3 or pos + 1 >= len(city_rows):
-        raise RuntimeError('Cannot calculate injected target')
-    trailing4 = float(city_rows.loc[pos-3:pos, 'value_thousand_sar'].mean())
     next_value = float(city_rows.loc[pos+1, 'value_thousand_sar'])
-    ratio = next_value / trailing4 if trailing4 > 0 else np.nan
-    if not np.isfinite(ratio) or ratio >= 0.80:
-        raise RuntimeError(f'Injected scenario did not create target decline: {city} {origin.date()} ratio={ratio}')
+    ratio = next_value / trailing4
+    if not np.isfinite(ratio) or abs(ratio - EVENT_TARGET_RATIO) > 1e-9:
+        raise RuntimeError(f'Injected ratio mismatch: {city} {origin.date()} ratio={ratio}')
+    if ratio >= 0.80:
+        raise RuntimeError(f'Injected scenario did not create >20% decline: {city} {origin.date()} ratio={ratio}')
     return d, {
         'city': city, 'origin': str(origin.date()), 'event_week': str(event_week.date()),
         'trailing4_value': trailing4, 'event_value': next_value, 'next_ratio': ratio,
@@ -101,13 +101,11 @@ def main():
     unaffected_rows = []
     for sid, (city, origin) in enumerate(scenarios, start=1):
         base_hist = panel[panel.week_start <= origin][['week_start','week_end','city','value_thousand_sar','transaction_count_thousand']].copy()
-        base_res = predict_latest(base_hist)
-        base_map = prediction_map(base_res)
+        base_map = prediction_map(predict_latest(base_hist))
 
         injected, truth = inject_one(panel, city, origin)
         inj_hist = injected[injected.week_start <= origin][['week_start','week_end','city','value_thousand_sar','transaction_count_thousand']].copy()
-        inj_res = predict_latest(inj_hist)
-        inj_map = prediction_map(inj_res)
+        inj_map = prediction_map(predict_latest(inj_hist))
 
         p = inj_map[city]
         b = base_map[city]
@@ -143,7 +141,7 @@ def main():
     new_control_red_rate = float(c.new_red.mean())
     new_control_alert_rate = float(c.new_alert.mean())
 
-    # Strong but realistic operational gates, frozen in code before reading results.
+    # Acceptance contract was fixed before the first result and remains unchanged.
     acceptance = {
         'injected_decline_alert_recall_ge_90pct': injected_recall >= 0.90,
         'injected_median_score_lift_positive': median_score_lift > 0.0,
@@ -159,6 +157,7 @@ def main():
         'frozen_model': EXPECTED_MODEL_VERSION,
         'model_development_end': artifact.get('development_end'),
         'scenario_count': int(len(s)), 'control_rows': int(len(c)),
+        'injection_contract': {'precursor_factors': {str(k):v for k,v in PRECURSOR_FACTORS.items()}, 'event_target_ratio': EVENT_TARGET_RATIO},
         'injected_declines': {
             'alerted': int(s.alerted.sum()), 'RED': int(s.red.sum()),
             'alert_recall': injected_recall, 'red_rate': red_rate,
