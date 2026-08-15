@@ -1,0 +1,239 @@
+{
+  "version": "SAMA-CITY-V3.3-SEMI-SYNTHETIC-CORRECTED-FRESH-2",
+  "seed": 3311,
+  "frozen_model": "SAMA-CITY-RISK-3.3-DUAL-CHANNEL",
+  "test_design": "Real SAMA city-total series with new model-score-blind event dates. Each event path is overwritten from its t-3 anchor to guarantee observable monotonic value/count deterioration before the target decline. Test validity requires >=6/7 precursor indicators at every event origin.",
+  "events": [
+    {
+      "origin": "2025-09-14",
+      "city": "HAIL"
+    },
+    {
+      "origin": "2025-10-12",
+      "city": "BURAIDAH"
+    },
+    {
+      "origin": "2025-11-09",
+      "city": "TABOUK"
+    },
+    {
+      "origin": "2025-12-07",
+      "city": "OTHER"
+    },
+    {
+      "origin": "2026-01-04",
+      "city": "ABHA"
+    },
+    {
+      "origin": "2026-02-01",
+      "city": "MADINA"
+    },
+    {
+      "origin": "2026-03-01",
+      "city": "RIYADH"
+    },
+    {
+      "origin": "2026-03-29",
+      "city": "KHOBAR"
+    },
+    {
+      "origin": "2026-04-26",
+      "city": "JEDDAH"
+    },
+    {
+      "origin": "2026-05-24",
+      "city": "MAKKAH"
+    },
+    {
+      "origin": "2026-06-21",
+      "city": "DAMMAM"
+    }
+  ],
+  "observability": [
+    {
+      "origin": "2025-09-14",
+      "city": "HAIL",
+      "precursor_count": 6,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop"
+      ]
+    },
+    {
+      "origin": "2025-10-12",
+      "city": "BURAIDAH",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2025-11-09",
+      "city": "TABOUK",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2025-12-07",
+      "city": "OTHER",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-01-04",
+      "city": "ABHA",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-02-01",
+      "city": "MADINA",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-03-01",
+      "city": "RIYADH",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-03-29",
+      "city": "KHOBAR",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-04-26",
+      "city": "JEDDAH",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-05-24",
+      "city": "MAKKAH",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    },
+    {
+      "origin": "2026-06-21",
+      "city": "DAMMAM",
+      "precursor_count": 7,
+      "precursors": [
+        "value_below_short_trend",
+        "count_below_short_trend",
+        "value_negative_slope",
+        "count_negative_slope",
+        "value_2w_drop",
+        "count_2w_drop",
+        "share_weakening"
+      ]
+    }
+  ],
+  "event_count": 11,
+  "rows_scored": 484,
+  "injected_event_actual_declines": 11,
+  "injected_event_alerted": 7,
+  "injected_event_alert_recall": 0.6363636363636364,
+  "injected_event_red": 0,
+  "control": {
+    "rows": 410,
+    "negative_rows": 398,
+    "false_red": 0,
+    "false_red_rate": 0.0,
+    "alert_rate": 0.2780487804878049,
+    "green_coverage": 0.7219512195121951
+  },
+  "overall": {
+    "states": {
+      "GREEN": 339,
+      "AMBER": 143,
+      "RED": 2
+    },
+    "OOD_abstentions": 11,
+    "fallback_alerts": 1
+  },
+  "acceptance": {
+    "test_observability_valid": true,
+    "all_injected_origins_are_actual_declines": true,
+    "injected_alert_recall_ge_85pct": false,
+    "control_false_red_rate_le_2pct": true,
+    "control_alert_rate_le_35pct": true,
+    "control_green_coverage_ge_65pct": true
+  },
+  "all_acceptance_passed": false
+}
