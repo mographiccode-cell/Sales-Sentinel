@@ -1,0 +1,33 @@
+name: Diagnose V11 Label Reconstruction
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/diagnose_v11_label_reconstruction.py'
+      - '.github/workflows/diagnose-v11-label-reconstruction.yml'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pandas numpy
+      - name: Reconstruct current target
+        run: python scripts/diagnose_v11_label_reconstruction.py
+      - name: Show summary
+        run: cat reports/v11_label_reconstruction/summary.md
+      - name: Persist diagnostics
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/v11_label_reconstruction
+          git diff --cached --quiet || git commit -m "Persist V11 label reconstruction"
+          git push
