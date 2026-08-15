@@ -1,0 +1,49 @@
+name: Train External Saudi Store V14
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/train_external_saudi_store_v14.py'
+      - '.github/workflows/train-external-saudi-store-v14.yml'
+
+jobs:
+  train-v14:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn xgboost catboost openpyxl
+      - name: Download external Saudi-labeled store dataset
+        run: |
+          mkdir -p /tmp/saudi_store_sales
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://www.kaggle.com/api/v1/datasets/download/shilton123456/sales-in-saudi-arabia' \
+            -o /tmp/saudi_store_sales.zip
+          unzip -o /tmp/saudi_store_sales.zip -d /tmp/saudi_store_sales
+      - name: Train development models and open blind 2023 once
+        env:
+          SAUDI_STORE_DIR: /tmp/saudi_store_sales
+        run: python scripts/train_external_saudi_store_v14.py
+      - name: Show V14 summary
+        run: cat reports/external_saudi_store_v14/development_summary.md
+      - name: Upload V14 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-saudi-store-v14
+          path: reports/external_saudi_store_v14/
+      - name: Persist V14 evidence only
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/external_saudi_store_v14
+          git diff --cached --quiet || git commit -m "Persist V14 external blind-holdout evidence"
+          git push
