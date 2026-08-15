@@ -1,0 +1,264 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-TOTAL-TRIAGE-4.5-OPERATIONAL-GUARDRAIL",
+  "status": "DEVELOPMENT_FROZEN_PENDING_NEW_STRESS",
+  "scientific_boundary": "v4.4 sensitivity stress is development feedback for this new architecture and is NOT reused as independent evidence. v4.5 guardrail threshold is selected from historical rolling OOF labels only; a different stress suite is required next.",
+  "rows": 541,
+  "oof_rows": 381,
+  "feature_count": 391,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2023-07-08",
+      "end": "2023-09-30",
+      "train_rows": 125,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 1,
+      "start": "2023-10-08",
+      "end": "2023-12-31",
+      "train_rows": 217,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 2,
+      "start": "2024-01-08",
+      "end": "2024-03-31",
+      "train_rows": 309,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 3,
+      "start": "2024-04-08",
+      "end": "2024-06-30",
+      "train_rows": 400,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-07-08",
+      "end": "2024-08-19",
+      "train_rows": 491,
+      "validation_rows": 43
+    }
+  ],
+  "base_v4_4": {
+    "amber_threshold": -0.9567809675257828,
+    "metrics15": {
+      "accuracy": 0.6850393700787402,
+      "balanced_accuracy": 0.6967654986522911,
+      "precision": 0.30612244897959184,
+      "recall": 0.7142857142857143,
+      "f1": 0.42857142857142855,
+      "roc_auc": 0.7584107018069283,
+      "alert_rate": 0.3858267716535433,
+      "green_npv": 0.9230769230769231,
+      "tp": 45,
+      "fp": 102,
+      "fn": 18,
+      "tn": 216
+    }
+  },
+  "operational_guardrail": {
+    "supported": false,
+    "threshold": null,
+    "feasible_candidates": 0,
+    "incremental_alerts": 0,
+    "incremental_true15": 0,
+    "incremental_negative_rate": 0.0
+  },
+  "combined15": {
+    "precision": 0.30612244897959184,
+    "recall": 0.7142857142857143,
+    "f1": 0.42857142857142855,
+    "alert_rate": 0.3858267716535433,
+    "green_npv": 0.9230769230769231,
+    "tp": 45,
+    "fp": 102,
+    "fn": 18,
+    "tn": 216
+  },
+  "combined20": {
+    "precision": 0.17006802721088435,
+    "recall": 0.7352941176470589,
+    "f1": 0.27624309392265195,
+    "alert_rate": 0.3858267716535433,
+    "green_npv": 0.9615384615384616,
+    "tp": 25,
+    "fp": 122,
+    "fn": 9,
+    "tn": 225
+  },
+  "red20": {
+    "accuracy": 0.910761154855643,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.7847940328869301,
+    "alert_rate": 0.0,
+    "green_npv": 0.910761154855643,
+    "tp": 0,
+    "fp": 0,
+    "fn": 34,
+    "tn": 347
+  },
+  "red_supported": false,
+  "per_fold": [
+    {
+      "fold_id": 0,
+      "positives15": 7,
+      "baseline": {
+        "precision": 0.20689655172413793,
+        "recall": 0.8571428571428571,
+        "f1": 0.3333333333333333,
+        "alert_rate": 0.3411764705882353,
+        "green_npv": 0.9821428571428571,
+        "tp": 6,
+        "fp": 23,
+        "fn": 1,
+        "tn": 55
+      },
+      "combined": {
+        "precision": 0.20689655172413793,
+        "recall": 0.8571428571428571,
+        "f1": 0.3333333333333333,
+        "alert_rate": 0.3411764705882353,
+        "green_npv": 0.9821428571428571,
+        "tp": 6,
+        "fp": 23,
+        "fn": 1,
+        "tn": 55
+      },
+      "operational_alert_rate": 0.0
+    },
+    {
+      "fold_id": 1,
+      "positives15": 15,
+      "baseline": {
+        "precision": 0.375,
+        "recall": 0.4,
+        "f1": 0.3870967741935484,
+        "alert_rate": 0.18823529411764706,
+        "green_npv": 0.8695652173913043,
+        "tp": 6,
+        "fp": 10,
+        "fn": 9,
+        "tn": 60
+      },
+      "combined": {
+        "precision": 0.375,
+        "recall": 0.4,
+        "f1": 0.3870967741935484,
+        "alert_rate": 0.18823529411764706,
+        "green_npv": 0.8695652173913043,
+        "tp": 6,
+        "fp": 10,
+        "fn": 9,
+        "tn": 60
+      },
+      "operational_alert_rate": 0.0
+    },
+    {
+      "fold_id": 2,
+      "positives15": 17,
+      "baseline": {
+        "precision": 0.42105263157894735,
+        "recall": 0.9411764705882353,
+        "f1": 0.5818181818181818,
+        "alert_rate": 0.4523809523809524,
+        "green_npv": 0.9782608695652174,
+        "tp": 16,
+        "fp": 22,
+        "fn": 1,
+        "tn": 45
+      },
+      "combined": {
+        "precision": 0.42105263157894735,
+        "recall": 0.9411764705882353,
+        "f1": 0.5818181818181818,
+        "alert_rate": 0.4523809523809524,
+        "green_npv": 0.9782608695652174,
+        "tp": 16,
+        "fp": 22,
+        "fn": 1,
+        "tn": 45
+      },
+      "operational_alert_rate": 0.0
+    },
+    {
+      "fold_id": 3,
+      "positives15": 19,
+      "baseline": {
+        "precision": 0.34285714285714286,
+        "recall": 0.631578947368421,
+        "f1": 0.4444444444444444,
+        "alert_rate": 0.4166666666666667,
+        "green_npv": 0.8571428571428571,
+        "tp": 12,
+        "fp": 23,
+        "fn": 7,
+        "tn": 42
+      },
+      "combined": {
+        "precision": 0.34285714285714286,
+        "recall": 0.631578947368421,
+        "f1": 0.4444444444444444,
+        "alert_rate": 0.4166666666666667,
+        "green_npv": 0.8571428571428571,
+        "tp": 12,
+        "fp": 23,
+        "fn": 7,
+        "tn": 42
+      },
+      "operational_alert_rate": 0.0
+    },
+    {
+      "fold_id": 4,
+      "positives15": 5,
+      "baseline": {
+        "precision": 0.1724137931034483,
+        "recall": 1.0,
+        "f1": 0.29411764705882354,
+        "alert_rate": 0.6744186046511628,
+        "green_npv": 1.0,
+        "tp": 5,
+        "fp": 24,
+        "fn": 0,
+        "tn": 14
+      },
+      "combined": {
+        "precision": 0.1724137931034483,
+        "recall": 1.0,
+        "f1": 0.29411764705882354,
+        "alert_rate": 0.6744186046511628,
+        "green_npv": 1.0,
+        "tp": 5,
+        "fp": 24,
+        "fn": 0,
+        "tn": 14
+      },
+      "operational_alert_rate": 0.0
+    }
+  ],
+  "contract": {
+    "combined15_recall_min": 0.78,
+    "combined15_green_npv_min": 0.94,
+    "combined15_alert_rate_max": 0.5,
+    "combined15_precision_min": 0.27,
+    "incremental_negative_rate_max": 0.15
+  },
+  "gates": {
+    "rolling_origin_past_only": true,
+    "operational_channel_current_past_only": true,
+    "base_dense_model_frozen_design": true,
+    "combined_recall": false,
+    "combined_green_npv": false,
+    "combined_alert_rate": true,
+    "combined_precision": true,
+    "incremental_negative_rate": true,
+    "guardrail_supported": false
+  },
+  "all_development_gates_passed": false,
+  "next_required_evidence": "New frozen sensitivity stress patterns that differ from v4.4 stress, followed by real merchant external validation."
+}
