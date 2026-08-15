@@ -1,0 +1,52 @@
+name: Train Merchant Category Signals V7.1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_merchant_category_signals_v7_1.py'
+      - '.github/workflows/train-merchant-category-signals-v7-1.yml'
+      - 'data/merchant_v4/merchant_sector_daily_features_v4.csv'
+      - 'data/saudi_v1_3/saudi_daily_sama_calibrated_v1_3.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train-v7-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-training.txt
+      - name: Train V7.1 nested merchant-category model
+        run: python scripts/train_merchant_category_signals_v7_1.py
+      - name: Show V7.1 summary
+        run: cat reports/merchant_category_signals_v7_1/development_summary.md
+      - name: Upload V7.1 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-1-evidence
+          path: |
+            reports/merchant_category_signals_v7_1/
+            data/merchant_v7_1/
+            models/merchant_category_signals_v7_1/
+      - name: Persist V7.1 evidence and model
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_category_signals_v7_1 data/merchant_v7_1 models/merchant_category_signals_v7_1
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Persist Sales Sentinel V7.1 nested results'
+            git push
+          fi
