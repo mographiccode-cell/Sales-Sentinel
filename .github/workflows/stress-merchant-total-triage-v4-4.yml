@@ -1,0 +1,55 @@
+name: Stress Merchant Total Triage v4.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/stress_merchant_total_triage_v4_4.py'
+      - '.github/workflows/stress-merchant-total-triage-v4-4.yml'
+      - 'models/merchant_total_triage_v4_4/merchant_total_triage_v4_4.joblib'
+
+permissions:
+  contents: write
+
+jobs:
+  stress:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-training.txt
+      - name: Run frozen sensitivity stress
+        run: python scripts/stress_merchant_total_triage_v4_4.py
+      - name: Show evidence
+        if: always()
+        run: cat reports/merchant_total_triage_v4_4/independent_sensitivity_stress.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: merchant-total-triage-v4-4-sensitivity
+          path: reports/merchant_total_triage_v4_4/independent_sensitivity_stress.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist stress evidence
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_total_triage_v4_4/independent_sensitivity_stress.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m 'test: persist frozen v4.4 sensitivity evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Enforce sensitivity gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('reports/merchant_total_triage_v4_4/independent_sensitivity_stress.json').read_text())
+          assert d.get('all_sensitivity_gates_passed') is True, json.dumps(d,indent=2)
+          PY
