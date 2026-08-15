@@ -25,13 +25,16 @@ jobs:
         run: pip install -r requirements.txt pytest
       - name: Run unit and integration tests
         run: python -m pytest -q tests/test_forecasting_engine.py tests/test_v18_runtime_and_import.py
-      - name: Smoke-create Flask application
+      - name: Smoke-create Flask application and compile updated templates
         env:
           DATABASE_URL: sqlite:////tmp/sales-sentinel-smoke.sqlite3
         run: |
           python - <<'PY'
           from app import create_app
           app=create_app()
+          for template in ('forecasting/detail.html', 'imports/index.html'):
+              app.jinja_env.get_template(template)
+              print('compiled', template)
           client=app.test_client()
           r=client.get('/healthz')
           print(r.status_code, r.get_json())
