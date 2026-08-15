@@ -1,0 +1,51 @@
+name: Train Merchant Error Corrector V7.5
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_merchant_error_corrector_v7_5.py'
+      - '.github/workflows/train-merchant-error-corrector-v7-5.yml'
+      - 'data/merchant_v7_1/merchant_feature_panel_v7_1.csv'
+      - 'reports/merchant_market_fusion_v6_1/oof_policy_diagnostics.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train-v7-5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost==3.0.2 catboost==1.2.8
+      - name: Train V7.5 noise-aware error corrector
+        run: python scripts/train_merchant_error_corrector_v7_5.py
+      - name: Show V7.5 summary
+        run: cat reports/merchant_error_corrector_v7_5/development_summary.md
+      - name: Upload V7.5 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-5-evidence
+          path: reports/merchant_error_corrector_v7_5/
+      - name: Persist V7.5 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_error_corrector_v7_5
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Persist Sales Sentinel V7.5 error-correction evidence'
+            git push
+          fi
