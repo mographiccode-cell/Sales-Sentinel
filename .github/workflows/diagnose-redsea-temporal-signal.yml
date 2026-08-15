@@ -1,0 +1,46 @@
+name: Diagnose Redsea Temporal Signal
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/diagnose_redsea_temporal_signal.py'
+      - '.github/workflows/diagnose-redsea-temporal-signal.yml'
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn openpyxl
+      - name: Download official Mendeley Redsea file
+        run: |
+          mkdir -p /tmp/redsea_mendeley
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://data.mendeley.com/public-files/datasets/9c87bd42ct/files/deb8ee07-178b-43b3-8462-ad71ee417edb/file_downloaded' \
+            -o '/tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx'
+      - name: Audit Redsea temporal and accounting structure
+        env:
+          REDSEA_FILE: /tmp/redsea_mendeley/RedSea_Data_Cleaned.xlsx
+        run: python scripts/diagnose_redsea_temporal_signal.py
+      - name: Show audit summary
+        run: cat reports/redsea_temporal_audit/summary.md
+      - name: Upload audit evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: redsea-temporal-audit
+          path: reports/redsea_temporal_audit/
+      - name: Persist audit evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/redsea_temporal_audit
+          git diff --cached --quiet || git commit -m "Persist Redsea temporal audit"
+          git push
