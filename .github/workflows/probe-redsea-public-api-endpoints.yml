@@ -1,0 +1,56 @@
+name: Probe Redsea Public API Endpoints
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-redsea-public-api-endpoints.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Extract frontend endpoint patterns and probe candidates
+        run: |
+          set +e
+          curl -L 'https://data.mendeley.com/datasets/bundle.js?d094b8f1274604a4ed85' -o /tmp/bundle.js
+          echo "bundle bytes: $(wc -c < /tmp/bundle.js)"
+          echo '=== endpoint strings around public-api/files ==='
+          python - <<'PY'
+          import re
+          s=open('/tmp/bundle.js',errors='ignore').read()
+          for pat in [r'public-api',r'filesLoading',r'/files',r'file_downloaded',r'datasets-v2',r'folders']:
+              print('\n###',pat)
+              for m in list(re.finditer(pat,s,re.I))[:25]:
+                  print(s[max(0,m.start()-450):min(len(s),m.end()+750)])
+                  print('\n---')
+          # Extract URL/path literals likely containing files/datasets.
+          strings=re.findall(r'["\'`]([^"\'`]{3,180})["\'`]',s)
+          hits=sorted(set(x for x in strings if ('file' in x.lower() or 'dataset' in x.lower()) and ('/' in x or 'api' in x.lower())))
+          print('\n=== likely path literals ===')
+          for x in hits[:300]: print(x)
+          PY
+
+          echo '=== candidate endpoint probes ==='
+          urls=(
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/versions/1/files'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/files?version=1'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/1/files'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/files'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/versions/1'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct?version=1'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/files?version=1&limit=100'
+            'https://data.mendeley.com/public-api/datasets/9c87bd42ct/files?version=1&page=1'
+            'https://data.mendeley.com/api/datasets-v2/datasets/9c87bd42ct/versions/1/files'
+            'https://data.mendeley.com/api/datasets-v2/datasets/9c87bd42ct/files?version=1'
+            'https://data.mendeley.com/api/datasets-v2/datasets/9c87bd42ct/1/files'
+          )
+          i=0
+          for u in "${urls[@]}"; do
+            i=$((i+1)); echo "--- [$i] $u"
+            curl -sS -L --max-time 20 -w '\nHTTP=%{http_code} TYPE=%{content_type} SIZE=%{size_download}\n' "$u" -o "/tmp/r$i"
+            head -c 1500 "/tmp/r$i"; echo
+          done
+          exit 0
