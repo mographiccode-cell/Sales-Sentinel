@@ -1,0 +1,59 @@
+name: Stress Test Sales Sentinel v3.2
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/production_city_risk_engine_v3_2.py'
+      - 'scripts/evaluate_v3_recent_stress.py'
+      - 'scripts/test_saudi_synthetic_v3.py'
+      - '.github/workflows/stress-test-sales-sentinel-v3-2.yml'
+      - 'models/sama_city_v3_2/**'
+
+permissions:
+  contents: write
+
+jobs:
+  stress:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Real recent SAMA stress diagnostic
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/evaluate_v3_recent_stress.py
+      - name: Fair Saudi-like synthetic stress test
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/test_saudi_synthetic_v3.py
+      - name: Show evidence
+        run: |
+          cat reports/sama_city_v3_2/recent_stress_report.json
+          cat reports/saudi_synthetic_v3_2/synthetic_v3_2_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v3-2-stress-evidence
+          path: |
+            reports/sama_city_v3_2/recent_stress_report.json
+            reports/sama_city_v3_2/recent_stress_predictions.csv
+            reports/saudi_synthetic_v3_2/**
+            tests/fixtures/saudi_synthetic_v3_2/**
+          retention-days: 90
+      - name: Persist stress evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3_2/recent_stress_report.json reports/sama_city_v3_2/recent_stress_predictions.csv reports/saudi_synthetic_v3_2 tests/fixtures/saudi_synthetic_v3_2
+          git diff --cached --quiet || git commit -m 'test: persist frozen Sales Sentinel v3.2 stress evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
