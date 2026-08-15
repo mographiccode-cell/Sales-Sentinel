@@ -1,0 +1,287 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-TOTAL-TRIAGE-4.4",
+  "status": "DEVELOPMENT_FROZEN_PENDING_INDEPENDENT_STRESS",
+  "scientific_boundary": "Rolling-origin development evidence only; no historical period is called an untouched final test. Independent stress does not provide real-world accuracy; external real merchant validation remains required.",
+  "rows": 541,
+  "oof_rows": 381,
+  "feature_count": 391,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2023-07-08",
+      "end": "2023-09-30",
+      "train_rows": 125,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 1,
+      "start": "2023-10-08",
+      "end": "2023-12-31",
+      "train_rows": 217,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 2,
+      "start": "2024-01-08",
+      "end": "2024-03-31",
+      "train_rows": 309,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 3,
+      "start": "2024-04-08",
+      "end": "2024-06-30",
+      "train_rows": 400,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-07-08",
+      "end": "2024-08-19",
+      "train_rows": 491,
+      "validation_rows": 43
+    }
+  ],
+  "ranking": {
+    "early15_auc": 0.7584107018069283,
+    "severe20_auc": 0.7847940328869301,
+    "early10_auc": 0.7505387101739264
+  },
+  "thresholds": {
+    "amber_score_threshold": -0.9567809675257828,
+    "red_score_threshold": null,
+    "amber_feasible_candidates": 14,
+    "red_feasible_candidates": 0
+  },
+  "metrics": {
+    "AMBER_or_RED_vs_10pct": {
+      "accuracy": 0.6902887139107612,
+      "balanced_accuracy": 0.680775742650454,
+      "precision": 0.4013605442176871,
+      "recall": 0.6629213483146067,
+      "f1": 0.5,
+      "roc_auc": 0.7505387101739264,
+      "alert_rate": 0.3858267716535433,
+      "green_npv": 0.8717948717948718,
+      "tp": 59,
+      "fp": 88,
+      "fn": 30,
+      "tn": 204
+    },
+    "AMBER_or_RED_vs_15pct": {
+      "accuracy": 0.6850393700787402,
+      "balanced_accuracy": 0.6967654986522911,
+      "precision": 0.30612244897959184,
+      "recall": 0.7142857142857143,
+      "f1": 0.42857142857142855,
+      "roc_auc": 0.7584107018069283,
+      "alert_rate": 0.3858267716535433,
+      "green_npv": 0.9230769230769231,
+      "tp": 45,
+      "fp": 102,
+      "fn": 18,
+      "tn": 216
+    },
+    "AMBER_or_RED_vs_20pct": {
+      "accuracy": 0.6561679790026247,
+      "balanced_accuracy": 0.6918545516189185,
+      "precision": 0.17006802721088435,
+      "recall": 0.7352941176470589,
+      "f1": 0.27624309392265195,
+      "roc_auc": 0.7646211222241057,
+      "alert_rate": 0.3858267716535433,
+      "green_npv": 0.9615384615384616,
+      "tp": 25,
+      "fp": 122,
+      "fn": 9,
+      "tn": 225
+    },
+    "RED_vs_20pct": {
+      "accuracy": 0.910761154855643,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.7847940328869301,
+      "alert_rate": 0.0,
+      "green_npv": 0.910761154855643,
+      "tp": 0,
+      "fp": 0,
+      "fn": 34,
+      "tn": 347
+    },
+    "RED_vs_15pct": {
+      "accuracy": 0.8346456692913385,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.7469801337725865,
+      "alert_rate": 0.0,
+      "green_npv": 0.8346456692913385,
+      "tp": 0,
+      "fp": 0,
+      "fn": 63,
+      "tn": 318
+    },
+    "state_counts": {
+      "GREEN": 234,
+      "AMBER": 147,
+      "RED": 0
+    }
+  },
+  "per_fold": [
+    {
+      "fold_id": 0,
+      "early15": {
+        "precision": 0.20689655172413793,
+        "recall": 0.8571428571428571,
+        "f1": 0.3333333333333333,
+        "alert_rate": 0.3411764705882353,
+        "positives": 7
+      },
+      "severe20_red": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "alert_rate": 0.0,
+        "positives": 1
+      }
+    },
+    {
+      "fold_id": 1,
+      "early15": {
+        "precision": 0.375,
+        "recall": 0.4,
+        "f1": 0.3870967741935484,
+        "alert_rate": 0.18823529411764706,
+        "positives": 15
+      },
+      "severe20_red": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "alert_rate": 0.0,
+        "positives": 7
+      }
+    },
+    {
+      "fold_id": 2,
+      "early15": {
+        "precision": 0.42105263157894735,
+        "recall": 0.9411764705882353,
+        "f1": 0.5818181818181818,
+        "alert_rate": 0.4523809523809524,
+        "positives": 17
+      },
+      "severe20_red": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "alert_rate": 0.0,
+        "positives": 10
+      }
+    },
+    {
+      "fold_id": 3,
+      "early15": {
+        "precision": 0.34285714285714286,
+        "recall": 0.631578947368421,
+        "f1": 0.4444444444444444,
+        "alert_rate": 0.4166666666666667,
+        "positives": 19
+      },
+      "severe20_red": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "alert_rate": 0.0,
+        "positives": 15
+      }
+    },
+    {
+      "fold_id": 4,
+      "early15": {
+        "precision": 0.1724137931034483,
+        "recall": 1.0,
+        "f1": 0.29411764705882354,
+        "alert_rate": 0.6744186046511628,
+        "positives": 5
+      },
+      "severe20_red": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "alert_rate": 0.0,
+        "positives": 1
+      }
+    }
+  ],
+  "weekday_cohorts": [
+    {
+      "weekday": 0,
+      "rows": 55,
+      "early15_auc": 0.696808510638298,
+      "severe20_auc": 0.744
+    },
+    {
+      "weekday": 1,
+      "rows": 54,
+      "early15_auc": 0.6739130434782609,
+      "severe20_auc": 0.7795918367346939
+    },
+    {
+      "weekday": 2,
+      "rows": 54,
+      "early15_auc": 0.8938271604938272,
+      "severe20_auc": 0.8693877551020408
+    },
+    {
+      "weekday": 3,
+      "rows": 54,
+      "early15_auc": 0.8134920634920635,
+      "severe20_auc": 0.7604166666666665
+    },
+    {
+      "weekday": 4,
+      "rows": 54,
+      "early15_auc": 0.6923076923076923,
+      "severe20_auc": 0.7717391304347826
+    },
+    {
+      "weekday": 5,
+      "rows": 55,
+      "early15_auc": 0.7351190476190477,
+      "severe20_auc": 0.8207547169811321
+    },
+    {
+      "weekday": 6,
+      "rows": 55,
+      "early15_auc": 0.8027210884353742,
+      "severe20_auc": 0.8205128205128205
+    }
+  ],
+  "contract": {
+    "early15_auc_min": 0.75,
+    "early15_recall_min": 0.7,
+    "early15_alert_rate_max": 0.45,
+    "early15_green_npv_min": 0.9,
+    "severe20_auc_min": 0.77,
+    "red_precision_min_if_red_exists": 0.6,
+    "median_weekday_early_auc_min": 0.7
+  },
+  "gates": {
+    "rolling_origin_past_only": true,
+    "dense_target_no_future_feature": true,
+    "early15_auc": true,
+    "early15_recall": true,
+    "early15_alert_rate": true,
+    "early15_green_npv": true,
+    "severe20_auc": true,
+    "red_precision": true,
+    "weekday_early_stability": true
+  },
+  "all_development_gates_passed": true,
+  "red_supported": false,
+  "next_required_evidence": "Frozen sensitivity stress on new deterioration patterns, then external validation on real merchant longitudinal data."
+}
