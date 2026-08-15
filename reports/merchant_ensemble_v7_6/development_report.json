@@ -1,0 +1,1416 @@
+{
+  "version": "SALES-SENTINEL-V7.6-RANK-ENSEMBLE-ERROR-CORRECTOR",
+  "status": "EXPERIMENTAL_V7_5_REMAINS_BEST",
+  "scientific_boundary": "V7.6 is a development-only rank ensemble over previously generated OOF evidence. It does not create independent validation. The feasibility frontier is diagnostic and must not be presented as external performance.",
+  "v6_1": {
+    "precision": 0.3880597014925373,
+    "recall": 0.8253968253968254,
+    "f1": 0.5279187817258884,
+    "accuracy": 0.7559055118110236,
+    "balanced_accuracy": 0.7837675950883498,
+    "green_npv": 0.9554655870445344,
+    "alert_rate": 0.35170603674540685,
+    "tp": 52,
+    "fp": 82,
+    "fn": 11,
+    "tn": 236,
+    "worst_fold_recall": 0.6,
+    "max_fold_alert_rate": 0.40476190476190477,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "recall": 0.8571428571428571,
+        "precision": 0.2,
+        "f1": 0.32432432432432434,
+        "alert_rate": 0.35294117647058826,
+        "green_npv": 0.9818181818181818
+      },
+      {
+        "fold_id": 1,
+        "recall": 0.6,
+        "precision": 0.4090909090909091,
+        "f1": 0.4864864864864865,
+        "alert_rate": 0.25882352941176473,
+        "green_npv": 0.9047619047619048
+      },
+      {
+        "fold_id": 2,
+        "recall": 0.8235294117647058,
+        "precision": 0.4375,
+        "f1": 0.5714285714285714,
+        "alert_rate": 0.38095238095238093,
+        "green_npv": 0.9423076923076923
+      },
+      {
+        "fold_id": 3,
+        "recall": 1.0,
+        "precision": 0.5588235294117647,
+        "f1": 0.7169811320754716,
+        "alert_rate": 0.40476190476190477,
+        "green_npv": 1.0
+      },
+      {
+        "fold_id": 4,
+        "recall": 0.8,
+        "precision": 0.25,
+        "f1": 0.38095238095238093,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629
+      }
+    ]
+  },
+  "v7_5": {
+    "precision": 0.40310077519379844,
+    "recall": 0.8253968253968254,
+    "f1": 0.5416666666666666,
+    "accuracy": 0.7690288713910761,
+    "balanced_accuracy": 0.7916292303084755,
+    "alert_rate": 0.33858267716535434,
+    "green_npv": 0.9563492063492064,
+    "tp": 52,
+    "fp": 77,
+    "fn": 11,
+    "tn": 241,
+    "worst_fold_recall": 0.6,
+    "max_fold_alert_rate": 0.37209302325581395,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "recall": 0.8571428571428571,
+        "precision": 0.2,
+        "f1": 0.32432432432432434,
+        "alert_rate": 0.35294117647058826,
+        "green_npv": 0.9818181818181818,
+        "tp": 6,
+        "fp": 24,
+        "fn": 1,
+        "tn": 54
+      },
+      {
+        "fold_id": 1,
+        "recall": 0.6,
+        "precision": 0.4090909090909091,
+        "f1": 0.4864864864864865,
+        "alert_rate": 0.25882352941176473,
+        "green_npv": 0.9047619047619048,
+        "tp": 9,
+        "fp": 13,
+        "fn": 6,
+        "tn": 57
+      },
+      {
+        "fold_id": 2,
+        "recall": 0.8823529411764706,
+        "precision": 0.5,
+        "f1": 0.6382978723404256,
+        "alert_rate": 0.35714285714285715,
+        "green_npv": 0.9629629629629629,
+        "tp": 15,
+        "fp": 15,
+        "fn": 2,
+        "tn": 52
+      },
+      {
+        "fold_id": 3,
+        "recall": 0.9473684210526315,
+        "precision": 0.5806451612903226,
+        "f1": 0.72,
+        "alert_rate": 0.36904761904761907,
+        "green_npv": 0.9811320754716981,
+        "tp": 18,
+        "fp": 13,
+        "fn": 1,
+        "tn": 52
+      },
+      {
+        "fold_id": 4,
+        "recall": 0.8,
+        "precision": 0.25,
+        "f1": 0.38095238095238093,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629,
+        "tp": 4,
+        "fp": 12,
+        "fn": 1,
+        "tn": 26
+      }
+    ]
+  },
+  "selected": {
+    "weights": {
+      "v7_5": 0.30000000000000004,
+      "v7_1": 0.30000000000000004,
+      "v6_merchant": 0.3999999999999999
+    },
+    "roc_auc": 0.8086253369272237,
+    "pr_auc": 0.4794872639284898,
+    "min_fold_auc": 0.736842105263158,
+    "metrics": {
+      "precision": 0.3923076923076923,
+      "recall": 0.8095238095238095,
+      "f1": 0.5284974093264249,
+      "accuracy": 0.7611548556430446,
+      "balanced_accuracy": 0.7805480682839174,
+      "green_npv": 0.952191235059761,
+      "alert_rate": 0.34120734908136485,
+      "tp": 51,
+      "fp": 79,
+      "fn": 12,
+      "tn": 239,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.40476190476190477,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "recall": 0.8571428571428571,
+          "precision": 0.2,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818
+        },
+        {
+          "fold_id": 1,
+          "recall": 0.6,
+          "precision": 0.4090909090909091,
+          "f1": 0.4864864864864865,
+          "alert_rate": 0.25882352941176473,
+          "green_npv": 0.9047619047619048
+        },
+        {
+          "fold_id": 2,
+          "recall": 0.7647058823529411,
+          "precision": 0.4642857142857143,
+          "f1": 0.5777777777777777,
+          "alert_rate": 0.3333333333333333,
+          "green_npv": 0.9285714285714286
+        },
+        {
+          "fold_id": 3,
+          "recall": 1.0,
+          "precision": 0.5588235294117647,
+          "f1": 0.7169811320754716,
+          "alert_rate": 0.40476190476190477,
+          "green_npv": 1.0
+        },
+        {
+          "fold_id": 4,
+          "recall": 0.8,
+          "precision": 0.25,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629
+        }
+      ]
+    },
+    "details": [
+      {
+        "fold_id": 0,
+        "mode": "v6_1_bootstrap"
+      },
+      {
+        "fold_id": 1,
+        "history_rule": [
+          "market",
+          0.5,
+          "none",
+          1.01
+        ],
+        "history_feasible": true
+      },
+      {
+        "fold_id": 2,
+        "history_rule": [
+          "market",
+          0.5,
+          "none",
+          1.01
+        ],
+        "history_feasible": true
+      },
+      {
+        "fold_id": 3,
+        "history_rule": [
+          "market",
+          0.4,
+          "none",
+          1.01
+        ],
+        "history_feasible": true
+      },
+      {
+        "fold_id": 4,
+        "history_rule": [
+          "market",
+          0.4,
+          "none",
+          1.01
+        ],
+        "history_feasible": true
+      }
+    ],
+    "strict_improvement_over_v7_5": false
+  },
+  "candidate_count": 66,
+  "feasibility_frontier": {
+    "max_precision_at_recall_ge_80": {
+      "precision": 0.3355263157894737,
+      "recall": 0.8095238095238095,
+      "threshold": 0.594
+    },
+    "max_recall_at_precision_ge_80": {
+      "precision": 0.8571428571428571,
+      "recall": 0.09523809523809523,
+      "threshold": 0.972
+    },
+    "best_f1_threshold": {
+      "f1": 0.48484848484848486,
+      "precision": 0.3333333333333333,
+      "recall": 0.8888888888888888,
+      "threshold": 0.558
+    },
+    "precision_and_recall_both_ge_80_exists": false
+  },
+  "adopt_over_v7_5": false,
+  "top_candidates": [
+    {
+      "weights": {
+        "v7_5": 0.30000000000000004,
+        "v7_1": 0.30000000000000004,
+        "v6_merchant": 0.3999999999999999
+      },
+      "roc_auc": 0.8086253369272237,
+      "pr_auc": 0.4794872639284898,
+      "min_fold_auc": 0.736842105263158,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.2,
+        "v7_1": 0.4,
+        "v6_merchant": 0.4
+      },
+      "roc_auc": 0.8077767794748928,
+      "pr_auc": 0.4793129887980361,
+      "min_fold_auc": 0.7421052631578948,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.30000000000000004,
+        "v7_1": 0.2,
+        "v6_merchant": 0.49999999999999994
+      },
+      "roc_auc": 0.8118698213037836,
+      "pr_auc": 0.47928819785332477,
+      "min_fold_auc": 0.7263157894736842,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.4,
+        "v7_1": 0.1,
+        "v6_merchant": 0.5
+      },
+      "roc_auc": 0.8105221124089049,
+      "pr_auc": 0.4784099662753303,
+      "min_fold_auc": 0.736842105263158,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.2,
+        "v7_1": 0.30000000000000004,
+        "v6_merchant": 0.5
+      },
+      "roc_auc": 0.81047219726465,
+      "pr_auc": 0.4769898860028927,
+      "min_fold_auc": 0.7210526315789474,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.5,
+        "v7_1": 0.0,
+        "v6_merchant": 0.5
+      },
+      "roc_auc": 0.8093740640910452,
+      "pr_auc": 0.47675396057244335,
+      "min_fold_auc": 0.7447368421052631,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.4,
+        "v7_1": 0.0,
+        "v6_merchant": 0.6
+      },
+      "roc_auc": 0.8108465608465608,
+      "pr_auc": 0.47648653764757526,
+      "min_fold_auc": 0.718421052631579,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.1,
+        "v7_1": 0.5,
+        "v6_merchant": 0.4
+      },
+      "roc_auc": 0.8045322950983329,
+      "pr_auc": 0.47249331598652017,
+      "min_fold_auc": 0.731578947368421,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "nonstrong",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.1,
+        "v7_1": 0.4,
+        "v6_merchant": 0.5
+      },
+      "roc_auc": 0.806953179594689,
+      "pr_auc": 0.4680337664847514,
+      "min_fold_auc": 0.7210526315789474,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    },
+    {
+      "weights": {
+        "v7_5": 0.30000000000000004,
+        "v7_1": 0.0,
+        "v6_merchant": 0.7
+      },
+      "roc_auc": 0.810072876110612,
+      "pr_auc": 0.46638462545911846,
+      "min_fold_auc": 0.6973684210526316,
+      "metrics": {
+        "precision": 0.3923076923076923,
+        "recall": 0.8095238095238095,
+        "f1": 0.5284974093264249,
+        "accuracy": 0.7611548556430446,
+        "balanced_accuracy": 0.7805480682839174,
+        "green_npv": 0.952191235059761,
+        "alert_rate": 0.34120734908136485,
+        "tp": 51,
+        "fp": 79,
+        "fn": 12,
+        "tn": 239,
+        "worst_fold_recall": 0.6,
+        "max_fold_alert_rate": 0.40476190476190477,
+        "per_fold": [
+          {
+            "fold_id": 0,
+            "recall": 0.8571428571428571,
+            "precision": 0.2,
+            "f1": 0.32432432432432434,
+            "alert_rate": 0.35294117647058826,
+            "green_npv": 0.9818181818181818
+          },
+          {
+            "fold_id": 1,
+            "recall": 0.6,
+            "precision": 0.4090909090909091,
+            "f1": 0.4864864864864865,
+            "alert_rate": 0.25882352941176473,
+            "green_npv": 0.9047619047619048
+          },
+          {
+            "fold_id": 2,
+            "recall": 0.7647058823529411,
+            "precision": 0.4642857142857143,
+            "f1": 0.5777777777777777,
+            "alert_rate": 0.3333333333333333,
+            "green_npv": 0.9285714285714286
+          },
+          {
+            "fold_id": 3,
+            "recall": 1.0,
+            "precision": 0.5588235294117647,
+            "f1": 0.7169811320754716,
+            "alert_rate": 0.40476190476190477,
+            "green_npv": 1.0
+          },
+          {
+            "fold_id": 4,
+            "recall": 0.8,
+            "precision": 0.25,
+            "f1": 0.38095238095238093,
+            "alert_rate": 0.37209302325581395,
+            "green_npv": 0.9629629629629629
+          }
+        ]
+      },
+      "details": [
+        {
+          "fold_id": 0,
+          "mode": "v6_1_bootstrap"
+        },
+        {
+          "fold_id": 1,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 2,
+          "history_rule": [
+            "market",
+            0.5,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 3,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        },
+        {
+          "fold_id": 4,
+          "history_rule": [
+            "market",
+            0.4,
+            "none",
+            1.01
+          ],
+          "history_feasible": true
+        }
+      ],
+      "strict_improvement_over_v7_5": false
+    }
+  ]
+}
