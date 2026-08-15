@@ -28,17 +28,22 @@ jobs:
           pip install -r requirements-training.txt
           pip install xgboost
       - name: Run frozen counterfactual SAMA stress test
+        id: stress_test
+        continue-on-error: true
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
         run: python scripts/stress_test_v3_3_counterfactual_sama.py
       - name: Show evidence
+        if: always()
         run: cat reports/sama_city_v3_3/counterfactual_stress/summary.md
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: sales-sentinel-v3-3-counterfactual-sama
           path: reports/sama_city_v3_3/counterfactual_stress/**
           retention-days: 90
       - name: Persist evidence
+        if: always()
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -46,3 +51,13 @@ jobs:
           git diff --cached --quiet || git commit -m 'test: persist v3.3 counterfactual SAMA evidence'
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Enforce acceptance gate
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          p=pathlib.Path('reports/sama_city_v3_3/counterfactual_stress/report.json')
+          d=json.loads(p.read_text())
+          print('all_acceptance_passed=', d['all_acceptance_passed'])
+          sys.exit(0 if d['all_acceptance_passed'] else 2)
+          PY
