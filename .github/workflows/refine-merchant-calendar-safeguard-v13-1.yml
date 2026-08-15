@@ -1,0 +1,38 @@
+name: Refine Merchant Calendar Safeguard V13.1
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/refine_merchant_calendar_safeguard_v13_1.py'
+      - '.github/workflows/refine-merchant-calendar-safeguard-v13-1.yml'
+
+jobs:
+  refine-v13-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn xgboost catboost
+      - name: Refine V13.1 calendar safeguard
+        run: python scripts/refine_merchant_calendar_safeguard_v13_1.py
+      - name: Show V13.1 summary
+        run: cat reports/merchant_calendar_safeguard_v13_1/development_summary.md
+      - name: Upload V13.1 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-calendar-safeguard-v13-1
+          path: reports/merchant_calendar_safeguard_v13_1/
+      - name: Persist V13.1 evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/merchant_calendar_safeguard_v13_1
+          git diff --cached --quiet || git commit -m "Persist V13.1 calendar safeguard evidence"
+          git push
