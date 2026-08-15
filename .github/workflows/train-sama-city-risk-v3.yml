@@ -25,6 +25,7 @@ jobs:
       - name: Install
         run: |
           pip install -r requirements-training.txt
+          pip install xgboost
       - name: Train v3 with purged multi-regime OOF
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
