@@ -1,0 +1,69 @@
+{
+  "version": "MERCHANT-TOTAL-TRIAGE-4.4-INDEPENDENT-SENSITIVITY-1",
+  "frozen_model": "SALES-SENTINEL-MERCHANT-TOTAL-TRIAGE-4.4",
+  "test_type": "feature-space sensitivity stress on new deterioration patterns; not a real-world accuracy/recall estimate",
+  "control_rows": 12,
+  "scenario_rows": 48,
+  "patterns": {
+    "broad_demand_slowdown": {
+      "n": 12,
+      "features_forced_low": 104,
+      "features_forced_high": 25,
+      "amber_or_red": 2,
+      "alert_rate": 0.16666666666666666,
+      "red": 0,
+      "median_early_ratio_change": -0.01984648579163556,
+      "median_severe_ratio_change": -0.041601943086873316,
+      "mean_early_ratio_change": -0.019033381120768467
+    },
+    "customer_attrition": {
+      "n": 12,
+      "features_forced_low": 50,
+      "features_forced_high": 24,
+      "amber_or_red": 4,
+      "alert_rate": 0.3333333333333333,
+      "red": 0,
+      "median_early_ratio_change": -0.02670641769994586,
+      "median_severe_ratio_change": -0.053424124637993564,
+      "mean_early_ratio_change": -0.026935952992628975
+    },
+    "product_availability_squeeze": {
+      "n": 12,
+      "features_forced_low": 43,
+      "features_forced_high": 24,
+      "amber_or_red": 2,
+      "alert_rate": 0.16666666666666666,
+      "red": 0,
+      "median_early_ratio_change": -0.012548821064734428,
+      "median_severe_ratio_change": -0.02821090654226527,
+      "mean_early_ratio_change": -0.014071413939299624
+    },
+    "external_market_contraction": {
+      "n": 12,
+      "features_forced_low": 35,
+      "features_forced_high": 0,
+      "amber_or_red": 9,
+      "alert_rate": 0.75,
+      "red": 0,
+      "median_early_ratio_change": -0.1130066412606246,
+      "median_severe_ratio_change": -0.12653962806567676,
+      "mean_early_ratio_change": -0.11402773288015755
+    }
+  },
+  "overall": {
+    "alert_rate": 0.3541666666666667,
+    "amber": 17,
+    "red": 0,
+    "green": 31,
+    "median_early_ratio_change": -0.0238107889593816
+  },
+  "acceptance": {
+    "control_repeat_identical": true,
+    "overall_alert_rate_ge_60pct": false,
+    "at_least_3_of_4_patterns_alert_ge_50pct": false,
+    "at_least_3_of_4_patterns_worsen_ratio_ge_2pct": false,
+    "red_remains_disabled_when_unsupported": true
+  },
+  "all_sensitivity_gates_passed": false,
+  "scientific_boundary": "No model fitting, threshold selection, or outcome labels are used here. Feature perturbations test directional sensitivity only. External real merchant validation is still required for accuracy claims."
+}
