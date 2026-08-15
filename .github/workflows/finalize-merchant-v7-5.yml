@@ -1,0 +1,52 @@
+name: Finalize Merchant V7.5
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/finalize_merchant_v7_5.py'
+      - '.github/workflows/finalize-merchant-v7-5.yml'
+      - 'reports/merchant_error_corrector_v7_5/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize-v7-5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost==3.0.2 catboost==1.2.8
+      - name: Finalize V7.5 and run robustness checks
+        run: python scripts/finalize_merchant_v7_5.py
+      - name: Show final V7.5 summary
+        run: cat reports/merchant_v7_5_final/finalization_summary.md
+      - name: Upload frozen V7.5 candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-5-frozen
+          path: |
+            reports/merchant_v7_5_final/
+            models/merchant_v7_5_final/
+      - name: Persist final evidence and model
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_v7_5_final models/merchant_v7_5_final
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Freeze Sales Sentinel V7.5 development candidate'
+            git push
+          fi
