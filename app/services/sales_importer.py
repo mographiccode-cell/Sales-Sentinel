@@ -118,6 +118,16 @@ INSERT OR IGNORE INTO sales (
 """)
 
 
+def _sqlite_bindable(item: dict) -> dict:
+    """Convert values used by raw ``text()`` SQL into DBAPI-safe primitives.
+
+    ORM Numeric columns normally adapt Decimal for SQLite, but a free-form text
+    statement does not have those type bindings. Keep parsing/accounting in
+    Decimal and convert only at the final raw INSERT boundary.
+    """
+    return {key: (float(value) if isinstance(value, Decimal) else value) for key, value in item.items()}
+
+
 def ingest_csv(db, path: Path, import_job_id: int, mode: str, chunk_size: int = 2000) -> dict:
     branch, category, aggregate = _get_or_create_reference_data(db)
     product_cache: dict[str, int] = {}
@@ -129,7 +139,8 @@ def ingest_csv(db, path: Path, import_job_id: int, mode: str, chunk_size: int = 
     def flush():
         nonlocal params
         if params:
-            db.execute(_INSERT, params); params = []
+            db.execute(_INSERT, [_sqlite_bindable(item) for item in params])
+            params = []
 
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         for line, row in enumerate(csv.DictReader(stream), start=2):
