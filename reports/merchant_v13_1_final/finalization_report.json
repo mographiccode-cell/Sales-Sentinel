@@ -1,0 +1,409 @@
+{
+  "version": "SALES-SENTINEL-V13.1-FROZEN-DEVELOPMENT-CANDIDATE",
+  "status": "DEVELOPMENT_FROZEN_PENDING_FRESH_EXTERNAL_VALIDATION",
+  "scientific_boundary": "V13.1 is the best development OOF decision policy found, but its incremental gain over V11 is concentrated in one outer fold and follows extensive reuse of the same 381 OOF rows. The frozen metrics are development evidence, not independent validation. No additional hyperparameter search on these OOF rows should be used to claim further validation gains.",
+  "selected_config": {
+    "C": 0.3,
+    "tp_quantile": 0.0,
+    "margin": 0.005,
+    "scope": "market",
+    "mean_guard": 0.45,
+    "max_guard": 0.85,
+    "min_guard": 0.25
+  },
+  "v11_reference": {
+    "precision": 0.4262295081967213,
+    "recall": 0.8253968253968254,
+    "f1": 0.5621621621621622,
+    "accuracy": 0.7874015748031497,
+    "balanced_accuracy": 0.8026355196166517,
+    "alert_rate": 0.32020997375328086,
+    "green_npv": 0.9575289575289575,
+    "tp": 52,
+    "fp": 70,
+    "fn": 11,
+    "tn": 248,
+    "worst_fold_recall": 0.6,
+    "max_fold_alert_rate": 0.37209302325581395,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "recall": 0.8571428571428571,
+        "precision": 0.2,
+        "f1": 0.32432432432432434,
+        "alert_rate": 0.35294117647058826,
+        "green_npv": 0.9818181818181818,
+        "tp": 6,
+        "fp": 24,
+        "fn": 1,
+        "tn": 54
+      },
+      {
+        "fold_id": 1,
+        "recall": 0.6,
+        "precision": 0.45,
+        "f1": 0.5142857142857142,
+        "alert_rate": 0.23529411764705882,
+        "green_npv": 0.9076923076923077,
+        "tp": 9,
+        "fp": 11,
+        "fn": 6,
+        "tn": 59
+      },
+      {
+        "fold_id": 2,
+        "recall": 0.8823529411764706,
+        "precision": 0.5172413793103449,
+        "f1": 0.6521739130434783,
+        "alert_rate": 0.34523809523809523,
+        "green_npv": 0.9636363636363636,
+        "tp": 15,
+        "fp": 14,
+        "fn": 2,
+        "tn": 53
+      },
+      {
+        "fold_id": 3,
+        "recall": 0.9473684210526315,
+        "precision": 0.6666666666666666,
+        "f1": 0.782608695652174,
+        "alert_rate": 0.32142857142857145,
+        "green_npv": 0.9824561403508771,
+        "tp": 18,
+        "fp": 9,
+        "fn": 1,
+        "tn": 56
+      },
+      {
+        "fold_id": 4,
+        "recall": 0.8,
+        "precision": 0.25,
+        "f1": 0.38095238095238093,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629,
+        "tp": 4,
+        "fp": 12,
+        "fn": 1,
+        "tn": 26
+      }
+    ]
+  },
+  "v13_1_primary_metrics": {
+    "precision": 0.4444444444444444,
+    "recall": 0.8253968253968254,
+    "f1": 0.5777777777777777,
+    "accuracy": 0.800524934383202,
+    "balanced_accuracy": 0.8104971548367774,
+    "alert_rate": 0.30708661417322836,
+    "green_npv": 0.9583333333333334,
+    "tp": 52,
+    "fp": 65,
+    "fn": 11,
+    "tn": 253,
+    "worst_fold_recall": 0.6,
+    "max_fold_alert_rate": 0.37209302325581395,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "recall": 0.8571428571428571,
+        "precision": 0.2,
+        "f1": 0.32432432432432434,
+        "alert_rate": 0.35294117647058826,
+        "green_npv": 0.9818181818181818,
+        "tp": 6,
+        "fp": 24,
+        "fn": 1,
+        "tn": 54
+      },
+      {
+        "fold_id": 1,
+        "recall": 0.6,
+        "precision": 0.45,
+        "f1": 0.5142857142857142,
+        "alert_rate": 0.23529411764705882,
+        "green_npv": 0.9076923076923077,
+        "tp": 9,
+        "fp": 11,
+        "fn": 6,
+        "tn": 59
+      },
+      {
+        "fold_id": 2,
+        "recall": 0.8823529411764706,
+        "precision": 0.5172413793103449,
+        "f1": 0.6521739130434783,
+        "alert_rate": 0.34523809523809523,
+        "green_npv": 0.9636363636363636,
+        "tp": 15,
+        "fp": 14,
+        "fn": 2,
+        "tn": 53
+      },
+      {
+        "fold_id": 3,
+        "recall": 0.9473684210526315,
+        "precision": 0.8181818181818182,
+        "f1": 0.8780487804878049,
+        "alert_rate": 0.2619047619047619,
+        "green_npv": 0.9838709677419355,
+        "tp": 18,
+        "fp": 4,
+        "fn": 1,
+        "tn": 61
+      },
+      {
+        "fold_id": 4,
+        "recall": 0.8,
+        "precision": 0.25,
+        "f1": 0.38095238095238093,
+        "alert_rate": 0.37209302325581395,
+        "green_npv": 0.9629629629629629,
+        "tp": 4,
+        "fp": 12,
+        "fn": 1,
+        "tn": 26
+      }
+    ]
+  },
+  "calendar_ablation": {
+    "with_calendar": {
+      "precision": 0.4444444444444444,
+      "recall": 0.8253968253968254,
+      "f1": 0.5777777777777777,
+      "accuracy": 0.800524934383202,
+      "balanced_accuracy": 0.8104971548367774,
+      "alert_rate": 0.30708661417322836,
+      "green_npv": 0.9583333333333334,
+      "tp": 52,
+      "fp": 65,
+      "fn": 11,
+      "tn": 253,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.37209302325581395,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "recall": 0.8571428571428571,
+          "precision": 0.2,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818,
+          "tp": 6,
+          "fp": 24,
+          "fn": 1,
+          "tn": 54
+        },
+        {
+          "fold_id": 1,
+          "recall": 0.6,
+          "precision": 0.45,
+          "f1": 0.5142857142857142,
+          "alert_rate": 0.23529411764705882,
+          "green_npv": 0.9076923076923077,
+          "tp": 9,
+          "fp": 11,
+          "fn": 6,
+          "tn": 59
+        },
+        {
+          "fold_id": 2,
+          "recall": 0.8823529411764706,
+          "precision": 0.5172413793103449,
+          "f1": 0.6521739130434783,
+          "alert_rate": 0.34523809523809523,
+          "green_npv": 0.9636363636363636,
+          "tp": 15,
+          "fp": 14,
+          "fn": 2,
+          "tn": 53
+        },
+        {
+          "fold_id": 3,
+          "recall": 0.9473684210526315,
+          "precision": 0.8181818181818182,
+          "f1": 0.8780487804878049,
+          "alert_rate": 0.2619047619047619,
+          "green_npv": 0.9838709677419355,
+          "tp": 18,
+          "fp": 4,
+          "fn": 1,
+          "tn": 61
+        },
+        {
+          "fold_id": 4,
+          "recall": 0.8,
+          "precision": 0.25,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629,
+          "tp": 4,
+          "fp": 12,
+          "fn": 1,
+          "tn": 26
+        }
+      ]
+    },
+    "same_config_without_calendar": {
+      "precision": 0.4297520661157025,
+      "recall": 0.8253968253968254,
+      "f1": 0.5652173913043478,
+      "accuracy": 0.7900262467191601,
+      "balanced_accuracy": 0.8042078466606768,
+      "alert_rate": 0.31758530183727035,
+      "green_npv": 0.9576923076923077,
+      "tp": 52,
+      "fp": 69,
+      "fn": 11,
+      "tn": 249,
+      "worst_fold_recall": 0.6,
+      "max_fold_alert_rate": 0.37209302325581395,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "recall": 0.8571428571428571,
+          "precision": 0.2,
+          "f1": 0.32432432432432434,
+          "alert_rate": 0.35294117647058826,
+          "green_npv": 0.9818181818181818,
+          "tp": 6,
+          "fp": 24,
+          "fn": 1,
+          "tn": 54
+        },
+        {
+          "fold_id": 1,
+          "recall": 0.6,
+          "precision": 0.45,
+          "f1": 0.5142857142857142,
+          "alert_rate": 0.23529411764705882,
+          "green_npv": 0.9076923076923077,
+          "tp": 9,
+          "fp": 11,
+          "fn": 6,
+          "tn": 59
+        },
+        {
+          "fold_id": 2,
+          "recall": 0.8823529411764706,
+          "precision": 0.5172413793103449,
+          "f1": 0.6521739130434783,
+          "alert_rate": 0.34523809523809523,
+          "green_npv": 0.9636363636363636,
+          "tp": 15,
+          "fp": 14,
+          "fn": 2,
+          "tn": 53
+        },
+        {
+          "fold_id": 3,
+          "recall": 0.9473684210526315,
+          "precision": 0.6923076923076923,
+          "f1": 0.8,
+          "alert_rate": 0.30952380952380953,
+          "green_npv": 0.9827586206896551,
+          "tp": 18,
+          "fp": 8,
+          "fn": 1,
+          "tn": 57
+        },
+        {
+          "fold_id": 4,
+          "recall": 0.8,
+          "precision": 0.25,
+          "f1": 0.38095238095238093,
+          "alert_rate": 0.37209302325581395,
+          "green_npv": 0.9629629629629629,
+          "tp": 4,
+          "fp": 12,
+          "fn": 1,
+          "tn": 26
+        }
+      ]
+    },
+    "calendar_fp_delta": 4,
+    "calendar_tp_delta": 0
+  },
+  "fold_delta": [
+    {
+      "fold_id": 0,
+      "fp_before": 24,
+      "fp_after": 24,
+      "fp_reduction": 0,
+      "tp_before": 6,
+      "tp_after": 6,
+      "recall_before": 0.8571428571428571,
+      "recall_after": 0.8571428571428571,
+      "precision_before": 0.2,
+      "precision_after": 0.2
+    },
+    {
+      "fold_id": 1,
+      "fp_before": 11,
+      "fp_after": 11,
+      "fp_reduction": 0,
+      "tp_before": 9,
+      "tp_after": 9,
+      "recall_before": 0.6,
+      "recall_after": 0.6,
+      "precision_before": 0.45,
+      "precision_after": 0.45
+    },
+    {
+      "fold_id": 2,
+      "fp_before": 14,
+      "fp_after": 14,
+      "fp_reduction": 0,
+      "tp_before": 15,
+      "tp_after": 15,
+      "recall_before": 0.8823529411764706,
+      "recall_after": 0.8823529411764706,
+      "precision_before": 0.5172413793103449,
+      "precision_after": 0.5172413793103449
+    },
+    {
+      "fold_id": 3,
+      "fp_before": 9,
+      "fp_after": 4,
+      "fp_reduction": 5,
+      "tp_before": 18,
+      "tp_after": 18,
+      "recall_before": 0.9473684210526315,
+      "recall_after": 0.9473684210526315,
+      "precision_before": 0.6666666666666666,
+      "precision_after": 0.8181818181818182
+    },
+    {
+      "fold_id": 4,
+      "fp_before": 12,
+      "fp_after": 12,
+      "fp_reduction": 0,
+      "tp_before": 4,
+      "tp_after": 4,
+      "recall_before": 0.8,
+      "recall_after": 0.8,
+      "precision_before": 0.25,
+      "precision_after": 0.25
+    }
+  ],
+  "fold_robustness": {
+    "folds_with_fp_improvement": 1,
+    "folds_with_tp_degradation": 0,
+    "total_folds": 5
+  },
+  "changed_alerts": {
+    "count": 5,
+    "all_removed_are_true_negatives": true,
+    "calendar_special_share": 0.0
+  },
+  "neighbor_robustness": {
+    "tested": 243,
+    "pass_v11_contract": 189,
+    "pass_v11_contract_rate": 0.7777777777777778,
+    "selected_or_better": 108,
+    "selected_or_better_rate": 0.4444444444444444,
+    "median_fp": 65.0,
+    "min_fp_with_tp52": 64
+  },
+  "external_validation_pending": true,
+  "red_supported": false
+}
