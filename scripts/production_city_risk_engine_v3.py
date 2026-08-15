@@ -11,8 +11,8 @@ import pandas as pd
 import train_sama_city_risk_v3 as v3
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL = ROOT / 'models' / 'sama_city_v3' / 'city_risk_v3.joblib'
-ENGINE_VERSION = 'SALES-SENTINEL-CITY-RISK-ENGINE-3.0'
+MODEL = ROOT / 'models' / 'sama_city_v3_3' / 'city_risk_v3_3.joblib'
+ENGINE_VERSION = 'SALES-SENTINEL-CITY-RISK-ENGINE-3.3'
 EXPECTED_CITIES = {'ABHA','BURAIDAH','DAMMAM','HAIL','JEDDAH','KHOBAR','MADINA','MAKKAH','OTHER','RIYADH','TABOUK'}
 
 
@@ -20,9 +20,10 @@ def ood_fraction(row: pd.Series, profile: dict[str, dict[str, float]]) -> float:
     bad = 0
     total = 0
     for c, p in profile.items():
-        if c not in row.index or not np.isfinite(float(row[c])):
-            bad += 1; total += 1; continue
         total += 1
+        if c not in row.index or not np.isfinite(float(row[c])):
+            bad += 1
+            continue
         x = float(row[c])
         if x < float(p['low']) or x > float(p['high']):
             bad += 1
@@ -31,10 +32,12 @@ def ood_fraction(row: pd.Series, profile: dict[str, dict[str, float]]) -> float:
 
 def predict_latest(panel: pd.DataFrame, model_path: Path = MODEL) -> dict[str, Any]:
     if not model_path.exists():
-        raise RuntimeError(f'v3 model artifact missing: {model_path}')
+        raise RuntimeError(f'v3.3 model artifact missing: {model_path}')
     artifact = joblib.load(model_path)
     src = panel.copy()
     src['week_start'] = pd.to_datetime(src['week_start'])
+    if 'week_end' in src.columns:
+        src['week_end'] = pd.to_datetime(src['week_end'])
     required = {'week_start','city','value_thousand_sar','transaction_count_thousand'}
     missing_source = required - set(src.columns)
     if missing_source:
@@ -44,10 +47,11 @@ def predict_latest(panel: pd.DataFrame, model_path: Path = MODEL) -> dict[str, A
     latest = pd.Timestamp(src.week_start.max())
     latest_src = src[src.week_start.eq(latest)]
     actual_cities = set(latest_src.city.astype(str))
-    if actual_cities != EXPECTED_CITIES:
+    expected_cities = set(artifact.get('expected_cities', EXPECTED_CITIES))
+    if actual_cities != expected_cities:
         return {
             'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':'CITY_CONTRACT_MISMATCH',
-            'expected_cities':sorted(EXPECTED_CITIES),'actual_cities':sorted(actual_cities),
+            'expected_cities':sorted(expected_cities),'actual_cities':sorted(actual_cities),
         }
     if src.groupby('city').size().min() < 104:
         return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':'INSUFFICIENT_HISTORY_LT_104_WEEKS'}
@@ -59,8 +63,8 @@ def predict_latest(panel: pd.DataFrame, model_path: Path = MODEL) -> dict[str, A
     if missing_features:
         return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':f'FEATURE_SCHEMA_MISSING:{missing_features}'}
     mask = d.week_start.eq(latest)
-    if int(mask.sum()) != 11:
-        return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':f'LATEST_FEATURE_ROWS_{int(mask.sum())}_NOT_11'}
+    if int(mask.sum()) != len(expected_cities):
+        return {'engine_version':ENGINE_VERSION,'status':'NO_DECISION','state':'AMBER','reason':f'LATEST_FEATURE_ROWS_{int(mask.sum())}_NOT_{len(expected_cities)}'}
     xx = X.loc[mask, artifact['features']].reset_index(drop=True)
     mm = d.loc[mask, ['week_start','city']].reset_index(drop=True)
     pp = P.loc[mask].reset_index(drop=True)
@@ -74,37 +78,52 @@ def predict_latest(panel: pd.DataFrame, model_path: Path = MODEL) -> dict[str, A
     score = matrix.mean(axis=1)
     agreement = (matrix >= 0.50).sum(axis=1)
 
+    watch_threshold = float(artifact['watch_threshold'])
+    fallback_threshold = float(artifact['high_precursor_fallback_threshold'])
+    high_precursor_count = int(artifact['high_precursor_count'])
+    red_threshold = float(artifact['red_threshold'])
+    min_precursor_red = int(artifact['min_precursor_red'])
+
     out = []
     for i, row in mm.iterrows():
         ood = ood_fraction(xx.iloc[i], artifact['ood_profile'])
         precursor_names = [c for c in pp.columns if bool(pp.iloc[i][c])]
-        red_candidate = (
-            float(score[i]) >= float(artifact['red_threshold']) and
-            int(agreement[i]) >= 2 and int(pcount.iloc[i]) >= int(artifact['min_precursor_red'])
-        )
-        alert_candidate = red_candidate or float(score[i]) >= float(artifact['watch_threshold']) or int(pcount.iloc[i]) >= 2
-        reason = 'MODEL_AND_PRECURSOR_CONSENSUS'
+        n_precursors = int(pcount.iloc[i])
+        s = float(score[i])
+        red_candidate = s >= red_threshold and int(agreement[i]) >= 2 and n_precursors >= min_precursor_red
+        fallback_candidate = n_precursors >= high_precursor_count and s >= fallback_threshold
+        alert_candidate = red_candidate or s >= watch_threshold or fallback_candidate
+
         if ood > float(artifact['ood_max_fraction']):
             state = 'AMBER'; reason = 'OOD_ABSTAIN'
         elif red_candidate:
-            state = 'RED'
+            state = 'RED'; reason = 'MODEL_AND_PRECURSOR_CONSENSUS'
+        elif fallback_candidate:
+            state = 'AMBER'; reason = 'HIGH_PRECURSOR_FALLBACK'
         elif alert_candidate:
-            state = 'AMBER'; reason = 'EARLY_WARNING'
+            state = 'AMBER'; reason = 'MODEL_EARLY_WARNING'
         else:
             state = 'GREEN'; reason = 'LOW_OBSERVED_RISK'
+
         out.append({
             'week_start': str(pd.Timestamp(row.week_start).date()), 'city': row.city,
-            'risk_score': float(score[i]), 'model_scores': {n:float(model_scores[n][i]) for n in names},
-            'model_agreement_ge_0_5': int(agreement[i]), 'precursor_count': int(pcount.iloc[i]),
+            'risk_score': s, 'model_scores': {n:float(model_scores[n][i]) for n in names},
+            'model_agreement_ge_0_5': int(agreement[i]), 'precursor_count': n_precursors,
             'precursors': precursor_names, 'ood_fraction': ood, 'state': state, 'reason': reason,
         })
     return {
         'engine_version': ENGINE_VERSION, 'model_version': artifact['version'], 'status':'OK',
         'latest_week':str(latest.date()), 'predictions':out,
+        'policy':{
+            'watch_threshold':watch_threshold,
+            'high_precursor_fallback_threshold':fallback_threshold,
+            'high_precursor_count':high_precursor_count,
+            'red_threshold':red_threshold,
+        },
         'safety':{
             'future_label_used':False,'city_identity_feature_used':False,'target_prevalence_feature_used':False,
             'ood_fail_closed_to_amber':True,'red_requires_model_agreement':True,'red_requires_observed_precursors':True,
-            'surprise_shocks_claimed_predictable':False,
+            'surprise_shocks_claimed_predictable':False,'train_serving_policy_version':'v3.3',
         },
     }
 
