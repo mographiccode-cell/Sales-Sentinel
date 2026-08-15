@@ -1,1 +1,58 @@
-{% extends 'base.html' %}{% block content %}<section class="page-heading"><div><span class="eyebrow">MODEL RUN #{{ run.id }}</span><h1>{{ t('forecasts') }}</h1><p>{{ run.model_name }} · {{ run.sample_size }} {{ t('days') }}</p></div><a class="btn" href="{{ url_for('reports.download',run_id=run.id,fmt='csv') }}">CSV</a></section>{% if alert %}<div class="notice error"><strong>{{ alert.title_ar if locale=='ar' else alert.title_en }}</strong><div>{{ alert.message_ar if locale=='ar' else alert.message_en }}</div></div>{% endif %}<div class="grid-2"><article class="panel"><h2>{{ 'التوقع اليومي' if locale=='ar' else 'Daily forecast' }}</h2><table><tr><th>{{ 'التاريخ' if locale=='ar' else 'Date' }}</th><th>{{ 'المتوقع' if locale=='ar' else 'Forecast' }}</th><th>{{ 'النطاق' if locale=='ar' else 'Interval' }}</th><th>{{ 'احتمال الانخفاض' if locale=='ar' else 'Decline probability' }}</th></tr>{% for f in forecasts %}<tr><td>{{ date_value(f.forecast_date) }}</td><td>{{ money(f.predicted_sales) }}</td><td>{{ money(f.lower_bound) }} — {{ money(f.upper_bound) }}</td><td>{{ '%.0f%%'|format(f.decline_probability*100) }}</td></tr>{% endfor %}</table></article><article><div class="panel"><h2>{{ t('factors') }}</h2>{% for f in factors %}<p><strong>{{ f.factor_name_ar if locale=='ar' else f.factor_name_en }}</strong> <span class="badge">{{ '%.2f'|format(f.impact_value) }}</span></p>{% else %}<p>—</p>{% endfor %}</div><div class="panel"><h2>{{ t('recommendations') }}</h2>{% for r in recommendations %}<p>{{ r.text_ar if locale=='ar' else r.text_en }}</p>{% else %}<p>—</p>{% endfor %}<p class="footer-note">{{ t('decision_support_notice') }}</p></div></article></div>{% endblock %}
+{% extends 'base.html' %}
+{% block content %}
+{% set metrics = run.metrics_json or {} %}
+{% set decline = metrics.get('decline_engine', {}) %}
+{% set point = metrics.get('point_forecast_engine', {}) %}
+<section class="page-heading">
+  <div>
+    <span class="eyebrow">MODEL RUN #{{ run.id }}</span>
+    <h1>{{ t('forecasts') }}</h1>
+    <p>{{ run.model_name }} · {{ run.model_version }} · {{ run.sample_size }} {{ t('days') }}</p>
+  </div>
+  <a class="btn" href="{{ url_for('reports.download',run_id=run.id,fmt='csv') }}">CSV</a>
+</section>
+
+{% if decline.get('available') %}
+<div class="grid-2">
+  <article class="panel">
+    <span class="eyebrow">SALES SENTINEL V18</span>
+    <h2>{{ 'محرك خطر الانخفاض' if locale=='ar' else 'Decline risk engine' }}</h2>
+    <p><strong>{{ decline.get('model_version') }}</strong></p>
+    <p>{{ 'درجة الخطر الحالية' if locale=='ar' else 'Current risk score' }}: <span class="badge">{{ '%.1f%%'|format(decline.get('score',0)*100) }}</span></p>
+    <p>{{ 'سياسة القرار' if locale=='ar' else 'Decision policy' }}: <strong>{{ decline.get('policy_mode') }}</strong></p>
+    <p>{{ 'الميزات / الأشجار' if locale=='ar' else 'Features / trees' }}: {{ decline.get('feature_count') }} / {{ decline.get('tree_count') }}</p>
+    <p>{{ 'تاريخ المعاملات' if locale=='ar' else 'Transaction history' }}: {{ decline.get('history_days') }} {{ t('days') }}</p>
+    {% if decline.get('risk_percentile') is not none %}<p>{{ 'رتبة الخطر داخل تاريخ المتجر' if locale=='ar' else 'Risk percentile within merchant history' }}: {{ '%.1f%%'|format(decline.get('risk_percentile')*100) }}</p>{% endif %}
+    <p class="footer-note">{{ 'قناة RED الحرجة معطلة حتى تتوفر أدلة خارجية كافية.' if locale=='ar' else 'The RED/critical channel remains disabled pending sufficient external evidence.' }}</p>
+  </article>
+  <article class="panel">
+    <span class="eyebrow">POINT FORECAST</span>
+    <h2>{{ 'محرك قيمة المبيعات' if locale=='ar' else 'Sales value forecast engine' }}</h2>
+    <p><strong>{{ point.get('name','—') }}</strong> · {{ point.get('version','—') }}</p>
+    <p>{{ 'هذا المحرك يحسب قيمة المبيعات المتوقعة والنطاق فقط. قرار خطر الانخفاض لمدة 7 أيام يأتي من V18.' if locale=='ar' else 'This engine supplies predicted sales values and intervals only. The 7-day decline-risk decision comes from V18.' }}</p>
+  </article>
+</div>
+{% else %}
+<div class="notice">
+  <strong>{{ 'وضع التنبؤ المبسط' if locale=='ar' else 'Minimal forecasting mode' }}</strong>
+  <div>{{ decline.get('reason','V18 unavailable') }}</div>
+  <div>{{ 'للتشغيل الكامل ارفع معاملات تحتوي الفاتورة والعميل والمنتج لمدة 56 يومًا على الأقل.' if locale=='ar' else 'For full V18 inference, import at least 56 days of transactions with invoice, customer, and product identifiers.' }}</div>
+</div>
+{% endif %}
+
+{% if alert %}<div class="notice error"><strong>{{ alert.title_ar if locale=='ar' else alert.title_en }}</strong><div>{{ alert.message_ar if locale=='ar' else alert.message_en }}</div></div>{% endif %}
+
+<div class="grid-2">
+  <article class="panel">
+    <h2>{{ 'التوقع اليومي' if locale=='ar' else 'Daily forecast' }}</h2>
+    <table>
+      <tr><th>{{ 'التاريخ' if locale=='ar' else 'Date' }}</th><th>{{ 'المتوقع' if locale=='ar' else 'Forecast' }}</th><th>{{ 'النطاق' if locale=='ar' else 'Interval' }}</th><th>{{ 'خطر الانخفاض 7 أيام' if locale=='ar' and decline.get('available') else ('7-day decline risk' if decline.get('available') else ('احتمال الانخفاض' if locale=='ar' else 'Decline probability')) }}</th></tr>
+      {% for f in forecasts %}<tr><td>{{ date_value(f.forecast_date) }}</td><td>{{ money(f.predicted_sales) }}</td><td>{{ money(f.lower_bound) }} — {{ money(f.upper_bound) }}</td><td>{{ '%.0f%%'|format(f.decline_probability*100) }}</td></tr>{% endfor %}
+    </table>
+  </article>
+  <article>
+    <div class="panel"><h2>{{ t('factors') }}</h2>{% for f in factors %}<p><strong>{{ f.factor_name_ar if locale=='ar' else f.factor_name_en }}</strong> <span class="badge">{{ '%.2f'|format(f.impact_value) }}</span></p>{% else %}<p>—</p>{% endfor %}</div>
+    <div class="panel"><h2>{{ t('recommendations') }}</h2>{% for r in recommendations %}<p>{{ r.text_ar if locale=='ar' else r.text_en }}</p>{% else %}<p>—</p>{% endfor %}<p class="footer-note">{{ t('decision_support_notice') }}</p></div>
+  </article>
+</div>
+{% endblock %}
