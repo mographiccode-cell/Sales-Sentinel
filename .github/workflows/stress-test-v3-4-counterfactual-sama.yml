@@ -1,0 +1,64 @@
+name: Stress Test v3.4 Counterfactual SAMA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/stress_test_v3_4_counterfactual_sama.py'
+      - 'scripts/production_city_risk_engine_v3_4.py'
+      - '.github/workflows/stress-test-v3-4-counterfactual-sama.yml'
+      - 'models/sama_city_v3_4/**'
+
+permissions:
+  contents: write
+
+jobs:
+  stress:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Run frozen v3.4 counterfactual stress
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/stress_test_v3_4_counterfactual_sama.py
+      - name: Show evidence
+        if: always()
+        run: |
+          test -f reports/sama_city_v3_4/counterfactual_stress/summary.md && cat reports/sama_city_v3_4/counterfactual_stress/summary.md || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sales-sentinel-v3-4-counterfactual-sama
+          path: reports/sama_city_v3_4/counterfactual_stress/**
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist evidence
+        if: always()
+        run: |
+          if [ -d reports/sama_city_v3_4/counterfactual_stress ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add reports/sama_city_v3_4/counterfactual_stress
+            git diff --cached --quiet || git commit -m 'test: persist v3.4 counterfactual SAMA evidence'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Enforce acceptance gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/sama_city_v3_4/counterfactual_stress/report.json')
+          d=json.loads(p.read_text())
+          assert d['all_acceptance_passed'], d['acceptance']
+          PY
