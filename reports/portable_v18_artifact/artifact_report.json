@@ -1,0 +1,14 @@
+{
+  "version": "SALES-SENTINEL-V18-PORTABLE-EXTRATREES-RUNTIME",
+  "artifact": "models/sales_sentinel_portable_v18.json.gz",
+  "sha256": "65e78860280ed9239f97176e9513f9c9803eede980355ac84983c07fe896fb7f",
+  "compressed_bytes": 497078,
+  "uncompressed_json_bytes": 1637249,
+  "training_rows": 541,
+  "features": 96,
+  "trees": 1000,
+  "pure_python_parity_max_abs_error": 4.440892098500626e-16,
+  "static_threshold": 0.2419221254280302,
+  "alert_budget": 0.4461942257217848,
+  "red_supported": false
+}
