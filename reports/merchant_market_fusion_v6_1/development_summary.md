@@ -4,19 +4,19 @@
 - Merchant rows: **541**
 - OOF ROC-AUC: **75.83%**
 - OOF PR-AUC: **38.73%**
-- Precision: **31.14%**
-- Recall: **82.54%**
-- F1: **45.22%**
-- GREEN NPV: **94.86%**
-- Alert rate: **43.83%**
-- TP / FP / FN / TN: **52 / 115 / 11 / 203**
-- Worst-fold recall: **40.00%**
-- Max fold alert rate: **67.44%**
-- False positives removed vs V6: **11**
-- TP change vs V6: **-3**
-- Precision delta vs V6: **+0.75%**
-- Recall delta vs V6: **-4.76%**
-- F1 delta vs V6: **+0.14%**
-- Alert-rate delta vs V6: **-3.67%**
+- Precision: **29.65%**
+- Recall: **80.95%**
+- F1: **43.40%**
+- GREEN NPV: **94.26%**
+- Alert rate: **45.14%**
+- TP / FP / FN / TN: **51 / 121 / 12 / 197**
+- Worst-fold recall: **46.67%**
+- Max fold alert rate: **60.47%**
+- False positives removed vs V6: **5**
+- TP change vs V6: **-4**
+- Precision delta vs V6: **-0.74%**
+- Recall delta vs V6: **-6.35%**
+- F1 delta vs V6: **-1.68%**
+- Alert-rate delta vs V6: **-2.36%**
 - RED supported: **False**
 - Development gates: **False**
