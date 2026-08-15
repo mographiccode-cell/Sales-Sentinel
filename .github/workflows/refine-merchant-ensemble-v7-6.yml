@@ -1,0 +1,48 @@
+name: Refine Merchant Ensemble V7.6
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refine_merchant_ensemble_v7_6.py'
+      - '.github/workflows/refine-merchant-ensemble-v7-6.yml'
+      - 'reports/merchant_error_corrector_v7_5/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refine-v7-6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements-training.txt
+      - name: Refine V7.6 ensemble and feasibility frontier
+        run: python scripts/refine_merchant_ensemble_v7_6.py
+      - name: Show V7.6 summary
+        run: cat reports/merchant_ensemble_v7_6/development_summary.md
+      - name: Upload V7.6 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-6-evidence
+          path: reports/merchant_ensemble_v7_6/
+      - name: Persist V7.6 evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_ensemble_v7_6
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Persist Sales Sentinel V7.6 ensemble evidence'
+            git push
+          fi
