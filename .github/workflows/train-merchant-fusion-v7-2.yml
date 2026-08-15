@@ -26,7 +26,9 @@ jobs:
           python-version: '3.11'
           cache: pip
       - name: Install dependencies
-        run: pip install -r requirements-training.txt
+        run: |
+          pip install -r requirements-training.txt
+          pip install 'xgboost>=2.1,<4'
       - name: Evaluate V7.2 constrained fusion
         run: python scripts/train_merchant_fusion_v7_2.py
       - name: Show V7.2 summary
