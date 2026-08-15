@@ -1,0 +1,66 @@
+name: Train Merchant + SAMA Fusion v6
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_merchant_market_fusion_v6.py'
+      - '.github/workflows/train-merchant-market-fusion-v6.yml'
+      - 'scripts/train_merchant_total_triage_v5.py'
+      - 'scripts/train_sama_city_risk_v3.py'
+      - 'data/merchant_v4_3/merchant_total_feature_panel_v4_3.csv'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-training.txt
+      - name: Train v6
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/train_merchant_market_fusion_v6.py
+      - name: Show evidence
+        if: always()
+        run: |
+          test -f reports/merchant_market_fusion_v6/development_summary.md && cat reports/merchant_market_fusion_v6/development_summary.md || true
+          test -f reports/merchant_market_fusion_v6/development_report.json && cat reports/merchant_market_fusion_v6/development_report.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sales-sentinel-merchant-market-fusion-v6
+          path: |
+            reports/merchant_market_fusion_v6/**
+            models/merchant_market_fusion_v6/**
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist evidence/model
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_market_fusion_v6 models/merchant_market_fusion_v6 2>/dev/null || true
+          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel merchant + SAMA fusion v6 evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Enforce development gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('reports/merchant_market_fusion_v6/development_report.json')
+          assert p.exists(), 'v6 development report missing'
+          d=json.loads(p.read_text())
+          assert d.get('all_development_gates_passed') is True, json.dumps(d.get('gates',{}),indent=2)
+          PY
