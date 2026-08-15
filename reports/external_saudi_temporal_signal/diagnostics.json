@@ -1,0 +1,140 @@
+{
+  "rows": 49998,
+  "days": 1461,
+  "daily_sales_autocorrelation": {
+    "1": 0.018580253336919105,
+    "2": 0.009190590245600063,
+    "3": 0.02741032782748057,
+    "7": -0.033384953728379206,
+    "14": -0.0009023264437874114,
+    "28": -0.035687887787514125,
+    "56": -0.04512287220808028
+  },
+  "daily_row_count_autocorrelation": {
+    "1": -0.002147253715131853,
+    "7": -0.00392035029726469,
+    "14": 0.007868651924534039,
+    "28": -0.018240425347763153
+  },
+  "variance_explained_by_weekday": 0.001802538109768875,
+  "variance_explained_by_month": 0.012563356564333201,
+  "variance_explained_by_year": 0.0015539899204614432,
+  "simple_recent7_vs28_baseline": {
+    "roc_auc": 0.4754859507313319,
+    "pr_auc": 0.08162546804623251,
+    "positives": 128,
+    "rows": 1427
+  },
+  "per_year": {
+    "2020": {
+      "rows": 339,
+      "positive_rate": 0.10619469026548672,
+      "sales_mean": 66952.85545722714,
+      "sales_std": 18398.14836064617,
+      "sales_cv": 0.2747925870376034,
+      "simple_auc": 0.39383938393839385,
+      "simple_pr": 0.08275745587013954
+    },
+    "2021": {
+      "rows": 365,
+      "positive_rate": 0.07123287671232877,
+      "sales_mean": 66808.27123287671,
+      "sales_std": 16573.841801325107,
+      "sales_cv": 0.248080686649605,
+      "simple_auc": 0.5601316088041751,
+      "simple_pr": 0.08072984969376731
+    },
+    "2022": {
+      "rows": 365,
+      "positive_rate": 0.0958904109589041,
+      "sales_mean": 68535.59178082192,
+      "sales_std": 16768.28353038637,
+      "sales_cv": 0.24466533511539007,
+      "simple_auc": 0.4733333333333334,
+      "simple_pr": 0.10396292598076823
+    },
+    "2023": {
+      "rows": 358,
+      "positive_rate": 0.08659217877094973,
+      "sales_mean": 67774.45251396648,
+      "sales_std": 17407.375780701925,
+      "sales_cv": 0.25684273549999886,
+      "simple_auc": 0.5131695767978691,
+      "simple_pr": 0.0868463022742331
+    }
+  },
+  "categorical_cardinality": {
+    "Customer Name": {
+      "unique": 26,
+      "normalized_entropy": 0.9709971311409208,
+      "top_share": 0.06080243209728389
+    },
+    "Employee Name": {
+      "unique": 6,
+      "normalized_entropy": 0.9974583249100316,
+      "top_share": 0.18802752110084403
+    },
+    "Manager Name": {
+      "unique": 2,
+      "normalized_entropy": 0.9998773276202826,
+      "top_share": 0.5065202608104324
+    },
+    "Product Name": {
+      "unique": 100,
+      "normalized_entropy": 0.9851766966385429,
+      "top_share": 0.012580503220128806
+    },
+    "Product Category": {
+      "unique": 10,
+      "normalized_entropy": 0.9986513356782631,
+      "top_share": 0.11188447537901516
+    },
+    "City": {
+      "unique": 12,
+      "normalized_entropy": 0.9768006219055385,
+      "top_share": 0.13802552102084084
+    },
+    "Channel": {
+      "unique": 2,
+      "normalized_entropy": 0.9200853973946257,
+      "top_share": 0.6648665946637865
+    },
+    "Customer Type": {
+      "unique": 3,
+      "normalized_entropy": 0.9223652374545777,
+      "top_share": 0.4973198927957118
+    },
+    "Customer Satisfaction": {
+      "unique": 5,
+      "normalized_entropy": 0.9253774451696306,
+      "top_share": 0.33567342693707747
+    },
+    "Invoice ID": {
+      "unique": 49998,
+      "normalized_entropy": 0.9999999953790011,
+      "top_share": 2.000080003200128e-05
+    }
+  },
+  "transaction_counts_by_year": {
+    "2020": 12487,
+    "2021": 12374,
+    "2022": 12715,
+    "2023": 12422
+  },
+  "transaction_counts_by_weekday": {
+    "0": 7057,
+    "1": 7004,
+    "2": 7046,
+    "3": 7210,
+    "4": 7287,
+    "5": 7074,
+    "6": 7320
+  },
+  "daily_rows": {
+    "mean": 34.2217659137577,
+    "std": 6.058626129581096,
+    "cv": 0.1770401371118441,
+    "min": 17,
+    "max": 59
+  }
+}
