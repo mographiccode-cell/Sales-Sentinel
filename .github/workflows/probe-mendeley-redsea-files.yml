@@ -1,0 +1,28 @@
+name: Probe Mendeley Redsea Files
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/probe-mendeley-redsea-files.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Probe public files endpoint and page source
+        run: |
+          set +e
+          echo '=== public files API ==='
+          curl -i -L 'https://api.data.mendeley.com/datasets/publics/9c87bd42ct/files?version=1&$limit=100' -o /tmp/api.txt
+          head -80 /tmp/api.txt
+          echo '=== dataset page ==='
+          curl -L 'https://data.mendeley.com/datasets/9c87bd42ct/1' -o /tmp/page.html
+          wc -c /tmp/page.html
+          grep -Eo '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}' /tmp/page.html | sort -u | head -50
+          echo '=== public-file-like links ==='
+          grep -Eo 'https?[^" ]+public-files[^" ]+' /tmp/page.html | head -30
+          echo '=== likely filenames ==='
+          grep -Eio '[^"<> ]+\.(csv|xlsx|xls|sav|zip|parquet)' /tmp/page.html | head -50
+          exit 0
