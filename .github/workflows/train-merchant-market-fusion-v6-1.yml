@@ -7,6 +7,7 @@ on:
     paths:
       - 'scripts/train_merchant_market_fusion_v6_1.py'
       - 'scripts/train_merchant_market_fusion_v6_1_guarded.py'
+      - 'scripts/train_merchant_market_fusion_v6_1_diagnostic.py'
       - '.github/workflows/train-merchant-market-fusion-v6-1.yml'
       - 'scripts/train_merchant_market_fusion_v6.py'
       - 'scripts/train_merchant_total_triage_v5.py'
@@ -34,7 +35,7 @@ jobs:
       - name: Train v6.1
         env:
           PYTHONPATH: ${{ github.workspace }}/scripts
-        run: python scripts/train_merchant_market_fusion_v6_1_guarded.py
+        run: python scripts/train_merchant_market_fusion_v6_1_diagnostic.py
       - name: Show evidence
         if: always()
         run: |
