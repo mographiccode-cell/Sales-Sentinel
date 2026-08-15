@@ -1,0 +1,82 @@
+{
+  "version": "SAMA-CITY-V3.3-SEMI-SYNTHETIC-FRESH-1",
+  "seed": 3303,
+  "frozen_model": "SAMA-CITY-RISK-3.3-DUAL-CHANNEL",
+  "test_design": "Fresh controlled perturbations injected into real SAMA city-total series after v3.3 policy freeze. Event selection uses dates/base target only, never model score.",
+  "events": [
+    {
+      "origin": "2026-02-22",
+      "city": "ABHA"
+    },
+    {
+      "origin": "2026-03-08",
+      "city": "BURAIDAH"
+    },
+    {
+      "origin": "2025-12-07",
+      "city": "DAMMAM"
+    },
+    {
+      "origin": "2026-03-01",
+      "city": "HAIL"
+    },
+    {
+      "origin": "2026-04-26",
+      "city": "JEDDAH"
+    },
+    {
+      "origin": "2025-11-30",
+      "city": "KHOBAR"
+    },
+    {
+      "origin": "2026-05-03",
+      "city": "MADINA"
+    },
+    {
+      "origin": "2025-10-26",
+      "city": "MAKKAH"
+    },
+    {
+      "origin": "2026-03-01",
+      "city": "OTHER"
+    },
+    {
+      "origin": "2026-03-08",
+      "city": "RIYADH"
+    },
+    {
+      "origin": "2026-02-01",
+      "city": "TABOUK"
+    }
+  ],
+  "event_count": 11,
+  "rows_scored": 429,
+  "injected_event_actual_declines": 11,
+  "injected_event_alerted": 3,
+  "injected_event_alert_recall": 0.2727272727272727,
+  "injected_event_red": 0,
+  "control": {
+    "rows": 352,
+    "negative_rows": 340,
+    "false_red": 0,
+    "false_red_rate": 0.0,
+    "alert_rate": 0.30113636363636365,
+    "green_coverage": 0.6988636363636364
+  },
+  "overall": {
+    "states": {
+      "GREEN": 295,
+      "AMBER": 132,
+      "RED": 2
+    },
+    "OOD_abstentions": 11,
+    "fallback_alerts": 0
+  },
+  "acceptance": {
+    "injected_alert_recall_ge_85pct": false,
+    "control_false_red_rate_le_2pct": true,
+    "control_alert_rate_le_30pct": false,
+    "control_green_coverage_ge_70pct": false
+  },
+  "all_acceptance_passed": false
+}
