@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'scripts/train_merchant_multihorizon_v11.py'
+      - 'scripts/run_merchant_multihorizon_v11.py'
       - '.github/workflows/train-merchant-multihorizon-v11.yml'
 
 jobs:
@@ -23,7 +24,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pandas scikit-learn xgboost catboost
       - name: Train V11 multi-horizon verifier
-        run: python scripts/train_merchant_multihorizon_v11.py
+        run: python scripts/run_merchant_multihorizon_v11.py
       - name: Show V11 summary
         run: cat reports/merchant_multihorizon_v11/development_summary.md
       - name: Upload V11 evidence
