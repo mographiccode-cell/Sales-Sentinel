@@ -1,0 +1,49 @@
+name: Train SAMA City Risk v3.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_sama_city_risk_v3_3.py'
+      - '.github/workflows/train-sama-city-risk-v3-3.yml'
+      - 'data/sama_pos/sama_city_weekly_value_count_2020_2025.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: |
+          pip install -r requirements-training.txt
+          pip install xgboost
+      - name: Train v3.3
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/train_sama_city_risk_v3_3.py
+      - name: Show evidence
+        run: cat reports/sama_city_v3_3/development_summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v3-3
+          path: |
+            reports/sama_city_v3_3/**
+            models/sama_city_v3_3/**
+          retention-days: 90
+      - name: Persist v3.3
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sama_city_v3_3 models/sama_city_v3_3
+          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel v3.3 artifacts'
+          git pull --rebase origin main
+          git push origin HEAD:main
