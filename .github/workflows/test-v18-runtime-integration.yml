@@ -9,6 +9,9 @@ on:
       - 'tests/**'
       - '.github/workflows/test-v18-runtime-integration.yml'
 
+env:
+  PYTHONPATH: .
+
 jobs:
   test:
     runs-on: ubuntu-latest
