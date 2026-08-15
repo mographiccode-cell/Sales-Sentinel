@@ -1,0 +1,49 @@
+name: Refine Merchant Fusion V7.2.1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refine_merchant_fusion_v7_2_1.py'
+      - '.github/workflows/refine-merchant-fusion-v7-2-1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refine-v7-2-1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-training.txt
+          pip install 'xgboost>=2.1,<4'
+      - name: Evaluate raw-score fusion
+        run: python scripts/refine_merchant_fusion_v7_2_1.py
+      - name: Show summary
+        run: cat reports/merchant_fusion_v7_2_1/development_summary.md
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-v7-2-1-evidence
+          path: reports/merchant_fusion_v7_2_1/
+      - name: Persist evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_fusion_v7_2_1
+          if git diff --cached --quiet; then
+            echo 'No generated changes to commit.'
+          else
+            git commit -m 'Persist Sales Sentinel V7.2.1 fusion evidence'
+            git push
+          fi
