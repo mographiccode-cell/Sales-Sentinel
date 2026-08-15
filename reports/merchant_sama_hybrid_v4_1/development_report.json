@@ -1,0 +1,115 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-SAMA-HYBRID-4.1-WEEKLY",
+  "scientific_boundary": "UCI-derived Saudi-localized synthetic merchant microdata; official SAMA is aggregate external context, not observed merchant truth.",
+  "source_rows": 1049042,
+  "eligible_rows": 1043290,
+  "weekly_panel_rows": 688,
+  "supervised_rows": 576,
+  "categories": 8,
+  "feature_count": 125,
+  "split": {
+    "train_rows": 280,
+    "train_positive_rate": 0.18214285714285713,
+    "validation_rows": 96,
+    "validation_positive_rate": 0.13541666666666666,
+    "test_rows": 184,
+    "test_positive_rate": 0.22826086956521738
+  },
+  "validation_model_auc": {
+    "logistic": 0.7210379981464319,
+    "extra_trees": 0.6515291936978684,
+    "hist_gb": 0.6163113994439295
+  },
+  "selected": {
+    "blend_weight_regression": 0.45,
+    "watch_threshold": 0.1988200040742192,
+    "red_threshold": 0.99,
+    "validation_metrics": {
+      "accuracy": 0.5833333333333334,
+      "balanced_accuracy": 0.6617238183503245,
+      "precision": 0.2127659574468085,
+      "recall": 0.7692307692307693,
+      "f1": 0.3333333333333333,
+      "roc_auc": 0.7479147358665432,
+      "alert_rate": 0.4895833333333333,
+      "green_npv": 0.9387755102040817,
+      "tp": 10,
+      "fp": 37,
+      "fn": 3,
+      "tn": 46
+    },
+    "validation_red_metrics": {
+      "accuracy": 0.8645833333333334,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.7479147358665432,
+      "alert_rate": 0.0,
+      "green_npv": 0.8645833333333334,
+      "tp": 0,
+      "fp": 0,
+      "fn": 13,
+      "tn": 83
+    },
+    "feasible_watch_thresholds": 13,
+    "feasible_red_thresholds": 0
+  },
+  "held_out_test": {
+    "accuracy": 0.5108695652173914,
+    "balanced_accuracy": 0.5824949698189135,
+    "precision": 0.2777777777777778,
+    "recall": 0.7142857142857143,
+    "f1": 0.4,
+    "roc_auc": 0.6061368209255533,
+    "alert_rate": 0.5869565217391305,
+    "green_npv": 0.8421052631578947,
+    "tp": 30,
+    "fp": 78,
+    "fn": 12,
+    "tn": 64
+  },
+  "held_out_test_red": {
+    "accuracy": 0.7717391304347826,
+    "balanced_accuracy": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "roc_auc": 0.6061368209255533,
+    "alert_rate": 0.0,
+    "green_npv": 0.7717391304347826,
+    "tp": 0,
+    "fp": 0,
+    "fn": 42,
+    "tn": 142
+  },
+  "contract": {
+    "test_roc_auc_min": 0.75,
+    "test_balanced_accuracy_min": 0.68,
+    "test_recall_min": 0.65,
+    "test_green_npv_min": 0.88,
+    "test_alert_rate_max": 0.55,
+    "red_precision_min_if_exists": 0.6
+  },
+  "gates": {
+    "source_rows_exact_1049042": true,
+    "non_overlapping_weekly_origins": true,
+    "future_actual_sama_excluded": true,
+    "one_week_purge_between_splits": true,
+    "threshold_validation_only": true,
+    "test_untouched_for_selection": true,
+    "test_roc_auc": false,
+    "test_balanced_accuracy": false,
+    "test_recall": true,
+    "test_green_npv": false,
+    "test_alert_rate": false,
+    "red_precision": true
+  },
+  "all_gates_passed": false,
+  "leakage_controls": {
+    "weekly_non_overlapping_target_rows": true,
+    "sama_previous_origin_only": true,
+    "actual_future_sama_not_feature": true,
+    "test_not_used_for_selection": true
+  }
+}
