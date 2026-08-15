@@ -6,18 +6,37 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
-from sqlalchemy import func, select
+from sqlalchemy import func, inspect, select, text
 
-from app.database import create_all, session_scope
+from app.database import create_all, get_engine, session_scope
 from app.models import Branch, Category, Permission, Product, Region, Role, Sale, SystemHealth, SystemSetting, User
 from app.services.security import hash_password
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
 
+def ensure_runtime_schema() -> None:
+    """Apply small additive runtime-safe upgrades to existing SQLite databases.
+
+    SQLAlchemy ``create_all`` creates new tables but does not add columns to an
+    existing table. ``customer_key`` is deliberately kept as an additive SQL
+    column so old databases remain readable while transaction imports can retain
+    a real customer identifier for V18 unique-customer features.
+    """
+    engine = get_engine()
+    if engine is None:
+        raise RuntimeError("Database engine is not initialized")
+    columns = {column["name"] for column in inspect(engine).get_columns("sales")}
+    if "customer_key" not in columns:
+        with engine.begin() as connection:
+            connection.execute(text("ALTER TABLE sales ADD COLUMN customer_key VARCHAR(100)"))
+            connection.execute(text("CREATE INDEX IF NOT EXISTS ix_sales_customer_key ON sales (customer_key)"))
+
+
 def ensure_seed_data() -> None:
     """Initialize SQLite from verified daily aggregates without inventing invoices."""
     create_all()
+    ensure_runtime_schema()
     with session_scope() as db:
         if int(db.scalar(select(func.count(User.id))) or 0) > 0:
             return
@@ -52,7 +71,6 @@ def ensure_seed_data() -> None:
                     sale_date = date.fromisoformat(row["date"])
                     net = Decimal(str(row.get("net_sales", "0")))
                     gross = Decimal(str(row.get("gross_sales", net)))
-                    returns = Decimal(str(row.get("returns", "0")))
                     quantity = int(float(row.get("quantity", "0")))
                     db.add(Sale(
                         sale_date=sale_date, transaction_number=f"UCI-DAY-{sale_date:%Y%m%d}", transaction_type="DAILY_AGGREGATE",
