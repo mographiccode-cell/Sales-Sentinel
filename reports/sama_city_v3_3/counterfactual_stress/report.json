@@ -1,0 +1,52 @@
+{
+  "version": "SAMA-CITY-V3.3-COUNTERFACTUAL-STRESS-1",
+  "test_type": "counterfactual stress test on real SAMA-shaped covariates; injected labels are synthetic and fixed before scoring",
+  "frozen_model": "SAMA-CITY-RISK-3.3-DUAL-CHANNEL",
+  "model_development_end": "2025-06-29",
+  "scenario_count": 22,
+  "control_rows": 220,
+  "injection_contract": {
+    "precursor_factors": {
+      "-2": 0.95,
+      "-1": 0.9,
+      "0": 0.84
+    },
+    "event_target_ratio": 0.65
+  },
+  "injected_declines": {
+    "alerted": 15,
+    "RED": 0,
+    "alert_recall": 0.6818181818181818,
+    "red_rate": 0.0,
+    "median_score_lift": 0.19864420362612972,
+    "median_next_ratio": 0.65,
+    "min_next_ratio": 0.6499999999999999,
+    "max_next_ratio": 0.65,
+    "states": {
+      "AMBER": 15,
+      "GREEN": 7
+    },
+    "reasons": {
+      "HIGH_PRECURSOR_FALLBACK": 11,
+      "LOW_OBSERVED_RISK": 7,
+      "MODEL_EARLY_WARNING": 4
+    }
+  },
+  "controls": {
+    "new_red": 0,
+    "new_red_rate": 0.0,
+    "new_alert": 0,
+    "new_alert_rate": 0.0,
+    "max_abs_score_change": 0.11036691391023688
+  },
+  "acceptance": {
+    "injected_decline_alert_recall_ge_90pct": false,
+    "injected_median_score_lift_positive": true,
+    "control_new_red_rate_le_1pct": true,
+    "control_new_alert_rate_le_5pct": true,
+    "all_injected_targets_verified_gt20pct": true,
+    "serving_uses_exact_v3_3_artifact": true
+  },
+  "all_acceptance_passed": false,
+  "scientific_boundary": "No model weight, feature, threshold, or policy parameter is fit in this script. Real SAMA outcomes are not used as labels for injected scenarios."
+}
