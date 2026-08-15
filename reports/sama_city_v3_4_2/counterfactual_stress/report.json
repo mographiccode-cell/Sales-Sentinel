@@ -1,0 +1,141 @@
+{
+  "version": "SAMA-CITY-V3.4.2-COUNTERFACTUAL-NEW-1",
+  "frozen_model": "SAMA-CITY-RISK-3.4.2-DOWNSIDE-RATIO",
+  "model_development_end": "2025-06-29",
+  "scenario_count": 44,
+  "control_rows": 440,
+  "patterns": {
+    "slow_four_week": {
+      "value": {
+        "-3": 0.99,
+        "-2": 0.96,
+        "-1": 0.92,
+        "0": 0.88
+      },
+      "count": {
+        "-3": 0.99,
+        "-2": 0.96,
+        "-1": 0.92,
+        "0": 0.88
+      },
+      "event_ratio": 0.73
+    },
+    "ticket_compression": {
+      "value": {
+        "-3": 0.98,
+        "-2": 0.94,
+        "-1": 0.88,
+        "0": 0.83
+      },
+      "count": {
+        "-3": 0.995,
+        "-2": 0.99,
+        "-1": 0.98,
+        "0": 0.97
+      },
+      "event_ratio": 0.7
+    },
+    "volume_compression": {
+      "value": {
+        "-3": 0.995,
+        "-2": 0.99,
+        "-1": 0.98,
+        "0": 0.97
+      },
+      "count": {
+        "-3": 0.98,
+        "-2": 0.94,
+        "-1": 0.88,
+        "0": 0.83
+      },
+      "event_ratio": 0.68
+    },
+    "accelerating_both": {
+      "value": {
+        "-3": 0.995,
+        "-2": 0.97,
+        "-1": 0.91,
+        "0": 0.84
+      },
+      "count": {
+        "-3": 0.995,
+        "-2": 0.97,
+        "-1": 0.91,
+        "0": 0.84
+      },
+      "event_ratio": 0.71
+    }
+  },
+  "pattern_results": {
+    "accelerating_both": {
+      "n": 11,
+      "alerted": 8,
+      "recall": 0.7272727272727273,
+      "red": 0,
+      "ratio_warnings": 0,
+      "ood_abstentions": 0,
+      "median_pred_ratio_change": -0.07325526254788306,
+      "median_risk_lift": 0.20324389185827574
+    },
+    "slow_four_week": {
+      "n": 11,
+      "alerted": 5,
+      "recall": 0.45454545454545453,
+      "red": 0,
+      "ratio_warnings": 2,
+      "ood_abstentions": 0,
+      "median_pred_ratio_change": -0.06127201692416839,
+      "median_risk_lift": 0.04943318143207588
+    },
+    "ticket_compression": {
+      "n": 11,
+      "alerted": 4,
+      "recall": 0.36363636363636365,
+      "red": 0,
+      "ratio_warnings": 1,
+      "ood_abstentions": 0,
+      "median_pred_ratio_change": -0.012126085396245934,
+      "median_risk_lift": 0.03502971822349643
+    },
+    "volume_compression": {
+      "n": 11,
+      "alerted": 8,
+      "recall": 0.7272727272727273,
+      "red": 0,
+      "ratio_warnings": 0,
+      "ood_abstentions": 0,
+      "median_pred_ratio_change": -0.08462678245462385,
+      "median_risk_lift": 0.08872921536679923
+    }
+  },
+  "overall": {
+    "alerted": 25,
+    "recall": 0.5681818181818182,
+    "RED": 0,
+    "AMBER": 25,
+    "GREEN": 19,
+    "ratio_warnings": 3,
+    "ood_abstentions": 0,
+    "median_pred_ratio_change": -0.04195835425093092,
+    "median_risk_lift": 0.07411796059786721
+  },
+  "controls": {
+    "new_red": 0,
+    "new_red_rate": 0.0,
+    "new_alert": 0,
+    "new_alert_rate": 0.0,
+    "max_abs_score_change": 0.24846861417596733,
+    "max_abs_ratio_change": 0.07162361957484098
+  },
+  "acceptance": {
+    "overall_recall_ge_90pct": false,
+    "each_pattern_recall_ge_80pct": false,
+    "control_new_red_rate_le_1pct": true,
+    "control_new_alert_rate_le_5pct": true,
+    "ood_abstain_rate_le_30pct": true,
+    "all_events_gt20pct": true,
+    "serving_exact_v3_4_2": true
+  },
+  "all_acceptance_passed": false,
+  "scientific_boundary": "Frozen v3.4.2; no fitting in this script. These four injection patterns were not used in v3.4.2 training or prior v3.3/v3.4 stress tests."
+}
