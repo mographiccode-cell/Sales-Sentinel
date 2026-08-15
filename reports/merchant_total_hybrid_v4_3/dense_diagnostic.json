@@ -1,0 +1,178 @@
+{
+  "version": "MERCHANT-TOTAL-DENSE-DIAGNOSTIC-1",
+  "scientific_boundary": "Post-v4.3 development diagnostic only; not independent validation. Uses rolling-origin past-only fits and dense future-ratio target.",
+  "rows": 541,
+  "feature_count": 391,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2023-07-08",
+      "end": "2023-09-30",
+      "train_rows": 125,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 1,
+      "start": "2023-10-08",
+      "end": "2023-12-31",
+      "train_rows": 217,
+      "validation_rows": 85
+    },
+    {
+      "fold_id": 2,
+      "start": "2024-01-08",
+      "end": "2024-03-31",
+      "train_rows": 309,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 3,
+      "start": "2024-04-08",
+      "end": "2024-06-30",
+      "train_rows": 400,
+      "validation_rows": 84
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-07-08",
+      "end": "2024-08-19",
+      "train_rows": 491,
+      "validation_rows": 43
+    }
+  ],
+  "regression": {
+    "ridge": {
+      "mae_ratio": 0.14217837866917804,
+      "spearman": 0.45043427507632083
+    },
+    "huber": {
+      "mae_ratio": 0.3390378309658719,
+      "spearman": 0.07276467129401604
+    },
+    "extra_trees_reg": {
+      "mae_ratio": 0.10560791223092486,
+      "spearman": 0.5541347804106465
+    },
+    "hist_gb_mean": {
+      "mae_ratio": 0.10720507761760575,
+      "spearman": 0.5226595469999977
+    },
+    "hist_gb_q25": {
+      "mae_ratio": 0.12125560969356107,
+      "spearman": 0.5278085761462236
+    },
+    "mean_tree_gb": {
+      "mae_ratio": 0.10508075519710074,
+      "spearman": 0.5570053571079862
+    },
+    "mean_q25_mix": {
+      "mae_ratio": 0.11003744089296383,
+      "spearman": 0.5508855826749955
+    },
+    "tree_q25_mix": {
+      "mae_ratio": 0.1091422431179976,
+      "spearman": 0.5738571394475387
+    }
+  },
+  "decline_thresholds": {
+    "decline_10pct": {
+      "positive_rate": 0.2335958005249344,
+      "positives": 89,
+      "rows": 381,
+      "models": {
+        "ridge": {
+          "roc_auc": 0.6705787286439896
+        },
+        "huber": {
+          "roc_auc": 0.49584423580113896
+        },
+        "extra_trees_reg": {
+          "roc_auc": 0.7357241803909497
+        },
+        "hist_gb_mean": {
+          "roc_auc": 0.7296829305833461
+        },
+        "hist_gb_q25": {
+          "roc_auc": 0.7378405417885178
+        },
+        "mean_tree_gb": {
+          "roc_auc": 0.7414191165153148
+        },
+        "mean_q25_mix": {
+          "roc_auc": 0.744689856857011
+        },
+        "tree_q25_mix": {
+          "roc_auc": 0.75
+        }
+      },
+      "best_model": "tree_q25_mix",
+      "best_auc": 0.75
+    },
+    "decline_15pct": {
+      "positive_rate": 0.16535433070866143,
+      "positives": 63,
+      "rows": 381,
+      "models": {
+        "ridge": {
+          "roc_auc": 0.6711590296495956
+        },
+        "huber": {
+          "roc_auc": 0.5098332834181891
+        },
+        "extra_trees_reg": {
+          "roc_auc": 0.7384945592492762
+        },
+        "hist_gb_mean": {
+          "roc_auc": 0.7348507537186781
+        },
+        "hist_gb_q25": {
+          "roc_auc": 0.7508235998802035
+        },
+        "mean_tree_gb": {
+          "roc_auc": 0.7455825097334531
+        },
+        "mean_q25_mix": {
+          "roc_auc": 0.7510232604572228
+        },
+        "tree_q25_mix": {
+          "roc_auc": 0.7582609563741639
+        }
+      },
+      "best_model": "tree_q25_mix",
+      "best_auc": 0.7582609563741639
+    },
+    "decline_20pct": {
+      "positive_rate": 0.08923884514435695,
+      "positives": 34,
+      "rows": 381,
+      "models": {
+        "ridge": {
+          "roc_auc": 0.644092219020173
+        },
+        "huber": {
+          "roc_auc": 0.5163587048652314
+        },
+        "extra_trees_reg": {
+          "roc_auc": 0.7240210205119513
+        },
+        "hist_gb_mean": {
+          "roc_auc": 0.717579250720461
+        },
+        "hist_gb_q25": {
+          "roc_auc": 0.785217833531107
+        },
+        "mean_tree_gb": {
+          "roc_auc": 0.7302085099169351
+        },
+        "mean_q25_mix": {
+          "roc_auc": 0.7535175453466689
+        },
+        "tree_q25_mix": {
+          "roc_auc": 0.7658925241566367
+        }
+      },
+      "best_model": "hist_gb_q25",
+      "best_auc": 0.785217833531107
+    }
+  }
+}
