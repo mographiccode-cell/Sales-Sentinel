@@ -1,22 +1,23 @@
-# Sales Sentinel v6.1 — Precision Recovery
+# Sales Sentinel v6.1 — Regime-Aware Precision Recovery
 
-- Policy: **two-stage merchant + prequential SAMA confirmation**
+- Policy: **three-branch merchant + prequential SAMA regime policy**
 - Merchant rows: **541**
+- OOF rows: **381**
 - OOF ROC-AUC: **75.83%**
 - OOF PR-AUC: **38.73%**
-- Precision: **29.65%**
-- Recall: **80.95%**
-- F1: **43.40%**
-- GREEN NPV: **94.26%**
-- Alert rate: **45.14%**
-- TP / FP / FN / TN: **51 / 121 / 12 / 197**
-- Worst-fold recall: **46.67%**
-- Max fold alert rate: **60.47%**
-- False positives removed vs V6: **5**
-- TP change vs V6: **-4**
-- Precision delta vs V6: **-0.74%**
-- Recall delta vs V6: **-6.35%**
-- F1 delta vs V6: **-1.68%**
-- Alert-rate delta vs V6: **-2.36%**
+- Precision: **38.81%**
+- Recall: **82.54%**
+- F1: **52.79%**
+- GREEN NPV: **95.55%**
+- Alert rate: **35.17%**
+- TP / FP / FN / TN: **52 / 82 / 11 / 236**
+- Worst-fold recall: **60.00%**
+- Max fold alert rate: **40.48%**
+- False positives removed vs V6: **44**
+- TP change vs V6: **-3**
+- Precision delta vs V6: **+8.42%**
+- Recall delta vs V6: **-4.76%**
+- F1 delta vs V6: **+7.71%**
+- Alert-rate delta vs V6: **-12.34%**
 - RED supported: **False**
-- Development gates: **False**
+- Development gates: **True**
