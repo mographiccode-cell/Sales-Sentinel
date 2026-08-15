@@ -1,0 +1,37 @@
+name: Extract Redsea Page File Metadata
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extract-redsea-page-file-metadata.yml'
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Extract contexts and embedded JSON
+        run: |
+          curl -L 'https://data.mendeley.com/datasets/9c87bd42ct/1' -o /tmp/page.html
+          python - <<'PY'
+          import re, html
+          from pathlib import Path
+          s=Path('/tmp/page.html').read_text(errors='ignore')
+          print('length',len(s))
+          pats=[r'file_downloaded',r'filename',r'files',r'download',r'2700',r'Redsea',r'\.csv',r'\.xlsx',r'\.sav']
+          for pat in pats:
+              print('\n###',pat)
+              for m in list(re.finditer(pat,s,re.I))[:15]:
+                  a=max(0,m.start()-500); b=min(len(s),m.end()+900)
+                  print(html.unescape(s[a:b]).replace('><','>\n<'))
+                  print('\n---')
+          print('\n### UUID contexts')
+          for m in re.finditer(r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',s):
+              a=max(0,m.start()-350); b=min(len(s),m.end()+500)
+              print(m.group(), html.unescape(s[a:b]).replace('><','>\n<'))
+              print('---')
+          PY
