@@ -1,0 +1,95 @@
+{
+  "sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
+  "raw_rows": 2700,
+  "columns": 23,
+  "exact_duplicate_rows": 5,
+  "unique_trx_numbers": 1661,
+  "unique_customers": 23,
+  "unique_items": 352,
+  "unique_families": 7,
+  "unique_classes": 23,
+  "date_min": "2023-07-01",
+  "date_max": "2023-10-31",
+  "active_dates": 121,
+  "missing_by_column": {
+    "ORG Name": 2700
+  },
+  "type_counts": {
+    "INV": 2579,
+    "CM": 121
+  },
+  "channel_counts": {
+    "RECA": 1923,
+    "REUI": 556,
+    "REEM": 191,
+    "RECO": 30
+  },
+  "org_counts": {
+    "EAC": 2149,
+    "TPC": 551
+  },
+  "negative_quantity_rows": 121,
+  "zero_quantity_rows": 0,
+  "negative_net_amount_rows": 121,
+  "negative_total_amount_rows": 121,
+  "discount_nonzero_rows": 1901,
+  "quantity_sum": 4359.0,
+  "net_amount_sum_raw": 4441432.180000001,
+  "total_amount_sum_raw": 5107648.65,
+  "duplicate_effect": {
+    "rows": 5,
+    "net_amount": 6257.77,
+    "total_amount": 7196.43,
+    "quantity": 3.0
+  },
+  "clean_rows": 2695,
+  "calendar_days": 123,
+  "zero_transaction_days": 2,
+  "daily": {
+    "net_sales_mean": 36058.328536585366,
+    "net_sales_std": 31904.21910708467,
+    "net_sales_cv": 0.8847947312564456,
+    "transactions_mean": 13.504065040650406,
+    "transactions_std": 9.117964598635188,
+    "transactions_cv": 0.6752014723853872
+  },
+  "autocorrelation": {
+    "1": 0.11112196994944122,
+    "2": 0.03473957202428031,
+    "3": -0.005591630841746534,
+    "7": 0.05335522646424657,
+    "14": 0.13741006216100982,
+    "28": 0.039101061333002715
+  },
+  "target": {
+    "usable_rows": 89,
+    "positives": 47,
+    "positive_rate": 0.5280898876404494,
+    "first_usable_date": "2023-07-28",
+    "last_usable_date": "2023-10-24",
+    "simple_recent7_28_auc": 0.42299898682877407,
+    "simple_recent7_28_pr_auc": 0.4505133337588341
+  },
+  "monthly_target": {
+    "2023-07": {
+      "rows": 4,
+      "positives": 0,
+      "rate": 0.0
+    },
+    "2023-08": {
+      "rows": 31,
+      "positives": 17,
+      "rate": 0.5483870967741935
+    },
+    "2023-09": {
+      "rows": 30,
+      "positives": 13,
+      "rate": 0.43333333333333335
+    },
+    "2023-10": {
+      "rows": 24,
+      "positives": 17,
+      "rate": 0.7083333333333334
+    }
+  }
+}
