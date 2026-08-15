@@ -1,0 +1,39 @@
+name: Evaluate Redsea Portable V16.2
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/evaluate_redsea_portable_v16_2.py'
+      - '.github/workflows/evaluate-redsea-portable-v16-2.yml'
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn
+      - name: Run V16.2 causal percentile calibration
+        run: python scripts/evaluate_redsea_portable_v16_2.py
+      - name: Show summary
+        run: cat reports/redsea_portable_v16_2/summary.md
+      - name: Upload evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: redsea-portable-v16-2
+          path: reports/redsea_portable_v16_2/
+      - name: Persist evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/redsea_portable_v16_2
+          git diff --cached --quiet || git commit -m "Persist V16.2 causal calibration diagnostics"
+          git pull --rebase origin main
+          git push
