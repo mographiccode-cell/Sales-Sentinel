@@ -5,24 +5,98 @@ import numpy as np
 import train_merchant_market_fusion_v6_1 as base
 
 
+def causal_percentile_score(values, lookback=126, min_history=20):
+    """Causal score normalization using only earlier model scores.
+
+    No labels are used. For row i, the percentile is computed only against
+    scores from rows < i, bounded to a recent lookback window. This makes the
+    operational threshold less sensitive to probability-scale drift while
+    preserving strict chronological availability.
+    """
+    x = np.asarray(values, float)
+    ranks = np.full(len(x), 0.5, float)
+    for i, value in enumerate(x):
+        start = max(0, i - int(lookback))
+        hist = x[start:i]
+        hist = hist[np.isfinite(hist)]
+        if len(hist) >= int(min_history):
+            ranks[i] = (np.sum(hist < value) + 0.5 * np.sum(hist == value)) / len(hist)
+    return ranks
+
+
+def drift_adjusted_score(Z):
+    raw = Z["merchant_mean"].to_numpy(float)
+    rank = causal_percentile_score(raw)
+    # Raw probability remains dominant; causal rank only corrects regime-scale drift.
+    return 0.62 * raw + 0.38 * rank
+
+
+def drift_make_policy_pred(Z, low_t, high_t, agree_t, market_t, disagreement_max):
+    raw_mean = Z["merchant_mean"].to_numpy(float)
+    adjusted = drift_adjusted_score(Z)
+    merchant_min = np.minimum(
+        Z["merchant_logreg"].to_numpy(float),
+        Z["merchant_extra"].to_numpy(float),
+    )
+    disagreement = Z["merchant_disagreement"].to_numpy(float)
+    market_p90 = Z[f"{base.MARKET_PREFIX}risk_p90"].to_numpy(float)
+    market_mean = Z[f"{base.MARKET_PREFIX}risk_mean"].to_numpy(float)
+    precursor = Z[f"{base.MARKET_PREFIX}precursor_share_2"].to_numpy(float)
+
+    # A high alert still needs a minimum absolute merchant signal; this prevents
+    # a pure relative-rank spike in a weak regime from becoming an alert.
+    absolute_floor = float(np.quantile(raw_mean, 0.30))
+    high = (adjusted >= high_t) & (raw_mean >= absolute_floor)
+    marginal = (adjusted >= low_t) & (~high)
+
+    merchant_agree = (merchant_min >= agree_t) & (disagreement <= disagreement_max)
+    market_confirm = (
+        (market_p90 >= market_t)
+        | ((market_mean >= market_t * 0.60) & (precursor >= 0.20))
+    )
+    confirm = merchant_agree | market_confirm
+    pred = high | (marginal & confirm)
+    return pred, {
+        "high_alerts": int(high.sum()),
+        "marginal_candidates": int(marginal.sum()),
+        "merchant_confirmed_marginal": int((marginal & merchant_agree).sum()),
+        "market_confirmed_marginal": int((marginal & market_confirm).sum()),
+        "final_alerts": int(pred.sum()),
+        "drift_adjustment": "0.62_raw_plus_0.38_causal_percentile",
+        "causal_rank_lookback": 126,
+        "causal_rank_min_history": 20,
+    }
+
+
+def gate_margin(m):
+    terms = [
+        m["recall"] / 0.80,
+        m["precision"] / 0.32,
+        m["f1"] / 0.46,
+        m["green_npv"] / 0.95,
+        0.43 / max(m["alert_rate"], 1e-9),
+        m["worst_fold_recall"] / 0.50,
+        0.60 / max(m["max_fold_alert_rate"], 1e-9),
+    ]
+    return float(min(terms))
+
+
 def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
     y = np.asarray(y, int)
     fold_ids = np.asarray(fold_ids, int)
-    score = Z["merchant_mean"].to_numpy(float)
+    raw_score = Z["merchant_mean"].to_numpy(float)
+    score = drift_adjusted_score(Z)
     market = Z[f"{base.MARKET_PREFIX}risk_p90"].to_numpy(float)
 
-    low_values = base.candidate_values(score, [0.36, 0.40, 0.44, 0.48, 0.52, 0.56])
-    high_values = sorted(set(
-        [0.3918606905880165]
-        + base.candidate_values(score, [0.54, 0.58, 0.62, 0.66, 0.70, 0.76])
-    ))
+    low_values = base.candidate_values(score, [0.34, 0.40, 0.46, 0.52, 0.58, 0.64])
+    high_values = base.candidate_values(score, [0.58, 0.64, 0.70, 0.76, 0.82, 0.88])
     agree_values = base.candidate_values(
         np.minimum(Z["merchant_logreg"], Z["merchant_extra"]),
-        [0.35, 0.45, 0.55, 0.65, 0.75],
+        [0.32, 0.42, 0.52, 0.62, 0.72],
     )
     market_values = base.candidate_values(market, [0.35, 0.48, 0.60, 0.72, 0.82])
     disagreement_values = base.candidate_values(
-        Z["merchant_disagreement"], [0.40, 0.55, 0.70, 0.82]
+        Z["merchant_disagreement"], [0.38, 0.52, 0.66, 0.80]
     )
 
     rows = []
@@ -33,11 +107,14 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
             for agree_t in agree_values:
                 for market_t in market_values:
                     for disagreement_max in disagreement_values:
-                        pred, diagnostics = base.make_policy_pred(
+                        pred, diagnostics = drift_make_policy_pred(
                             Z, low_t, high_t, agree_t, market_t, disagreement_max
                         )
-                        m, per = base.evaluate_policy(y, score, pred, fold_ids)
+                        # Ranking evidence remains the original merchant probability.
+                        m, per = base.evaluate_policy(y, raw_score, pred, fold_ids)
                         alerts = m["tp"] + m["fp"]
+                        margin = gate_margin(m) if not severe else 0.0
+
                         if severe:
                             supported = (
                                 alerts >= 5
@@ -62,17 +139,20 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
                                 and m["max_fold_alert_rate"] <= 0.60
                             )
                             objective = (
-                                1.45 * m["f1"]
-                                + 0.65 * m["precision"]
-                                + 0.55 * m["balanced_accuracy"]
-                                + 0.70 * m["recall"]
-                                + 0.25 * m["green_npv"]
-                                - 0.60 * m["alert_rate"]
+                                1.20 * m["f1"]
+                                + 0.55 * m["precision"]
+                                + 0.45 * m["balanced_accuracy"]
+                                + 0.60 * m["recall"]
+                                + 0.30 * m["green_npv"]
+                                + 1.20 * margin
+                                - 0.55 * m["alert_rate"]
                                 - 0.0015 * m["fp"]
                             )
+
                         rows.append({
                             "supported": bool(supported),
                             "objective": float(objective),
+                            "gate_margin": float(margin),
                             "params": {
                                 "low_threshold": float(low_t),
                                 "high_threshold": float(high_t),
@@ -86,14 +166,13 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
                         })
 
     if not rows:
-        raise RuntimeError("No guarded v6.1 policy candidates generated")
+        raise RuntimeError("No drift-aware v6.1 policy candidates generated")
 
     feasible = [r for r in rows if r["supported"]]
     if severe:
         protected = []
     else:
-        # V6 had 55 TP / 126 FP on the same 381 OOF rows. The v6.1 fallback is
-        # forbidden from trading away more than five TP merely to improve precision.
+        # V6: 55 TP / 126 FP on the same 381 OOF rows.
         protected = [
             r for r in rows
             if r["metrics"]["tp"] >= 50
@@ -109,32 +188,49 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
         fallback_mode = "fully_feasible"
     elif protected:
         pool = protected
-        fallback_mode = "tp_protected_fallback"
+        fallback_mode = "tp_protected_drift_fallback"
     else:
-        # Last-resort safety: prioritize retained TP and recall before objective.
         pool = rows
-        fallback_mode = "recall_first_fallback"
+        fallback_mode = "recall_first_drift_fallback"
 
-    if fallback_mode == "recall_first_fallback" and not severe:
+    if severe:
         pool.sort(
             key=lambda r: (
-                r["metrics"]["tp"],
+                r["supported"],
+                r["objective"],
+                r["metrics"]["precision"],
                 r["metrics"]["recall"],
+            ),
+            reverse=True,
+        )
+    elif feasible:
+        pool.sort(
+            key=lambda r: (
+                r["gate_margin"],
                 -r["metrics"]["fp"],
                 r["metrics"]["f1"],
-                r["objective"],
+                r["metrics"]["recall"],
+            ),
+            reverse=True,
+        )
+    elif protected:
+        pool.sort(
+            key=lambda r: (
+                r["gate_margin"],
+                -r["metrics"]["fp"],
+                r["metrics"]["worst_fold_recall"],
+                -r["metrics"]["max_fold_alert_rate"],
+                r["metrics"]["f1"],
             ),
             reverse=True,
         )
     else:
         pool.sort(
             key=lambda r: (
-                r["supported"],
-                r["metrics"]["f1"],
-                r["metrics"]["precision"],
+                r["metrics"]["tp"],
+                r["metrics"]["worst_fold_recall"],
                 -r["metrics"]["fp"],
-                r["metrics"]["recall"],
-                r["objective"],
+                r["gate_margin"],
             ),
             reverse=True,
         )
@@ -144,10 +240,13 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
     best["protected_fallback_candidates"] = int(len(protected))
     best["total_candidates"] = int(len(rows))
     best["selection_mode"] = fallback_mode
+    best["policy_score"] = "drift_adjusted_causal_merchant_score"
     return best
 
 
+# Patch both the policy search and prediction function used by base.main().
 base.search_precision_recovery_policy = guarded_search_precision_recovery_policy
+base.make_policy_pred = drift_make_policy_pred
 
 if __name__ == "__main__":
     base.main()
