@@ -1,0 +1,38 @@
+name: Evaluate Selective Triage V8.4
+
+on:
+  push:
+    paths:
+      - 'scripts/evaluate_selective_triage_v8_4.py'
+      - '.github/workflows/evaluate-selective-triage-v8-4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate-v8-4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas
+      - name: Evaluate V8.4 selective triage
+        run: python scripts/evaluate_selective_triage_v8_4.py
+      - name: Show V8.4 summary
+        run: cat reports/merchant_selective_triage_v8_4/development_summary.md
+      - name: Upload V8.4 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-selective-triage-v8-4
+          path: reports/merchant_selective_triage_v8_4/
+      - name: Persist V8.4 evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/merchant_selective_triage_v8_4/
+          git diff --cached --quiet || git commit -m "Persist V8.4 selective triage evidence"
+          git push
