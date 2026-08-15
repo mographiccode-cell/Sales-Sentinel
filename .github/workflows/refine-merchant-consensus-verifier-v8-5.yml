@@ -1,0 +1,38 @@
+name: Refine Merchant Consensus Verifier V8.5
+
+on:
+  push:
+    paths:
+      - 'scripts/refine_merchant_consensus_verifier_v8_5.py'
+      - '.github/workflows/refine-merchant-consensus-verifier-v8-5.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refine-v8-5:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install numpy pandas scikit-learn catboost xgboost
+      - name: Refine V8.5 consensus verifier
+        run: python scripts/refine_merchant_consensus_verifier_v8_5.py
+      - name: Show V8.5 summary
+        run: cat reports/merchant_consensus_verifier_v8_5/development_summary.md
+      - name: Upload V8.5 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: merchant-consensus-verifier-v8-5
+          path: reports/merchant_consensus_verifier_v8_5/
+      - name: Persist V8.5 evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/merchant_consensus_verifier_v8_5/
+          git diff --cached --quiet || git commit -m "Persist V8.5 consensus verifier evidence"
+          git push
