@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install numpy pandas scikit-learn
+        run: pip install numpy pandas scikit-learn xgboost catboost
       - name: Refine V9.1 consensus verifier
         run: python scripts/refine_merchant_consensus_v9_1.py
       - name: Show V9.1 summary
