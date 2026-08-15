@@ -1,0 +1,348 @@
+{
+  "version": "SALES-SENTINEL-MERCHANT-TOTAL-HYBRID-4.3.1",
+  "status": "DEVELOPMENT_FROZEN_PENDING_INDEPENDENT_STRESS",
+  "scientific_boundary": "Merchant-total target on UCI-derived Saudi-localized synthetic microdata. Historical periods are development rolling-origin evidence, not a new untouched final test.",
+  "source_rows_proven_by_upstream_v1_3_1": 1049042,
+  "supervised_days": 541,
+  "feature_count": 391,
+  "folds": [
+    {
+      "fold_id": 0,
+      "start": "2023-07-08",
+      "end": "2023-09-30",
+      "train_rows": 125,
+      "validation_rows": 85,
+      "positives": 1
+    },
+    {
+      "fold_id": 1,
+      "start": "2023-10-08",
+      "end": "2023-12-31",
+      "train_rows": 217,
+      "validation_rows": 85,
+      "positives": 7
+    },
+    {
+      "fold_id": 2,
+      "start": "2024-01-08",
+      "end": "2024-03-31",
+      "train_rows": 309,
+      "validation_rows": 84,
+      "positives": 10
+    },
+    {
+      "fold_id": 3,
+      "start": "2024-04-08",
+      "end": "2024-06-30",
+      "train_rows": 400,
+      "validation_rows": 84,
+      "positives": 15
+    },
+    {
+      "fold_id": 4,
+      "start": "2024-07-08",
+      "end": "2024-08-19",
+      "train_rows": 491,
+      "validation_rows": 43,
+      "positives": 1
+    }
+  ],
+  "candidate_oof": {
+    "logistic": {
+      "threshold": 0.30499999999999994,
+      "metrics": {
+        "accuracy": 0.8372703412073491,
+        "balanced_accuracy": 0.6055687404644855,
+        "precision": 0.22,
+        "recall": 0.3235294117647059,
+        "f1": 0.2619047619047619,
+        "roc_auc": 0.5942532632649602,
+        "alert_rate": 0.13123359580052493,
+        "green_npv": 0.9305135951661632,
+        "tp": 11,
+        "fp": 39,
+        "fn": 23,
+        "tn": 308
+      },
+      "feasible_thresholds": 0
+    },
+    "extra_trees": {
+      "threshold": 0.07237680224650787,
+      "metrics": {
+        "accuracy": 0.4225721784776903,
+        "balanced_accuracy": 0.6432022376674013,
+        "precision": 0.125,
+        "recall": 0.9117647058823529,
+        "f1": 0.2198581560283688,
+        "roc_auc": 0.6533310730632311,
+        "alert_rate": 0.6509186351706037,
+        "green_npv": 0.9774436090225563,
+        "tp": 31,
+        "fp": 217,
+        "fn": 3,
+        "tn": 130
+      },
+      "feasible_thresholds": 0
+    },
+    "hist_gb": {
+      "threshold": 0.36999999999999994,
+      "metrics": {
+        "accuracy": 0.8976377952755905,
+        "balanced_accuracy": 0.6254449906763858,
+        "precision": 0.4,
+        "recall": 0.29411764705882354,
+        "f1": 0.3389830508474576,
+        "roc_auc": 0.5940837430072893,
+        "alert_rate": 0.06561679790026247,
+        "green_npv": 0.9325842696629213,
+        "tp": 10,
+        "fp": 15,
+        "fn": 24,
+        "tn": 332
+      },
+      "feasible_thresholds": 0
+    },
+    "ensemble": {
+      "threshold": 0.2466844051323886,
+      "metrics": {
+        "accuracy": 0.8136482939632546,
+        "balanced_accuracy": 0.6589252415663671,
+        "precision": 0.2318840579710145,
+        "recall": 0.47058823529411764,
+        "f1": 0.3106796116504854,
+        "roc_auc": 0.6575690795050009,
+        "alert_rate": 0.18110236220472442,
+        "green_npv": 0.9423076923076923,
+        "tp": 16,
+        "fp": 53,
+        "fn": 18,
+        "tn": 294
+      },
+      "feasible_thresholds": 0
+    },
+    "ensemble_reg20": {
+      "threshold": 0.22499999999999998,
+      "metrics": {
+        "accuracy": 0.8241469816272966,
+        "balanced_accuracy": 0.6779538904899136,
+        "precision": 0.2537313432835821,
+        "recall": 0.5,
+        "f1": 0.33663366336633666,
+        "roc_auc": 0.6808781149347347,
+        "alert_rate": 0.17585301837270342,
+        "green_npv": 0.945859872611465,
+        "tp": 17,
+        "fp": 50,
+        "fn": 17,
+        "tn": 297
+      },
+      "feasible_thresholds": 0
+    },
+    "ensemble_reg40": {
+      "threshold": 0.10057067372294959,
+      "metrics": {
+        "accuracy": 0.6272965879265092,
+        "balanced_accuracy": 0.6627394473639601,
+        "precision": 0.15384615384615385,
+        "recall": 0.7058823529411765,
+        "f1": 0.25263157894736843,
+        "roc_auc": 0.7013900661129006,
+        "alert_rate": 0.4094488188976378,
+        "green_npv": 0.9555555555555556,
+        "tp": 24,
+        "fp": 132,
+        "fn": 10,
+        "tn": 215
+      },
+      "feasible_thresholds": 7
+    }
+  },
+  "selected": {
+    "score_variant": "ensemble_reg40",
+    "watch_threshold": 0.10057067372294959,
+    "red_threshold": 0.99,
+    "metrics": {
+      "accuracy": 0.6272965879265092,
+      "balanced_accuracy": 0.6627394473639601,
+      "precision": 0.15384615384615385,
+      "recall": 0.7058823529411765,
+      "f1": 0.25263157894736843,
+      "roc_auc": 0.7013900661129006,
+      "alert_rate": 0.4094488188976378,
+      "green_npv": 0.9555555555555556,
+      "tp": 24,
+      "fp": 132,
+      "fn": 10,
+      "tn": 215
+    },
+    "red_metrics": {
+      "accuracy": 0.910761154855643,
+      "balanced_accuracy": 0.5,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.7013900661129006,
+      "alert_rate": 0.0,
+      "green_npv": 0.910761154855643,
+      "tp": 0,
+      "fp": 0,
+      "fn": 34,
+      "tn": 347
+    },
+    "red_candidates": 0,
+    "worst_fold_recall": 0.42857142857142855,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "accuracy": 0.4117647058823529,
+        "balanced_accuracy": 0.7023809523809523,
+        "precision": 0.0196078431372549,
+        "recall": 1.0,
+        "f1": 0.038461538461538464,
+        "roc_auc": 0.9642857142857143,
+        "alert_rate": 0.6,
+        "green_npv": 1.0,
+        "tp": 1,
+        "fp": 50,
+        "fn": 0,
+        "tn": 34
+      },
+      {
+        "fold_id": 1,
+        "accuracy": 0.788235294117647,
+        "balanced_accuracy": 0.6245421245421245,
+        "precision": 0.17647058823529413,
+        "recall": 0.42857142857142855,
+        "f1": 0.25,
+        "roc_auc": 0.6483516483516483,
+        "alert_rate": 0.2,
+        "green_npv": 0.9411764705882353,
+        "tp": 3,
+        "fp": 14,
+        "fn": 4,
+        "tn": 64
+      },
+      {
+        "fold_id": 2,
+        "accuracy": 0.7738095238095238,
+        "balanced_accuracy": 0.8283783783783785,
+        "precision": 0.3333333333333333,
+        "recall": 0.9,
+        "f1": 0.4864864864864865,
+        "roc_auc": 0.8540540540540541,
+        "alert_rate": 0.32142857142857145,
+        "green_npv": 0.9824561403508771,
+        "tp": 9,
+        "fp": 18,
+        "fn": 1,
+        "tn": 56
+      },
+      {
+        "fold_id": 3,
+        "accuracy": 0.6785714285714286,
+        "balanced_accuracy": 0.6739130434782609,
+        "precision": 0.3125,
+        "recall": 0.6666666666666666,
+        "f1": 0.425531914893617,
+        "roc_auc": 0.7980676328502416,
+        "alert_rate": 0.38095238095238093,
+        "green_npv": 0.9038461538461539,
+        "tp": 10,
+        "fp": 22,
+        "fn": 5,
+        "tn": 47
+      },
+      {
+        "fold_id": 4,
+        "accuracy": 0.3488372093023256,
+        "balanced_accuracy": 0.6666666666666666,
+        "precision": 0.034482758620689655,
+        "recall": 1.0,
+        "f1": 0.06666666666666667,
+        "roc_auc": 1.0,
+        "alert_rate": 0.6744186046511628,
+        "green_npv": 1.0,
+        "tp": 1,
+        "fp": 28,
+        "fn": 0,
+        "tn": 14
+      }
+    ]
+  },
+  "non_overlapping_weekday_cohorts": [
+    {
+      "weekday": 0,
+      "rows": 55,
+      "positives": 5,
+      "roc_auc": 0.708
+    },
+    {
+      "weekday": 1,
+      "rows": 54,
+      "positives": 5,
+      "roc_auc": 0.6367346938775511
+    },
+    {
+      "weekday": 2,
+      "rows": 54,
+      "positives": 5,
+      "roc_auc": 0.6979591836734693
+    },
+    {
+      "weekday": 3,
+      "rows": 54,
+      "positives": 6,
+      "roc_auc": 0.5069444444444444
+    },
+    {
+      "weekday": 4,
+      "rows": 54,
+      "positives": 8,
+      "roc_auc": 0.7798913043478262
+    },
+    {
+      "weekday": 5,
+      "rows": 55,
+      "positives": 2,
+      "roc_auc": 0.9245283018867925
+    },
+    {
+      "weekday": 6,
+      "rows": 55,
+      "positives": 3,
+      "roc_auc": 0.673076923076923
+    }
+  ],
+  "median_nonoverlap_weekday_auc": 0.6979591836734693,
+  "min_nonoverlap_weekday_auc": 0.5069444444444444,
+  "ablation": {
+    "merchant_operational_logistic_without_external_sama_auc": 0.48457365655195794,
+    "selected_hybrid_auc": 0.7013900661129006,
+    "delta_auc": 0.2168164095609426
+  },
+  "contract": {
+    "oof_auc_min": 0.8,
+    "oof_balanced_accuracy_min": 0.72,
+    "oof_recall_min": 0.7,
+    "oof_green_npv_min": 0.9,
+    "oof_alert_rate_max": 0.45,
+    "median_nonoverlap_weekday_auc_min": 0.75,
+    "min_nonoverlap_weekday_auc_min": 0.6,
+    "worst_fold_recall_min": 0.5
+  },
+  "gates": {
+    "rolling_origin_past_only": true,
+    "target_purge_7days": true,
+    "previous_completed_week_rich_features_only": true,
+    "oof_auc": false,
+    "oof_balanced_accuracy": false,
+    "oof_recall": true,
+    "oof_green_npv": true,
+    "oof_alert_rate": true,
+    "weekday_median_auc": false,
+    "weekday_min_auc": false,
+    "fold_stability": false
+  },
+  "all_development_gates_passed": false,
+  "next_required_evidence": "Independent frozen merchant-total stress test using patterns not used in this development."
+}
