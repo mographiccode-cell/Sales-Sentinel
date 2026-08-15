@@ -1,0 +1,211 @@
+{
+  "source": "Kaggle shilton123456/sales-in-saudi-arabia",
+  "files": [
+    {
+      "name": "Interactive Dashboards Start.xlsx",
+      "size_bytes": 3890260,
+      "sha256": "dd84813ef1fd5b5b9bee325a0d87e57c47890bb7a31738a585e3b60bf0df35bf",
+      "status": "ok",
+      "rows": 49998,
+      "columns": 13,
+      "column_names": [
+        "Invoice Date",
+        "Invoice ID",
+        "Customer Type",
+        "Customer Name",
+        "City",
+        "Customer Gender",
+        "Employee Name",
+        "Manager Name",
+        "Product Name",
+        "Product Category",
+        "Channel",
+        "Customer Satisfaction",
+        "Total Sales"
+      ],
+      "duplicate_rows": 0,
+      "missing_cells": 0,
+      "date_ranges": {
+        "Invoice Date": {
+          "min": "2020-01-01 00:00:00",
+          "max": "2023-12-31 00:00:00",
+          "unique": 1461,
+          "parsed": 49998
+        }
+      },
+      "semantic_columns": {
+        "invoice": [
+          "Invoice Date",
+          "Invoice ID"
+        ],
+        "customer": [
+          "Customer Type",
+          "Customer Name",
+          "Customer Gender",
+          "Customer Satisfaction"
+        ],
+        "product": [
+          "Product Name",
+          "Product Category"
+        ],
+        "category": [
+          "Product Category"
+        ],
+        "city": [
+          "City"
+        ],
+        "channel": [
+          "Channel"
+        ],
+        "sales": [
+          "Total Sales"
+        ],
+        "total": [
+          "Total Sales"
+        ],
+        "amount": [],
+        "quantity": [],
+        "branch": [],
+        "store": []
+      },
+      "numeric_summary": {
+        "Total Sales": {
+          "min": 22.0,
+          "max": 9700.0,
+          "mean": 1973.11878475139,
+          "std": 2048.0091336601604,
+          "unique": 2641
+        }
+      },
+      "sample_rows": [
+        {
+          "Invoice Date": "2021-06-19",
+          "Invoice ID": "ID-355796",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Hala Ahmed",
+          "City": "Hafar Al Batin",
+          "Customer Gender": "Female",
+          "Employee Name": "Ayman Kamal",
+          "Manager Name": "Hany Higazi",
+          "Product Name": "Backseat Car Organizer",
+          "Product Category": "Automotive",
+          "Channel": "Store",
+          "Customer Satisfaction": "Ok",
+          "Total Sales": "56"
+        },
+        {
+          "Invoice Date": "2020-02-18",
+          "Invoice ID": "ID-394350",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Ahmed Yousef",
+          "City": "Riyadh",
+          "Customer Gender": "Male",
+          "Employee Name": "Sara Adel",
+          "Manager Name": "Hany Higazi",
+          "Product Name": "Micro Sd-Memory-Card",
+          "Product Category": "Electronics",
+          "Channel": "OnLine",
+          "Customer Satisfaction": "Very Low",
+          "Total Sales": "1175"
+        },
+        {
+          "Invoice Date": "2022-09-21",
+          "Invoice ID": "ID-80295",
+          "Customer Type": "Retail Customer",
+          "Customer Name": "Hassan Abdelrahman",
+          "City": "Riyadh",
+          "Customer Gender": "Male",
+          "Employee Name": "Abdullateif AlKhateib",
+          "Manager Name": "Mohamed Allam",
+          "Product Name": "Bowls Feeder",
+          "Product Category": "Pet Supplies",
+          "Channel": "OnLine",
+          "Customer Satisfaction": "Very Low",
+          "Total Sales": "305"
+        },
+        {
+          "Invoice Date": "2020-09-14",
+          "Invoice ID": "ID-284815",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Taleb Aldris",
+          "City": "Najran",
+          "Customer Gender": "Male",
+          "Employee Name": "Mohamed Musallam",
+          "Manager Name": "Mohamed Allam",
+          "Product Name": "Hooded Shirt Jacket",
+          "Product Category": "Men'S Fashion",
+          "Channel": "Store",
+          "Customer Satisfaction": "Ok",
+          "Total Sales": "104"
+        },
+        {
+          "Invoice Date": "2022-05-14",
+          "Invoice ID": "ID-210187",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Amal Mohamed",
+          "City": "Riyadh",
+          "Customer Gender": "Female",
+          "Employee Name": "Alaa Khalifa",
+          "Manager Name": "Hany Higazi",
+          "Product Name": "Toddler Little Boy",
+          "Product Category": "Boys' Fashion",
+          "Channel": "Store",
+          "Customer Satisfaction": "High",
+          "Total Sales": "294"
+        },
+        {
+          "Invoice Date": "2020-06-21",
+          "Invoice ID": "ID-492341",
+          "Customer Type": "Retail Customer",
+          "Customer Name": "Hala Ahmed",
+          "City": "Riyadh",
+          "Customer Gender": "Female",
+          "Employee Name": "Ayman Kamal",
+          "Manager Name": "Hany Higazi",
+          "Product Name": "Bird Toys",
+          "Product Category": "Pet Supplies",
+          "Channel": "Store",
+          "Customer Satisfaction": "Ok",
+          "Total Sales": "288"
+        },
+        {
+          "Invoice Date": "2023-10-07",
+          "Invoice ID": "ID-88999",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Mostafa Almohammady",
+          "City": "Hafar Al Batin",
+          "Customer Gender": "Male",
+          "Employee Name": "Mohamed Musallam",
+          "Manager Name": "Mohamed Allam",
+          "Product Name": "Perches Platform",
+          "Product Category": "Pet Supplies",
+          "Channel": "OnLine",
+          "Customer Satisfaction": "Ok",
+          "Total Sales": "3364"
+        },
+        {
+          "Invoice Date": "2020-04-19",
+          "Invoice ID": "ID-447133",
+          "Customer Type": "Loyal Customer",
+          "Customer Name": "Abdullah Alomary",
+          "City": "AlUla",
+          "Customer Gender": "Male",
+          "Employee Name": "Abdullateif AlKhateib",
+          "Manager Name": "Mohamed Allam",
+          "Product Name": "Softside Luggage",
+          "Product Category": "Luggage",
+          "Channel": "Store",
+          "Customer Satisfaction": "Low",
+          "Total Sales": "545"
+        }
+      ],
+      "daily_row_stats": {
+        "days": 1461,
+        "median_rows_per_day": 34.0,
+        "max_rows_per_day": 59
+      }
+    }
+  ],
+  "usable_files": 1,
+  "total_rows": 49998
+}
