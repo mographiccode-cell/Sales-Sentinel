@@ -70,7 +70,6 @@ def fit_cls(m,X,y):
 def horizon_folds(d):
  starts=pd.to_datetime(['2022-01-01','2022-07-01','2023-01-01','2023-07-01','2024-01-01','2024-04-01','2024-07-01','2024-10-01','2025-01-01','2025-04-01'])
  out=[]
- # Four-week target uses future through t+4; 35-day purge guarantees no train label can touch validation period.
  for st in starts:
   en=min(st+pd.DateOffset(months=3)-pd.Timedelta(days=1),DEV_END)
   tr=d.week_start<=st-pd.Timedelta(days=35); va=d.week_start.between(st,en)
@@ -78,7 +77,6 @@ def horizon_folds(d):
  return out
 
 def build_aligned(panel):
- # Feature engineering is source-only. Targets are built separately then joined by immutable week/city keys.
  md,X,P,pc=base.featureize(panel,require_target=False)
  t=add_horizon_targets(panel)[['week_start','city','target_h1','target_h2','target_h4','min_ratio_h1','min_ratio_h2','min_ratio_h4']]
  d=md[['week_start','city']].merge(t,on=['week_start','city'],how='left',validate='one_to_one')
@@ -98,7 +96,6 @@ def build_oof(d,X,pc):
  return pd.concat(rows,ignore_index=True),fm
 
 def base_red_from_artifact(q,a,d,X):
- # Recreate frozen v3.3 next-week base on the same purged folds so RED remains independently conservative.
  reds=np.zeros(len(q),bool); basewatch=np.zeros(len(q),bool); cursor=0
  for fid,(st,en,tr,va) in enumerate(horizon_folds(d)):
   n=int(va.sum()); y=d.loc[tr,'target_h1'].astype(int); scores=[]
@@ -124,8 +121,9 @@ def evaluate(q,red,basewatch,t2,t4,agree_min):
  return {'ok':bool(ok),'RED_next1':rm,'ALERT_next4':m,'alert_rate':rate,'green_coverage':cov,'incremental_negative_alert_rate':incneg,'horizon_incremental_alerts':int(inc.sum()),'horizon_incremental_tp':int((inc&(y4==1)).sum()),'min_stable_fold_recall':float(minst),'folds':per}
 
 def choose(q,red,basewatch):
- c2=np.unique(np.r_[np.quantile(q.score_h2,np.linspace(.20,.995,120)),np.linspace(.15,.85,100)])
- c4=np.unique(np.r_[np.quantile(q.score_h4,np.linspace(.20,.995,120)),np.linspace(.15,.85,100)])
+ # Compact quantile+linear grids preserve full score range while avoiding tens of thousands of duplicate decisions.
+ c2=np.unique(np.r_[np.quantile(q.score_h2,np.linspace(.20,.995,45)),np.linspace(.15,.85,35)])
+ c4=np.unique(np.r_[np.quantile(q.score_h4,np.linspace(.20,.995,45)),np.linspace(.15,.85,35)])
  valid=[]; best_feasible=None
  for agree in (1,2):
   for t2 in c2:
