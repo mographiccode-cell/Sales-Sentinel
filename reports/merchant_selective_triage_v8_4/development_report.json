@@ -1,0 +1,255 @@
+{
+  "version": "SALES-SENTINEL-V8.4-PREQUENTIAL-SELECTIVE-TRIAGE",
+  "status": "DEVELOPMENT_SELECTIVE_POLICY",
+  "scientific_boundary": "Fold 0 is calibration burn-in and emits WATCH only. Folds 1-4 choose GREEN/AMBER thresholds exclusively from earlier folds. Selective metrics must not be confused with full-coverage binary precision/recall; WATCH is an explicit abstention state. External Saudi merchant validation remains required.",
+  "all_folds": {
+    "amber_precision": null,
+    "green_npv": 0.9010416666666666,
+    "amber_recall": 0.0,
+    "amber_n": 0,
+    "green_n": 192,
+    "watch_n": 189,
+    "decisive_n": 192,
+    "decisive_coverage": 0.5039370078740157,
+    "watch_rate": 0.49606299212598426,
+    "decisive_accuracy": 0.9010416666666666,
+    "per_fold": [
+      {
+        "fold_id": 0,
+        "rows": 85,
+        "amber_n": 0,
+        "green_n": 0,
+        "watch_n": 85,
+        "amber_precision": null,
+        "green_npv": null,
+        "decisive_accuracy": 0.0,
+        "decisive_coverage": 0.0
+      },
+      {
+        "fold_id": 1,
+        "rows": 85,
+        "amber_n": 0,
+        "green_n": 70,
+        "watch_n": 15,
+        "amber_precision": null,
+        "green_npv": 0.8571428571428571,
+        "decisive_accuracy": 0.8571428571428571,
+        "decisive_coverage": 0.8235294117647058
+      },
+      {
+        "fold_id": 2,
+        "rows": 84,
+        "amber_n": 0,
+        "green_n": 49,
+        "watch_n": 35,
+        "amber_precision": null,
+        "green_npv": 0.8979591836734694,
+        "decisive_accuracy": 0.8979591836734694,
+        "decisive_coverage": 0.5833333333333334
+      },
+      {
+        "fold_id": 3,
+        "rows": 84,
+        "amber_n": 0,
+        "green_n": 50,
+        "watch_n": 34,
+        "amber_precision": null,
+        "green_npv": 0.92,
+        "decisive_accuracy": 0.92,
+        "decisive_coverage": 0.5952380952380952
+      },
+      {
+        "fold_id": 4,
+        "rows": 43,
+        "amber_n": 0,
+        "green_n": 23,
+        "watch_n": 20,
+        "amber_precision": null,
+        "green_npv": 1.0,
+        "decisive_accuracy": 1.0,
+        "decisive_coverage": 0.5348837209302325
+      }
+    ]
+  },
+  "post_calibration_folds_1_4": {
+    "amber_precision": null,
+    "green_npv": 0.9010416666666666,
+    "amber_recall": 0.0,
+    "amber_n": 0,
+    "green_n": 192,
+    "watch_n": 104,
+    "decisive_n": 192,
+    "decisive_coverage": 0.6486486486486487,
+    "watch_rate": 0.35135135135135137,
+    "decisive_accuracy": 0.9010416666666666,
+    "per_fold": [
+      {
+        "fold_id": 1,
+        "rows": 85,
+        "amber_n": 0,
+        "green_n": 70,
+        "watch_n": 15,
+        "amber_precision": null,
+        "green_npv": 0.8571428571428571,
+        "decisive_accuracy": 0.8571428571428571,
+        "decisive_coverage": 0.8235294117647058
+      },
+      {
+        "fold_id": 2,
+        "rows": 84,
+        "amber_n": 0,
+        "green_n": 49,
+        "watch_n": 35,
+        "amber_precision": null,
+        "green_npv": 0.8979591836734694,
+        "decisive_accuracy": 0.8979591836734694,
+        "decisive_coverage": 0.5833333333333334
+      },
+      {
+        "fold_id": 3,
+        "rows": 84,
+        "amber_n": 0,
+        "green_n": 50,
+        "watch_n": 34,
+        "amber_precision": null,
+        "green_npv": 0.92,
+        "decisive_accuracy": 0.92,
+        "decisive_coverage": 0.5952380952380952
+      },
+      {
+        "fold_id": 4,
+        "rows": 43,
+        "amber_n": 0,
+        "green_n": 23,
+        "watch_n": 20,
+        "amber_precision": null,
+        "green_npv": 1.0,
+        "decisive_accuracy": 1.0,
+        "decisive_coverage": 0.5348837209302325
+      }
+    ]
+  },
+  "fold_details": [
+    {
+      "fold_id": 0,
+      "mode": "calibration_burn_in",
+      "low": null,
+      "high": null
+    },
+    {
+      "fold_id": 1,
+      "history_rows": 85,
+      "low": 0.7801257861635221,
+      "high": 1.01,
+      "history_amber_precision": null,
+      "history_green_npv": 0.9583333333333334,
+      "history_decisive_coverage": 0.8470588235294118
+    },
+    {
+      "fold_id": 2,
+      "history_rows": 170,
+      "low": 0.6111949685534592,
+      "high": 1.01,
+      "history_amber_precision": null,
+      "history_green_npv": 0.9537037037037037,
+      "history_decisive_coverage": 0.6352941176470588
+    },
+    {
+      "fold_id": 3,
+      "history_rows": 254,
+      "low": 0.5863522012578617,
+      "high": 1.01,
+      "history_amber_precision": null,
+      "history_green_npv": 0.9533333333333334,
+      "history_decisive_coverage": 0.5905511811023622
+    },
+    {
+      "fold_id": 4,
+      "history_rows": 338,
+      "low": 0.5615094339622642,
+      "high": 0.9750943396226417,
+      "history_amber_precision": 0.8,
+      "history_green_npv": 0.9581151832460733,
+      "history_decisive_coverage": 0.5798816568047337
+    }
+  ],
+  "development_oracle": {
+    "low": 0.5650000000000001,
+    "high": 0.9726262626262626,
+    "metrics": {
+      "amber_precision": 0.8571428571428571,
+      "green_npv": 0.9539170506912442,
+      "amber_recall": 0.09523809523809523,
+      "amber_n": 7,
+      "green_n": 217,
+      "watch_n": 157,
+      "decisive_n": 224,
+      "decisive_coverage": 0.5879265091863517,
+      "watch_rate": 0.4120734908136483,
+      "decisive_accuracy": 0.9508928571428571,
+      "per_fold": [
+        {
+          "fold_id": 0,
+          "rows": 85,
+          "amber_n": 2,
+          "green_n": 51,
+          "watch_n": 32,
+          "amber_precision": 1.0,
+          "green_npv": 0.9607843137254902,
+          "decisive_accuracy": 0.9622641509433962,
+          "decisive_coverage": 0.6235294117647059
+        },
+        {
+          "fold_id": 1,
+          "rows": 85,
+          "amber_n": 2,
+          "green_n": 47,
+          "watch_n": 36,
+          "amber_precision": 0.5,
+          "green_npv": 0.9787234042553191,
+          "decisive_accuracy": 0.9591836734693877,
+          "decisive_coverage": 0.5764705882352941
+        },
+        {
+          "fold_id": 2,
+          "rows": 84,
+          "amber_n": 2,
+          "green_n": 48,
+          "watch_n": 34,
+          "amber_precision": 1.0,
+          "green_npv": 0.9166666666666666,
+          "decisive_accuracy": 0.92,
+          "decisive_coverage": 0.5952380952380952
+        },
+        {
+          "fold_id": 3,
+          "rows": 84,
+          "amber_n": 1,
+          "green_n": 48,
+          "watch_n": 35,
+          "amber_precision": 1.0,
+          "green_npv": 0.9375,
+          "decisive_accuracy": 0.9387755102040817,
+          "decisive_coverage": 0.5833333333333334
+        },
+        {
+          "fold_id": 4,
+          "rows": 43,
+          "amber_n": 0,
+          "green_n": 23,
+          "watch_n": 20,
+          "amber_precision": null,
+          "green_npv": 1.0,
+          "decisive_accuracy": 1.0,
+          "decisive_coverage": 0.5348837209302325
+        }
+      ]
+    },
+    "meets_80_precision_95_npv": true
+  },
+  "targets": {
+    "amber_precision": 0.8,
+    "green_npv": 0.95
+  },
+  "red_supported": false
+}
