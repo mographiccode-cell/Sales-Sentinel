@@ -1,0 +1,331 @@
+{
+  "version": "SAMA-CITY-V3.4-FRESH-ACCEPTANCE-1",
+  "seed": 3429,
+  "frozen_model": "SAMA-CITY-RISK-3.4-STRUCTURAL-HYBRID",
+  "freshness": "No event key overlaps the corrected v3.3 diagnostic set; event severities are newly sampled and model-score blind.",
+  "events": [
+    {
+      "origin": "2025-09-28",
+      "city": "KHOBAR"
+    },
+    {
+      "origin": "2025-10-26",
+      "city": "JEDDAH"
+    },
+    {
+      "origin": "2025-11-23",
+      "city": "TABOUK"
+    },
+    {
+      "origin": "2025-12-21",
+      "city": "BURAIDAH"
+    },
+    {
+      "origin": "2026-01-18",
+      "city": "ABHA"
+    },
+    {
+      "origin": "2026-02-15",
+      "city": "MAKKAH"
+    },
+    {
+      "origin": "2026-03-15",
+      "city": "MADINA"
+    },
+    {
+      "origin": "2026-04-12",
+      "city": "HAIL"
+    },
+    {
+      "origin": "2026-05-10",
+      "city": "OTHER"
+    },
+    {
+      "origin": "2026-06-07",
+      "city": "RIYADH"
+    },
+    {
+      "origin": "2026-07-05",
+      "city": "DAMMAM"
+    }
+  ],
+  "paths": [
+    {
+      "origin": "2025-09-28",
+      "city": "KHOBAR",
+      "value_path": {
+        "-2": 0.9670282590886836,
+        "-1": 0.8809814044763793,
+        "0": 0.8014921345069005,
+        "1": 0.5675132707992395
+      },
+      "count_path": {
+        "-2": 0.9611671244156733,
+        "-1": 0.9062976398175461,
+        "0": 0.8159057379246806,
+        "1": 0.5934330755003191
+      }
+    },
+    {
+      "origin": "2025-10-26",
+      "city": "JEDDAH",
+      "value_path": {
+        "-2": 0.9742253099035634,
+        "-1": 0.8915801352502319,
+        "0": 0.7995458775806026,
+        "1": 0.6187743543471951
+      },
+      "count_path": {
+        "-2": 0.9749805390283155,
+        "-1": 0.8884452933361806,
+        "0": 0.7997647963827684,
+        "1": 0.5863886086153195
+      }
+    },
+    {
+      "origin": "2025-11-23",
+      "city": "TABOUK",
+      "value_path": {
+        "-2": 0.9689137441692219,
+        "-1": 0.8981197543389412,
+        "0": 0.7955036284944587,
+        "1": 0.6111436411332729
+      },
+      "count_path": {
+        "-2": 0.9609958888603873,
+        "-1": 0.906240797060624,
+        "0": 0.8178297716979587,
+        "1": 0.5992888876414779
+      }
+    },
+    {
+      "origin": "2025-12-21",
+      "city": "BURAIDAH",
+      "value_path": {
+        "-2": 0.9553088176821593,
+        "-1": 0.8776128633678107,
+        "0": 0.8244737367301336,
+        "1": 0.5687106815908478
+      },
+      "count_path": {
+        "-2": 0.9738173463754106,
+        "-1": 0.8882631256438805,
+        "0": 0.8256203310361423,
+        "1": 0.6292203671008318
+      }
+    },
+    {
+      "origin": "2026-01-18",
+      "city": "ABHA",
+      "value_path": {
+        "-2": 0.9698076260070883,
+        "-1": 0.8937147439235199,
+        "0": 0.7975912200023773,
+        "1": 0.5716287069520868
+      },
+      "count_path": {
+        "-2": 0.973248151320256,
+        "-1": 0.8998723897071114,
+        "0": 0.8238682228003331,
+        "1": 0.5986224428337851
+      }
+    },
+    {
+      "origin": "2026-02-15",
+      "city": "MAKKAH",
+      "value_path": {
+        "-2": 0.9572570023126475,
+        "-1": 0.9041845509577544,
+        "0": 0.8192425677192429,
+        "1": 0.5929752672025758
+      },
+      "count_path": {
+        "-2": 0.9696528775030534,
+        "-1": 0.8800472283666744,
+        "0": 0.8266001782445782,
+        "1": 0.5924612530363221
+      }
+    },
+    {
+      "origin": "2026-03-15",
+      "city": "MADINA",
+      "value_path": {
+        "-2": 0.9558390428403838,
+        "-1": 0.8761192880372526,
+        "0": 0.7950594110238877,
+        "1": 0.5978098518519998
+      },
+      "count_path": {
+        "-2": 0.9737047478857213,
+        "-1": 0.9138831535607437,
+        "0": 0.8221228200778716,
+        "1": 0.6101968450458112
+      }
+    },
+    {
+      "origin": "2026-04-12",
+      "city": "HAIL",
+      "value_path": {
+        "-2": 0.9613453618031319,
+        "-1": 0.8776058830241975,
+        "0": 0.7956739558575137,
+        "1": 0.5975255988703021
+      },
+      "count_path": {
+        "-2": 0.9774921936838886,
+        "-1": 0.8940023248783128,
+        "0": 0.7997220257964298,
+        "1": 0.5762336163078844
+      }
+    },
+    {
+      "origin": "2026-05-10",
+      "city": "OTHER",
+      "value_path": {
+        "-2": 0.9572792890884317,
+        "-1": 0.8937667721023341,
+        "0": 0.8246134978928101,
+        "1": 0.6027351392822601
+      },
+      "count_path": {
+        "-2": 0.9769723248298778,
+        "-1": 0.8969242115859042,
+        "0": 0.8002481035145588,
+        "1": 0.6139313991201457
+      }
+    },
+    {
+      "origin": "2026-06-07",
+      "city": "RIYADH",
+      "value_path": {
+        "-2": 0.9633047998722242,
+        "-1": 0.8987962444468073,
+        "0": 0.8115801285820161,
+        "1": 0.5932074236626781
+      },
+      "count_path": {
+        "-2": 0.977485066076206,
+        "-1": 0.914726007469885,
+        "0": 0.8270147846904994,
+        "1": 0.5990261787115916
+      }
+    },
+    {
+      "origin": "2026-07-05",
+      "city": "DAMMAM",
+      "value_path": {
+        "-2": 0.9661731370666305,
+        "-1": 0.8761655356475994,
+        "0": 0.8076087140154202,
+        "1": 0.5927806792479452
+      },
+      "count_path": {
+        "-2": 0.9717443754009093,
+        "-1": 0.8809725740344742,
+        "0": 0.8205284504344332,
+        "1": 0.6262974981683788
+      }
+    }
+  ],
+  "observability": [
+    {
+      "origin": "2025-09-28",
+      "city": "KHOBAR",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2025-10-26",
+      "city": "JEDDAH",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2025-11-23",
+      "city": "TABOUK",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2025-12-21",
+      "city": "BURAIDAH",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-01-18",
+      "city": "ABHA",
+      "core_count": 6,
+      "precursor_count": 6
+    },
+    {
+      "origin": "2026-02-15",
+      "city": "MAKKAH",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-03-15",
+      "city": "MADINA",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-04-12",
+      "city": "HAIL",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-05-10",
+      "city": "OTHER",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-06-07",
+      "city": "RIYADH",
+      "core_count": 6,
+      "precursor_count": 7
+    },
+    {
+      "origin": "2026-07-05",
+      "city": "DAMMAM",
+      "core_count": 6,
+      "precursor_count": 7
+    }
+  ],
+  "event_count": 11,
+  "rows_scored": 462,
+  "injected_event_actual_declines": 11,
+  "injected_event_alerted": 11,
+  "injected_event_alert_recall": 1.0,
+  "injected_event_red": 0,
+  "injected_event_structural_alerts": 4,
+  "control": {
+    "rows": 390,
+    "negative_rows": 380,
+    "false_red": 0,
+    "false_red_rate": 0.0,
+    "alert_rate": 0.3153846153846154,
+    "green_coverage": 0.6846153846153846
+  },
+  "overall": {
+    "states": {
+      "GREEN": 300,
+      "AMBER": 161,
+      "RED": 1
+    },
+    "OOD_abstentions": 14,
+    "structural_alerts": 47
+  },
+  "acceptance": {
+    "test_core6_valid": true,
+    "all_injected_origins_actual_declines": true,
+    "injected_alert_recall_ge_90pct": true,
+    "control_false_red_rate_le_2pct": true,
+    "control_alert_rate_le_35pct": true,
+    "control_green_coverage_ge_65pct": true
+  },
+  "all_acceptance_passed": true
+}

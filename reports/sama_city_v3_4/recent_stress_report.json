@@ -1,0 +1,50 @@
+{
+  "version": "SAMA-CITY-V3.4-RECENT-STRESS-1",
+  "independence_status": "NOT INDEPENDENT: this era informed v3 architecture; v3.4 weights/policy are not fitted here.",
+  "rows": 605,
+  "weeks": 55,
+  "declines": 17,
+  "states": {
+    "GREEN": 454,
+    "AMBER": 148,
+    "RED": 3
+  },
+  "alert_rate": 0.24958677685950414,
+  "green_coverage": 0.7504132231404959,
+  "RED": {
+    "TP": 3,
+    "FP": 0,
+    "FN": 14,
+    "TN": 588,
+    "precision": 1.0,
+    "recall": 0.17647058823529413,
+    "FPR": 0.0,
+    "NPV": 0.9767441860465116
+  },
+  "RED_plus_AMBER": {
+    "TP": 16,
+    "FP": 135,
+    "FN": 1,
+    "TN": 453,
+    "precision": 0.10596026490066225,
+    "recall": 0.9411764705882353,
+    "FPR": 0.22959183673469388,
+    "NPV": 0.9977973568281938
+  },
+  "GREEN": {
+    "NPV": 0.9977973568281938,
+    "missed_declines": 1
+  },
+  "ranking": {
+    "ROC_AUC": 0.96468587434974,
+    "PR_AUC": 0.6174921163036234
+  },
+  "OOD": {
+    "rows": 1,
+    "rate": 0.001652892561983471
+  },
+  "structural_channel": {
+    "alerts": 54,
+    "positives": 0
+  }
+}
