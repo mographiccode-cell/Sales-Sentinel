@@ -1,0 +1,41 @@
+name: Export Portable V18 Artifact
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/export_portable_v18_artifact.py'
+      - '.github/workflows/export-portable-v18-artifact.yml'
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install training-only dependencies
+        run: pip install numpy pandas scikit-learn joblib
+      - name: Export pure-Python runtime artifact
+        run: python scripts/export_portable_v18_artifact.py
+      - name: Show artifact summary
+        run: cat reports/portable_v18_artifact/summary.md
+      - name: Upload evidence and model
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-portable-v18
+          path: |
+            reports/portable_v18_artifact/
+            models/sales_sentinel_portable_v18.json.gz
+      - name: Persist artifact and evidence
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add reports/portable_v18_artifact models/sales_sentinel_portable_v18.json.gz
+          git diff --cached --quiet || git commit -m "Export portable V18 runtime artifact"
+          git pull --rebase origin main
+          git push
