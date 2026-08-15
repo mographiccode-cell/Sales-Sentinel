@@ -4,6 +4,8 @@ import numpy as np
 
 import train_merchant_market_fusion_v6_1 as base
 
+_DRIFT_CACHE = {}
+
 
 def causal_percentile_score(values, lookback=126, min_history=20):
     """Causal score normalization using only earlier model scores.
@@ -25,10 +27,16 @@ def causal_percentile_score(values, lookback=126, min_history=20):
 
 
 def drift_adjusted_score(Z):
+    """Return cached causal drift score for this exact OOF feature frame."""
+    key = id(Z)
+    cached = _DRIFT_CACHE.get(key)
+    if cached is not None and len(cached) == len(Z):
+        return cached
     raw = Z["merchant_mean"].to_numpy(float)
     rank = causal_percentile_score(raw)
-    # Raw probability remains dominant; causal rank only corrects regime-scale drift.
-    return 0.62 * raw + 0.38 * rank
+    adjusted = 0.62 * raw + 0.38 * rank
+    _DRIFT_CACHE[key] = adjusted
+    return adjusted
 
 
 def drift_make_policy_pred(Z, low_t, high_t, agree_t, market_t, disagreement_max):
@@ -43,8 +51,6 @@ def drift_make_policy_pred(Z, low_t, high_t, agree_t, market_t, disagreement_max
     market_mean = Z[f"{base.MARKET_PREFIX}risk_mean"].to_numpy(float)
     precursor = Z[f"{base.MARKET_PREFIX}precursor_share_2"].to_numpy(float)
 
-    # A high alert still needs a minimum absolute merchant signal; this prevents
-    # a pure relative-rank spike in a weak regime from becoming an alert.
     absolute_floor = float(np.quantile(raw_mean, 0.30))
     high = (adjusted >= high_t) & (raw_mean >= absolute_floor)
     marginal = (adjusted >= low_t) & (~high)
@@ -68,6 +74,11 @@ def drift_make_policy_pred(Z, low_t, high_t, agree_t, market_t, disagreement_max
     }
 
 
+def candidate_values(x, quantiles):
+    x = np.asarray(x, float)
+    return sorted(set(float(v) for v in np.quantile(x, quantiles)))
+
+
 def gate_margin(m):
     terms = [
         m["recall"] / 0.80,
@@ -88,14 +99,14 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
     score = drift_adjusted_score(Z)
     market = Z[f"{base.MARKET_PREFIX}risk_p90"].to_numpy(float)
 
-    low_values = base.candidate_values(score, [0.34, 0.40, 0.46, 0.52, 0.58, 0.64])
-    high_values = base.candidate_values(score, [0.58, 0.64, 0.70, 0.76, 0.82, 0.88])
-    agree_values = base.candidate_values(
+    low_values = candidate_values(score, [0.34, 0.40, 0.46, 0.52, 0.58, 0.64])
+    high_values = candidate_values(score, [0.58, 0.64, 0.70, 0.76, 0.82, 0.88])
+    agree_values = candidate_values(
         np.minimum(Z["merchant_logreg"], Z["merchant_extra"]),
         [0.32, 0.42, 0.52, 0.62, 0.72],
     )
-    market_values = base.candidate_values(market, [0.35, 0.48, 0.60, 0.72, 0.82])
-    disagreement_values = base.candidate_values(
+    market_values = candidate_values(market, [0.35, 0.48, 0.60, 0.72, 0.82])
+    disagreement_values = candidate_values(
         Z["merchant_disagreement"], [0.38, 0.52, 0.66, 0.80]
     )
 
@@ -110,7 +121,6 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
                         pred, diagnostics = drift_make_policy_pred(
                             Z, low_t, high_t, agree_t, market_t, disagreement_max
                         )
-                        # Ranking evidence remains the original merchant probability.
                         m, per = base.evaluate_policy(y, raw_score, pred, fold_ids)
                         alerts = m["tp"] + m["fp"]
                         margin = gate_margin(m) if not severe else 0.0
@@ -172,7 +182,6 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
     if severe:
         protected = []
     else:
-        # V6: 55 TP / 126 FP on the same 381 OOF rows.
         protected = [
             r for r in rows
             if r["metrics"]["tp"] >= 50
@@ -244,7 +253,6 @@ def guarded_search_precision_recovery_policy(y, Z, fold_ids, severe=False):
     return best
 
 
-# Patch both the policy search and prediction function used by base.main().
 base.search_precision_recovery_policy = guarded_search_precision_recovery_policy
 base.make_policy_pred = drift_make_policy_pred
 
