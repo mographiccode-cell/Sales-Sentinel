@@ -1,0 +1,61 @@
+name: Train Merchant Total Triage v4.4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/train_merchant_total_triage_v4_4.py'
+      - '.github/workflows/train-merchant-total-triage-v4-4.yml'
+      - 'data/merchant_v4_3/merchant_total_feature_panel_v4_3.csv'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: pip install -r requirements-training.txt
+      - name: Train frozen dense triage v4.4
+        env:
+          PYTHONPATH: ${{ github.workspace }}/scripts
+        run: python scripts/train_merchant_total_triage_v4_4.py
+      - name: Show evidence
+        if: always()
+        run: |
+          test -f reports/merchant_total_triage_v4_4/development_summary.md && cat reports/merchant_total_triage_v4_4/development_summary.md || true
+          test -f reports/merchant_total_triage_v4_4/development_report.json && cat reports/merchant_total_triage_v4_4/development_report.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sales-sentinel-merchant-total-triage-v4-4
+          path: |
+            reports/merchant_total_triage_v4_4/**
+            models/merchant_total_triage_v4_4/**
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist evidence/model
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/merchant_total_triage_v4_4 models/merchant_total_triage_v4_4 2>/dev/null || true
+          git diff --cached --quiet || git commit -m 'model: persist Sales Sentinel dense triage v4.4 evidence'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Enforce development gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('reports/merchant_total_triage_v4_4/development_report.json').read_text())
+          assert d.get('all_development_gates_passed') is True, json.dumps(d,indent=2)
+          PY
