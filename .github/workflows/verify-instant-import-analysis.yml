@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'app/database.py'
+      - 'app/services/forecasting_engine.py'
       - 'app/services/instant_analysis.py'
       - 'app/services/model_evidence.py'
       - 'app/imports/routes.py'
@@ -92,6 +93,12 @@ jobs:
                   assert len(analysis['forecasts']) == 7
                   assert analysis['observed_change_pct'] < 0
                   assert analysis['observed_decline_pct'] > 0
+                  # The uploaded series is deliberately declining; calibrated point
+                  # forecasts must remain on its monetary scale and preserve that signal.
+                  assert analysis['predicted_change_pct'] < 0, analysis['predicted_change_pct']
+                  assert analysis['predicted_decline_pct'] > 10, analysis['predicted_decline_pct']
+                  assert analysis['forecast_average'] < analysis['baseline_daily_sales'], (analysis['forecast_average'], analysis['baseline_daily_sales'])
+                  assert analysis['forecast_average'] < 1000, analysis['forecast_average']
                   assert 70 < analysis['forecast_accuracy_pct'] < 80
                   assert 20 < analysis['forecast_error_pct'] < 30
                   assert round(analysis['decline_diagnostic_accuracy_pct'], 1) == 65.0
