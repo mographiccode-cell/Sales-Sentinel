@@ -5,25 +5,22 @@ on:
   push:
     branches: [main]
     paths:
-      - 'api/**'
-      - 'vercel.json'
-      - '.vercelignore'
       - '.github/workflows/test-live-vercel.yml'
 
 jobs:
   live-vercel:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe stable and team-qualified aliases
+      - name: Probe candidate production aliases
         shell: bash
         run: |
           set +e
           urls=(
             "https://sales-sentinel-ppgm.vercel.app/"
-            "https://sales-sentinel-ppgm.vercel.app/__probe"
-            "https://sales-sentinel-ppgm-mographiccode.vercel.app/"
-            "https://sales-sentinel-ppgm-mographiccode.vercel.app/__probe"
+            "https://sales-sentinel.vercel.app/"
+            "https://sales-sentinel.vercel.app/healthz"
             "https://sales-sentinel-mographiccode.vercel.app/"
+            "https://sales-sentinel-ppgm-mographiccode.vercel.app/"
           )
           failed=0
           for url in "${urls[@]}"; do
