@@ -1,0 +1,31 @@
+name: Export Full Source
+
+on:
+  push:
+    branches: [ux3-final-transfer]
+    paths:
+      - '.github/workflows/export-full-source.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Remove Git metadata only
+        shell: bash
+        run: |
+          rm -rf .git
+      - name: Upload full source
+        uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-full-main
+          path: .
+          include-hidden-files: true
+          retention-days: 1
