@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import json
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -37,6 +38,31 @@ def test_v18_artifact_and_pure_runtime_score():
     score = v18._score(artifact, row)
     assert len(row) == 96
     assert 0.0 <= score <= 1.0
+
+
+def test_model_registry_matches_runtime_artifact():
+    registry_path = Path(__file__).resolve().parents[1] / "models" / "model_registry.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    runtime = registry["models"]["portable_runtime"]
+    development = registry["models"]["merchant_decline_development_best"]
+    point = registry["models"]["point_sales_forecast"]
+    artifact = v18.load_artifact()
+
+    assert development["version"] == "V13.1"
+    assert development["status"] == "DEVELOPMENT_BEST"
+    assert development["metrics"]["recall"] == 0.8254
+    assert development["metrics"]["precision"] == 0.4444
+
+    assert runtime["version"] == artifact["version"]
+    assert runtime["artifact"] == "models/sales_sentinel_portable_v18.json.gz"
+    assert runtime["feature_count"] == len(artifact["feature_names"]) == 96
+    assert runtime["tree_count"] == len(artifact["trees"]) == 1000
+    assert runtime["history_required_days"] == int(artifact.get("history_required_days", 56))
+    assert runtime["red_severity_supported"] is False
+
+    assert point["name"] == "ridge_raw_1"
+    assert point["status"] == "LEGACY_POINT_FORECAST_ONLY"
+    assert "decline" in point["must_not_be_used_for"].lower()
 
 
 def test_uci_ambiguous_date_is_month_first():
