@@ -7,16 +7,17 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 IS_VERCEL = bool(os.getenv("VERCEL"))
+EXTERNAL_DATABASE_URL = str(os.getenv("DATABASE_URL") or "").strip()
 
 
 def prepare_runtime_database() -> Path:
-    """Return a writable SQLite path.
+    """Return the SQLite path used when no external database is configured.
 
-    Locally the project uses the persistent database under ``instance``.
-    Vercel Functions have an ephemeral read-only deployment filesystem, so the
-    verified seed database is copied to ``/tmp`` for the lifetime of a warm
-    function instance. The public deployment is therefore a demonstration;
-    local SQLite remains the authoritative persistent mode.
+    Local development uses persistent SQLite under ``instance``. Vercel falls
+    back to an ephemeral ``/tmp`` SQLite copy only when ``DATABASE_URL`` is not
+    configured. A persistent hosted database should therefore be supplied for
+    deployments that need imports, forecasts, alerts, and audit history to
+    survive function recycling.
     """
     seed = BASE_DIR / "instance" / "sales_sentinel.db"
     if not IS_VERCEL:
@@ -40,8 +41,8 @@ def prepare_runtime_database() -> Path:
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "development-only-change-before-production-2026")
-    DATABASE_PATH = prepare_runtime_database()
-    DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DATABASE_PATH}")
+    DATABASE_PATH = None if EXTERNAL_DATABASE_URL else prepare_runtime_database()
+    DATABASE_URL = EXTERNAL_DATABASE_URL or f"sqlite:///{DATABASE_PATH}"
     UPLOAD_DIR = Path("/tmp/uploads") if IS_VERCEL else BASE_DIR / "instance" / "uploads"
     REPORT_DIR = Path("/tmp/reports") if IS_VERCEL else BASE_DIR / "instance" / "reports"
     MODEL_DIR = BASE_DIR / "models"
@@ -56,4 +57,9 @@ class Config:
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SECURE = IS_VERCEL or os.getenv("SESSION_COOKIE_SECURE", "0") == "1"
-    DEPLOYMENT_MODE = "vercel-demo-ephemeral" if IS_VERCEL else "local-persistent-sqlite"
+    if EXTERNAL_DATABASE_URL:
+        DEPLOYMENT_MODE = "persistent-external-database"
+    elif IS_VERCEL:
+        DEPLOYMENT_MODE = "vercel-demo-ephemeral"
+    else:
+        DEPLOYMENT_MODE = "local-persistent-sqlite"
