@@ -1,8 +1,11 @@
-from flask import Flask, jsonify
+from http.server import BaseHTTPRequestHandler
 
-app = Flask(__name__)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def probe(path):
-    return jsonify({'status': 'ok', 'runtime': 'python-flask', 'probe': True}), 200
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        body = b'{"status":"ok","runtime":"python-stdlib","probe":true}'
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
