@@ -39,9 +39,23 @@ jobs:
           client = app.test_client()
           response = client.get('/')
           print('root status=', response.status_code)
-          print(response.data[:500].decode('utf-8', errors='replace'))
           assert response.status_code == 200
           health = client.get('/healthz')
           print('health status=', health.status_code, health.get_json())
           assert health.status_code == 200
+          PY
+      - name: Verify unavailable DATABASE_URL cannot crash Vercel
+        run: |
+          rm -f /tmp/sales_sentinel.db
+          DATABASE_URL='postgresql://sales:sentinel@127.0.0.1:1/unreachable' python - <<'PY'
+          from api.index import app
+          assert app.config['DEPLOYMENT_MODE'] == 'vercel-demo-ephemeral-fallback', app.config['DEPLOYMENT_MODE']
+          client = app.test_client()
+          root = client.get('/')
+          health = client.get('/healthz')
+          print('fallback root=', root.status_code)
+          print('fallback health=', health.status_code, health.get_json())
+          assert root.status_code == 200
+          assert health.status_code == 200
+          assert health.get_json()['database'] == 'sqlite'
           PY
