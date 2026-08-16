@@ -38,7 +38,7 @@ def create_user():
         if not role:
             flash("Invalid role", "error")
             return redirect(url_for("admin.users"))
-        db.add(User(username=username, email=email, full_name_ar=username, full_name_en=username, password_hash=hash_password(password), role_id=role.id, locale="ar"))
+        db.add(User(username=username, email=email, full_name_ar=username, full_name_en=username, password_hash=hash_password(password), role_id=role.id, locale="en"))
     flash("تم إنشاء المستخدم / User created.", "success")
     return redirect(url_for("admin.users"))
 
