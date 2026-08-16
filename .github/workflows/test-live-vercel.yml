@@ -14,15 +14,15 @@ jobs:
   live-vercel:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe stable aliases and latest successful deployment
+      - name: Probe stable and team-qualified aliases
         shell: bash
         run: |
           set +e
           urls=(
             "https://sales-sentinel-ppgm.vercel.app/"
             "https://sales-sentinel-ppgm.vercel.app/__probe"
-            "https://sales-sentinel-ppgm-t8mdvf0th-mographiccode.vercel.app/"
-            "https://sales-sentinel-ppgm-t8mdvf0th-mographiccode.vercel.app/__probe"
+            "https://sales-sentinel-ppgm-mographiccode.vercel.app/"
+            "https://sales-sentinel-ppgm-mographiccode.vercel.app/__probe"
             "https://sales-sentinel-mographiccode.vercel.app/"
           )
           failed=0
