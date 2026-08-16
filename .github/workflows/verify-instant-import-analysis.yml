@@ -1,0 +1,102 @@
+name: Verify Instant Import Analysis
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/services/instant_analysis.py'
+      - 'app/services/model_evidence.py'
+      - 'app/imports/routes.py'
+      - 'app/templates/imports/index.html'
+      - 'app/static/js/app.js'
+      - '.github/workflows/verify-instant-import-analysis.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL: '1'
+      DATABASE_URL: 'sqlite:////tmp/sales-sentinel-integration.db'
+      SECRET_KEY: 'integration-test-only'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Verify Python and templates
+        run: |
+          python -m compileall -q app main.py api/index.py
+          python - <<'PY'
+          from app import create_app
+          app = create_app()
+          for name in ['imports/index.html','forecasting/index.html','reports/index.html']:
+              app.jinja_env.get_template(name)
+              print('TEMPLATE_OK', name)
+          PY
+      - name: Verify browser JavaScript syntax
+        run: node --check app/static/js/app.js
+      - name: Run 240-row end-to-end analysis
+        run: |
+          rm -f /tmp/sales-sentinel-integration.db /tmp/integration.csv
+          python - <<'PY'
+          import csv
+          from datetime import date, timedelta
+          from decimal import Decimal
+          from pathlib import Path
+
+          from app import create_app
+          from app.database import session_scope
+          from app.models import ImportJob
+          from app.services.instant_analysis import run_instant_analysis
+          from app.services.model_evidence import enrich_analysis_evidence
+          from app.services.sales_importer import ingest_csv, inspect_csv
+
+          path = Path('/tmp/integration.csv')
+          headers = ['TRX DATE','TRX NUMBER','SALES CHANNEL','CUSTOMER NUMBER','ITEM CODE','QUANTITY','Unit Price','Net Amount','TOTAL AMOUNT','Vat Amount','Discount Amount','Discount Amount(%)','ITEM DESC','Type','FAMILY','SUBCLASS','FRANCHISE']
+          start = date(2026, 6, 17)
+          rows = []
+          for day_index in range(60):
+              day = start + timedelta(days=day_index)
+              # Stable first 46 days, then a deliberate controlled decline.
+              factor = 1.0 if day_index < 46 else max(0.48, 1.0 - (day_index - 45) * 0.04)
+              for n in range(4):
+                  price = Decimal('50.00') + Decimal(str((n % 3) * 5))
+                  qty = 2 + (n % 2)
+                  net = (price * qty * Decimal(str(factor))).quantize(Decimal('0.01'))
+                  vat = (net * Decimal('0.15')).quantize(Decimal('0.01'))
+                  total = net + vat
+                  rows.append([day.isoformat(),f'TEST-{day:%Y%m%d}-{n+1:02d}','Store' if n < 3 else 'Online',f'CUST-{1000 + ((day_index*4+n)%90):04d}',f'SKU-{(n%6)+1:03d}',qty,f'{price:.2f}',f'{net:.2f}',f'{total:.2f}',f'{vat:.2f}','0.00','0.00',f'Product {(n%6)+1}','INV','Retail','Test','Integration'])
+          with path.open('w', encoding='utf-8-sig', newline='') as f:
+              w = csv.writer(f); w.writerow(headers); w.writerows(rows)
+          assert len(rows) == 240
+
+          app = create_app()
+          with app.app_context():
+              mode, total, accepted, errors = inspect_csv(path)
+              assert mode == 'redsea', (mode, errors)
+              assert total == accepted == 240, (total, accepted, errors[:3])
+              with session_scope() as db:
+                  job = ImportJob(filename='integration.csv', file_sha256='integration', status='importing', total_rows=240, accepted_rows=0, rejected_rows=0, error_details={'mode':'redsea'})
+                  db.add(job); db.flush()
+                  result = ingest_csv(db, path, job.id, mode)
+                  assert result['inserted_rows'] == 240, result
+                  analysis = run_instant_analysis(db, horizon=7)
+                  enrich_analysis_evidence(analysis)
+                  print('ANALYSIS=', analysis)
+                  assert analysis['available'] is True
+                  assert analysis['v18_available'] is True, analysis.get('v18_reason')
+                  assert analysis['history_days'] >= 56
+                  assert len(analysis['forecasts']) == 7
+                  assert analysis['observed_change_pct'] < 0
+                  assert analysis['observed_decline_pct'] > 0
+                  assert 70 < analysis['forecast_accuracy_pct'] < 80
+                  assert 20 < analysis['forecast_error_pct'] < 30
+                  assert round(analysis['decline_diagnostic_accuracy_pct'], 1) == 65.0
+                  assert analysis['decline_correct_count'] == 39
+                  assert analysis['decline_wrong_count'] == 21
+                  assert analysis['decline_diagnostic_sample_size'] == 60
+                  print('INTEGRATION_OK')
+          PY
