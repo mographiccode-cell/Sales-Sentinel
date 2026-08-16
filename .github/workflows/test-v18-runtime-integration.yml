@@ -47,7 +47,7 @@ jobs:
           tests/test_v18_runtime_and_import.py
           tests/test_import_route_xlsx.py
           tests/test_postgres_ingestion.py
-      - name: Smoke-create Flask application and compile updated templates
+      - name: Smoke-create Flask application and compile updated templates on SQLite
         env:
           DATABASE_URL: sqlite:////tmp/sales-sentinel-smoke.sqlite3
         run: |
@@ -62,4 +62,22 @@ jobs:
           print(r.status_code, r.get_json())
           assert r.status_code == 200
           assert r.get_json()['database'] == 'sqlite'
+          PY
+      - name: Smoke-create full Flask application on persistent PostgreSQL
+        env:
+          DATABASE_URL: postgresql://sales:sales@127.0.0.1:5432/sales_sentinel
+          SECRET_KEY: postgres-smoke-secret
+        run: |
+          python - <<'PY'
+          from app import create_app
+          app = create_app()
+          client = app.test_client()
+          response = client.get('/healthz')
+          payload = response.get_json()
+          print(response.status_code, payload)
+          assert response.status_code == 200
+          assert payload['database'] == 'postgresql'
+          assert payload['mode'] == 'persistent-external-database'
+          login = client.get('/auth/login')
+          assert login.status_code == 200
           PY
