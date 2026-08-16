@@ -7,11 +7,23 @@ from sqlalchemy import desc, select
 
 from app.database import session_scope
 from app.models import ImportJob
+from app.services.instant_analysis import run_instant_analysis
 from app.services.sales_importer import ingest_csv, inspect_csv
 from app.services.security import current_user, login_required, permission_required, safe_filename, sha256_file
 from app.services.tabular_upload import normalize_tabular_upload
 
 imports_bp = Blueprint("imports", __name__, url_prefix="/imports")
+
+
+def _render_imports(*, analysis: dict | None = None, analysis_error: str | None = None):
+    with session_scope() as db:
+        jobs = db.scalars(select(ImportJob).order_by(desc(ImportJob.created_at)).limit(30)).all()
+    return render_template(
+        "imports/index.html",
+        jobs=jobs,
+        analysis=analysis,
+        analysis_error=analysis_error,
+    )
 
 
 @imports_bp.route("/", methods=["GET", "POST"])
@@ -35,6 +47,8 @@ def index():
         original_sha256 = sha256_file(destination)
         working_path = destination
         generated_csv = False
+        analysis = None
+        analysis_error = None
 
         try:
             working_path, generated_csv = normalize_tabular_upload(destination)
@@ -60,6 +74,7 @@ def index():
                 flash("فشل التحقق من بنية الملف / File validation failed.", "error")
                 return redirect(url_for("imports.index"))
 
+            user = current_user()
             with session_scope() as db:
                 job = ImportJob(
                     filename=destination.name,
@@ -73,7 +88,7 @@ def index():
                         "source_format": extension.lstrip("."),
                         "validation_errors": validation_errors,
                     },
-                    created_by_id=current_user().id if current_user() else None,
+                    created_by_id=user.id if user else None,
                 )
                 db.add(job)
                 db.flush()
@@ -93,16 +108,45 @@ def index():
                 inserted = result["inserted_rows"]
                 duplicates = result["duplicate_rows"]
 
+                # Important for Vercel: inference happens in the SAME request and
+                # database session as ingestion. This guarantees that the newly
+                # uploaded rows are visible even when /tmp SQLite is ephemeral.
+                try:
+                    analysis = run_instant_analysis(
+                        db,
+                        horizon=7,
+                        created_by_id=user.id if user else None,
+                    )
+                    analysis.update({
+                        "source_filename": destination.name,
+                        "source_sha256": original_sha256,
+                        "import_mode": mode,
+                        "import_total_rows": total,
+                        "import_validated_rows": accepted,
+                        "import_inserted_rows": inserted,
+                        "import_duplicate_rows": duplicates,
+                        "import_rejected_rows": validation_rejected + result["rejected_rows"],
+                    })
+                    if not analysis.get("available"):
+                        analysis_error = analysis.get("reason")
+                except Exception as exc:
+                    # Import success must never be rolled back just because the
+                    # model cannot run. Surface the model error separately.
+                    analysis_error = str(exc)
+
             if mode == "daily":
                 flash(
-                    f"تم استيراد {inserted} يوم. هذا وضع مبسط ولا يستخدم V18 إلا عند توفر تفاصيل الفواتير والعملاء والمنتجات. / Imported {inserted} daily rows in minimal mode.",
+                    f"تم استيراد {inserted} يوم وتشغيل تحليل التوقع تلقائيًا. / Imported {inserted} daily rows and ran automatic forecasting.",
                     "success",
                 )
             else:
                 flash(
-                    f"تم استيراد {inserted} سجل معاملات فعلي؛ المكرر المتجاهل {duplicates}. / Imported {inserted} transaction rows; ignored {duplicates} duplicates.",
+                    f"تم استيراد {inserted} سجل معاملات فعلي؛ المكرر المتجاهل {duplicates}. تم تشغيل التنبؤ والتنبيه تلقائيًا. / Imported {inserted} transaction rows; ignored {duplicates} duplicates. Prediction and alert analysis ran automatically.",
                     "success",
                 )
+
+            return _render_imports(analysis=analysis, analysis_error=analysis_error)
+
         except Exception as exc:
             try:
                 with session_scope() as db:
@@ -119,12 +163,9 @@ def index():
             except Exception:
                 pass
             flash(f"تعذر إكمال الاستيراد: {exc}", "error")
+            return _render_imports(analysis_error=str(exc))
         finally:
             if generated_csv and working_path != destination:
                 working_path.unlink(missing_ok=True)
 
-        return redirect(url_for("imports.index"))
-
-    with session_scope() as db:
-        jobs = db.scalars(select(ImportJob).order_by(desc(ImportJob.created_at)).limit(30)).all()
-    return render_template("imports/index.html", jobs=jobs)
+    return _render_imports()
