@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "flask",
+  "alias": ["sales-sentinel-ppgm.vercel.app"],
   "functions": {
     "api/index.py": {
       "maxDuration": 60
