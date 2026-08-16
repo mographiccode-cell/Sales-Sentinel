@@ -1,0 +1,36 @@
+name: UX3 Atomic Release
+
+on:
+  push:
+    branches: [ux3-final-transfer]
+    paths:
+      - '.github/workflows/ux3-apply.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout transfer branch
+        uses: actions/checkout@v4
+        with:
+          ref: ux3-final-transfer
+          fetch-depth: 0
+      - name: Assemble validated payload
+        shell: bash
+        run: cat .ux3/chunk_* > /tmp/ux3.b64
+      - name: Apply to main and validate
+        shell: bash
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          base64 -d /tmp/ux3.b64 | tar -xzf -
+          python -m compileall -q app main.py
+          node --check app/static/js/app.js
+          git config user.name 'MahmoudDev'
+          git config user.email 'mographiccode@gmail.com'
+          git add requirements.txt app/dashboard/routes.py app/reports/routes.py app/templates/base.html app/templates/dashboard/index.html app/templates/imports/index.html app/templates/forecasting/index.html app/templates/forecasting/detail.html app/templates/reports/index.html app/templates/sales/index.html app/templates/admin/users.html app/templates/admin/health.html app/templates/admin/settings.html app/static/js/app.js app/static/css/ux3.css
+          git commit -m 'feat: redesign Sales Sentinel UX workflow'
+          git push origin main
