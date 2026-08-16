@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10231c">
+  <meta name="description" content="{{ 'Sales Sentinel turns daily sales data into forward-looking forecasts, sales-decline risk signals, and practical decision support.' if locale == 'en' else 'يحوّل حارس المبيعات بيانات المبيعات اليومية إلى توقعات مستقبلية وإشارات مبكرة لاحتمال الانخفاض ودعم عملي للقرار.' }}">
+  <title>{{ 'Sales Sentinel — Intelligent Sales Decline Prediction' if locale == 'en' else 'حارس المبيعات — التنبؤ الذكي بانخفاض المبيعات' }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body class="lp-body">
+  <header class="lp-header" id="top">
+    <div class="lp-container lp-nav-wrap">
+      <a class="lp-brand" href="{{ url_for('landing') }}" aria-label="Sales Sentinel home">
+        <span class="lp-brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="lp-brand-copy"><strong>{{ 'Sales Sentinel' if locale == 'en' else 'حارس المبيعات' }}</strong><small>{{ 'Predict earlier. Decide better.' if locale == 'en' else 'تنبأ مبكرًا. قرر أفضل.' }}</small></span>
+      </a>
+
+      <button class="lp-menu-button" type="button" aria-label="Menu" aria-expanded="false" data-menu-button>
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="lp-nav" data-menu>
+        <a href="#product">{{ 'Product' if locale == 'en' else 'المنتج' }}</a>
+        <a href="#workflow">{{ 'How it works' if locale == 'en' else 'كيف يعمل' }}</a>
+        <a href="#intelligence">{{ 'Intelligence' if locale == 'en' else 'الذكاء' }}</a>
+        <a href="#evidence">{{ 'Evidence' if locale == 'en' else 'المنهجية' }}</a>
+      </nav>
+
+      <div class="lp-nav-actions">
+        <a class="lp-language" href="{{ url_for('set_locale', language='ar' if locale == 'en' else 'en', next='/') }}">{{ 'العربية' if locale == 'en' else 'English' }}</a>
+        {% if current_user %}
+        <a class="lp-btn lp-btn-dark lp-btn-small" href="{{ url_for('dashboard.index') }}">{{ 'Open dashboard' if locale == 'en' else 'فتح لوحة المعلومات' }}</a>
+        {% else %}
+        <a class="lp-btn lp-btn-dark lp-btn-small" href="{{ url_for('auth.login') }}">{{ 'Sign in' if locale == 'en' else 'تسجيل الدخول' }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="lp-hero">
+      <div class="lp-hero-glow lp-hero-glow-one"></div>
+      <div class="lp-hero-glow lp-hero-glow-two"></div>
+      <div class="lp-container lp-hero-grid">
+        <div class="lp-hero-copy">
+          <span class="lp-kicker"><i></i>{{ 'AI-powered sales intelligence' if locale == 'en' else 'ذكاء مبيعات مدعوم بالذكاء الاصطناعي' }}</span>
+          <h1>
+            {% if locale == 'en' %}
+              See the decline <em>before</em> it hits revenue.
+            {% else %}
+              اكتشف الانخفاض <em>قبل</em> أن يؤثر على الإيرادات.
+            {% endif %}
+          </h1>
+          <p>{{ 'Sales Sentinel transforms daily sales history into forward-looking forecasts, early decline risk signals, and practical decision support—so teams can act before a weak period becomes a costly one.' if locale == 'en' else 'يحوّل حارس المبيعات سجل المبيعات اليومي إلى توقعات مستقبلية وإشارات مبكرة لاحتمال الانخفاض ودعم عملي للقرار، حتى يتمكن الفريق من التدخل قبل أن تتحول الفترة الضعيفة إلى خسارة مكلفة.' }}</p>
+          <div class="lp-hero-actions">
+            {% if current_user %}
+            <a class="lp-btn lp-btn-primary" href="{{ url_for('dashboard.index') }}">{{ 'Go to dashboard' if locale == 'en' else 'الانتقال إلى لوحة المعلومات' }} <span>↗</span></a>
+            {% else %}
+            <a class="lp-btn lp-btn-primary" href="{{ url_for('auth.login') }}">{{ 'Explore the system' if locale == 'en' else 'استكشف النظام' }} <span>↗</span></a>
+            {% endif %}
+            <a class="lp-text-link" href="#workflow">{{ 'See how it works' if locale == 'en' else 'شاهد كيف يعمل' }} <span>↓</span></a>
+          </div>
+          <div class="lp-proof-row">
+            <span><b>7 / 30</b>{{ 'day forecast horizons' if locale == 'en' else 'يومًا لفترات التوقع' }}</span>
+            <span><b>SHA-256</b>{{ 'import traceability' if locale == 'en' else 'لتتبع ملفات الاستيراد' }}</span>
+            <span><b>AR / EN</b>{{ 'bilingual workspace' if locale == 'en' else 'واجهة ثنائية اللغة' }}</span>
+          </div>
+        </div>
+
+        <div class="lp-hero-visual" aria-label="Sales Sentinel dashboard preview">
+          <div class="lp-window">
+            <div class="lp-window-top">
+              <div class="lp-window-brand"><span class="lp-mini-mark"><i></i><i></i><i></i></span><strong>Sales Sentinel</strong></div>
+              <div class="lp-window-dots"><i></i><i></i><i></i></div>
+            </div>
+            <div class="lp-window-body">
+              <aside class="lp-mini-sidebar">
+                <span class="active"></span><span></span><span></span><span></span><span></span>
+              </aside>
+              <div class="lp-preview-main">
+                <div class="lp-preview-heading">
+                  <div><small>{{ 'OVERVIEW' if locale == 'en' else 'نظرة عامة' }}</small><strong>{{ 'Sales intelligence' if locale == 'en' else 'ذكاء المبيعات' }}</strong></div>
+                  <span class="lp-live-dot">{{ 'Live' if locale == 'en' else 'مباشر' }}</span>
+                </div>
+                <div class="lp-preview-kpis">
+                  <div><small>{{ 'Current sales' if locale == 'en' else 'المبيعات الحالية' }}</small><strong>SAR 84.2K</strong><span class="lp-up">+6.8%</span></div>
+                  <div class="featured"><small>{{ '7-day forecast' if locale == 'en' else 'توقع 7 أيام' }}</small><strong>SAR 76.9K</strong><span>−8.7%</span></div>
+                  <div><small>{{ 'Decline risk' if locale == 'en' else 'خطر الانخفاض' }}</small><strong>High</strong><span class="lp-risk-dot">82% signal</span></div>
+                </div>
+                <div class="lp-preview-grid">
+                  <div class="lp-chart-card">
+                    <div class="lp-card-title"><span>{{ 'Sales + forecast' if locale == 'en' else 'المبيعات + التوقع' }}</span><small>{{ '30 days' if locale == 'en' else '30 يومًا' }}</small></div>
+                    <div class="lp-line-chart">
+                      <svg viewBox="0 0 540 190" preserveAspectRatio="none" role="img" aria-label="forecast chart">
+                        <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b664a" stop-opacity=".22"/><stop offset="1" stop-color="#0b664a" stop-opacity="0"/></linearGradient></defs>
+                        <path class="grid" d="M0 35H540M0 80H540M0 125H540M0 170H540"/>
+                        <path class="area" d="M0 142 C42 122,61 112,92 118 S150 83,185 92 S236 57,270 71 S319 88,352 78 S401 99,436 112 S492 92,540 128 L540 190 L0 190Z"/>
+                        <path class="actual-line" d="M0 142 C42 122,61 112,92 118 S150 83,185 92 S236 57,270 71 S319 88,352 78"/>
+                        <path class="forecast-line" d="M352 78 C401 99,436 112,468 105 S508 110,540 128"/>
+                        <circle cx="352" cy="78" r="5"/>
+                      </svg>
+                    </div>
+                    <div class="lp-chart-legend"><span><i class="actual"></i>{{ 'Actual' if locale == 'en' else 'فعلي' }}</span><span><i class="forecast"></i>{{ 'Forecast' if locale == 'en' else 'متوقع' }}</span></div>
+                  </div>
+                  <div class="lp-alert-card">
+                    <small>{{ 'EARLY SIGNAL' if locale == 'en' else 'إشارة مبكرة' }}</small>
+                    <div class="lp-risk-ring"><span>82<small>%</small></span></div>
+                    <strong>{{ 'Potential decline ahead' if locale == 'en' else 'انخفاض محتمل قادم' }}</strong>
+                    <p>{{ 'Review trend, category movement and market context before acting.' if locale == 'en' else 'راجع الاتجاه وحركة الفئات وسياق السوق قبل اتخاذ القرار.' }}</p>
+                    <span class="lp-alert-chip">{{ 'Decision support' if locale == 'en' else 'دعم القرار' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lp-floating-card lp-floating-one"><span>01</span><div><small>{{ 'Forecast engine' if locale == 'en' else 'محرك التوقع' }}</small><strong>{{ 'Forward view' if locale == 'en' else 'رؤية مستقبلية' }}</strong></div></div>
+          <div class="lp-floating-card lp-floating-two"><i></i><div><small>{{ 'Data status' if locale == 'en' else 'حالة البيانات' }}</small><strong>{{ 'Validated' if locale == 'en' else 'تم التحقق' }}</strong></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-trust-strip">
+      <div class="lp-container lp-trust-grid">
+        <div><span>01</span><strong>{{ 'Real daily inputs' if locale == 'en' else 'مدخلات يومية حقيقية' }}</strong><small>{{ 'Imported and validated before analysis' if locale == 'en' else 'تُستورد وتُفحص قبل التحليل' }}</small></div>
+        <div><span>02</span><strong>{{ 'Saudi-market context' if locale == 'en' else 'سياق السوق السعودي' }}</strong><small>{{ 'Official aggregate indicators used as context' if locale == 'en' else 'استخدام المؤشرات الرسمية المجمعة كسياق' }}</small></div>
+        <div><span>03</span><strong>{{ 'Temporal evaluation' if locale == 'en' else 'تقييم زمني' }}</strong><small>{{ 'Past-to-future validation instead of random leakage' if locale == 'en' else 'تحقق من الماضي إلى المستقبل بدل التسرب العشوائي' }}</small></div>
+        <div><span>04</span><strong>{{ 'Traceable evidence' if locale == 'en' else 'أدلة قابلة للتتبع' }}</strong><small>{{ 'Hashes, imports, reports and audit history' if locale == 'en' else 'بصمات رقمية واستيراد وتقارير وسجل تدقيق' }}</small></div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="product">
+      <div class="lp-container">
+        <div class="lp-section-head">
+          <div><span class="lp-kicker lp-kicker-light"><i></i>{{ 'Built for early action' if locale == 'en' else 'مصمم للتدخل المبكر' }}</span><h2>{{ 'From raw sales history to a decision-ready signal.' if locale == 'en' else 'من سجل مبيعات خام إلى إشارة جاهزة لاتخاذ القرار.' }}</h2></div>
+          <p>{{ 'Sales Sentinel brings forecasting, decline detection, context and reporting into one focused workflow instead of leaving teams to interpret spreadsheets after the damage is visible.' if locale == 'en' else 'يجمع حارس المبيعات التوقع واكتشاف الانخفاض والسياق والتقارير في مسار عمل واحد، بدل الاعتماد على جداول البيانات بعد أن يصبح أثر الانخفاض واضحًا.' }}</p>
+        </div>
+        <div class="lp-feature-grid">
+          <article class="lp-feature-card lp-feature-dark"><span class="lp-card-number">01</span><div class="lp-feature-icon">↗</div><h3>{{ 'Forecast what comes next' if locale == 'en' else 'توقع ما سيأتي' }}</h3><p>{{ 'Generate forward-looking 7-day or 30-day sales forecasts from historical daily performance.' if locale == 'en' else 'أنشئ توقعات للمبيعات لمدة 7 أو 30 يومًا اعتمادًا على الأداء اليومي التاريخي.' }}</p><div class="lp-mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+          <article class="lp-feature-card"><span class="lp-card-number">02</span><div class="lp-feature-icon">!</div><h3>{{ 'Detect decline risk early' if locale == 'en' else 'اكتشف خطر الانخفاض مبكرًا' }}</h3><p>{{ 'Surface weakening patterns before they become obvious in monthly totals, with clear severity and probability cues.' if locale == 'en' else 'اكتشف أنماط الضعف قبل أن تظهر بوضوح في الإجماليات الشهرية مع مؤشرات واضحة للشدة والاحتمال.' }}</p><div class="lp-signal-list"><span><i class="good"></i>{{ 'Trend stability' if locale == 'en' else 'استقرار الاتجاه' }}</span><span><i class="warn"></i>{{ 'Emerging risk' if locale == 'en' else 'خطر ناشئ' }}</span><span><i class="bad"></i>{{ 'Action needed' if locale == 'en' else 'يتطلب إجراء' }}</span></div></article>
+          <article class="lp-feature-card"><span class="lp-card-number">03</span><div class="lp-feature-icon">◎</div><h3>{{ 'Explain the signal' if locale == 'en' else 'افهم سبب الإشارة' }}</h3><p>{{ 'Pair predictions with contributing factors, market context and readable recommendations for decision support.' if locale == 'en' else 'اربط التنبؤ بالعوامل المؤثرة وسياق السوق وتوصيات قابلة للفهم لدعم القرار.' }}</p><div class="lp-factor-stack"><span style="--w:88%"></span><span style="--w:67%"></span><span style="--w:49%"></span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section lp-section-ivory" id="workflow">
+      <div class="lp-container lp-workflow-layout">
+        <div class="lp-workflow-copy"><span class="lp-kicker lp-kicker-light"><i></i>{{ 'One practical workflow' if locale == 'en' else 'مسار عمل عملي واحد' }}</span><h2>{{ 'Import. Validate. Forecast. Act.' if locale == 'en' else 'استورد. تحقق. توقع. تصرف.' }}</h2><p>{{ 'The system is designed around a repeatable daily workflow that keeps the source data, prediction and resulting decision connected.' if locale == 'en' else 'صُمم النظام حول مسار يومي قابل للتكرار يربط مصدر البيانات بالتنبؤ ثم بالقرار الناتج عنه.' }}</p><a class="lp-text-link lp-text-link-dark" href="{{ url_for('auth.login') }}">{{ 'Open the workspace' if locale == 'en' else 'فتح مساحة العمل' }} <span>↗</span></a></div>
+        <div class="lp-steps">
+          <article><span>01</span><div><h3>{{ 'Import sales data' if locale == 'en' else 'استيراد بيانات المبيعات' }}</h3><p>{{ 'Upload supported daily or transaction data. The system validates structure and records file traceability.' if locale == 'en' else 'ارفع البيانات اليومية أو بيانات المعاملات المدعومة، وسيتم التحقق من بنيتها وتسجيل إمكانية تتبع الملف.' }}</p></div></article>
+          <article><span>02</span><div><h3>{{ 'Clean and validate' if locale == 'en' else 'التنظيف والتحقق' }}</h3><p>{{ 'Invalid dates, missing fields and unsupported structures are stopped before they contaminate analysis.' if locale == 'en' else 'يتم إيقاف التواريخ غير الصحيحة والحقول المفقودة والبنى غير المدعومة قبل أن تؤثر في التحليل.' }}</p></div></article>
+          <article><span>03</span><div><h3>{{ 'Run predictive analysis' if locale == 'en' else 'تشغيل التحليل التنبؤي' }}</h3><p>{{ 'Historical movement is converted into forecasts and early-warning risk signals using time-aware model logic.' if locale == 'en' else 'يتم تحويل الحركة التاريخية إلى توقعات وإشارات إنذار مبكر باستخدام منطق نماذج يراعي الزمن.' }}</p></div></article>
+          <article><span>04</span><div><h3>{{ 'Review and act' if locale == 'en' else 'المراجعة واتخاذ الإجراء' }}</h3><p>{{ 'Use dashboards, factors, alerts and exportable reports to support a faster, documented business response.' if locale == 'en' else 'استخدم لوحات المعلومات والعوامل والتنبيهات والتقارير القابلة للتصدير لدعم استجابة أسرع وموثقة.' }}</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section lp-section-dark" id="intelligence">
+      <div class="lp-container">
+        <div class="lp-section-head lp-section-head-dark">
+          <div><span class="lp-kicker"><i></i>{{ 'Intelligence layer' if locale == 'en' else 'طبقة الذكاء' }}</span><h2>{{ 'More than a forecast line.' if locale == 'en' else 'أكثر من مجرد خط توقع.' }}</h2></div>
+          <p>{{ 'The useful question is not only “what will sales be?” but “is a meaningful decline developing, how urgent is it, and what evidence should the team review?”' if locale == 'en' else 'السؤال المفيد ليس فقط «كم ستكون المبيعات؟» بل «هل يتشكل انخفاض مهم؟ وما درجة الاستعجال؟ وما الأدلة التي يجب على الفريق مراجعتها؟»' }}</p>
+        </div>
+        <div class="lp-intelligence-grid">
+          <article class="lp-intel-main"><div class="lp-intel-tag">{{ 'FORECAST' if locale == 'en' else 'التوقع' }}</div><h3>{{ 'Forward sales view' if locale == 'en' else 'رؤية مستقبلية للمبيعات' }}</h3><p>{{ 'Compare recent actual movement with near-term forecast behavior and uncertainty before planning inventory, staffing or promotions.' if locale == 'en' else 'قارن الحركة الفعلية الأخيرة بالسلوك المتوقع وعدم اليقين قبل التخطيط للمخزون أو القوى العاملة أو العروض.' }}</p><div class="lp-big-chart"><div class="lp-axis"><span>100K</span><span>75K</span><span>50K</span><span>25K</span></div><svg viewBox="0 0 700 260" preserveAspectRatio="none"><path class="grid" d="M0 35H700M0 95H700M0 155H700M0 215H700"/><path class="history" d="M0 192 C50 162,85 177,120 143 S195 105,245 121 S316 78,360 91 S430 72,485 112"/><path class="future" d="M485 112 C535 124,568 151,610 143 S664 165,700 190"/><line x1="485" y1="18" x2="485" y2="238"/><circle cx="485" cy="112" r="6"/></svg><div class="lp-chart-cut"><span>{{ 'Today' if locale == 'en' else 'اليوم' }}</span></div></div></article>
+          <article class="lp-intel-side"><div class="lp-intel-tag">{{ 'RISK' if locale == 'en' else 'المخاطر' }}</div><h3>{{ 'Early-warning decision layer' if locale == 'en' else 'طبقة قرار للإنذار المبكر' }}</h3><div class="lp-risk-scale"><div class="lp-risk-scale-row"><span>{{ 'Monitor' if locale == 'en' else 'مراقبة' }}</span><b>26%</b></div><div class="lp-risk-scale-track"><i style="--w:26%"></i></div><div class="lp-risk-scale-row"><span>{{ 'Elevated' if locale == 'en' else 'مرتفع' }}</span><b>61%</b></div><div class="lp-risk-scale-track"><i class="mid" style="--w:61%"></i></div><div class="lp-risk-scale-row"><span>{{ 'High attention' if locale == 'en' else 'انتباه عالٍ' }}</span><b>82%</b></div><div class="lp-risk-scale-track"><i class="high" style="--w:82%"></i></div></div><div class="lp-intel-note"><i></i><p>{{ 'Risk signals are decision support—not guarantees. They should be reviewed with business context.' if locale == 'en' else 'إشارات المخاطر أدوات لدعم القرار وليست ضمانًا، ويجب مراجعتها مع سياق العمل.' }}</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section" id="evidence">
+      <div class="lp-container lp-evidence-layout">
+        <div class="lp-evidence-copy"><span class="lp-kicker lp-kicker-light"><i></i>{{ 'Evidence before claims' if locale == 'en' else 'الأدلة قبل الادعاءات' }}</span><h2>{{ 'Saudi-aware by calibration. Transparent about the data boundary.' if locale == 'en' else 'مراعاة للسوق السعودي بالمعايرة، ووضوح كامل حول حدود البيانات.' }}</h2><p>{{ 'The research pipeline separates merchant transaction evidence from official Saudi aggregate market indicators. Aggregate SAMA point-of-sale signals can provide market and sector context, but they are not presented as Saudi merchant-level microtransactions.' if locale == 'en' else 'يفصل مسار البحث بين أدلة معاملات التاجر والمؤشرات الرسمية المجمعة للسوق السعودي. يمكن لمؤشرات نقاط البيع المجمعة من البنك المركزي السعودي أن توفر سياقًا للسوق والقطاعات، لكنها لا تُعرض على أنها معاملات تفصيلية حقيقية لتاجر سعودي.' }}</p><div class="lp-evidence-badges"><span>{{ 'Past-only temporal features' if locale == 'en' else 'خصائص زمنية من الماضي فقط' }}</span><span>{{ 'Purged time validation' if locale == 'en' else 'تحقق زمني مع فترة عزل' }}</span><span>{{ 'No synthetic sales injection' if locale == 'en' else 'لا يتم حقن مبيعات صناعية' }}</span></div></div>
+        <div class="lp-evidence-panel">
+          <div class="lp-evidence-top"><small>{{ 'RESEARCH & DATA DISCIPLINE' if locale == 'en' else 'انضباط البحث والبيانات' }}</small><span>✓</span></div>
+          <div class="lp-evidence-row"><span>01</span><div><strong>{{ 'Source traceability' if locale == 'en' else 'تتبع المصدر' }}</strong><p>{{ 'Imported files are validated and can be recorded with SHA-256 fingerprints.' if locale == 'en' else 'يتم التحقق من الملفات المستوردة ويمكن تسجيل بصمتها الرقمية SHA-256.' }}</p></div></div>
+          <div class="lp-evidence-row"><span>02</span><div><strong>{{ 'Time-safe evaluation' if locale == 'en' else 'تقييم آمن زمنيًا' }}</strong><p>{{ 'Model evidence is evaluated chronologically to reduce target leakage from future observations.' if locale == 'en' else 'يتم تقييم أدلة النموذج زمنيًا لتقليل تسرب الهدف من المشاهدات المستقبلية.' }}</p></div></div>
+          <div class="lp-evidence-row"><span>03</span><div><strong>{{ 'Market context, not identity replacement' if locale == 'en' else 'سياق للسوق وليس استبدالًا لهوية البيانات' }}</strong><p>{{ 'Saudi aggregate statistics are used as context or calibration where appropriate, not mislabeled as merchant microdata.' if locale == 'en' else 'تُستخدم الإحصاءات السعودية المجمعة كسياق أو معايرة عند الحاجة، ولا تُسمى خطأً بيانات تفصيلية للتاجر.' }}</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-section lp-operations">
+      <div class="lp-container">
+        <div class="lp-section-head"><div><span class="lp-kicker lp-kicker-light"><i></i>{{ 'Operational by design' if locale == 'en' else 'مصمم للتشغيل' }}</span><h2>{{ 'A prediction system needs more than a model.' if locale == 'en' else 'نظام التنبؤ يحتاج أكثر من مجرد نموذج.' }}</h2></div><p>{{ 'Sales Sentinel includes the surrounding controls needed to move from an experiment toward a usable analytical application.' if locale == 'en' else 'يتضمن حارس المبيعات الضوابط المحيطة اللازمة للانتقال من تجربة إلى تطبيق تحليلي قابل للاستخدام.' }}</p></div>
+        <div class="lp-ops-grid">
+          <article><span>01</span><h3>{{ 'Role-based access' if locale == 'en' else 'صلاحيات حسب الدور' }}</h3><p>{{ 'Protected workspaces and administrative permissions.' if locale == 'en' else 'مساحات عمل محمية وصلاحيات إدارية.' }}</p></article>
+          <article><span>02</span><h3>{{ 'Secure request flow' if locale == 'en' else 'تدفق طلبات آمن' }}</h3><p>{{ 'CSRF checks, hardened session settings and security headers.' if locale == 'en' else 'فحص CSRF وإعدادات جلسات محمية ورؤوس أمان.' }}</p></article>
+          <article><span>03</span><h3>{{ 'Audit trail' if locale == 'en' else 'سجل تدقيق' }}</h3><p>{{ 'Important authentication and system actions can be traced.' if locale == 'en' else 'يمكن تتبع إجراءات الدخول والعمليات المهمة في النظام.' }}</p></article>
+          <article><span>04</span><h3>{{ 'Bilingual experience' if locale == 'en' else 'تجربة ثنائية اللغة' }}</h3><p>{{ 'English-first default with complete Arabic RTL support.' if locale == 'en' else 'الإنجليزية افتراضيًا مع دعم كامل للعربية واتجاه RTL.' }}</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lp-cta-section">
+      <div class="lp-container">
+        <div class="lp-cta-card">
+          <div class="lp-cta-orbit"></div>
+          <div class="lp-cta-copy"><span class="lp-kicker"><i></i>{{ 'Turn history into foresight' if locale == 'en' else 'حوّل التاريخ إلى رؤية مستقبلية' }}</span><h2>{{ 'Your sales data already tells a story. Read the next chapter earlier.' if locale == 'en' else 'بيانات مبيعاتك تحكي قصة بالفعل. اقرأ الفصل القادم مبكرًا.' }}</h2><p>{{ 'Open the analytical workspace to import data, review forecasts and inspect early decline signals.' if locale == 'en' else 'افتح مساحة التحليل لاستيراد البيانات ومراجعة التوقعات وفحص إشارات الانخفاض المبكر.' }}</p></div>
+          <div class="lp-cta-action">{% if current_user %}<a class="lp-btn lp-btn-ivory" href="{{ url_for('dashboard.index') }}">{{ 'Open dashboard' if locale == 'en' else 'فتح لوحة المعلومات' }} <span>↗</span></a>{% else %}<a class="lp-btn lp-btn-ivory" href="{{ url_for('auth.login') }}">{{ 'Sign in to Sales Sentinel' if locale == 'en' else 'تسجيل الدخول إلى حارس المبيعات' }} <span>↗</span></a>{% endif %}</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="lp-footer">
+    <div class="lp-container lp-footer-grid">
+      <div class="lp-footer-brand"><span class="lp-brand-mark"><i></i><i></i><i></i></span><div><strong>{{ 'Sales Sentinel' if locale == 'en' else 'حارس المبيعات' }}</strong><small>{{ 'Intelligent Sales Decline Prediction System' if locale == 'en' else 'نظام التنبؤ الذكي بانخفاض المبيعات' }}</small></div></div>
+      <div class="lp-footer-note">{{ 'Decision-support forecasts do not guarantee business outcomes.' if locale == 'en' else 'التوقعات أدوات لدعم القرار ولا تضمن نتائج الأعمال.' }}</div>
+      <a class="lp-back-top" href="#top">{{ 'Back to top' if locale == 'en' else 'العودة للأعلى' }} ↑</a>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+</body>
+</html>
