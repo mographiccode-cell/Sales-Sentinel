@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "purpose": "Runtime integration verification only; not an accuracy or blind-validation claim.",
+  "source": {
+    "doi": "10.17632/9c87bd42ct.1",
+    "file": "RedSea_Data_Cleaned.xlsx",
+    "sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
+    "bytes": 354721
+  },
+  "validation": {
+    "mode": "redsea",
+    "total_rows": 2700,
+    "accepted_rows": 2700,
+    "rejected_rows": 0,
+    "errors": []
+  },
+  "ingestion": {
+    "parsed_rows": 2700,
+    "inserted_rows": 2695,
+    "duplicate_rows": 5,
+    "rejected_rows": 0,
+    "errors": [],
+    "mode": "redsea"
+  },
+  "database": {
+    "rows": 2695,
+    "days": 121,
+    "transactions": 1661,
+    "customers": 23,
+    "products": 352,
+    "date_start": "2023-07-01",
+    "date_end": "2023-10-31",
+    "net_sales": 4435174.41
+  },
+  "v18": {
+    "available": true,
+    "score": 0.03988336872309652,
+    "alert": false,
+    "policy_mode": "static",
+    "decision_threshold": 0.2419221254280302,
+    "risk_percentile": null,
+    "model_name": "Sales Sentinel Portable ExtraTrees",
+    "model_version": "SALES-SENTINEL-V18-PORTABLE-EXTRATREES-RUNTIME",
+    "feature_count": 96,
+    "tree_count": 1000,
+    "history_days": 123,
+    "data_start": "2023-07-01",
+    "data_end": "2023-10-31",
+    "market_context_available": true,
+    "red_supported": false
+  },
+  "scientific_boundary": [
+    "No model or threshold was selected using this runtime test.",
+    "This proves the real Saudi XLSX can flow through the deployed ingestion and V18 scoring path.",
+    "It does not prove production predictive performance or replace fresh independent longitudinal validation."
+  ]
+}
