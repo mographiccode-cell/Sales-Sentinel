@@ -42,9 +42,12 @@ def _date(value: str, *, uci: bool = False):
 
 
 def detect_mode(columns: set[str]) -> str:
-    if UCI_COLUMNS.issubset(columns): return "uci"
-    if REDSEA_COLUMNS.issubset(columns): return "redsea"
-    if DAILY_COLUMNS.issubset(columns): return "daily"
+    if UCI_COLUMNS.issubset(columns):
+        return "uci"
+    if REDSEA_COLUMNS.issubset(columns):
+        return "redsea"
+    if DAILY_COLUMNS.issubset(columns):
+        return "daily"
     return "invalid"
 
 
@@ -60,32 +63,62 @@ def inspect_csv(path: Path) -> tuple[str, int, int, list[str]]:
             total += 1
             try:
                 if mode == "uci":
-                    _date(row["InvoiceDate"], uci=True); _decimal(row["Quantity"]); _decimal(row["UnitPrice"])
-                    if not str(row["InvoiceNo"]).strip() or not str(row["StockCode"]).strip(): raise ValueError("missing invoice or stock code")
+                    _date(row["InvoiceDate"], uci=True)
+                    _decimal(row["Quantity"])
+                    _decimal(row["UnitPrice"])
+                    if not str(row["InvoiceNo"]).strip() or not str(row["StockCode"]).strip():
+                        raise ValueError("missing invoice or stock code")
                 elif mode == "redsea":
-                    _date(row["TRX DATE"]); _decimal(row["QUANTITY"]); _decimal(row["Unit Price"]); _decimal(row["Net Amount"])
-                    if not str(row["TRX NUMBER"]).strip() or not str(row["ITEM CODE"]).strip(): raise ValueError("missing transaction or item code")
+                    _date(row["TRX DATE"])
+                    _decimal(row["QUANTITY"])
+                    _decimal(row["Unit Price"])
+                    _decimal(row["Net Amount"])
+                    if not str(row["TRX NUMBER"]).strip() or not str(row["ITEM CODE"]).strip():
+                        raise ValueError("missing transaction or item code")
                 else:
-                    _date(row["date"]); _decimal(row["net_sales"])
+                    _date(row["date"])
+                    _decimal(row["net_sales"])
                 accepted += 1
             except (ValueError, TypeError, KeyError) as exc:
-                if len(errors) < 100: errors.append(f"row {line}: {exc}")
+                if len(errors) < 100:
+                    errors.append(f"row {line}: {exc}")
     return mode, total, accepted, errors
 
 
 def _get_or_create_reference_data(db):
     region = db.scalar(select(Region).where(Region.code == "IMPORT"))
     if not region:
-        region = Region(code="IMPORT", name_ar="بيانات مستوردة", name_en="Imported data"); db.add(region); db.flush()
+        region = Region(code="IMPORT", name_ar="بيانات مستوردة", name_en="Imported data")
+        db.add(region)
+        db.flush()
     branch = db.scalar(select(Branch).where(Branch.code == "IMPORT-STORE"))
     if not branch:
-        branch = Branch(code="IMPORT-STORE", name_ar="المتجر المستورد", name_en="Imported store", city_ar="غير محدد", city_en="Unspecified", region_id=region.id); db.add(branch); db.flush()
+        branch = Branch(
+            code="IMPORT-STORE",
+            name_ar="المتجر المستورد",
+            name_en="Imported store",
+            city_ar="غير محدد",
+            city_en="Unspecified",
+            region_id=region.id,
+        )
+        db.add(branch)
+        db.flush()
     category = db.scalar(select(Category).where(Category.code == "IMPORTED"))
     if not category:
-        category = Category(code="IMPORTED", name_ar="منتجات مستوردة", name_en="Imported products"); db.add(category); db.flush()
+        category = Category(code="IMPORTED", name_ar="منتجات مستوردة", name_en="Imported products")
+        db.add(category)
+        db.flush()
     aggregate = db.scalar(select(Product).where(Product.sku == "DAILY-IMPORTED-AGGREGATE"))
     if not aggregate:
-        aggregate = Product(sku="DAILY-IMPORTED-AGGREGATE", name_ar="إجمالي يومي مستورد", name_en="Imported daily aggregate", category_id=category.id, base_price=Decimal("1")); db.add(aggregate); db.flush()
+        aggregate = Product(
+            sku="DAILY-IMPORTED-AGGREGATE",
+            name_ar="إجمالي يومي مستورد",
+            name_en="Imported daily aggregate",
+            category_id=category.id,
+            base_price=Decimal("1"),
+        )
+        db.add(aggregate)
+        db.flush()
     return branch, category, aggregate
 
 
@@ -96,34 +129,56 @@ def _row_hash(mode: str, row: dict) -> str:
 
 def _product(db, cache: dict[str, int], category_id: int, sku: str, description: str, base_price: Decimal) -> int:
     sku = (str(sku).strip() or "UNKNOWN")[:50]
-    if sku in cache: return cache[sku]
+    if sku in cache:
+        return cache[sku]
     product = db.scalar(select(Product).where(Product.sku == sku))
     if not product:
-        product = Product(sku=sku, name_ar=(description or sku)[:150], name_en=(description or sku)[:150], category_id=category_id, base_price=max(base_price, Decimal("0"))); db.add(product); db.flush()
+        product = Product(
+            sku=sku,
+            name_ar=(description or sku)[:150],
+            name_en=(description or sku)[:150],
+            category_id=category_id,
+            base_price=max(base_price, Decimal("0")),
+        )
+        db.add(product)
+        db.flush()
     cache[sku] = product.id
     return product.id
 
 
-_INSERT = text("""
-INSERT OR IGNORE INTO sales (
+_INSERT_BODY = """
+INTO sales (
  sale_date,transaction_number,transaction_type,branch_id,product_id,customer_segment_id,promotion_id,
  channel,family,subclass,franchise,quantity,unit_price,discount_amount,discount_percent,gross_sales,net_sales,
  vat_amount,total_amount,stock_quantity,inventory_available,is_promotion,seasonal_factor,is_demo,source_row_hash,
  source_import_id,created_at,customer_key
 ) VALUES (
  :sale_date,:transaction_number,:transaction_type,:branch_id,:product_id,NULL,NULL,:channel,:family,:subclass,:franchise,
- :quantity,:unit_price,:discount_amount,:discount_percent,:gross_sales,:net_sales,:vat_amount,:total_amount,NULL,0,0,1.0,0,
+ :quantity,:unit_price,:discount_amount,:discount_percent,:gross_sales,:net_sales,:vat_amount,:total_amount,NULL,FALSE,FALSE,1.0,FALSE,
  :source_row_hash,:source_import_id,CURRENT_TIMESTAMP,:customer_key
 )
-""")
+"""
+
+_SQLITE_INSERT = text("INSERT OR IGNORE " + _INSERT_BODY)
+_POSTGRES_INSERT = text("INSERT " + _INSERT_BODY + " ON CONFLICT (source_row_hash) DO NOTHING")
 
 
-def _sqlite_bindable(item: dict) -> dict:
-    """Convert values used by raw ``text()`` SQL into DBAPI-safe primitives.
+def _insert_statement(db):
+    dialect = db.get_bind().dialect.name
+    if dialect == "sqlite":
+        return _SQLITE_INSERT
+    if dialect == "postgresql":
+        return _POSTGRES_INSERT
+    raise RuntimeError(f"Unsupported database dialect for idempotent sales ingestion: {dialect}")
 
-    ORM Numeric columns normally adapt Decimal for SQLite, but a free-form text
-    statement does not have those type bindings. Keep parsing/accounting in
-    Decimal and convert only at the final raw INSERT boundary.
+
+def _dbapi_bindable(item: dict) -> dict:
+    """Convert Decimal values used by raw text SQL into safe driver primitives.
+
+    Financial parsing stays Decimal until the final database boundary. SQLite
+    requires this conversion for raw text statements; PostgreSQL drivers accept
+    floats here as well, while the target Numeric columns preserve the declared
+    database scale.
     """
     return {key: (float(value) if isinstance(value, Decimal) else value) for key, value in item.items()}
 
@@ -135,38 +190,122 @@ def ingest_csv(db, path: Path, import_job_id: int, mode: str, chunk_size: int = 
     params: list[dict] = []
     parsed = rejected = 0
     errors: list[str] = []
+    insert_statement = _insert_statement(db)
 
     def flush():
         nonlocal params
         if params:
-            db.execute(_INSERT, [_sqlite_bindable(item) for item in params])
+            db.execute(insert_statement, [_dbapi_bindable(item) for item in params])
             params = []
 
     with path.open("r", encoding="utf-8-sig", newline="") as stream:
         for line, row in enumerate(csv.DictReader(stream), start=2):
             try:
                 if mode == "daily":
-                    day = _date(row["date"]); net = _decimal(row["net_sales"]); gross = _decimal(row.get("gross_sales", net)); quantity = int(_decimal(row.get("quantity", "0")))
-                    item = dict(sale_date=day, transaction_number=f"DAILY-{day:%Y%m%d}", transaction_type="DAILY_IMPORT", branch_id=branch.id, product_id=aggregate.id, customer_key=None, channel="Aggregate", family="Daily aggregate", subclass="Daily aggregate", franchise="Imported CSV", quantity=quantity, unit_price=Decimal("1"), discount_amount=Decimal("0"), discount_percent=0.0, gross_sales=gross, net_sales=net, vat_amount=Decimal("0"), total_amount=net)
+                    day = _date(row["date"])
+                    net = _decimal(row["net_sales"])
+                    gross = _decimal(row.get("gross_sales", net))
+                    quantity = int(_decimal(row.get("quantity", "0")))
+                    item = dict(
+                        sale_date=day,
+                        transaction_number=f"DAILY-{day:%Y%m%d}",
+                        transaction_type="DAILY_IMPORT",
+                        branch_id=branch.id,
+                        product_id=aggregate.id,
+                        customer_key=None,
+                        channel="Aggregate",
+                        family="Daily aggregate",
+                        subclass="Daily aggregate",
+                        franchise="Imported CSV",
+                        quantity=quantity,
+                        unit_price=Decimal("1"),
+                        discount_amount=Decimal("0"),
+                        discount_percent=0.0,
+                        gross_sales=gross,
+                        net_sales=net,
+                        vat_amount=Decimal("0"),
+                        total_amount=net,
+                    )
                 elif mode == "uci":
-                    day = _date(row["InvoiceDate"], uci=True); qty = int(_decimal(row["Quantity"])); price = _decimal(row["UnitPrice"]); net = Decimal(qty) * price
-                    sku = str(row["StockCode"]).strip(); pid = _product(db, product_cache, category.id, sku, str(row.get("Description") or sku).strip(), price)
+                    day = _date(row["InvoiceDate"], uci=True)
+                    qty = int(_decimal(row["Quantity"]))
+                    price = _decimal(row["UnitPrice"])
+                    net = Decimal(qty) * price
+                    sku = str(row["StockCode"]).strip()
+                    pid = _product(db, product_cache, category.id, sku, str(row.get("Description") or sku).strip(), price)
                     invoice = str(row["InvoiceNo"]).strip()
-                    item = dict(sale_date=day, transaction_number=invoice, transaction_type="RETURN" if qty < 0 or invoice.upper().startswith("C") else "INV", branch_id=branch.id, product_id=pid, customer_key=str(row.get("CustomerID") or "").strip() or None, channel="Online", family="Retail", subclass=None, franchise=str(row.get("Country") or "UCI")[:120], quantity=qty, unit_price=price, discount_amount=Decimal("0"), discount_percent=0.0, gross_sales=max(net, Decimal("0")), net_sales=net, vat_amount=Decimal("0"), total_amount=net)
+                    item = dict(
+                        sale_date=day,
+                        transaction_number=invoice,
+                        transaction_type="RETURN" if qty < 0 or invoice.upper().startswith("C") else "INV",
+                        branch_id=branch.id,
+                        product_id=pid,
+                        customer_key=str(row.get("CustomerID") or "").strip() or None,
+                        channel="Online",
+                        family="Retail",
+                        subclass=None,
+                        franchise=str(row.get("Country") or "UCI")[:120],
+                        quantity=qty,
+                        unit_price=price,
+                        discount_amount=Decimal("0"),
+                        discount_percent=0.0,
+                        gross_sales=max(net, Decimal("0")),
+                        net_sales=net,
+                        vat_amount=Decimal("0"),
+                        total_amount=net,
+                    )
                 elif mode == "redsea":
-                    day = _date(row["TRX DATE"]); qty = int(_decimal(row["QUANTITY"])); price = _decimal(row["Unit Price"]); net = _decimal(row["Net Amount"]); total = _decimal(row["TOTAL AMOUNT"]); vat = _decimal(row.get("Vat Amount", total-net)); discount = _decimal(row.get("Discount Amount", "0")); discount_pct = float(_decimal(row.get("Discount Amount(%)", "0")))
-                    sku = str(row["ITEM CODE"]).strip(); pid = _product(db, product_cache, category.id, sku, str(row.get("ITEM DESC") or sku).strip(), price)
-                    item = dict(sale_date=day, transaction_number=str(row["TRX NUMBER"]).strip(), transaction_type=str(row.get("Type") or "INV").strip().upper(), branch_id=branch.id, product_id=pid, customer_key=str(row.get("CUSTOMER NUMBER") or "").strip() or None, channel=str(row.get("SALES CHANNEL") or "Store")[:30], family=str(row.get("FAMILY") or "")[:80] or None, subclass=str(row.get("SUBCLASS") or "")[:120] or None, franchise=str(row.get("FRANCHISE") or "")[:120] or None, quantity=qty, unit_price=price, discount_amount=discount, discount_percent=max(0.0, min(100.0, discount_pct)), gross_sales=max(net, Decimal("0")), net_sales=net, vat_amount=vat, total_amount=total)
+                    day = _date(row["TRX DATE"])
+                    qty = int(_decimal(row["QUANTITY"]))
+                    price = _decimal(row["Unit Price"])
+                    net = _decimal(row["Net Amount"])
+                    total = _decimal(row["TOTAL AMOUNT"])
+                    vat = _decimal(row.get("Vat Amount", total - net))
+                    discount = _decimal(row.get("Discount Amount", "0"))
+                    discount_pct = float(_decimal(row.get("Discount Amount(%)", "0")))
+                    sku = str(row["ITEM CODE"]).strip()
+                    pid = _product(db, product_cache, category.id, sku, str(row.get("ITEM DESC") or sku).strip(), price)
+                    item = dict(
+                        sale_date=day,
+                        transaction_number=str(row["TRX NUMBER"]).strip(),
+                        transaction_type=str(row.get("Type") or "INV").strip().upper(),
+                        branch_id=branch.id,
+                        product_id=pid,
+                        customer_key=str(row.get("CUSTOMER NUMBER") or "").strip() or None,
+                        channel=str(row.get("SALES CHANNEL") or "Store")[:30],
+                        family=str(row.get("FAMILY") or "")[:80] or None,
+                        subclass=str(row.get("SUBCLASS") or "")[:120] or None,
+                        franchise=str(row.get("FRANCHISE") or "")[:120] or None,
+                        quantity=qty,
+                        unit_price=price,
+                        discount_amount=discount,
+                        discount_percent=max(0.0, min(100.0, discount_pct)),
+                        gross_sales=max(net, Decimal("0")),
+                        net_sales=net,
+                        vat_amount=vat,
+                        total_amount=total,
+                    )
                 else:
                     raise ValueError("unsupported import mode")
-                item["source_row_hash"] = _row_hash(mode, row); item["source_import_id"] = import_job_id
-                params.append(item); parsed += 1
-                if len(params) >= chunk_size: flush()
+                item["source_row_hash"] = _row_hash(mode, row)
+                item["source_import_id"] = import_job_id
+                params.append(item)
+                parsed += 1
+                if len(params) >= chunk_size:
+                    flush()
             except Exception as exc:
                 rejected += 1
-                if len(errors) < 100: errors.append(f"row {line}: {exc}")
+                if len(errors) < 100:
+                    errors.append(f"row {line}: {exc}")
         flush()
     db.flush()
     after = int(db.execute(text("SELECT COUNT(*) FROM sales")).scalar_one())
     inserted = after - before
-    return {"parsed_rows": parsed, "inserted_rows": inserted, "duplicate_rows": max(parsed-inserted, 0), "rejected_rows": rejected, "errors": errors, "mode": mode}
+    return {
+        "parsed_rows": parsed,
+        "inserted_rows": inserted,
+        "duplicate_rows": max(parsed - inserted, 0),
+        "rejected_rows": rejected,
+        "errors": errors,
+        "mode": mode,
+    }
