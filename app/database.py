@@ -12,6 +12,16 @@ _engine = None
 SessionLocal = scoped_session(sessionmaker(autoflush=False, expire_on_commit=False))
 
 
+def normalize_database_url(url: str) -> str:
+    """Normalize common hosted PostgreSQL URLs for SQLAlchemy + psycopg v3."""
+    value = str(url or "").strip()
+    if value.startswith("postgres://"):
+        return "postgresql+psycopg://" + value[len("postgres://"):]
+    if value.startswith("postgresql://"):
+        return "postgresql+psycopg://" + value[len("postgresql://"):]
+    return value
+
+
 def init_engine(url: str):
     global _engine
     # A scoped_session keeps a thread-local Session in its registry even after
@@ -20,8 +30,15 @@ def init_engine(url: str):
     SessionLocal.remove()
     if _engine is not None:
         _engine.dispose()
-    connect_args = {"check_same_thread": False} if url.startswith("sqlite") else {}
-    _engine = create_engine(url, future=True, connect_args=connect_args)
+
+    normalized_url = normalize_database_url(url)
+    connect_args = {"check_same_thread": False} if normalized_url.startswith("sqlite") else {}
+    _engine = create_engine(
+        normalized_url,
+        future=True,
+        connect_args=connect_args,
+        pool_pre_ping=True,
+    )
     SessionLocal.configure(bind=_engine)
     return _engine
 
