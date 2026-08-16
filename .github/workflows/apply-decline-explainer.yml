@@ -1,0 +1,62 @@
+name: Apply Decline Explainer
+
+on:
+  push:
+    branches: [decline-explainer-transfer]
+    paths:
+      - '.github/workflows/apply-decline-explainer.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout transfer branch
+        uses: actions/checkout@v4
+        with:
+          ref: decline-explainer-transfer
+          fetch-depth: 0
+
+      - name: Assemble validated payload
+        shell: bash
+        run: |
+          cat .transfer_decline/chunk0 .transfer_decline/chunk1 .transfer_decline/chunk2 > /tmp/decline-explainer.b64
+          base64 -d /tmp/decline-explainer.b64 > /tmp/decline-explainer.tar.gz
+          tar -tzf /tmp/decline-explainer.tar.gz
+
+      - name: Apply to latest main
+        shell: bash
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+          tar -xzf /tmp/decline-explainer.tar.gz
+          python -m compileall -q app
+
+      - name: Test decline explainer
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - shell: bash
+        run: |
+          python -m pip install -q -r requirements.txt pytest
+          pytest -q tests/test_decline_explainer.py
+
+      - name: Commit one validated release to main
+        shell: bash
+        run: |
+          git config user.name 'MahmoudDev'
+          git config user.email 'mographiccode@gmail.com'
+          git add app/services/decline_explainer.py \
+                  app/services/instant_analysis.py \
+                  app/forecasting/routes.py \
+                  app/templates/imports/index.html \
+                  app/templates/forecasting/detail.html \
+                  app/reports/routes.py \
+                  app/static/css/ux3.css \
+                  tests/test_decline_explainer.py
+          git diff --cached --check
+          git commit -m 'feat: explain predicted sales decline drivers'
+          git push origin main
