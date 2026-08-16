@@ -5,6 +5,7 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
+from openpyxl import Workbook
 from sqlalchemy import inspect, text
 
 from app.database import create_all, init_engine, session_scope
@@ -12,6 +13,7 @@ from app.models import ImportJob
 from app.services.bootstrap import ensure_runtime_schema
 from app.services import portable_decline_engine as v18
 from app.services.sales_importer import _date, ingest_csv, inspect_csv
+from app.services.tabular_upload import normalize_tabular_upload
 
 
 def test_v18_artifact_and_pure_runtime_score():
@@ -122,8 +124,6 @@ def test_rich_import_activates_v18_end_to_end(tmp_path: Path):
         writer.writeheader()
         for i in range(70):
             day = start + timedelta(days=i)
-            # Two customers and two products every calendar day make customer/product
-            # observability explicit while sales trend changes through time.
             for j in range(2):
                 writer.writerow({
                     "InvoiceNo": f"INV-{i:03d}-{j}",
@@ -156,3 +156,61 @@ def test_rich_import_activates_v18_end_to_end(tmp_path: Path):
         assert risk["policy_mode"] == "static"
         assert 0.0 <= risk["score"] <= 1.0
         assert isinstance(risk["alert"], bool)
+
+
+def test_redsea_style_xlsx_normalizes_imports_and_activates_v18(tmp_path: Path):
+    """Prove direct XLSX upload compatibility using the official Redsea column layout."""
+    workbook = Workbook()
+    sheet = workbook.active
+    headers = [
+        "TRX DATE", "TRX NUMBER", "SALES CHANNEL", "CUSTOMER NUMBER",
+        "ITEM CODE", "FAMILY", "CLASS", "SUBCLASS", "FRANCHISE",
+        "Type", "QUANTITY", "Unit Price", "Discount Amount",
+        "Discount Amount(%)", "Net Amount", "Vat Amount", "TOTAL AMOUNT",
+    ]
+    sheet.append(headers)
+    start = date(2023, 7, 1)
+    for i in range(60):
+        day = start + timedelta(days=i)
+        for j in range(2):
+            quantity = 1 + ((i + j) % 3)
+            unit_price = 100 + j * 25 + (i % 5)
+            net = quantity * unit_price
+            vat = round(net * 0.15, 2)
+            sheet.append([
+                day, f"TRX-{i:03d}-{j}", "Store", f"CUST-{j}",
+                f"ITEM-{j}", "Retail", "General", f"Sub-{j}", "Redsea",
+                "INV", quantity, unit_price, 0, 0, net, vat, net + vat,
+            ])
+    xlsx_path = tmp_path / "RedSea_Data_Cleaned.xlsx"
+    workbook.save(xlsx_path)
+    workbook.close()
+
+    csv_path, generated = normalize_tabular_upload(xlsx_path)
+    assert generated is True
+    assert csv_path.exists()
+    mode, total, accepted, errors = inspect_csv(csv_path)
+    assert mode == "redsea"
+    assert total == accepted == 120
+    assert errors == []
+
+    db_path = tmp_path / "redsea-xlsx.sqlite3"
+    init_engine(f"sqlite:///{db_path}")
+    create_all()
+    ensure_runtime_schema()
+    with session_scope() as db:
+        job = ImportJob(filename=xlsx_path.name, file_sha256="3" * 64, status="importing", total_rows=total, accepted_rows=0, rejected_rows=0)
+        db.add(job); db.flush()
+        result = ingest_csv(db, csv_path, job.id, mode)
+        assert result["inserted_rows"] == 120
+        assert result["rejected_rows"] == 0
+
+    with session_scope() as db:
+        risk = v18.assess_decline_risk(db)
+        assert risk["available"] is True
+        assert risk["history_days"] == 60
+        assert risk["feature_count"] == 96
+        assert risk["tree_count"] == 1000
+        assert 0.0 <= risk["score"] <= 1.0
+
+    csv_path.unlink(missing_ok=True)
