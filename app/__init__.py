@@ -65,6 +65,10 @@ def create_app(config_object=None):
             "deployment_mode": app.config["DEPLOYMENT_MODE"],
         }
 
+    @app.get("/")
+    def landing():
+        return render_template("landing.html")
+
     @app.route("/locale/<language>")
     def set_locale(language):
         if language not in {"ar", "en"}:
@@ -72,7 +76,7 @@ def create_app(config_object=None):
         session["locale"] = language
         next_url = request.args.get("next")
         if not next_url or not next_url.startswith("/") or next_url.startswith("//"):
-            next_url = url_for("dashboard.index")
+            next_url = url_for("landing")
         return redirect(next_url)
 
     @app.get("/healthz")
