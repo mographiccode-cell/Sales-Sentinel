@@ -8,6 +8,7 @@ from sqlalchemy import desc, select
 from app.database import session_scope
 from app.models import ImportJob
 from app.services.instant_analysis import run_instant_analysis
+from app.services.model_evidence import enrich_analysis_evidence
 from app.services.sales_importer import ingest_csv, inspect_csv
 from app.services.security import current_user, login_required, permission_required, safe_filename, sha256_file
 from app.services.tabular_upload import normalize_tabular_upload
@@ -117,6 +118,7 @@ def index():
                         horizon=7,
                         created_by_id=user.id if user else None,
                     )
+                    enrich_analysis_evidence(analysis)
                     analysis.update({
                         "source_filename": destination.name,
                         "source_sha256": original_sha256,
