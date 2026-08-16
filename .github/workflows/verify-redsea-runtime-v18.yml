@@ -5,6 +5,11 @@ on:
   push:
     paths:
       - 'scripts/verify_redsea_runtime_v18.py'
+      - 'app/services/sales_importer.py'
+      - 'app/services/tabular_upload.py'
+      - 'app/services/portable_decline_engine.py'
+      - 'models/sales_sentinel_portable_v18.json.gz'
+      - 'requirements.txt'
       - '.github/workflows/verify-redsea-runtime-v18.yml'
 
 permissions:
