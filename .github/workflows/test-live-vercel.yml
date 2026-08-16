@@ -14,15 +14,16 @@ jobs:
   live-vercel:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe live production and isolated Python function
+      - name: Probe stable aliases and latest successful deployment
         shell: bash
         run: |
           set +e
           urls=(
             "https://sales-sentinel-ppgm.vercel.app/"
             "https://sales-sentinel-ppgm.vercel.app/__probe"
+            "https://sales-sentinel-ppgm-t8mdvf0th-mographiccode.vercel.app/"
+            "https://sales-sentinel-ppgm-t8mdvf0th-mographiccode.vercel.app/__probe"
             "https://sales-sentinel-mographiccode.vercel.app/"
-            "https://sales-sentinel-mographiccode.vercel.app/__probe"
           )
           failed=0
           for url in "${urls[@]}"; do
