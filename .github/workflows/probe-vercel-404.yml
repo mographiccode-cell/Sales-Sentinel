@@ -1,0 +1,35 @@
+name: Probe Vercel 404
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/probe-vercel-404.yml'
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe aliases and routes
+        shell: bash
+        run: |
+          set +e
+          urls=(
+            "https://sales-sentinel-ppgm.vercel.app/"
+            "https://sales-sentinel-ppgm.vercel.app/healthz"
+            "https://sales-sentinel-ppgm.vercel.app/api/index"
+            "https://sales-sentinel-ppgm-g29olf3kj-mographiccode.vercel.app/"
+            "https://sales-sentinel-ppgm-g29olf3kj-mographiccode.vercel.app/healthz"
+            "https://sales-sentinel-ppgm-g29olf3kj-mographiccode.vercel.app/api/index"
+            "https://sales-sentinel.vercel.app/"
+            "https://sales-sentinel.vercel.app/healthz"
+          )
+          for url in "${urls[@]}"; do
+            echo "===== $url ====="
+            curl -sS -L --max-time 20 -D /tmp/headers.txt -o /tmp/body.txt -w 'HTTP=%{http_code} FINAL=%{url_effective}\n' "$url"
+            grep -Ei '^(x-vercel|server:|location:|content-type:)' /tmp/headers.txt || true
+            echo 'BODY:'
+            head -c 600 /tmp/body.txt || true
+            echo
+          done
