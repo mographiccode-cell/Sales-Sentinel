@@ -1,0 +1,77 @@
+{
+  "project": "Sales Sentinel",
+  "registry_version": "2026-08-16",
+  "canonical_business_target": "Predict whether total merchant sales will decline by at least 15% over the next 7 days relative to the trailing 28-day daily-sales baseline.",
+  "models": {
+    "merchant_decline_development_best": {
+      "name": "Calendar Safeguarded Verifier",
+      "version": "V13.1",
+      "status": "DEVELOPMENT_BEST",
+      "role": "Canonical internal development evidence for merchant-level 7-day decline detection",
+      "report": "reports/merchant_calendar_safeguard_v13_1/development_summary.md",
+      "metrics": {
+        "precision": 0.4444,
+        "recall": 0.8254,
+        "f1": 0.5778,
+        "npv": 0.9583,
+        "alert_rate": 0.3071,
+        "tp": 52,
+        "fp": 65,
+        "fn": 11,
+        "tn": 253,
+        "worst_fold_recall": 0.60
+      },
+      "scientific_boundary": "Development result only. Fresh independent external merchant validation is required before production-performance claims."
+    },
+    "portable_runtime": {
+      "name": "Sales Sentinel Portable ExtraTrees",
+      "version": "SALES-SENTINEL-V18-PORTABLE-EXTRATREES-RUNTIME",
+      "status": "RUNTIME_ARTIFACT",
+      "role": "Pure-Python production-compatible runtime implementation for transaction-rich 7-day decline-risk scoring",
+      "artifact": "models/sales_sentinel_portable_v18.json.gz",
+      "engine": "app/services/portable_decline_engine.py",
+      "feature_count": 96,
+      "tree_count": 1000,
+      "history_required_days": 56,
+      "requires_transaction_customer_identifiers": true,
+      "requires_transaction_product_identifiers": true,
+      "red_severity_supported": false,
+      "decision_policy": "Static threshold during warm-up, then causal percentile mode when sufficient prior V18 scores exist.",
+      "important_note": "V18 is the deployment/runtime representation. It must not be reported as a separate higher-accuracy experimental model unless evaluated under an explicitly comparable protocol."
+    },
+    "point_sales_forecast": {
+      "name": "ridge_raw_1",
+      "status": "LEGACY_POINT_FORECAST_ONLY",
+      "role": "Daily sales-value point forecast and interval estimation only",
+      "must_not_be_used_for": "Merchant decline-risk model performance claims"
+    }
+  },
+  "external_evidence": {
+    "redsea_mendeley": {
+      "doi": "10.17632/9c87bd42ct.1",
+      "file": "RedSea_Data_Cleaned.xlsx",
+      "rows": 2700,
+      "columns": 23,
+      "date_start": "2023-07-01",
+      "date_end": "2023-10-31",
+      "sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
+      "inspection_report": "reports/external_redsea_mendeley_inspection/inspection_summary.md",
+      "status": "EXTERNAL_SAUDI_MICRODATA_DIAGNOSTIC",
+      "boundary": "Short external window; useful for transfer diagnostics but insufficient by itself for a production-readiness claim."
+    },
+    "v16_2_transfer_diagnostic": {
+      "status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_NOT_FRESH_BLIND",
+      "precision": 0.7097,
+      "recall": 0.6471,
+      "alert_rate": 0.5167,
+      "note": "Recorded as transfer/calibration evidence only. Redsea had already been observed during iteration, so these numbers are not fresh blind validation."
+    }
+  },
+  "claim_rules": [
+    "Do not describe the localized UCI transaction data as real Saudi merchant transactions.",
+    "Do not use plain accuracy alone as the primary metric for the imbalanced decline target.",
+    "Do not present SAMA city/market-risk metrics as merchant Sales Sentinel metrics.",
+    "Do not claim RED/severe-risk classification is supported.",
+    "Do not claim production validation until an independent longitudinal Saudi merchant dataset is evaluated without tuning on it."
+  ]
+}
