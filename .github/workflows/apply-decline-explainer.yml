@@ -35,14 +35,16 @@ jobs:
           tar -xzf /tmp/decline-explainer.tar.gz
           python -m compileall -q app
 
-      - name: Test decline explainer
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - shell: bash
+
+      - name: Test decline explainer
+        shell: bash
         run: |
           python -m pip install -q -r requirements.txt pytest
-          pytest -q tests/test_decline_explainer.py
+          PYTHONPATH=. pytest -q tests/test_decline_explainer.py
 
       - name: Commit one validated release to main
         shell: bash
