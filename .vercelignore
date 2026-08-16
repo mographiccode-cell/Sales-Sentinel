@@ -3,6 +3,7 @@
 /*
 
 # Runtime application and configuration
+!main.py
 !api
 !app
 !requirements.txt
