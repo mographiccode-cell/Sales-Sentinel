@@ -59,6 +59,24 @@
       "status": "EXTERNAL_SAUDI_MICRODATA_DIAGNOSTIC",
       "boundary": "Short external window; useful for transfer diagnostics but insufficient by itself for a production-readiness claim."
     },
+    "redsea_real_runtime_v18": {
+      "status": "PASS_RUNTIME_INTEGRATION_ONLY",
+      "report": "reports/external_redsea_runtime_v18/runtime_summary.md",
+      "source_rows_validated": 2700,
+      "rows_inserted_after_duplicate_protection": 2695,
+      "duplicate_rows_ignored": 5,
+      "calendar_days": 121,
+      "distinct_transactions": 1661,
+      "distinct_customers": 23,
+      "distinct_products": 352,
+      "v18_available": true,
+      "feature_count": 96,
+      "tree_count": 1000,
+      "policy_mode_at_test_time": "static",
+      "latest_runtime_risk_score": 0.039883,
+      "alert_decision": false,
+      "boundary": "This proves the official Saudi XLSX can flow through XLSX normalization, SQLite ingestion, feature generation, and V18 scoring. It is not an accuracy claim and not fresh blind external validation."
+    },
     "v16_2_transfer_diagnostic": {
       "status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_NOT_FRESH_BLIND",
       "precision": 0.7097,
