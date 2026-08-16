@@ -61,8 +61,8 @@ def ensure_seed_data() -> None:
         category = Category(code="ALL", name_ar="جميع المنتجات", name_en="All products")
         product = Product(sku="DAILY-AGGREGATE", name_ar="إجمالي المبيعات اليومي", name_en="Verified daily aggregate", category=category, base_price=Decimal("1"))
         db.add_all([admin_role, analyst_role, region, branch, category, product]); db.flush()
-        admin = User(username="admin", email="admin@sales-sentinel.local", full_name_ar="مسؤول النظام", full_name_en="System Administrator", password_hash=hash_password("Admin@2026!"), role=admin_role, locale="ar", branches=[branch])
-        analyst = User(username="analyst", email="analyst@sales-sentinel.local", full_name_ar="محلل المبيعات", full_name_en="Sales Analyst", password_hash=hash_password("Analyst@2026!"), role=analyst_role, locale="ar", branches=[branch])
+        admin = User(username="admin", email="admin@sales-sentinel.local", full_name_ar="مسؤول النظام", full_name_en="System Administrator", password_hash=hash_password("Admin@2026!"), role=admin_role, locale="en", branches=[branch])
+        analyst = User(username="analyst", email="analyst@sales-sentinel.local", full_name_ar="محلل المبيعات", full_name_en="Sales Analyst", password_hash=hash_password("Analyst@2026!"), role=analyst_role, locale="en", branches=[branch])
         db.add_all([admin, analyst]); db.flush()
         csv_path = BASE_DIR / "data" / "processed" / "daily_sales.csv"
         if csv_path.exists():
