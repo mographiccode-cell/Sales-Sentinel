@@ -110,15 +110,20 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         for row in db.execute(series_stmt)
     ]
 
+    # A forecast generated against an older seed/import must never be shown next
+    # to newer sales as if it described the current dataset. Only a completed run
+    # whose data_end matches the current preferred sales scope is eligible.
     latest_run = db.scalar(
         select(ModelRun)
-        .where(ModelRun.status == "completed")
+        .where(ModelRun.status == "completed", ModelRun.data_end == max_date)
         .order_by(desc(ModelRun.completed_at))
         .limit(1)
     )
     forecasts = []
     forecast_sales = 0.0
     probability = 0.0
+    active_alerts = 0
+    top_alerts = []
     if latest_run:
         rows = db.scalars(
             select(Forecast)
@@ -136,16 +141,28 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         ]
         forecast_sales = sum(float(row.predicted_sales) for row in rows[:30])
         probability = max((row.decline_probability for row in rows), default=0.0)
+        active_alerts = int(
+            db.scalar(
+                select(func.count(Alert.id))
+                .join(Forecast, Alert.forecast_id == Forecast.id)
+                .where(
+                    Forecast.model_run_id == latest_run.id,
+                    Alert.is_resolved.is_(False),
+                )
+            )
+            or 0
+        )
+        top_alerts = db.scalars(
+            select(Alert)
+            .join(Forecast, Alert.forecast_id == Forecast.id)
+            .where(
+                Forecast.model_run_id == latest_run.id,
+                Alert.is_resolved.is_(False),
+            )
+            .order_by(desc(Alert.created_at))
+            .limit(5)
+        ).all()
 
-    active_alerts = int(
-        db.scalar(select(func.count(Alert.id)).where(Alert.is_resolved.is_(False))) or 0
-    )
-    top_alerts = db.scalars(
-        select(Alert)
-        .where(Alert.is_resolved.is_(False))
-        .order_by(desc(Alert.created_at))
-        .limit(5)
-    ).all()
     return {
         "current_sales": current_sales,
         "previous_sales": previous_sales,
