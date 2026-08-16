@@ -53,7 +53,17 @@ def create_app(config_object=None):
     @app.context_processor
     def context():
         user = current_user()
-        return {"current_user": user, "t": t, "locale": locale(), "direction": "rtl" if locale() == "ar" else "ltr", "money": money, "number": number, "date_value": date_value, "csrf_token": csrf_token, "deployment_mode": app.config["DEPLOYMENT_MODE"]}
+        return {
+            "current_user": user,
+            "t": t,
+            "locale": locale(),
+            "direction": "rtl" if locale() == "ar" else "ltr",
+            "money": money,
+            "number": number,
+            "date_value": date_value,
+            "csrf_token": csrf_token,
+            "deployment_mode": app.config["DEPLOYMENT_MODE"],
+        }
 
     @app.route("/locale/<language>")
     def set_locale(language):
@@ -68,11 +78,17 @@ def create_app(config_object=None):
     @app.get("/healthz")
     def healthz():
         from sqlalchemy import text
-        from .database import session_scope
+        from .database import get_engine, session_scope
         try:
             with session_scope() as db:
                 db.execute(text("SELECT 1"))
-            return {"status": "ok", "database": "sqlite", "mode": app.config["DEPLOYMENT_MODE"]}, 200
+            engine = get_engine()
+            dialect = engine.dialect.name if engine is not None else "unknown"
+            return {
+                "status": "ok",
+                "database": dialect,
+                "mode": app.config["DEPLOYMENT_MODE"],
+            }, 200
         except Exception:
             return {"status": "error"}, 503
 
