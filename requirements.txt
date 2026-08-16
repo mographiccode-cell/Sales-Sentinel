@@ -5,3 +5,4 @@ psutil==7.0.0
 Babel==2.17.0
 openpyxl==3.1.5
 psycopg[binary]>=3.2,<4
+fpdf2==2.8.5

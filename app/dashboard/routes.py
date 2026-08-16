@@ -16,9 +16,12 @@ def index():
     user = current_user()
     with session_scope() as db:
         summary = dashboard_summary(db, branch_ids_for_user(user) if user else None)
+    chart_values = [float(item.get('value', 0) or 0) for item in summary['series']] + [float(item.get('median', 0) or 0) for item in summary['forecast_series']]
+    chart_max = max(chart_values or [1.0])
     return render_template(
         "dashboard/index.html",
         summary=summary,
         sales_json=json.dumps(summary["series"], ensure_ascii=False),
         forecasts_json=json.dumps(summary["forecast_series"], ensure_ascii=False),
+        chart_max=chart_max,
     )

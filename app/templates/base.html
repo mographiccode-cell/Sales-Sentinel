@@ -10,45 +10,68 @@
   <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/analysis.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/ux3.css') }}">
 </head>
 <body>
 {% if current_user %}
-<div class="app-shell">
-  <aside class="sidebar">
-    <a class="brand" href="{{ url_for('dashboard.index') }}">
-      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span><strong>{{ t('app_name') }}</strong><small>Sales intelligence</small></span>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><span>01</span>{{ t('dashboard') }}</a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><span>02</span>{{ t('sales') }}</a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><span>03</span>{{ t('forecasts') }}</a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><span>04</span>{{ t('imports') }}</a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><span>05</span>{{ t('reports') }}</a>
+<div class="app-shell ux3-shell">
+  <aside class="sidebar ux3-sidebar" id="app-sidebar">
+    <div class="ux3-sidebar-top">
+      <a class="brand ux3-brand" href="{{ url_for('dashboard.index') }}">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>{{ t('app_name') }}</strong><small>{{ 'ذكاء المبيعات' if locale == 'ar' else 'Sales intelligence' }}</small></span>
+      </a>
+      <button type="button" class="ux3-sidebar-close" data-sidebar-close aria-label="Close navigation">×</button>
+    </div>
+
+    <nav class="nav ux3-nav" aria-label="Primary">
+      <a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><b>⌂</b><span>{{ 'الرئيسية' if locale == 'ar' else 'Home' }}</span></a>
+      <a class="ux3-nav-primary {{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><b>＋</b><span>{{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</span></a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><b>◫</b><span>{{ 'التحليلات' if locale == 'ar' else 'Analyses' }}</span></a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><b>↗</b><span>{{ t('sales') }}</span></a>
+      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><b>▤</b><span>{{ t('reports') }}</span></a>
+
       {% if 'users.manage' in current_user.permission_codes %}
-      <div class="nav-divider"></div>
-      <a class="{{ 'active' if request.endpoint == 'admin.users' else '' }}" href="{{ url_for('admin.users') }}"><span>06</span>{{ t('users') }}</a>
-      <a class="{{ 'active' if request.endpoint == 'admin.health' else '' }}" href="{{ url_for('admin.health') }}"><span>07</span>{{ t('system_health') }}</a>
-      <a class="{{ 'active' if request.endpoint == 'admin.settings' else '' }}" href="{{ url_for('admin.settings') }}"><span>08</span>{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
+      <details class="ux3-admin-nav" {{ 'open' if request.endpoint and request.endpoint.startswith('admin.') else '' }}>
+        <summary><span><b>⚙</b>{{ 'الإدارة' if locale == 'ar' else 'Administration' }}</span><i>⌄</i></summary>
+        <div>
+          <a class="{{ 'active' if request.endpoint == 'admin.users' else '' }}" href="{{ url_for('admin.users') }}">{{ t('users') }}</a>
+          <a class="{{ 'active' if request.endpoint == 'admin.health' else '' }}" href="{{ url_for('admin.health') }}">{{ t('system_health') }}</a>
+          <a class="{{ 'active' if request.endpoint == 'admin.settings' else '' }}" href="{{ url_for('admin.settings') }}">{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
+        </div>
+      </details>
       {% endif %}
     </nav>
-    <div class="sidebar-foot">
-      <span class="data-status"><i></i>{{ 'بيانات يومية حقيقية' if locale == 'ar' else 'Real daily data' }}</span>
+
+    <div class="sidebar-foot ux3-sidebar-foot">
+      <span class="data-status"><i></i>{{ 'النظام متصل' if locale == 'ar' else 'System online' }}</span>
       <form method="post" action="{{ url_for('auth.logout') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button class="logout-button" type="submit">{{ t('logout') }}</button>
       </form>
     </div>
   </aside>
-  <main class="main">
-    <header class="topbar">
-      <div><span class="topbar-label">{{ 'مساحة التحليل' if locale == 'ar' else 'Analytics workspace' }}</span><strong>{{ current_user.full_name_ar if locale == 'ar' else current_user.full_name_en }}</strong></div>
-      <div class="topbar-actions">{% if deployment_mode.startswith('vercel') %}<span class="mode-badge">Vercel demo</span>{% endif %}<a class="language-switch" href="{{ url_for('set_locale', language='en' if locale == 'ar' else 'ar', next=request.full_path) }}">{{ t('language') }}</a></div>
+
+  <main class="main ux3-main">
+    <header class="topbar ux3-topbar">
+      <div class="ux3-topbar-title">
+        <button type="button" class="ux3-menu-button" data-sidebar-open aria-label="Open navigation">☰</button>
+        <div><span>{{ 'مساحة العمل' if locale == 'ar' else 'Workspace' }}</span><strong>{% block page_name %}{{ 'حارس المبيعات' if locale == 'ar' else 'Sales Sentinel' }}{% endblock %}</strong></div>
+      </div>
+      <div class="topbar-actions ux3-topbar-actions">
+        {% if deployment_mode.startswith('vercel') %}<span class="mode-badge">Vercel</span>{% endif %}
+        <a class="language-switch" href="{{ url_for('set_locale', language='en' if locale == 'ar' else 'ar', next=request.full_path) }}">{{ 'EN' if locale == 'ar' else 'AR' }}</a>
+        <span class="ux3-user-chip">{{ current_user.full_name_ar if locale == 'ar' else current_user.full_name_en }}</span>
+      </div>
     </header>
-    {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
-    {% block content %}{% endblock %}
+
+    <div class="ux3-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="flash {{ category }} ux3-flash">{{ message }}</div>{% endfor %}{% endwith %}
+      {% block content %}{% endblock %}
+    </div>
   </main>
 </div>
+<div class="ux3-sidebar-scrim" data-sidebar-close></div>
 {% else %}
   {% block guest %}{% block content_guest %}{% endblock %}{% endblock %}
 {% endif %}
