@@ -55,8 +55,8 @@ TRANSLATIONS = {
 
 
 def locale() -> str:
-    value = session.get("locale", "ar")
-    return value if value in TRANSLATIONS else "ar"
+    value = session.get("locale", "en")
+    return value if value in TRANSLATIONS else "en"
 
 
 def t(key: str) -> str:
