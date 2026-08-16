@@ -4,16 +4,28 @@
   <div>
     <span class="eyebrow">DATA QUALITY + INGESTION</span>
     <h1>{{ t('imports') }}</h1>
-    <p>{{ 'CSV حتى 10MB — يتم التحقق ثم الحفظ فعليًا في قاعدة المبيعات' if locale=='ar' else 'CSV up to 10MB — validated and then physically ingested into the sales database' }}</p>
+    <p>{{ 'CSV أو XLSX حتى 10MB — يتم التحقق ثم الحفظ فعليًا في قاعدة المبيعات' if locale=='ar' else 'CSV or XLSX up to 10MB — validated and then physically ingested into the sales database' }}</p>
   </div>
 </section>
+
+{% if deployment_mode == 'vercel-demo-ephemeral' %}
+<div class="notice error">
+  <strong>{{ 'تنبيه وضع العرض على Vercel' if locale=='ar' else 'Vercel demo-mode warning' }}</strong>
+  <div>{{ 'قاعدة SQLite الحالية داخل /tmp مؤقتة وقد تُعاد تهيئتها عند تدوير الدالة. اربط DATABASE_URL بقاعدة PostgreSQL دائمة قبل الاعتماد على الاستيراد في الإنتاج.' if locale=='ar' else 'The current SQLite database lives in temporary /tmp storage and can be reset when the function is recycled. Configure a persistent PostgreSQL DATABASE_URL before relying on imports in production.' }}</div>
+</div>
+{% elif deployment_mode == 'persistent-external-database' %}
+<div class="notice success">
+  <strong>{{ 'قاعدة بيانات دائمة' if locale=='ar' else 'Persistent database' }}</strong>
+  <div>{{ 'الاستيراد متصل بقاعدة بيانات خارجية دائمة.' if locale=='ar' else 'Imports are connected to a persistent external database.' }}</div>
+</div>
+{% endif %}
 
 <div class="grid-2">
   <article class="panel">
     <h2>{{ 'استيراد المبيعات' if locale=='ar' else 'Import sales' }}</h2>
     <form method="post" enctype="multipart/form-data" class="stacked-form">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <input type="file" name="file" accept=".csv" required>
+      <input type="file" name="file" accept=".csv,.xlsx" required>
       <button class="primary-button">{{ 'تحقق واحفظ المعاملات' if locale=='ar' else 'Validate and ingest transactions' }}</button>
     </form>
     <p class="footer-note">{{ 'إعادة رفع نفس الصفوف لا يكرر المبيعات؛ يستخدم النظام بصمة SHA-256 لكل صف.' if locale=='ar' else 'Re-uploading identical rows does not duplicate sales; each source row is protected by a SHA-256 fingerprint.' }}</p>
@@ -21,8 +33,8 @@
 
   <article class="panel">
     <h2>{{ 'الصيغ المدعومة' if locale=='ar' else 'Supported schemas' }}</h2>
-    <p><strong>UCI transaction CSV</strong><br>{{ 'InvoiceNo، StockCode، Quantity، InvoiceDate، UnitPrice، CustomerID… — يشغّل V18 بعد توفر 56 يومًا على الأقل.' if locale=='ar' else 'InvoiceNo, StockCode, Quantity, InvoiceDate, UnitPrice, CustomerID… — eligible for V18 after at least 56 days.' }}</p>
-    <p><strong>Redsea transaction CSV</strong><br>{{ 'TRX DATE، TRX NUMBER، CUSTOMER NUMBER، ITEM CODE، Net Amount… — معاملات غنية صالحة لمحرك V18.' if locale=='ar' else 'TRX DATE, TRX NUMBER, CUSTOMER NUMBER, ITEM CODE, Net Amount… — rich transaction input for V18.' }}</p>
+    <p><strong>UCI transaction CSV/XLSX</strong><br>{{ 'InvoiceNo، StockCode، Quantity، InvoiceDate، UnitPrice، CustomerID… — يشغّل V18 بعد توفر 56 يومًا على الأقل.' if locale=='ar' else 'InvoiceNo, StockCode, Quantity, InvoiceDate, UnitPrice, CustomerID… — eligible for V18 after at least 56 days.' }}</p>
+    <p><strong>Redsea transaction CSV/XLSX</strong><br>{{ 'TRX DATE، TRX NUMBER، CUSTOMER NUMBER، ITEM CODE، Net Amount… — ويمكن رفع ملف Redsea الرسمي XLSX مباشرة.' if locale=='ar' else 'TRX DATE, TRX NUMBER, CUSTOMER NUMBER, ITEM CODE, Net Amount… — including the official Redsea XLSX directly.' }}</p>
     <p><strong>date, net_sales</strong><br>{{ 'وضع مبسط للتوقع الزمني فقط؛ لا نختلق عملاء أو منتجات، لذلك لا يُفعّل V18.' if locale=='ar' else 'Minimal time-series mode only; customers/products are not fabricated, so V18 remains disabled.' }}</p>
   </article>
 </div>
