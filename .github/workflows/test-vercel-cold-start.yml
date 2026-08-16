@@ -1,0 +1,47 @@
+name: Test Vercel Cold Start
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'api/**'
+      - 'app/**'
+      - 'data/bootstrap.sql'
+      - 'data/processed/daily_sales.csv'
+      - 'requirements.txt'
+      - 'vercel.json'
+      - '.vercelignore'
+      - '.github/workflows/test-vercel-cold-start.yml'
+  workflow_dispatch:
+
+jobs:
+  vercel-cold-start:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL: '1'
+      VERCEL_ENV: production
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install production dependencies
+        run: pip install -r requirements.txt
+      - name: Reproduce Vercel cold start and root request
+        run: |
+          rm -f /tmp/sales_sentinel.db
+          python - <<'PY'
+          import os
+          print('VERCEL=', os.getenv('VERCEL'))
+          from api.index import app
+          print('app imported')
+          client = app.test_client()
+          response = client.get('/')
+          print('root status=', response.status_code)
+          print(response.data[:500].decode('utf-8', errors='replace'))
+          assert response.status_code == 200
+          health = client.get('/healthz')
+          print('health status=', health.status_code, health.get_json())
+          assert health.status_code == 200
+          PY
