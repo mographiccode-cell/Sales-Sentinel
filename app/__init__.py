@@ -57,7 +57,18 @@ def create_app(config_object=None):
     from .services.security import csrf_token, current_user, validate_csrf
 
     config_object = config_object or Config
-    app = Flask(__name__, instance_relative_config=True)
+
+    # Vercel Functions run with a read-only project filesystem. Flask's default
+    # instance directory lives beside the application code, so trying to create
+    # it during a cold start can raise EROFS and crash the Python function before
+    # any route is served. Keep the instance directory in /tmp on Vercel, which
+    # is the runtime's writable scratch space.
+    runtime_instance_path = "/tmp/sales-sentinel-instance" if os.getenv("VERCEL") else None
+    app = Flask(
+        __name__,
+        instance_relative_config=True,
+        instance_path=runtime_instance_path,
+    )
     app.config.from_object(config_object)
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(seconds=app.config["PERMANENT_SESSION_LIFETIME_SECONDS"])
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
