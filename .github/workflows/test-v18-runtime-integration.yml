@@ -7,16 +7,32 @@ on:
       - 'app/**'
       - 'models/sales_sentinel_portable_v18.json.gz'
       - 'models/model_registry.json'
+      - 'requirements.txt'
       - 'tests/**'
       - '.github/workflows/test-v18-runtime-integration.yml'
 
 env:
   PYTHONPATH: .
+  POSTGRES_TEST_URL: postgresql://sales:sales@127.0.0.1:5432/sales_sentinel
 
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: sales
+          POSTGRES_PASSWORD: sales
+          POSTGRES_DB: sales_sentinel
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U sales -d sales_sentinel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -24,8 +40,13 @@ jobs:
           python-version: '3.11'
       - name: Install runtime and test dependencies
         run: pip install -r requirements.txt pytest
-      - name: Run unit and integration tests
-        run: python -m pytest -q tests/test_forecasting_engine.py tests/test_v18_runtime_and_import.py tests/test_import_route_xlsx.py
+      - name: Run SQLite, browser upload, V18, and PostgreSQL integration tests
+        run: >-
+          python -m pytest -q
+          tests/test_forecasting_engine.py
+          tests/test_v18_runtime_and_import.py
+          tests/test_import_route_xlsx.py
+          tests/test_postgres_ingestion.py
       - name: Smoke-create Flask application and compile updated templates
         env:
           DATABASE_URL: sqlite:////tmp/sales-sentinel-smoke.sqlite3
@@ -40,4 +61,5 @@ jobs:
           r=client.get('/healthz')
           print(r.status_code, r.get_json())
           assert r.status_code == 200
+          assert r.get_json()['database'] == 'sqlite'
           PY
