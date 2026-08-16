@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'app/database.py'
       - 'app/services/instant_analysis.py'
       - 'app/services/model_evidence.py'
       - 'app/imports/routes.py'
@@ -60,7 +61,6 @@ jobs:
           rows = []
           for day_index in range(60):
               day = start + timedelta(days=day_index)
-              # Stable first 46 days, then a deliberate controlled decline.
               factor = 1.0 if day_index < 46 else max(0.48, 1.0 - (day_index - 45) * 0.04)
               for n in range(4):
                   price = Decimal('50.00') + Decimal(str((n % 3) * 5))
