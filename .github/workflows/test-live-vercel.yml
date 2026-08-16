@@ -11,22 +11,22 @@ jobs:
   live-vercel:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe known production URLs
+      - name: Probe live production and isolated Python function
         shell: bash
         run: |
           set +e
           urls=(
-            "https://sales-sentinel-mographiccode.vercel.app/"
             "https://sales-sentinel-ppgm.vercel.app/"
-            "https://sales-sentinel-pj7aw84ig-mographiccode.vercel.app/"
-            "https://sales-sentinel-ppgm-da8ezfz91-mographiccode.vercel.app/"
+            "https://sales-sentinel-ppgm.vercel.app/__probe"
+            "https://sales-sentinel-mographiccode.vercel.app/"
+            "https://sales-sentinel-mographiccode.vercel.app/__probe"
           )
           failed=0
           for url in "${urls[@]}"; do
             echo "===== $url ====="
             code=$(curl -L -sS --max-time 30 -o /tmp/body.txt -w "%{http_code}" "$url")
             echo "HTTP $code"
-            head -c 1200 /tmp/body.txt || true
+            head -c 1600 /tmp/body.txt || true
             echo
             if [ "$code" = "500" ]; then failed=1; fi
           done
