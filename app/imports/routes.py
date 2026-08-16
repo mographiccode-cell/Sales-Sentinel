@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
 from sqlalchemy import desc, select
 
 from app.database import session_scope
@@ -136,16 +136,20 @@ def index():
                     # model cannot run. Surface the model error separately.
                     analysis_error = str(exc)
 
+            locale = session.get("locale", "en")
             if mode == "daily":
-                flash(
-                    f"تم استيراد {inserted} يوم وتشغيل تحليل التوقع تلقائيًا. / Imported {inserted} daily rows and ran automatic forecasting.",
-                    "success",
+                message = (
+                    f"تم استيراد {inserted} يوم وتشغيل تحليل التوقع تلقائيًا."
+                    if locale == "ar"
+                    else f"Imported {inserted} daily rows and ran automatic forecasting."
                 )
             else:
-                flash(
-                    f"تم استيراد {inserted} سجل معاملات فعلي؛ المكرر المتجاهل {duplicates}. تم تشغيل التنبؤ والتنبيه تلقائيًا. / Imported {inserted} transaction rows; ignored {duplicates} duplicates. Prediction and alert analysis ran automatically.",
-                    "success",
+                message = (
+                    f"تم استيراد {inserted} سجل معاملات فعلي؛ تم تجاهل {duplicates} صف مكرر، وتشغيل التنبؤ والتنبيه والتقرير تلقائيًا."
+                    if locale == "ar"
+                    else f"Imported {inserted} transaction rows; ignored {duplicates} duplicates. Prediction, alert analysis and reporting ran automatically."
                 )
+            flash(message, "success")
 
             return _render_imports(analysis=analysis, analysis_error=analysis_error)
 

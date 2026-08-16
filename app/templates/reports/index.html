@@ -1,8 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="page-heading"><div><span class="eyebrow">EXPORT + BROWSER REPORT</span><h1>{{ t('reports') }}</h1><p>{{ 'آخر تقرير ناتج عن ملف مرفوع يُحفظ في المتصفح أيضًا، لذلك يبقى قابلًا للعرض والتنزيل حتى مع SQLite المؤقتة على Vercel.' if locale=='ar' else 'The latest uploaded-file report is also cached in the browser, so it remains viewable and downloadable even with ephemeral SQLite on Vercel.' }}</p></div></section>
+{% set latest = runs[0] if runs else none %}
+{% set metrics = (latest.metrics_json or {}) if latest else {} %}
+{% set decline = metrics.get('decline_engine', {}) if metrics else {} %}
+{% set point = metrics.get('quality', {}).get('point', {}) if metrics else {} %}
+<section class="page-heading report-heading-v2"><div><span class="eyebrow">EXPORT + AUDIT REPORT</span><h1>{{ t('reports') }}</h1><p>{{ 'التقرير يجمع التوقع، إشارة الانخفاض، جودة النموذج وبيانات التشغيل في ملف قابل للتنزيل والمراجعة.' if locale=='ar' else 'Reports combine forecasts, decline signals, model quality and run metadata in a downloadable, auditable file.' }}</p></div></section>
 
 <div data-browser-analysis-slot data-locale="{{ locale }}"></div>
 
-<article class="panel"><div class="panel-heading"><div><h2>{{ 'تقارير قاعدة البيانات' if locale=='ar' else 'Database reports' }}</h2><p>{{ 'تظهر هنا عمليات التشغيل المتاحة في نسخة قاعدة البيانات الحالية.' if locale=='ar' else 'Runs available in the current database instance appear here.' }}</p></div></div><div class="table-wrap"><table><tr><th>#</th><th>{{ 'النموذج' if locale=='ar' else 'Model' }}</th><th>{{ 'الفترة' if locale=='ar' else 'Horizon' }}</th><th>{{ 'التنزيل' if locale=='ar' else 'Download' }}</th></tr>{% for run in runs %}<tr><td>{{ run.id }}</td><td>{{ run.model_name }}</td><td>{{ run.horizon_days }}</td><td><a class="btn" href="{{ url_for('reports.download',run_id=run.id,fmt='csv') }}">CSV</a></td></tr>{% else %}<tr><td colspan="4">{{ 'لا توجد تقارير دائمة في هذه الدالة حاليًا؛ استخدم التقرير المحفوظ في المتصفح أعلى الصفحة.' if locale=='ar' else 'No persistent reports exist in this function instance; use the browser-cached report above.' }}</td></tr>{% endfor %}</table></div><p class="footer-note">{{ t('decision_support_notice') }}</p></article>
+{% if latest %}
+<section class="report-overview-v2">
+  <article class="report-hero-v2">
+    <div><span class="eyebrow">LATEST REPORT</span><h2>{{ 'تقرير التوقع الأخير جاهز' if locale=='ar' else 'Latest forecast report is ready' }}</h2><p>#{{ latest.id }} · {{ latest.model_name }} · {{ latest.horizon_days }} {{ t('days') }}</p><div class="report-actions-v2"><a class="primary-button" href="{{ url_for('reports.download',run_id=latest.id,fmt='csv') }}">{{ 'تنزيل CSV' if locale=='ar' else 'Download CSV' }}</a><a class="btn" href="{{ url_for('forecasting.detail',run_id=latest.id) }}">{{ 'فتح تفاصيل التنبؤ' if locale=='ar' else 'Open forecast details' }}</a></div></div>
+    <div class="report-stamp-v2"><small>{{ 'الفترة' if locale=='ar' else 'Horizon' }}</small><strong>{{ latest.horizon_days }}</strong><span>{{ t('days') }}</span></div>
+  </article>
+  <div class="report-metrics-v2">
+    <div><small>{{ 'احتمال الانخفاض' if locale=='ar' else 'Decline probability' }}</small><strong>{{ '%.1f%%'|format((decline.get('score',0)|float)*100) }}</strong></div>
+    <div><small>{{ 'دقة قيمة المبيعات' if locale=='ar' else 'Sales-value accuracy' }}</small><strong>{{ '%.1f%%'|format(point.get('accuracy_proxy_pct',0)|float) }}</strong></div>
+    <div><small>WAPE</small><strong>{{ '%.1f%%'|format(point.get('error_wape_pct',0)|float) }}</strong></div>
+    <div><small>{{ 'السجلات' if locale=='ar' else 'History days' }}</small><strong>{{ latest.sample_size }}</strong></div>
+  </div>
+</section>
+{% endif %}
+
+<section class="report-grid-v2">
+  <article class="panel report-list-v2"><div class="panel-heading"><div><span class="eyebrow">AVAILABLE REPORTS</span><h2>{{ 'التقارير المحفوظة' if locale=='ar' else 'Stored reports' }}</h2><p>{{ 'اختر أي تشغيل مكتمل لتنزيل التقرير.' if locale=='ar' else 'Choose any completed run to download its report.' }}</p></div></div><div class="table-wrap"><table><thead><tr><th>#</th><th>{{ 'النموذج' if locale=='ar' else 'Model' }}</th><th>{{ 'الفترة' if locale=='ar' else 'Horizon' }}</th><th>{{ 'البيانات' if locale=='ar' else 'Data size' }}</th><th>{{ 'التنزيل' if locale=='ar' else 'Download' }}</th></tr></thead><tbody>{% for run in runs %}<tr><td>{{ run.id }}</td><td><strong>{{ run.model_name }}</strong><small>{{ run.model_version }}</small></td><td>{{ run.horizon_days }} {{ t('days') }}</td><td>{{ run.sample_size }}</td><td><a class="btn" href="{{ url_for('reports.download',run_id=run.id,fmt='csv') }}">CSV</a></td></tr>{% else %}<tr><td colspan="5"><div class="empty-state">{{ 'لا توجد تقارير محفوظة في قاعدة البيانات الحالية.' if locale=='ar' else 'No reports are stored in the current database.' }}</div></td></tr>{% endfor %}</tbody></table></div></article>
+  <article class="panel report-content-v2"><span class="eyebrow">REPORT CONTENT</span><h2>{{ 'ماذا يتضمن التقرير؟' if locale=='ar' else 'What does the report include?' }}</h2><div class="report-content-list-v2"><div><b>01</b><span><strong>{{ 'النتيجة التنفيذية' if locale=='ar' else 'Executive result' }}</strong><small>{{ 'احتمال الانخفاض، مستوى التنبيه، والتوصية.' if locale=='ar' else 'Decline probability, alert level and recommendation.' }}</small></span></div><div><b>02</b><span><strong>{{ 'توقعات الأيام القادمة' if locale=='ar' else 'Upcoming forecasts' }}</strong><small>{{ 'القيمة المتوقعة ونطاق عدم اليقين لكل يوم.' if locale=='ar' else 'Predicted value and uncertainty range for each day.' }}</small></span></div><div><b>03</b><span><strong>{{ 'مؤشرات الجودة' if locale=='ar' else 'Quality metrics' }}</strong><small>{{ 'WAPE، الدقة المشتقة، MAE وتغطية النطاق.' if locale=='ar' else 'WAPE, derived accuracy, MAE and interval coverage.' }}</small></span></div><div><b>04</b><span><strong>{{ 'التتبع والتدقيق' if locale=='ar' else 'Traceability' }}</strong><small>{{ 'اسم النموذج والإصدار وبيانات التشغيل.' if locale=='ar' else 'Model name, version and run metadata.' }}</small></span></div></div></article>
+</section>
+<p class="footer-note report-note-v2">{{ t('decision_support_notice') }}</p>
 {% endblock %}

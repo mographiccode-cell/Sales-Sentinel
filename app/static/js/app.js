@@ -32,45 +32,64 @@
     if (!analysis || !analysis.available || slot.hidden) return;
     const ar = slot.dataset.locale === 'ar';
     const forecasts = Array.isArray(analysis.forecasts) ? analysis.forecasts : [];
-    const alertClass = analysis.alert ? `severity-${escapeHtml(analysis.severity || 'medium')}` : 'safe';
-    const alertTitle = analysis.alert
-      ? (ar ? 'آخر تنبيه محفوظ في هذا المتصفح' : 'Latest alert saved in this browser')
-      : (ar ? 'آخر تحليل محفوظ في هذا المتصفح' : 'Latest analysis saved in this browser');
+    const severity = escapeHtml(analysis.severity || 'medium');
+    const severityLabel = ar
+      ? ({high: 'مرتفع', medium: 'متوسط', low: 'منخفض'}[analysis.severity] || 'متوسط')
+      : String(analysis.severity || 'medium').replace(/^./, c => c.toUpperCase());
+    const sourceLabel = ar
+      ? ({model_and_observed: 'النموذج + الانخفاض الفعلي', model: 'النموذج', observed: 'الانخفاض الفعلي'}[analysis.alert_source] || analysis.alert_source || '')
+      : String(analysis.alert_source || '').replaceAll('_', ' ');
     const recommendation = ar ? analysis.recommendation_ar : analysis.recommendation_en;
     const rows = forecasts.map(item => `
       <tr>
-        <td>${escapeHtml(item.date)}</td>
-        <td>${money(item.predicted)}</td>
-        <td>${money(item.lower)}</td>
-        <td>${money(item.upper)}</td>
-        <td>${pct(item.decline_probability_pct)}</td>
+        <td><strong>${escapeHtml(item.date)}</strong></td>
+        <td class="forecast-value-v2">${money(item.predicted)}</td>
+        <td><span class="range-v2">${money(item.lower)} — ${money(item.upper)}</span></td>
+        <td><span class="probability-pill-v2">${pct(item.decline_probability_pct)}</span></td>
+        <td><span class="decline-pill-v2">${pct(item.decline_percent_pct)}</span></td>
       </tr>`).join('');
 
     slot.innerHTML = `
-      <section class="analysis-section browser-analysis">
-        <div class="analysis-title-row">
-          <div>
+      <section class="analysis-section analysis-section-v2 browser-analysis">
+        <div class="result-hero-v2 severity-${severity}">
+          <div class="result-copy-v2">
+            <div class="result-badges-v2">
+              <span class="status-badge-v2">${analysis.alert ? (ar ? `تنبيه ${severityLabel}` : `Alert · ${severityLabel}`) : (ar ? 'لا يوجد تنبيه' : 'No active alert')}</span>
+              <span class="source-badge-v2">${escapeHtml(sourceLabel)}</span>
+            </div>
             <span class="eyebrow">BROWSER ANALYSIS CACHE</span>
-            <h2>${ar ? 'نتيجة آخر ملف تم تحليله' : 'Latest uploaded-file analysis'}</h2>
+            <h2>${analysis.alert ? (ar ? 'آخر إشارة انخفاض محفوظة في المتصفح' : 'Latest decline signal saved in this browser') : (ar ? 'آخر تحليل محفوظ في المتصفح' : 'Latest analysis saved in this browser')}</h2>
             <p>${escapeHtml(analysis.source_filename || '')} · ${escapeHtml(analysis.data_start || '')} → ${escapeHtml(analysis.data_end || '')}</p>
+            <div class="analysis-actions result-actions-v2"><button type="button" class="primary-button" data-download-analysis>${ar ? 'تنزيل التقرير CSV' : 'Download CSV report'}</button></div>
           </div>
-          <button type="button" class="btn" data-download-analysis>${ar ? 'تنزيل التقرير CSV' : 'Download report CSV'}</button>
+          <div class="risk-score-v2">
+            <span>${ar ? 'احتمال الانخفاض' : 'Decline probability'}</span>
+            <strong>${pct(analysis.risk_probability_pct)}</strong>
+            <div class="risk-track-v2"><i style="width:${number(analysis.risk_probability_pct).toFixed(1)}%"></i></div>
+            <small>${ar ? 'حد القرار' : 'Decision threshold'} ${pct(analysis.decision_threshold_pct)}</small>
+          </div>
         </div>
-        <div class="analysis-alert ${alertClass}">
-          <strong>${alertTitle}</strong>
-          <span>${ar ? 'احتمال الانخفاض' : 'Decline probability'} ${pct(analysis.risk_probability_pct)}</span>
+        <div class="primary-metrics-v2">
+          <article><small>${ar ? 'الانخفاض الفعلي' : 'Observed decline'}</small><strong class="negative">${pct(analysis.observed_decline_pct)}</strong><span>${ar ? 'محسوب من البيانات' : 'Calculated from data'}</span></article>
+          <article><small>${ar ? 'الانخفاض المتوقع' : 'Forecast decline'}</small><strong class="negative">${pct(analysis.predicted_decline_pct)}</strong><span>${pct(analysis.predicted_change_pct, true)}</span></article>
+          <article><small>${ar ? 'إجمالي توقع 7 أيام' : '7-day forecast total'}</small><strong>${money(analysis.forecast_total)}</strong><span>7 ${ar ? 'أيام' : 'days'}</span></article>
+          <article class="accuracy"><small>${ar ? 'دقة توقع قيمة المبيعات' : 'Sales-value forecast accuracy'}</small><strong>${pct(analysis.forecast_accuracy_pct)}</strong><span>1 − WAPE</span></article>
         </div>
-        <div class="kpi-grid six">
-          <article class="kpi-card risk"><small>${ar ? 'احتمال الانخفاض' : 'Decline probability'}</small><strong>${pct(analysis.risk_probability_pct)}</strong><span>7 days</span></article>
-          <article class="kpi-card"><small>${ar ? 'التغير الفعلي آخر 7 أيام' : 'Observed last-7-day change'}</small><strong class="${number(analysis.observed_change_pct) < 0 ? 'negative' : 'positive'}">${pct(analysis.observed_change_pct, true)}</strong><span>${money(analysis.observed_current_7d_sales)}</span></article>
-          <article class="kpi-card"><small>${ar ? 'الانخفاض المتوقع' : 'Forecast decline'}</small><strong>${pct(analysis.predicted_decline_pct)}</strong><span>${pct(analysis.predicted_change_pct, true)}</span></article>
-          <article class="kpi-card featured"><small>${ar ? 'دقة التوقع 1−WAPE' : 'Forecast accuracy 1−WAPE'}</small><strong>${pct(analysis.forecast_accuracy_pct)}</strong><span>${escapeHtml(analysis.point_model_name || '')}</span></article>
-          <article class="kpi-card"><small>${ar ? 'نسبة الخطأ WAPE' : 'WAPE error'}</small><strong>${pct(analysis.forecast_error_pct)}</strong><span>MAE ${money(analysis.forecast_mae)}</span></article>
-          <article class="kpi-card"><small>${ar ? 'تغطية نطاق التوقع' : 'Interval coverage'}</small><strong>${pct(analysis.interval_coverage_pct)}</strong><span>${escapeHtml(analysis.model_version || '')}</span></article>
+        <div class="analysis-grid-v2">
+          <article class="panel decision-card-v2">
+            <div class="decision-title-v2"><span class="decision-icon-v2">AI</span><div><span class="eyebrow">DECISION SUPPORT</span><h2>${ar ? 'القرار والتوصية' : 'Decision and recommendation'}</h2></div></div>
+            <p class="decision-summary-v2">${escapeHtml(recommendation || '')}</p>
+            <div class="decision-facts-v2"><div><small>${ar ? 'الخطر' : 'Risk'}</small><strong>${pct(analysis.risk_probability_pct)}</strong></div><div><small>${ar ? 'الانخفاض الفعلي' : 'Observed decline'}</small><strong>${pct(analysis.observed_decline_pct)}</strong></div><div><small>${ar ? 'الانخفاض المتوقع' : 'Forecast decline'}</small><strong>${pct(analysis.predicted_decline_pct)}</strong></div></div>
+          </article>
+          <article class="panel quality-card-v2">
+            <div class="panel-heading"><div><span class="eyebrow">MODEL QUALITY</span><h2>${ar ? 'الدقة والخطأ بوضوح' : 'Accuracy and error, separated'}</h2></div></div>
+            <div class="quality-meter-v2"><div class="quality-meter-head-v2"><span>${ar ? 'توقع قيمة المبيعات' : 'Sales-value forecast'}</span><strong>${pct(analysis.forecast_accuracy_pct)}</strong></div><div class="meter-track-v2"><i style="width:${number(analysis.forecast_accuracy_pct).toFixed(1)}%"></i></div><div class="quality-sub-v2"><span>WAPE ${pct(analysis.forecast_error_pct)}</span><span>${ar ? 'تغطية النطاق' : 'Coverage'} ${pct(analysis.interval_coverage_pct)}</span></div></div>
+            ${analysis.decline_diagnostic_accuracy_pct == null ? '' : `<div class="quality-meter-v2 diagnostic"><div class="quality-meter-head-v2"><span>${ar ? 'تصنيف الانخفاض · دليل خارجي' : 'Decline classification · external evidence'}</span><strong>${pct(analysis.decline_diagnostic_accuracy_pct)}</strong></div><div class="meter-track-v2"><i style="width:${number(analysis.decline_diagnostic_accuracy_pct).toFixed(1)}%"></i></div><div class="quality-sub-v2"><span>${ar ? 'صحيح' : 'Correct'} ${escapeHtml(analysis.decline_correct_count)}/${escapeHtml(analysis.decline_diagnostic_sample_size)}</span><span>${ar ? 'خطأ' : 'Wrong'} ${escapeHtml(analysis.decline_wrong_count)}/${escapeHtml(analysis.decline_diagnostic_sample_size)}</span></div></div>`}
+          </article>
         </div>
-        <article class="panel">
-          <div class="panel-heading"><div><h2>${ar ? 'التوصية' : 'Recommendation'}</h2><p>${escapeHtml(recommendation || '')}</p></div></div>
-          <div class="table-wrap"><table><thead><tr><th>${ar ? 'التاريخ' : 'Date'}</th><th>${ar ? 'المتوقع' : 'Forecast'}</th><th>${ar ? 'الأدنى' : 'Lower'}</th><th>${ar ? 'الأعلى' : 'Upper'}</th><th>${ar ? 'احتمال الانخفاض' : 'Decline probability'}</th></tr></thead><tbody>${rows}</tbody></table></div>
+        <article class="panel analysis-report-panel report-panel-v2">
+          <div class="panel-heading"><div><span class="eyebrow">7-DAY REPORT</span><h2>${ar ? 'التوقع اليومي القادم' : 'Upcoming daily forecast'}</h2></div></div>
+          <div class="table-wrap"><table class="forecast-table-v2"><thead><tr><th>${ar ? 'التاريخ' : 'Date'}</th><th>${ar ? 'المبيعات المتوقعة' : 'Predicted sales'}</th><th>${ar ? 'نطاق التوقع' : 'Prediction range'}</th><th>${ar ? 'احتمال الانخفاض' : 'Decline probability'}</th><th>${ar ? 'انخفاض القيمة' : 'Value decline'}</th></tr></thead><tbody>${rows}</tbody></table></div>
         </article>
       </section>`;
     slot.hidden = false;
