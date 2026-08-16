@@ -66,10 +66,29 @@
         </div>
       </article>
       <aside class="ux3-next-action">
-        <span class="eyebrow">NEXT ACTION</span><h3>{{ 'الإجراء المقترح' if locale=='ar' else 'Recommended action' }}</h3><p>{{ 'راجع المنتجات والعملاء والأيام الأكثر مساهمة في الانخفاض قبل تعديل العروض أو المخزون.' if locale=='ar' else 'Review the products, customers and days contributing most to the decline before changing promotions or inventory.' }}</p>
+        <span class="eyebrow">NEXT ACTION</span><h3>{{ 'الإجراء المقترح' if locale=='ar' else 'Recommended action' }}</h3><p>{{ analysis.explanation.recommended_action_ar if locale=='ar' and analysis.explanation else (analysis.explanation.recommended_action_en if analysis.explanation else analysis.recommendation_en) }}</p>
         <a href="{{ url_for('sales.index') }}" class="ux3-text-action">{{ 'افتح المبيعات' if locale=='ar' else 'Open sales' }} ←</a>
       </aside>
     </div>
+
+    {% if analysis.explanation and analysis.explanation.available %}
+    <section class="ux3-why-card" id="decline-explanation">
+      <div class="ux3-why-head">
+        <div><span class="eyebrow">{{ 'أسباب الانخفاض' if locale=='ar' else 'WHY THIS DECLINE?' }}</span><h2>{{ 'لماذا يتوقع النظام انخفاض المبيعات؟' if locale=='ar' else 'Why does the system expect a decline?' }}</h2><p>{{ 'أقوى الإشارات في آخر 7 أيام مقارنة بالـ7 أيام السابقة.' if locale=='ar' else 'Strongest signals in the latest 7 days versus the previous 7 days.' }}</p></div>
+        <div class="ux3-primary-driver"><small>{{ 'الإشارة الأبرز' if locale=='ar' else 'Top signal' }}</small><strong>{{ analysis.explanation.primary_driver_ar if locale=='ar' else analysis.explanation.primary_driver_en }}</strong></div>
+      </div>
+      <div class="ux3-driver-grid">
+        {% for driver in analysis.explanation.drivers %}
+        <article class="ux3-driver severity-{{ driver.severity }}">
+          <div class="ux3-driver-top"><span class="ux3-driver-rank">{{ loop.index }}</span><div><strong>{{ driver.title_ar if locale=='ar' else driver.title_en }}</strong><small>{{ '%+.1f%%'|format(driver.change_pct) }} {{ 'مقارنة بالفترة السابقة' if locale=='ar' else 'vs previous period' }}</small></div><b><span>{{ '%.1f%%'|format(driver.strength_pct) }}</span><em>{{ 'قوة الإشارة' if locale=='ar' else 'signal strength' }}</em></b></div>
+          <div class="ux3-driver-bar"><i style="width:{{ driver.strength_pct }}%"></i></div>
+          <p>{{ driver.summary_ar if locale=='ar' else driver.summary_en }}</p>
+        </article>
+        {% endfor %}
+      </div>
+      <details class="ux3-explain-details"><summary>{{ 'كيف تم حساب الأسباب؟' if locale=='ar' else 'How were these signals calculated?' }}</summary><p>{{ analysis.explanation.note_ar if locale=='ar' else analysis.explanation.note_en }} {{ 'النسب المعروضة هي قوة إشارة نسبية وليست نسبًا سببية تجمع إلى أثر مالي واحد.' if locale=='ar' else 'Displayed percentages are relative signal strength, not causal shares of one financial effect.' }}</p></details>
+    </section>
+    {% endif %}
   </div>
 
   <div class="ux3-tab-panel" data-ux-panel="forecast" hidden>

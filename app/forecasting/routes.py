@@ -9,6 +9,7 @@ from sqlalchemy import desc, func, select
 from app.database import session_scope
 from app.models import Alert, DeclineFactor, Forecast, ModelRun, Recommendation, Sale
 from app.services.forecasting_engine import forecast
+from app.services.decline_explainer import explain_decline_drivers
 from app.services.portable_decline_engine import assess_decline_risk
 from app.services.security import current_user, login_required, permission_required
 
@@ -66,6 +67,7 @@ def index():
                     raise ValueError("Insufficient daily history")
                 values = [float(row[1] or 0) for row in rows]
                 generated = forecast(values, rows[-1][0], horizon)
+                explanation = explain_decline_drivers(db, window=7) if data_mode.startswith("transaction_level") else {"available": False, "drivers": []}
                 point_model_name = generated[0]["model_name"]
                 point_model_version = generated[0]["model_version"]
 
@@ -87,6 +89,7 @@ def index():
                             "version": point_model_version,
                             "metrics": generated[0]["metrics"],
                         },
+                        "explanation": explanation,
                     }
                 else:
                     model_name = point_model_name
@@ -98,6 +101,7 @@ def index():
                             "version": point_model_version,
                             "metrics": generated[0]["metrics"],
                         },
+                        "explanation": explanation,
                     }
 
                 run = ModelRun(
@@ -180,6 +184,16 @@ def index():
                         direction="negative",
                         method=factor_method,
                     ))
+                    for driver in explanation.get("drivers", []):
+                        db.add(DeclineFactor(
+                            forecast_id=highest.id,
+                            factor_code=str(driver.get("code") or "decline_signal")[:80],
+                            factor_name_ar=str(driver.get("title_ar") or "إشارة انخفاض")[:150],
+                            factor_name_en=str(driver.get("title_en") or "Decline signal")[:150],
+                            impact_value=float(driver.get("strength_pct") or 0.0) / 100.0,
+                            direction="negative",
+                            method="recent_window_explanation",
+                        ))
                     db.add(Recommendation(
                         alert_id=alert.id,
                         factor_code="trend_vs_baseline",

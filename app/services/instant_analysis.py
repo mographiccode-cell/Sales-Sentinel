@@ -7,6 +7,7 @@ from sqlalchemy import func, select
 
 from app.models import Alert, DeclineFactor, Forecast, ModelRun, Recommendation, Sale
 from app.services.forecasting_engine import forecast, load_artifact as load_point_artifact
+from app.services.decline_explainer import explain_decline_drivers
 from app.services.portable_decline_engine import assess_decline_risk
 
 
@@ -119,6 +120,7 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
     generated = forecast(values, rows[-1][0], horizon)
     point = _point_quality()
     recent = _recent_change(rows)
+    explanation = explain_decline_drivers(db, window=7)
 
     if horizon == 7:
         decline_risk = assess_decline_risk(db)
@@ -184,6 +186,7 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         "quality": {"point": point, "decline": decline_quality},
         "observed_recent": recent,
         "predicted_change_pct": predicted_change_pct,
+        "explanation": explanation,
     }
 
     now = datetime.now(timezone.utc)
@@ -256,8 +259,18 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
             direction="negative" if impact > 0 else "neutral",
             method="v18_plus_observed_window" if decline_risk.get("available") else "point_forecast_plus_observed_window",
         ))
-        recommendation_ar = "راجع المنتجات والعملاء والقنوات في آخر 14 يومًا وابدأ بمعالجة العناصر الأكثر مساهمة في الانخفاض."
-        recommendation_en = "Review products, customers, and channels in the last 14 days and address the largest decline contributors first."
+        for driver in explanation.get("drivers", []):
+            db.add(DeclineFactor(
+                forecast_id=highest.id,
+                factor_code=str(driver.get("code") or "decline_signal")[:80],
+                factor_name_ar=str(driver.get("title_ar") or "إشارة انخفاض")[:150],
+                factor_name_en=str(driver.get("title_en") or "Decline signal")[:150],
+                impact_value=float(driver.get("strength_pct") or 0.0) / 100.0,
+                direction="negative",
+                method="recent_window_explanation",
+            ))
+        recommendation_ar = explanation.get("recommended_action_ar") or "راجع المنتجات والعملاء والقنوات في آخر 14 يومًا وابدأ بمعالجة العناصر الأكثر مساهمة في الانخفاض."
+        recommendation_en = explanation.get("recommended_action_en") or "Review products, customers, and channels in the last 14 days and address the largest decline contributors first."
         db.add(Recommendation(
             alert_id=alert_model.id,
             factor_code="uploaded_recent_vs_baseline",
@@ -317,6 +330,7 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         "scientific_status": decline_quality["scientific_status"],
         "recommendation_ar": recommendation_ar,
         "recommendation_en": recommendation_en,
+        "explanation": explanation,
         "forecasts": [
             {
                 "date": item["date"].isoformat(),

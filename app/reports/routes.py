@@ -39,6 +39,7 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     quality = (metrics.get("quality", {}) or {}).get("point", {}) or {}
     observed = metrics.get("observed_recent", {}) or {}
     predicted_change = float(metrics.get("predicted_change_pct", 0) or 0)
+    explanation = metrics.get("explanation", {}) or {}
 
     pdf = FPDF(format="A4")
     pdf.set_auto_page_break(auto=True, margin=14)
@@ -69,6 +70,21 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
         pdf.cell(70, 7, label)
         pdf.set_font("Helvetica", "B", 9)
         pdf.cell(0, 7, value, new_x="LMARGIN", new_y="NEXT")
+
+    if explanation.get("drivers"):
+        pdf.ln(4)
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.cell(0, 8, "Why the decline is expected", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_font("Helvetica", size=8)
+        for driver in explanation.get("drivers", [])[:4]:
+            title = str(driver.get("title_en") or driver.get("code") or "Signal")
+            change = float(driver.get("change_pct") or 0.0)
+            strength = float(driver.get("strength_pct") or 0.0)
+            pdf.cell(0, 6, f"- {title}: {change:+.1f}% | relative signal strength {strength:.1f}%", new_x="LMARGIN", new_y="NEXT")
+        pdf.set_font("Helvetica", "I", 7)
+        pdf.set_text_color(90, 100, 95)
+        pdf.multi_cell(0, 4, "These are data-supported explanatory signals from the latest 7 days versus the previous 7 days; they are not proof of causation.")
+        pdf.set_text_color(16, 35, 28)
 
     pdf.ln(4)
     pdf.set_font("Helvetica", "B", 12)
