@@ -1,0 +1,45 @@
+name: Verify Vercel Runtime
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-vercel-runtime.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL: "1"
+      SECRET_KEY: "runtime-verification-only"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install runtime dependencies
+        run: pip install -r requirements.txt
+      - name: Verify application cold start and routes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from api.index import app
+
+          print('INSTANCE_PATH=', app.instance_path)
+          assert app.instance_path.startswith('/tmp/'), app.instance_path
+          assert Path(app.instance_path).exists()
+
+          client = app.test_client()
+          root = client.get('/')
+          print('ROOT_STATUS=', root.status_code)
+          print(root.data[:120])
+          assert root.status_code == 200
+          assert b'Sales Sentinel' in root.data
+
+          health = client.get('/healthz')
+          print('HEALTH_STATUS=', health.status_code)
+          print('HEALTH_JSON=', health.get_json())
+          assert health.status_code == 200
+          assert health.get_json()['status'] == 'ok'
+          PY
