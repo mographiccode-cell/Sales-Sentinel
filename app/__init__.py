@@ -1,14 +1,58 @@
 from __future__ import annotations
 
+import os
 from datetime import timedelta
 from pathlib import Path
+
+
+def _initialize_runtime_database(app) -> None:
+    """Initialize the configured database and keep Vercel cold starts resilient.
+
+    A bad/unreachable hosted DATABASE_URL must not turn the public landing page
+    into FUNCTION_INVOCATION_FAILED. On Vercel only, retry with an ephemeral
+    SQLite database under /tmp. Local and non-Vercel environments still fail
+    loudly so development/test errors are never hidden.
+    """
+    from .database import init_engine
+    from .services.bootstrap import ensure_seed_data
+
+    configured_url = str(app.config["DATABASE_URL"])
+    try:
+        init_engine(configured_url)
+        ensure_seed_data()
+        return
+    except Exception as error:
+        if not os.getenv("VERCEL"):
+            raise
+
+        app.logger.warning(
+            "Primary Vercel database initialization failed (%s); using ephemeral SQLite fallback.",
+            type(error).__name__,
+        )
+
+    fallback_path = Path("/tmp/sales_sentinel.db")
+    fallback_url = f"sqlite:///{fallback_path}"
+
+    # If the configured database was already the ephemeral SQLite target, the
+    # file may be a partially initialized artifact from a previous failed cold
+    # start. Recreate it once before retrying.
+    if configured_url == fallback_url:
+        try:
+            fallback_path.unlink(missing_ok=True)
+        except OSError:
+            pass
+
+    init_engine(fallback_url)
+    ensure_seed_data()
+    app.config["DATABASE_URL"] = fallback_url
+    app.config["DEPLOYMENT_MODE"] = "vercel-demo-ephemeral-fallback"
 
 
 def create_app(config_object=None):
     from flask import Flask, abort, redirect, render_template, request, session, url_for
 
     from .config import Config
-    from .database import SessionLocal, init_engine
+    from .database import SessionLocal
     from .services.i18n import date_value, locale, money, number, t
     from .services.security import csrf_token, current_user, validate_csrf
 
@@ -19,10 +63,8 @@ def create_app(config_object=None):
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     Path(app.config["UPLOAD_DIR"]).mkdir(parents=True, exist_ok=True)
     Path(app.config["REPORT_DIR"]).mkdir(parents=True, exist_ok=True)
-    init_engine(app.config["DATABASE_URL"])
 
-    from .services.bootstrap import ensure_seed_data
-    ensure_seed_data()
+    _initialize_runtime_database(app)
 
     from .admin.routes import admin_bp
     from .auth.routes import auth_bp
