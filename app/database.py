@@ -1,4 +1,5 @@
 from contextlib import contextmanager
+import json
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, scoped_session, sessionmaker
@@ -22,6 +23,18 @@ def normalize_database_url(url: str) -> str:
     return value
 
 
+def _json_serializer(value) -> str:
+    """Serialize SQL JSON payloads while preserving model/date metadata safely.
+
+    Forecast metadata legitimately contains ``date``/``datetime`` objects (for
+    example V18 data_start/data_end). SQLAlchemy's default JSON serializer uses
+    plain ``json.dumps`` and crashes on those values. ``default=str`` keeps the
+    payload portable across SQLite and PostgreSQL and produces ISO-like text for
+    Python date/datetime objects without changing the model's numeric metrics.
+    """
+    return json.dumps(value, ensure_ascii=False, default=str)
+
+
 def init_engine(url: str):
     global _engine
     # A scoped_session keeps a thread-local Session in its registry even after
@@ -38,6 +51,7 @@ def init_engine(url: str):
         future=True,
         connect_args=connect_args,
         pool_pre_ping=True,
+        json_serializer=_json_serializer,
     )
     SessionLocal.configure(bind=_engine)
     return _engine
