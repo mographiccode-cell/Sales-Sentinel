@@ -4,29 +4,122 @@
   <div>
     <span class="eyebrow">DATA QUALITY + INGESTION</span>
     <h1>{{ t('imports') }}</h1>
-    <p>{{ 'CSV أو XLSX حتى 10MB — يتم التحقق ثم الحفظ فعليًا في قاعدة المبيعات' if locale=='ar' else 'CSV or XLSX up to 10MB — validated and then physically ingested into the sales database' }}</p>
+    <p>{{ 'CSV أو XLSX حتى 10MB — يتم التحقق والحفظ ثم تشغيل التنبؤ والتنبيه تلقائيًا' if locale=='ar' else 'CSV or XLSX up to 10MB — validate, ingest, then automatically run prediction and alert analysis' }}</p>
   </div>
 </section>
 
-{% if deployment_mode == 'vercel-demo-ephemeral' %}
-<div class="notice error">
-  <strong>{{ 'تنبيه وضع العرض على Vercel' if locale=='ar' else 'Vercel demo-mode warning' }}</strong>
-  <div>{{ 'قاعدة SQLite الحالية داخل /tmp مؤقتة وقد تُعاد تهيئتها عند تدوير الدالة. اربط DATABASE_URL بقاعدة PostgreSQL دائمة قبل الاعتماد على الاستيراد في الإنتاج.' if locale=='ar' else 'The current SQLite database lives in temporary /tmp storage and can be reset when the function is recycled. Configure a persistent PostgreSQL DATABASE_URL before relying on imports in production.' }}</div>
+{% if deployment_mode.startswith('vercel-demo-ephemeral') %}
+<div class="notice browser-safe-notice">
+  <strong>{{ 'وضع Vercel + SQLite' if locale=='ar' else 'Vercel + SQLite mode' }}</strong>
+  <div>{{ 'قاعدة SQLite داخل /tmp مؤقتة، لذلك يشغّل النظام التحليل في نفس طلب الرفع ويحفظ آخر نتيجة أيضًا داخل المتصفح. النتيجة والتقرير يظلان قابلين للعرض حتى إذا تغيّرت دالة Vercel.' if locale=='ar' else 'SQLite in /tmp is ephemeral, so analysis runs in the same upload request and the latest result is also cached in the browser. The result and report remain viewable even if the Vercel function instance changes.' }}</div>
 </div>
 {% elif deployment_mode == 'persistent-external-database' %}
 <div class="notice success">
   <strong>{{ 'قاعدة بيانات دائمة' if locale=='ar' else 'Persistent database' }}</strong>
-  <div>{{ 'الاستيراد متصل بقاعدة بيانات خارجية دائمة.' if locale=='ar' else 'Imports are connected to a persistent external database.' }}</div>
+  <div>{{ 'الاستيراد والتحليلات متصلة بقاعدة بيانات خارجية دائمة.' if locale=='ar' else 'Imports and analyses are connected to a persistent external database.' }}</div>
 </div>
 {% endif %}
 
-<div class="grid-2">
+{% if analysis_error and not analysis %}
+<div class="notice error"><strong>{{ 'تعذر تشغيل التحليل' if locale=='ar' else 'Analysis could not run' }}</strong><div>{{ analysis_error }}</div></div>
+{% endif %}
+
+{% if analysis and analysis.available %}
+<section id="instant-analysis" class="analysis-section">
+  <div class="analysis-title-row">
+    <div>
+      <span class="eyebrow">INSTANT MODEL RESULT</span>
+      <h2>{{ 'نتيجة التحليل للبيانات المرفوعة' if locale=='ar' else 'Uploaded-data analysis result' }}</h2>
+      <p>{{ analysis.source_filename }} · {{ analysis.import_inserted_rows }} {{ 'معاملة أضيفت' if locale=='ar' else 'inserted rows' }} · {{ analysis.history_days }} {{ t('days') }}</p>
+    </div>
+    <div class="analysis-actions">
+      {% if analysis.run_id %}<a class="btn" href="{{ url_for('forecasting.detail', run_id=analysis.run_id) }}">{{ 'تفاصيل النموذج' if locale=='ar' else 'Model details' }}</a>{% endif %}
+      <button type="button" class="btn" data-download-analysis>{{ 'تنزيل التقرير CSV' if locale=='ar' else 'Download report CSV' }}</button>
+    </div>
+  </div>
+
+  {% if analysis.alert %}
+  <div class="analysis-alert severity-{{ analysis.severity }}">
+    <strong>{{ 'تنبيه: توجد إشارة انخفاض في البيانات الحالية' if locale=='ar' else 'Alert: a decline signal is present in the current data' }}</strong>
+    <span>{{ 'المصدر' if locale=='ar' else 'Source' }}: {{ analysis.alert_source }} · {{ 'احتمال الانخفاض' if locale=='ar' else 'Decline probability' }} {{ '%.1f%%'|format(analysis.risk_probability_pct) }}</span>
+  </div>
+  {% else %}
+  <div class="analysis-alert safe">
+    <strong>{{ 'لا يوجد تنبيه يتجاوز الحدود الحالية' if locale=='ar' else 'No alert exceeds the current thresholds' }}</strong>
+    <span>{{ 'احتمال الانخفاض' if locale=='ar' else 'Decline probability' }} {{ '%.1f%%'|format(analysis.risk_probability_pct) }}</span>
+  </div>
+  {% endif %}
+
+  <div class="kpi-grid six">
+    <article class="kpi-card risk"><small>{{ 'احتمال الانخفاض خلال 7 أيام' if locale=='ar' else '7-day decline probability' }}</small><strong>{{ '%.1f%%'|format(analysis.risk_probability_pct) }}</strong><span>{{ analysis.model_name }}</span></article>
+    <article class="kpi-card"><small>{{ 'التغير الفعلي: آخر 7 أيام' if locale=='ar' else 'Observed change: last 7 days' }}</small><strong class="{{ 'negative' if analysis.observed_change_pct < 0 else 'positive' }}">{{ '%+.1f%%'|format(analysis.observed_change_pct) }}</strong><span>{{ money(analysis.observed_current_7d_sales) }} / {{ money(analysis.observed_previous_7d_sales) }}</span></article>
+    <article class="kpi-card"><small>{{ 'الانخفاض المتوقع مقابل خط الأساس' if locale=='ar' else 'Forecast decline vs baseline' }}</small><strong class="{{ 'negative' if analysis.predicted_decline_pct > 0 else 'positive' }}">{{ '%.1f%%'|format(analysis.predicted_decline_pct) }}</strong><span>{{ '%+.1f%%'|format(analysis.predicted_change_pct) }} {{ 'تغير متوقع' if locale=='ar' else 'forecast change' }}</span></article>
+    <article class="kpi-card featured"><small>{{ 'دقة توقع القيمة (1−WAPE)' if locale=='ar' else 'Value forecast accuracy (1−WAPE)' }}</small><strong>{{ '%.1f%%'|format(analysis.forecast_accuracy_pct) }}</strong><span>{{ analysis.point_model_name }}</span></article>
+    <article class="kpi-card"><small>{{ 'نسبة الخطأ WAPE' if locale=='ar' else 'WAPE error rate' }}</small><strong>{{ '%.1f%%'|format(analysis.forecast_error_pct) }}</strong><span>MAE {{ money(analysis.forecast_mae) }}</span></article>
+    <article class="kpi-card"><small>{{ 'تغطية نطاق التوقع' if locale=='ar' else 'Prediction interval coverage' }}</small><strong>{{ '%.1f%%'|format(analysis.interval_coverage_pct) }}</strong><span>{{ 'اختبار زمني مستقل' if locale=='ar' else 'Independent chronological test' }}</span></article>
+  </div>
+
+  <div class="grid-2 analysis-grid">
+    <article class="panel">
+      <div class="panel-heading"><div><span class="eyebrow">MODEL + QUALITY</span><h2>{{ 'الدقة والصواب والخطأ' if locale=='ar' else 'Accuracy, correct and error' }}</h2></div></div>
+      <div class="quality-list">
+        <div><span>{{ 'نموذج خطر الانخفاض' if locale=='ar' else 'Decline model' }}</span><strong>{{ analysis.model_version }}</strong></div>
+        <div><span>{{ 'نموذج قيمة المبيعات' if locale=='ar' else 'Sales-value model' }}</span><strong>{{ analysis.point_model_version }}</strong></div>
+        <div><span>{{ 'خط أساس متوسط 28 يومًا' if locale=='ar' else '28-day average baseline' }}</span><strong>{{ money(analysis.baseline_daily_sales) }}</strong></div>
+        <div><span>{{ 'إجمالي توقع 7 أيام' if locale=='ar' else '7-day forecast total' }}</span><strong>{{ money(analysis.forecast_total) }}</strong></div>
+        {% if analysis.decision_threshold_pct is not none %}<div><span>{{ 'حد قرار V18 الحالي' if locale=='ar' else 'Current V18 decision threshold' }}</span><strong>{{ '%.1f%%'|format(analysis.decision_threshold_pct) }}</strong></div>{% endif %}
+      </div>
+      {% if analysis.decline_diagnostic_accuracy_pct is not none %}
+      <div class="diagnostic-box">
+        <strong>{{ 'دليل التصنيف الخارجي المتاح' if locale=='ar' else 'Available external classification evidence' }}</strong>
+        <div class="mini-metrics">
+          <span>{{ 'دقة' if locale=='ar' else 'Accuracy' }} <b>{{ '%.1f%%'|format(analysis.decline_diagnostic_accuracy_pct) }}</b></span>
+          <span>{{ 'خطأ' if locale=='ar' else 'Error' }} <b>{{ '%.1f%%'|format(analysis.decline_diagnostic_error_pct) }}</b></span>
+          <span>{{ 'صحيح' if locale=='ar' else 'Correct' }} <b>{{ analysis.decline_correct_count }}</b></span>
+          <span>{{ 'خطأ' if locale=='ar' else 'Wrong' }} <b>{{ analysis.decline_wrong_count }}</b></span>
+        </div>
+        <p class="footer-note">{{ 'هذه مؤشرات الدليل الخارجي المخزن مع artifact وليست قياسًا لنتيجة ملفك لأن المستقبل الحقيقي للملف لم يحدث بعد.' if locale=='ar' else 'These metrics come from the external diagnostic evidence stored with the artifact; they are not an accuracy score for this upload because its future outcome has not happened yet.' }}</p>
+      </div>
+      {% endif %}
+    </article>
+
+    <article class="panel">
+      <span class="eyebrow">DECISION SUPPORT</span>
+      <h2>{{ 'التنبيه والتوصية' if locale=='ar' else 'Alert and recommendation' }}</h2>
+      <p><strong>{{ 'الانخفاض المرصود' if locale=='ar' else 'Observed decline' }}:</strong> {{ '%.1f%%'|format(analysis.observed_decline_pct) }}</p>
+      <p><strong>{{ 'الانخفاض المتوقع' if locale=='ar' else 'Predicted decline' }}:</strong> {{ '%.1f%%'|format(analysis.predicted_decline_pct) }}</p>
+      <p>{{ analysis.recommendation_ar if locale=='ar' else analysis.recommendation_en }}</p>
+      <p class="footer-note">{{ 'احتمال الانخفاض نتيجة نموذج، أما التغير الفعلي فيُحسب مباشرة من مبيعات آخر 7 أيام مقابل السبعة السابقة.' if locale=='ar' else 'Decline probability is model output; observed change is calculated directly from the last 7 days versus the preceding 7 days.' }}</p>
+    </article>
+  </div>
+
+  <article class="panel analysis-report-panel">
+    <div class="panel-heading">
+      <div><span class="eyebrow">7-DAY REPORT</span><h2>{{ 'تقرير التوقع' if locale=='ar' else 'Forecast report' }}</h2><p>{{ analysis.data_start }} → {{ analysis.data_end }}</p></div>
+      <button type="button" class="primary-button" data-download-analysis>{{ 'تنزيل التقرير' if locale=='ar' else 'Download report' }}</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>{{ 'التاريخ' if locale=='ar' else 'Date' }}</th><th>{{ 'المبيعات المتوقعة' if locale=='ar' else 'Predicted sales' }}</th><th>{{ 'الحد الأدنى' if locale=='ar' else 'Lower' }}</th><th>{{ 'الحد الأعلى' if locale=='ar' else 'Upper' }}</th><th>{{ 'احتمال الانخفاض' if locale=='ar' else 'Decline probability' }}</th><th>{{ 'انخفاض القيمة' if locale=='ar' else 'Value decline' }}</th></tr></thead>
+        <tbody>{% for f in analysis.forecasts %}<tr><td>{{ f.date }}</td><td>{{ money(f.predicted) }}</td><td>{{ money(f.lower) }}</td><td>{{ money(f.upper) }}</td><td>{{ '%.1f%%'|format(f.decline_probability_pct) }}</td><td>{{ '%.1f%%'|format(f.decline_percent_pct) }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </article>
+</section>
+<script id="instant-analysis-json" type="application/json">{{ analysis|tojson }}</script>
+{% elif analysis_error %}
+<div class="notice error"><strong>{{ 'تم الاستيراد ولكن تعذر تشغيل النموذج' if locale=='ar' else 'Import completed but the model could not run' }}</strong><div>{{ analysis_error }}</div></div>
+{% endif %}
+
+<div id="browser-analysis-slot" data-browser-analysis-slot data-locale="{{ locale }}" {% if analysis and analysis.available %}hidden{% endif %}></div>
+
+<div class="grid-2 import-panels">
   <article class="panel">
     <h2>{{ 'استيراد المبيعات' if locale=='ar' else 'Import sales' }}</h2>
     <form method="post" enctype="multipart/form-data" class="stacked-form">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="file" name="file" accept=".csv,.xlsx" required>
-      <button class="primary-button">{{ 'تحقق واحفظ المعاملات' if locale=='ar' else 'Validate and ingest transactions' }}</button>
+      <button class="primary-button">{{ 'تحقق واحفظ وشغّل التنبؤ' if locale=='ar' else 'Validate, ingest and predict' }}</button>
     </form>
     <p class="footer-note">{{ 'إعادة رفع نفس الصفوف لا يكرر المبيعات؛ يستخدم النظام بصمة SHA-256 لكل صف.' if locale=='ar' else 'Re-uploading identical rows does not duplicate sales; each source row is protected by a SHA-256 fingerprint.' }}</p>
   </article>
@@ -34,21 +127,18 @@
   <article class="panel">
     <h2>{{ 'الصيغ المدعومة' if locale=='ar' else 'Supported schemas' }}</h2>
     <p><strong>UCI transaction CSV/XLSX</strong><br>{{ 'InvoiceNo، StockCode، Quantity، InvoiceDate، UnitPrice، CustomerID… — يشغّل V18 بعد توفر 56 يومًا على الأقل.' if locale=='ar' else 'InvoiceNo, StockCode, Quantity, InvoiceDate, UnitPrice, CustomerID… — eligible for V18 after at least 56 days.' }}</p>
-    <p><strong>Redsea transaction CSV/XLSX</strong><br>{{ 'TRX DATE، TRX NUMBER، CUSTOMER NUMBER، ITEM CODE، Net Amount… — ويمكن رفع ملف Redsea الرسمي XLSX مباشرة.' if locale=='ar' else 'TRX DATE, TRX NUMBER, CUSTOMER NUMBER, ITEM CODE, Net Amount… — including the official Redsea XLSX directly.' }}</p>
+    <p><strong>Redsea transaction CSV/XLSX</strong><br>{{ 'TRX DATE، TRX NUMBER، CUSTOMER NUMBER، ITEM CODE، Net Amount… — ويشغّل التنبؤ مباشرة بعد الاستيراد.' if locale=='ar' else 'TRX DATE, TRX NUMBER, CUSTOMER NUMBER, ITEM CODE, Net Amount… — prediction runs immediately after import.' }}</p>
     <p><strong>date, net_sales</strong><br>{{ 'وضع مبسط للتوقع الزمني فقط؛ لا نختلق عملاء أو منتجات، لذلك لا يُفعّل V18.' if locale=='ar' else 'Minimal time-series mode only; customers/products are not fabricated, so V18 remains disabled.' }}</p>
   </article>
 </div>
 
 <article class="panel">
   <h2>{{ 'سجل الاستيراد' if locale=='ar' else 'Import history' }}</h2>
-  <table>
+  <div class="table-wrap"><table>
     <tr><th>{{ 'الملف' if locale=='ar' else 'File' }}</th><th>{{ 'الحالة' if locale=='ar' else 'Status' }}</th><th>{{ 'أُضيف فعليًا' if locale=='ar' else 'Inserted' }}</th><th>{{ 'مرفوض' if locale=='ar' else 'Rejected' }}</th><th>{{ 'الوضع' if locale=='ar' else 'Mode' }}</th></tr>
     {% for j in jobs %}
-      <tr>
-        <td>{{ j.filename }}</td><td>{{ j.status }}</td><td>{{ j.accepted_rows }}</td><td>{{ j.rejected_rows }}</td>
-        <td>{{ (j.error_details or {}).get('mode','—') }}</td>
-      </tr>
+      <tr><td>{{ j.filename }}</td><td>{{ j.status }}</td><td>{{ j.accepted_rows }}</td><td>{{ j.rejected_rows }}</td><td>{{ (j.error_details or {}).get('mode','—') }}</td></tr>
     {% else %}<tr><td colspan="5">—</td></tr>{% endfor %}
-  </table>
+  </table></div>
 </article>
 {% endblock %}
