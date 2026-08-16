@@ -1,0 +1,24 @@
+# Sales Sentinel production deployment allowlist.
+# Keep research/training evidence in GitHub, but do not send it to the Vercel runtime bundle.
+/*
+
+# Runtime application and configuration
+!api
+!app
+!requirements.txt
+!vercel.json
+!.python-version
+
+# Runtime model artifacts only
+!models
+models/**
+!models/sales_forecast.json
+!models/sales_sentinel_portable_v18.json.gz
+
+# Runtime data only
+!data
+!data/processed
+!data/processed/daily_sales.csv
+!data/saudi_v1_3
+!data/saudi_v1_3/saudi_weekly_sama_calibration_v1_3.csv
+!data/bootstrap.sql
