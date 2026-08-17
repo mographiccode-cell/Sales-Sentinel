@@ -1,0 +1,43 @@
+name: Experiment Adaptive 7D Ensemble Redsea
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/experiment_adaptive_7d_ensemble_redsea.py'
+      - '.github/workflows/experiment-adaptive-7d-ensemble-redsea.yml'
+
+permissions:
+  contents: read
+
+env:
+  PYTHONPATH: .
+  REDSEA_XLSX: /tmp/RedSea_Data_Cleaned.xlsx
+
+jobs:
+  experiment:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Download and verify official Mendeley Redsea file
+        run: |
+          curl -L --fail --retry 3 --retry-delay 2 \
+            'https://data.mendeley.com/public-files/datasets/9c87bd42ct/files/deb8ee07-178b-43b3-8462-ad71ee417edb/file_downloaded' \
+            -o "$REDSEA_XLSX"
+          test "$(stat -c%s "$REDSEA_XLSX")" -eq 354721
+          echo 'dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645  /tmp/RedSea_Data_Cleaned.xlsx' | sha256sum -c -
+      - name: Run nested 7-day ensemble experiment
+        run: python scripts/experiment_adaptive_7d_ensemble_redsea.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adaptive-7d-ensemble-experiment
+          path: reports/experiment_adaptive_7d_ensemble_redsea/
+          if-no-files-found: error
