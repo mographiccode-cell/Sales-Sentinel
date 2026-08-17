@@ -12,11 +12,11 @@ from app.services.i18n import t
 from app.services.security import (
     clear_login_attempts,
     current_user,
+    hash_password,
     login_rate_limited,
     needs_rehash,
     record_login_attempt,
     verify_password,
-    hash_password,
 )
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
@@ -29,17 +29,38 @@ def login():
     if request.method == "POST":
         username = request.form.get("username", "").strip().lower()
         password = request.form.get("password", "")
+        locale = session.get("locale", "en")
         identifier = f"{request.remote_addr}:{username}"
         if login_rate_limited(identifier):
             flash(t("rate_limited"), "error")
             return render_template("auth/login.html"), 429
+
         with session_scope() as db:
-            user = db.scalar(select(User).where(or_(User.username == username, User.email == username)))
-            if not user or not user.is_active or not verify_password(user.password_hash, password):
+            user = db.scalar(
+                select(User).where(
+                    or_(User.username == username, User.email == username)
+                )
+            )
+            if (
+                not user
+                or not user.is_active
+                or not verify_password(user.password_hash, password)
+            ):
                 record_login_attempt(identifier)
-                write_audit(db, "auth.login_failed", user_id=user.id if user else None, details={"username": username})
-                flash(t("invalid_credentials"), "error")
+                write_audit(
+                    db,
+                    "auth.login_failed",
+                    user_id=user.id if user else None,
+                    details={"username": username},
+                )
+                message = (
+                    "The username or password is incorrect."
+                    if locale == "en"
+                    else "اسم المستخدم أو كلمة المرور غير صحيحة."
+                )
+                flash(message, "error")
                 return render_template("auth/login.html"), 401
+
             clear_login_attempts(identifier)
             if needs_rehash(user.password_hash):
                 user.password_hash = hash_password(password)
@@ -49,6 +70,7 @@ def login():
             session["locale"] = user.locale
             session["csrf_token"] = __import__("secrets").token_urlsafe(32)
             write_audit(db, "auth.login_success", user_id=user.id)
+
         next_url = request.args.get("next")
         if not next_url or not next_url.startswith("/") or next_url.startswith("//"):
             next_url = url_for("dashboard.index")
