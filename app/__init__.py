@@ -92,6 +92,7 @@ def create_app(config_object=None):
         "admin.settings": "system.manage",
     }
     company_scope_endpoints = {
+        "imports.index",
         "forecasting.index",
         "forecasting.detail",
         "reports.index",
@@ -115,8 +116,8 @@ def create_app(config_object=None):
                 return redirect(url_for("auth.login", next=request.full_path))
             if required_permission not in user.permission_codes:
                 abort(403)
-            # Current V18/Adaptive forecast, report and alert artifacts are
-            # company-scope outputs. Until a branch-specific artifact is
+            # Current import, V18/Adaptive forecast, report and alert artifacts
+            # are company-scope outputs. Until branch-specific artifacts are
             # validated, these endpoints require explicit all-branch access.
             if endpoint in company_scope_endpoints and "branches.view_all" not in user.permission_codes:
                 abort(403)
