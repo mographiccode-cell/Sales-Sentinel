@@ -48,6 +48,7 @@ def test_model_registry_matches_runtime_artifact():
     runtime = registry["models"]["portable_runtime"]
     development = registry["models"]["merchant_decline_development_best"]
     point = registry["models"]["point_sales_forecast"]
+    legacy_point = registry["models"]["legacy_uci_point_forecast"]
     artifact = v18.load_artifact()
 
     assert development["version"] == "V13.1"
@@ -62,9 +63,17 @@ def test_model_registry_matches_runtime_artifact():
     assert runtime["history_required_days"] == int(artifact.get("history_required_days", 56))
     assert runtime["red_severity_supported"] is False
 
-    assert point["name"] == "ridge_raw_1"
-    assert point["status"] == "LEGACY_POINT_FORECAST_ONLY"
-    assert "decline" in point["must_not_be_used_for"].lower()
+    assert point["name"] == "Adaptive Merchant Forecast"
+    assert point["version"] == "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V3"
+    assert point["status"] == "DEFAULT_RUNTIME_POINT_FORECAST"
+    assert point["primary_quality_metric"] == "horizon_total_wape"
+    assert point["decline_probability_supported"] is False
+
+    # Keep the old UCI Ridge artifact only as reproducibility evidence. It must
+    # remain explicitly separated from the website's current point-forecast model.
+    assert legacy_point["name"] == "ridge_raw_1"
+    assert legacy_point["status"] == "LEGACY_NOT_DEFAULT"
+    assert "decline" in legacy_point["must_not_be_used_for"].lower()
 
 
 def test_uci_ambiguous_date_is_month_first():
