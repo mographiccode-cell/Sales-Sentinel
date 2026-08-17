@@ -125,6 +125,8 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
 
     detail = client.get(f"/forecasts/{run7_id}")
     assert detail.status_code == 200
+    assert b"Horizon-total WAPE" in detail.data
+    assert b"Daily WAPE" in detail.data
     csv_report = client.get(f"/reports/{run7_id}.csv")
     assert csv_report.status_code == 200
     assert csv_report.mimetype == "text/csv"
