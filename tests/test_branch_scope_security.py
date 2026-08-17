@@ -31,7 +31,14 @@ def test_empty_branch_assignment_is_not_all_branch_access(tmp_path: Path):
     client = app.test_client()
 
     with session_scope() as db:
-        wanted = {"dashboard.view", "sales.view", "forecasts.run", "reports.export", "alerts.view"}
+        wanted = {
+            "dashboard.view",
+            "sales.view",
+            "imports.manage",
+            "forecasts.run",
+            "reports.export",
+            "alerts.view",
+        }
         permissions = db.scalars(select(Permission).where(Permission.code.in_(wanted))).all()
         role = Role(
             code="branch-limited",
@@ -77,9 +84,10 @@ def test_empty_branch_assignment_is_not_all_branch_access(tmp_path: Path):
     assert sales.status_code == 200
     assert b"No results" in sales.data
 
-    # Current V18/Adaptive artifacts are company-scope. A branch-limited role
-    # must never receive those global outputs merely because it has the feature
-    # permission.
+    # Current import, V18/Adaptive forecast, report, and alert artifacts are
+    # company-scope. A branch-limited role must never receive those global
+    # outputs merely because it has the feature permission.
+    assert client.get("/imports/").status_code == 403
     assert client.get("/forecasts/").status_code == 403
     assert client.get("/reports/").status_code == 403
     assert client.get("/alerts/").status_code == 403
