@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block page_name %}{{ 'الإعدادات' if locale=='ar' else 'Settings' }}{% endblock %}
+{% block content %}
+<section class="ux3-page-head">
+  <div>
+    <span class="eyebrow">SYSTEM SETTINGS</span>
+    <h1>{{ 'الإعدادات' if locale=='ar' else 'Settings' }}</h1>
+    <p>{{ 'إعدادات تشغيلية آمنة لا تغيّر حدود الموديل العلمية.' if locale=='ar' else 'Safe operational preferences that do not modify scientific model thresholds.' }}</p>
+  </div>
+</section>
+
+<section class="ux3-dashboard-main">
+  <article class="ux3-settings-card">
+    <div>
+      <span class="eyebrow">FORECASTING</span>
+      <h2>{{ 'أفق التوقع الافتراضي' if locale=='ar' else 'Default forecast horizon' }}</h2>
+      <p>{{ 'يُستخدم هذا الاختيار افتراضيًا عند فتح نموذج التوقع اليدوي.' if locale=='ar' else 'This selection is applied when the manual forecast form is opened.' }}</p>
+    </div>
+    <form method="post" action="{{ url_for('settings_pref.settings') }}" class="ux3-inline-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>{{ 'الأفق' if locale=='ar' else 'Horizon' }}
+        <select name="default_forecast_horizon">
+          <option value="7" {{ 'selected' if default_horizon == 7 else '' }}>7 {{ t('days') }}</option>
+          <option value="30" {{ 'selected' if default_horizon == 30 else '' }}>30 {{ t('days') }}</option>
+        </select>
+      </label>
+      <button class="primary-button" type="submit">{{ 'حفظ' if locale=='ar' else 'Save' }}</button>
+    </form>
+  </article>
+
+  <aside class="ux3-alert-block">
+    <div class="ux3-section-title"><div><span class="eyebrow">MODEL POLICY</span><h2>{{ 'سياسة تنبيه V18' if locale=='ar' else 'V18 alert policy' }}</h2></div></div>
+    <p>{{ 'حد القرار الخاص بخطر الانخفاض مضبوط داخل Artifact/Policy للموديل ولا يمكن تغييره من لوحة الإدارة، حفاظًا على صلاحية التقييم.' if locale=='ar' else 'The decline-risk decision threshold is controlled by the validated model artifact/policy and cannot be changed from administration, preserving evaluation validity.' }}</p>
+    <span class="status status-completed">{{ 'Model-controlled' }}</span>
+  </aside>
+</section>
+{% endblock %}
