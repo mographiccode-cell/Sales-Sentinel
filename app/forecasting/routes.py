@@ -8,7 +8,7 @@ from sqlalchemy import desc, func, select
 
 from app.database import session_scope
 from app.models import Alert, DeclineFactor, Forecast, ModelRun, Recommendation, Sale
-from app.services.forecasting_engine import forecast
+from app.services.adaptive_forecasting_engine import forecast
 from app.services.decline_explainer import explain_decline_drivers
 from app.services.portable_decline_engine import assess_decline_risk
 from app.services.security import current_user, login_required, permission_required
@@ -26,15 +26,7 @@ def _grouped_sales(db, condition):
 
 
 def _daily_sales_rows(db):
-    """Choose one coherent history source and never mix seed/demo with user data.
-
-    Transaction-level imports have first priority when they provide the minimum
-    28-day point-forecast history. Explicit daily imports have second priority.
-    If user data exists but is shorter than 28 days, return that short history
-    so the caller raises ``Insufficient daily history`` instead of silently
-    falling back to old UCI seed rows. Seed aggregates are used only when there
-    is no user-imported history at all.
-    """
+    """Choose one coherent history source and never mix seed/demo with user data."""
     rich = _grouped_sales(
         db,
         Sale.transaction_type.notin_(["DAILY_AGGREGATE", "DAILY_IMPORT"]),
@@ -78,14 +70,9 @@ def index():
                 if decline_risk.get("available"):
                     for item in generated:
                         item["decline_probability"] = float(decline_risk["score"])
-                        item["model_name"] = decline_risk["model_name"]
-                        item["model_version"] = decline_risk["model_version"]
                     model_name = decline_risk["model_name"]
                     model_version = decline_risk["model_version"]
                 else:
-                    # The point forecaster is not validated as a decline detector.
-                    # Keep its sales-value forecast, but do not expose its residual
-                    # heuristic as an operational decline probability.
                     for item in generated:
                         item["decline_probability"] = 0.0
                     model_name = point_model_name
@@ -98,6 +85,7 @@ def index():
                         "name": point_model_name,
                         "version": point_model_version,
                         "metrics": generated[0]["metrics"],
+                        "calibration": generated[0].get("calibration", {}),
                     },
                     "explanation": explanation,
                 }
@@ -110,6 +98,7 @@ def index():
                     filters_json={
                         "data_mode": data_mode,
                         "decline_engine_available": bool(decline_risk.get("available")),
+                        "point_forecast_selection": "merchant_rolling_wape",
                     },
                     metrics_json=metrics,
                     data_start=rows[0][0],
@@ -136,19 +125,10 @@ def index():
                     )
                     db.add(forecast_row)
                     db.flush()
-                    highest = (
-                        forecast_row
-                        if highest is None or forecast_row.decline_probability > highest.decline_probability
-                        else highest
-                    )
+                    highest = forecast_row if highest is None or forecast_row.decline_probability > highest.decline_probability else highest
 
-                # Operational alerts are allowed only when the dedicated decline
-                # engine is available and its validated decision policy fires.
-                should_alert = bool(
-                    decline_risk.get("available") and decline_risk.get("alert")
-                )
+                should_alert = bool(decline_risk.get("available") and decline_risk.get("alert"))
                 if highest and should_alert:
-                    # RED/critical remains disabled because severe-decline evidence is unsupported.
                     severity = "high" if highest.decline_probability >= 0.70 else "medium"
                     mode = decline_risk.get("policy_mode", "static")
                     alert = Alert(
@@ -182,14 +162,8 @@ def index():
                         ))
 
                     primary_code = str(explanation.get("primary_driver_code") or "trend_vs_baseline")[:80]
-                    recommendation_ar = str(
-                        explanation.get("recommended_action_ar")
-                        or "راجع الأيام والمنتجات والعملاء المساهمة في الانخفاض قبل اتخاذ إجراء."
-                    )
-                    recommendation_en = str(
-                        explanation.get("recommended_action_en")
-                        or "Review contributing days, products and customers before acting."
-                    )
+                    recommendation_ar = str(explanation.get("recommended_action_ar") or "راجع الأيام والمنتجات والعملاء المساهمة في الانخفاض قبل اتخاذ إجراء.")
+                    recommendation_en = str(explanation.get("recommended_action_en") or "Review contributing days, products and customers before acting.")
                     db.add(Recommendation(
                         alert_id=alert.id,
                         factor_code=primary_code,
@@ -219,30 +193,16 @@ def detail(run_id: int):
         if not run:
             return redirect(url_for("forecasting.index"))
         forecasts = db.scalars(
-            select(Forecast)
-            .where(Forecast.model_run_id == run.id)
-            .order_by(Forecast.forecast_date)
+            select(Forecast).where(Forecast.model_run_id == run.id).order_by(Forecast.forecast_date)
         ).all()
         forecast_ids = [item.id for item in forecasts]
         alert = (
-            db.scalar(
-                select(Alert)
-                .where(Alert.forecast_id.in_(forecast_ids))
-                .order_by(desc(Alert.created_at))
-                .limit(1)
-            )
+            db.scalar(select(Alert).where(Alert.forecast_id.in_(forecast_ids)).order_by(desc(Alert.created_at)).limit(1))
             if forecast_ids else None
         )
-        factors = (
-            db.scalars(select(DeclineFactor).where(DeclineFactor.forecast_id.in_(forecast_ids))).all()
-            if forecast_ids else []
-        )
+        factors = db.scalars(select(DeclineFactor).where(DeclineFactor.forecast_id.in_(forecast_ids))).all() if forecast_ids else []
         recommendations = (
-            db.scalars(
-                select(Recommendation)
-                .where(Recommendation.alert_id == alert.id)
-                .order_by(Recommendation.priority)
-            ).all()
+            db.scalars(select(Recommendation).where(Recommendation.alert_id == alert.id).order_by(Recommendation.priority)).all()
             if alert else []
         )
     return render_template(
