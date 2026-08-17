@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block page_name %}{{ 'التنبيهات' if locale=='ar' else 'Alerts' }}{% endblock %}
+{% block content %}
+<section class="ux3-page-head">
+  <div>
+    <span class="eyebrow">EARLY WARNING</span>
+    <h1>{{ 'مركز التنبيهات' if locale=='ar' else 'Alert center' }}</h1>
+    <p>{{ 'راجع إشارات الانخفاض والتوصيات، ثم علّم التنبيه كمقروء أو محلول.' if locale=='ar' else 'Review decline signals and recommendations, then mark alerts read or resolved.' }}</p>
+  </div>
+  <a class="primary-button" href="{{ url_for('imports.index') }}">＋ {{ 'تحليل جديد' if locale=='ar' else 'New analysis' }}</a>
+</section>
+
+<nav class="ux3-filter-tabs">
+  <a class="{{ 'active' if status=='active' else '' }}" href="{{ url_for('alerts.index', status='active') }}">{{ 'نشطة' if locale=='ar' else 'Active' }}</a>
+  <a class="{{ 'active' if status=='resolved' else '' }}" href="{{ url_for('alerts.index', status='resolved') }}">{{ 'محلولة' if locale=='ar' else 'Resolved' }}</a>
+  <a class="{{ 'active' if status=='all' else '' }}" href="{{ url_for('alerts.index', status='all') }}">{{ 'الكل' if locale=='ar' else 'All' }}</a>
+</nav>
+
+<section class="ux3-alert-feed">
+{% for alert in alerts %}
+  <article class="ux3-plain-block">
+    <div class="ux3-section-title">
+      <div>
+        <span class="eyebrow">{{ alert.severity|upper }} · {{ alert.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+        <h2>{{ alert.title_ar if locale=='ar' else alert.title_en }}</h2>
+      </div>
+      <span class="status {{ 'status-completed' if alert.is_resolved else 'status-failed' }}">{{ ('محلول' if alert.is_resolved else 'نشط') if locale=='ar' else ('Resolved' if alert.is_resolved else 'Active') }}</span>
+    </div>
+    <p>{{ alert.message_ar if locale=='ar' else alert.message_en }}</p>
+
+    {% set recs = recommendation_map.get(alert.id, []) %}
+    {% if recs %}
+    <div class="ux3-recommendation-card">
+      <small>{{ 'الإجراء الموصى به' if locale=='ar' else 'Recommended action' }}</small>
+      <strong>{{ recs[0].text_ar if locale=='ar' else recs[0].text_en }}</strong>
+      <p>{{ recs[0].rationale_ar if locale=='ar' else recs[0].rationale_en }}</p>
+    </div>
+    {% endif %}
+
+    <div class="ux3-row-actions">
+      {% if alert.forecast_id and forecast_run_map.get(alert.forecast_id) %}
+      <a class="secondary-button" href="{{ url_for('forecasting.detail', run_id=forecast_run_map.get(alert.forecast_id)) }}">{{ 'عرض التحليل' if locale=='ar' else 'View analysis' }}</a>
+      {% endif %}
+      {% if not alert.is_read %}
+      <form method="post" action="{{ url_for('alerts.mark_read', alert_id=alert.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="status" value="{{ status }}"><button class="secondary-button" type="submit">{{ 'تمت القراءة' if locale=='ar' else 'Mark read' }}</button></form>
+      {% endif %}
+      {% if alert.is_resolved %}
+      <form method="post" action="{{ url_for('alerts.reopen', alert_id=alert.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="status" value="{{ status }}"><button class="secondary-button" type="submit">{{ 'إعادة فتح' if locale=='ar' else 'Reopen' }}</button></form>
+      {% else %}
+      <form method="post" action="{{ url_for('alerts.resolve', alert_id=alert.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="status" value="{{ status }}"><button class="primary-button" type="submit">{{ 'وضع كمحلول' if locale=='ar' else 'Resolve' }}</button></form>
+      {% endif %}
+    </div>
+  </article>
+{% else %}
+  <div class="empty-state ux3-empty"><span>✓</span><strong>{{ 'لا توجد تنبيهات في هذا التصنيف' if locale=='ar' else 'No alerts in this view' }}</strong><small>{{ 'شغّل تحليلًا جديدًا لتحديث الإشارات.' if locale=='ar' else 'Run a new analysis to refresh risk signals.' }}</small></div>
+{% endfor %}
+</section>
+{% endblock %}
