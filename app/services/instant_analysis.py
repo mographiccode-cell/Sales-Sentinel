@@ -73,13 +73,19 @@ def _recent_change(rows, window: int = 7) -> dict:
 def _point_quality(generated: list[dict]) -> dict:
     first = generated[0]
     metrics = first.get("metrics") or {}
-    wape = metrics.get("wape")
-    wape = float(wape) if wape is not None else None
+    daily_wape = metrics.get("wape")
+    daily_wape = float(daily_wape) if daily_wape is not None else None
+    horizon_wape = metrics.get("horizon_total_wape")
+    horizon_wape = float(horizon_wape) if horizon_wape is not None else None
+    primary_wape = horizon_wape if horizon_wape is not None else daily_wape
     return {
         "model_name": first.get("model_name", "—"),
         "model_version": first.get("model_version", "—"),
-        "accuracy_proxy_pct": max(0.0, min(100.0, (1.0 - wape) * 100.0)) if wape is not None else None,
-        "error_wape_pct": max(0.0, wape * 100.0) if wape is not None else None,
+        "accuracy_proxy_pct": max(0.0, min(100.0, (1.0 - primary_wape) * 100.0)) if primary_wape is not None else None,
+        "error_wape_pct": max(0.0, primary_wape * 100.0) if primary_wape is not None else None,
+        "daily_wape_pct": max(0.0, daily_wape * 100.0) if daily_wape is not None else None,
+        "horizon_total_wape_pct": max(0.0, horizon_wape * 100.0) if horizon_wape is not None else None,
+        "horizon_backtest_folds": int(metrics.get("horizon_backtest_folds") or 0),
         "interval_coverage_pct": None,
         "interval_method": (first.get("calibration") or {}).get("interval_method"),
         "mae": float(metrics.get("mae")) if metrics.get("mae") is not None else None,
@@ -192,7 +198,7 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
             "data_mode": data_mode,
             "decline_engine_available": decline_supported,
             "auto_after_import": True,
-            "point_forecast_selection": "merchant_rolling_wape",
+            "point_forecast_selection": "merchant_horizon_total_wape_then_daily_wape",
         },
         metrics_json=metrics,
         data_start=rows[0][0],

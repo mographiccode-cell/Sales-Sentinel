@@ -113,7 +113,7 @@ def index():
                     filters_json={
                         "data_mode": data_mode,
                         "decline_engine_available": bool(decline_risk.get("available")),
-                        "point_forecast_selection": "merchant_rolling_wape",
+                        "point_forecast_selection": "merchant_horizon_total_wape_then_daily_wape",
                     },
                     metrics_json=metrics,
                     data_start=rows[0][0],
