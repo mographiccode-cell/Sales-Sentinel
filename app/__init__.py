@@ -56,19 +56,20 @@ def create_app(config_object=None):
     from .auth.routes import auth_bp
     from .dashboard.routes import dashboard_bp
     from .forecasting.routes import forecasting_bp
+    from .import_history.routes import import_history_bp
     from .imports.routes import imports_bp
     from .reports.routes import reports_bp
     from .sales.routes import sales_bp
 
-    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp, admin_user_bp, settings_bp):
+    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, import_history_bp, reports_bp, alerts_bp, admin_bp, admin_user_bp, settings_bp):
         app.register_blueprint(blueprint)
 
     endpoint_permissions = {
         "dashboard.index": "dashboard.view", "sales.index": "sales.view",
         "forecasting.index": "forecasts.run", "forecasting.detail": "forecasts.run",
-        "imports.index": "imports.manage", "reports.index": "reports.export",
-        "reports.download": "reports.export", "alerts.index": "alerts.view",
-        "alerts.mark_read": "alerts.view", "alerts.resolve": "alerts.view", "alerts.reopen": "alerts.view",
+        "imports.index": "imports.manage", "import_history.history": "imports.manage",
+        "reports.index": "reports.export", "reports.download": "reports.export",
+        "alerts.index": "alerts.view", "alerts.mark_read": "alerts.view", "alerts.resolve": "alerts.view", "alerts.reopen": "alerts.view",
         "admin.users": "users.manage", "admin.create_user": "users.manage", "admin.edit_user": "users.manage",
         "admin.toggle_user": "users.manage", "admin.remove_user_access": "users.manage",
         "admin_user.delete_user": "users.manage", "admin.roles": "users.manage",
@@ -76,8 +77,8 @@ def create_app(config_object=None):
         "admin.health": "system.manage", "admin.settings": "system.manage", "settings_pref.settings": "system.manage",
     }
     company_scope_endpoints = {
-        "imports.index", "forecasting.index", "forecasting.detail", "reports.index", "reports.download",
-        "alerts.index", "alerts.mark_read", "alerts.resolve", "alerts.reopen",
+        "imports.index", "import_history.history", "forecasting.index", "forecasting.detail",
+        "reports.index", "reports.download", "alerts.index", "alerts.mark_read", "alerts.resolve", "alerts.reopen",
     }
 
     @app.before_request
