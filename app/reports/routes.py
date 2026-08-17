@@ -28,18 +28,16 @@ def index():
 
 
 def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
-    """Create a dependency-light, auditable PDF report.
-
-    The UI remains bilingual; the downloadable PDF uses ASCII labels so it can
-    be generated consistently in serverless environments without bundling font
-    files. Numeric results and model metadata are identical to the stored run.
-    """
+    """Create a dependency-light, auditable report from the stored run evidence."""
     metrics = run.metrics_json or {}
     decline = metrics.get("decline_engine", {}) or {}
-    quality = (metrics.get("quality", {}) or {}).get("point", {}) or {}
-    observed = metrics.get("observed_recent", {}) or {}
-    predicted_change = float(metrics.get("predicted_change_pct", 0) or 0)
+    point = metrics.get("point_forecast_engine", {}) or {}
+    point_metrics = point.get("metrics", {}) or {}
     explanation = metrics.get("explanation", {}) or {}
+    decline_supported = bool(metrics.get("decline_probability_supported") and decline.get("available"))
+    wape = point_metrics.get("wape")
+    wape_pct = float(wape) * 100.0 if wape is not None else None
+    quality_pct = max(0.0, min(100.0, 100.0 - wape_pct)) if wape_pct is not None else None
 
     pdf = FPDF(format="A4")
     pdf.set_auto_page_break(auto=True, margin=14)
@@ -56,25 +54,27 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     pdf.set_font("Helvetica", "B", 12)
     pdf.cell(0, 8, "Executive result", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", size=10)
+    decline_value = f"{float(decline.get('score', 0) or 0) * 100:.1f}%" if decline_supported else "N/A - dedicated 7-day risk engine unavailable"
+    threshold_value = f"{float(decline.get('decision_threshold', 0) or 0) * 100:.1f}%" if decline_supported else "N/A"
     rows = [
-        ("Decline probability", f"{float(decline.get('score', 0) or 0) * 100:.1f}%"),
-        ("Decision threshold", f"{float(decline.get('decision_threshold', 0) or 0) * 100:.1f}%"),
-        ("Observed change", f"{float(observed.get('change_pct', 0) or 0):+.1f}%"),
-        ("Forecast decline", f"{max(0.0, -predicted_change):.1f}%"),
-        ("Forecast quality (1-WAPE)", f"{float(quality.get('accuracy_proxy_pct', 0) or 0):.1f}%"),
-        ("WAPE", f"{float(quality.get('error_wape_pct', 0) or 0):.1f}%"),
-        ("Interval coverage", f"{float(quality.get('interval_coverage_pct', 0) or 0):.1f}%"),
+        ("Point forecast model", str(point.get("name") or "N/A")),
+        ("Point forecast selection", str(point_metrics.get("selection_metric") or "N/A")),
+        ("Merchant backtest points", str(point_metrics.get("backtest_points") or "N/A")),
+        ("Point forecast WAPE", f"{wape_pct:.1f}%" if wape_pct is not None else "N/A"),
+        ("Point forecast quality (1-WAPE)", f"{quality_pct:.1f}%" if quality_pct is not None else "N/A"),
+        ("Validated decline probability", decline_value),
+        ("Decline decision threshold", threshold_value),
     ]
     for label, value in rows:
         pdf.set_font("Helvetica", "", 9)
-        pdf.cell(70, 7, label)
+        pdf.cell(78, 7, label)
         pdf.set_font("Helvetica", "B", 9)
         pdf.cell(0, 7, value, new_x="LMARGIN", new_y="NEXT")
 
     if explanation.get("drivers"):
         pdf.ln(4)
         pdf.set_font("Helvetica", "B", 12)
-        pdf.cell(0, 8, "Why the decline is expected", new_x="LMARGIN", new_y="NEXT")
+        pdf.cell(0, 8, "Why the decline signal may be occurring", new_x="LMARGIN", new_y="NEXT")
         pdf.set_font("Helvetica", size=8)
         for driver in explanation.get("drivers", [])[:4]:
             title = str(driver.get("title_en") or driver.get("code") or "Signal")
@@ -88,7 +88,7 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
 
     pdf.ln(4)
     pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, "7-day forecast", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 8, f"{run.horizon_days}-day forecast", new_x="LMARGIN", new_y="NEXT")
     widths = [30, 40, 40, 40, 35]
     headers = ["Date", "Predicted", "Lower", "Upper", "Decline risk"]
     pdf.set_font("Helvetica", "B", 8)
@@ -97,12 +97,13 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     pdf.ln()
     pdf.set_font("Helvetica", size=8)
     for item in forecasts:
+        risk_value = f"{float(item.decline_probability) * 100:.1f}%" if decline_supported else "N/A"
         values = [
             item.forecast_date.isoformat(),
             f"{float(item.predicted_sales):,.2f}",
             f"{float(item.lower_bound):,.2f}",
             f"{float(item.upper_bound):,.2f}",
-            f"{float(item.decline_probability) * 100:.1f}%",
+            risk_value,
         ]
         for w, value in zip(widths, values):
             pdf.cell(w, 7, value, border=1)
@@ -111,7 +112,7 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     pdf.ln(5)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(90, 100, 95)
-    pdf.multi_cell(0, 5, "Decision-support output. Review contributing products, customers, and dates before taking action.")
+    pdf.multi_cell(0, 5, "Decision-support output. Point-forecast quality is merchant-specific. Decline alerts are generated only by the dedicated validated-risk runtime.")
     return bytes(pdf.output())
 
 
