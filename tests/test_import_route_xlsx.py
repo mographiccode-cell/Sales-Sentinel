@@ -79,7 +79,10 @@ def test_authenticated_browser_xlsx_upload_is_ingested_and_idempotent(tmp_path: 
         content_type="multipart/form-data",
         follow_redirects=False,
     )
-    assert response.status_code == 302
+    # The current UX renders the instant V18 + point-forecast result in the same
+    # request rather than redirecting away from the upload page.
+    assert response.status_code == 200
+    assert b'id="instant-analysis"' in response.data
 
     with session_scope() as db:
         first = db.scalar(select(ImportJob).order_by(desc(ImportJob.id)))
@@ -91,7 +94,14 @@ def test_authenticated_browser_xlsx_upload_is_ingested_and_idempotent(tmp_path: 
         assert first.error_details["mode"] == "redsea"
         assert first.error_details["source_format"] == "xlsx"
         assert first.error_details["duplicate_rows"] == 0
-        rich_rows = int(db.scalar(select(func.count(Sale.id)).where(Sale.transaction_type != "DAILY_AGGREGATE")) or 0)
+        rich_rows = int(
+            db.scalar(
+                select(func.count(Sale.id)).where(
+                    Sale.transaction_type != "DAILY_AGGREGATE"
+                )
+            )
+            or 0
+        )
         assert rich_rows == 120
 
     # Re-upload the exact same workbook through the browser route. Row hashes must
@@ -109,7 +119,8 @@ def test_authenticated_browser_xlsx_upload_is_ingested_and_idempotent(tmp_path: 
         content_type="multipart/form-data",
         follow_redirects=False,
     )
-    assert response.status_code == 302
+    assert response.status_code == 200
+    assert b'id="instant-analysis"' in response.data
 
     with session_scope() as db:
         second = db.scalar(select(ImportJob).order_by(desc(ImportJob.id)))
@@ -117,7 +128,14 @@ def test_authenticated_browser_xlsx_upload_is_ingested_and_idempotent(tmp_path: 
         assert second.status == "imported_no_new_rows"
         assert second.accepted_rows == 0
         assert second.error_details["duplicate_rows"] == 120
-        rich_rows = int(db.scalar(select(func.count(Sale.id)).where(Sale.transaction_type != "DAILY_AGGREGATE")) or 0)
+        rich_rows = int(
+            db.scalar(
+                select(func.count(Sale.id)).where(
+                    Sale.transaction_type != "DAILY_AGGREGATE"
+                )
+            )
+            or 0
+        )
         assert rich_rows == 120
 
     assert (upload_dir / "RedSea_Data_Cleaned.xlsx").exists()
