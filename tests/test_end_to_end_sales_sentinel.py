@@ -24,7 +24,6 @@ def _merchant_xlsx(days: int = 70) -> bytes:
     ])
     start = date(2023, 7, 1)
     for i in range(days):
-        # Keep a real calendar series with a weekly pattern and a mild late decline.
         multiplier = 0.82 if i >= days - 14 else 1.0
         for j in range(3):
             quantity = 1 + ((i + j) % 3)
@@ -72,13 +71,29 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
     csrf = "e2e-csrf"
     _authenticate(client, admin_id, csrf)
 
+    # The redesigned import page renders the automatic analysis inline in the
+    # same request. A successful upload therefore returns 200, not a redirect.
     upload = client.post(
         "/imports/",
         data={"csrf_token": csrf, "file": (BytesIO(_merchant_xlsx()), "merchant-sales.xlsx")},
         content_type="multipart/form-data",
         follow_redirects=False,
     )
-    assert upload.status_code == 302
+    assert upload.status_code == 200
+    assert b"instant-analysis" in upload.data
+
+    # Verify the automatic upload analysis already uses the adaptive merchant
+    # point forecaster and the dedicated V18 risk runtime.
+    with session_scope() as db:
+        instant_run = db.scalar(select(ModelRun).order_by(desc(ModelRun.id)))
+        assert instant_run is not None
+        instant_metrics = instant_run.metrics_json or {}
+        instant_point = instant_metrics["point_forecast_engine"]
+        assert instant_point["version"] == "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1"
+        assert instant_point["metrics"]["selection_metric"] == "merchant_rolling_wape"
+        assert instant_point["metrics"]["backtest_points"] > 0
+        assert instant_metrics["decline_engine"].get("available") is True
+        assert instant_metrics["decline_probability_supported"] is True
 
     _authenticate(client, admin_id, csrf)
     run7_response = client.post(
@@ -101,8 +116,6 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
             "seasonal_naive_7", "moving_average_7", "moving_average_14", "weekly_trend_7"
         }
         assert len(db.scalars(select(Forecast).where(Forecast.model_run_id == run7.id)).all()) == 7
-        # With transaction-rich history the dedicated runtime, not the point
-        # forecaster, is responsible for decline-risk availability and alerts.
         assert metrics7["decline_engine"].get("available") is True
         assert metrics7["decline_probability_supported"] is True
         run7_id = run7.id
