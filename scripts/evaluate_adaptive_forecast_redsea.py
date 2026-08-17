@@ -51,12 +51,9 @@ def load_daily_sales(path: Path) -> tuple[list[date], list[float], int]:
             value = float(row[net_idx] or 0.0)
         except (TypeError, ValueError):
             continue
-        # Net returns/credits may be negative in transaction data. The runtime
-        # forecasting target is non-negative daily merchant sales, so keep the
-        # daily accounting sum and clamp only after aggregation.
         daily[day] = daily.get(day, 0.0) + value
-
     wb.close()
+
     if not daily:
         raise RuntimeError("No usable Redsea daily sales were found")
 
@@ -97,11 +94,22 @@ def _metrics(actual: list[float], predicted: list[float]) -> dict:
     }
 
 
+def _total_wape(actual_totals: list[float], predicted_totals: list[float]) -> float | None:
+    if not actual_totals:
+        return None
+    error = sum(abs(a - p) for a, p in zip(actual_totals, predicted_totals))
+    denom = sum(abs(a) for a in actual_totals)
+    return error / max(denom, 1e-9)
+
+
 def evaluate(dates: list[date], values: list[float], horizon: int, step: int) -> dict:
     min_history = 56
     all_actual: list[float] = []
     all_pred: list[float] = []
     all_naive: list[float] = []
+    actual_totals: list[float] = []
+    pred_totals: list[float] = []
+    naive_totals: list[float] = []
     coverage_hits = 0
     coverage_total = 0
     winners: Counter[str] = Counter()
@@ -118,6 +126,13 @@ def evaluate(dates: list[date], values: list[float], horizon: int, step: int) ->
 
         fold_metrics = _metrics(actual, predicted)
         naive_metrics = _metrics(actual, naive)
+        actual_total = sum(actual)
+        pred_total = sum(predicted)
+        naive_total = sum(naive)
+        actual_totals.append(actual_total)
+        pred_totals.append(pred_total)
+        naive_totals.append(naive_total)
+
         for a, item in zip(actual, generated):
             coverage_total += 1
             if float(item["lower"]) <= a <= float(item["upper"]):
@@ -127,8 +142,12 @@ def evaluate(dates: list[date], values: list[float], horizon: int, step: int) ->
             "origin": dates[origin].isoformat(),
             "history_days": origin,
             "winner": winner,
-            "adaptive_wape": fold_metrics["wape"],
-            "naive_wape": naive_metrics["wape"],
+            "adaptive_daily_wape": fold_metrics["wape"],
+            "naive_daily_wape": naive_metrics["wape"],
+            "actual_total": actual_total,
+            "adaptive_total": pred_total,
+            "naive_total": naive_total,
+            "adaptive_total_abs_error_pct": abs(actual_total - pred_total) / max(abs(actual_total), 1e-9) * 100.0,
             "backtest_points": int(generated[0]["metrics"]["backtest_points"]),
         })
         all_actual.extend(actual)
@@ -137,6 +156,8 @@ def evaluate(dates: list[date], values: list[float], horizon: int, step: int) ->
 
     adaptive = _metrics(all_actual, all_pred)
     naive = _metrics(all_actual, all_naive)
+    adaptive_total_wape = _total_wape(actual_totals, pred_totals)
+    naive_total_wape = _total_wape(actual_totals, naive_totals)
     return {
         "horizon_days": horizon,
         "step_days": step,
@@ -144,7 +165,16 @@ def evaluate(dates: list[date], values: list[float], horizon: int, step: int) ->
         "evaluated_daily_points": len(all_actual),
         "adaptive": adaptive,
         "seasonal_naive_7_reference": naive,
-        "wape_delta_vs_naive_pct_points": (
+        "horizon_total": {
+            "adaptive_wape": adaptive_total_wape,
+            "adaptive_accuracy_proxy_pct": max(0.0, (1.0 - adaptive_total_wape) * 100.0) if adaptive_total_wape is not None else None,
+            "seasonal_naive_wape": naive_total_wape,
+            "wape_delta_vs_naive_pct_points": (
+                (naive_total_wape - adaptive_total_wape) * 100.0
+                if adaptive_total_wape is not None and naive_total_wape is not None else None
+            ),
+        },
+        "daily_wape_delta_vs_naive_pct_points": (
             (naive["wape"] - adaptive["wape"]) * 100.0
             if naive["wape"] is not None and adaptive["wape"] is not None else None
         ),
@@ -194,28 +224,28 @@ def main() -> None:
 ## 7-day walk-forward
 
 - Folds: **{seven['fold_count']}**
-- Evaluated daily points: **{seven['evaluated_daily_points']}**
-- Adaptive WAPE: **{pct(seven['adaptive']['wape'])}**
-- Adaptive 1-WAPE quality proxy: **{seven['adaptive']['accuracy_proxy_pct']:.2f}%**
-- Seasonal-naive reference WAPE: **{pct(seven['seasonal_naive_7_reference']['wape'])}**
-- WAPE improvement vs seasonal naive: **{seven['wape_delta_vs_naive_pct_points']:.2f} percentage points**
+- Daily WAPE: **{pct(seven['adaptive']['wape'])}**
+- 7-day TOTAL WAPE: **{pct(seven['horizon_total']['adaptive_wape'])}**
+- 7-day TOTAL quality proxy (1-WAPE): **{seven['horizon_total']['adaptive_accuracy_proxy_pct']:.2f}%**
+- Seasonal-naive TOTAL WAPE: **{pct(seven['horizon_total']['seasonal_naive_wape'])}**
+- TOTAL WAPE improvement vs seasonal naive: **{seven['horizon_total']['wape_delta_vs_naive_pct_points']:.2f} percentage points**
 - Prediction-interval empirical coverage: **{seven['interval_coverage_pct']:.2f}%**
 - Selected-model counts: `{json.dumps(seven['winner_counts'], ensure_ascii=False)}`
 
 ## 30-day walk-forward
 
 - Folds: **{thirty['fold_count']}**
-- Evaluated daily points: **{thirty['evaluated_daily_points']}**
-- Adaptive WAPE: **{pct(thirty['adaptive']['wape'])}**
-- Adaptive 1-WAPE quality proxy: **{thirty['adaptive']['accuracy_proxy_pct']:.2f}%**
-- Seasonal-naive reference WAPE: **{pct(thirty['seasonal_naive_7_reference']['wape'])}**
-- WAPE improvement vs seasonal naive: **{thirty['wape_delta_vs_naive_pct_points']:.2f} percentage points**
+- Daily WAPE: **{pct(thirty['adaptive']['wape'])}**
+- 30-day TOTAL WAPE: **{pct(thirty['horizon_total']['adaptive_wape'])}**
+- 30-day TOTAL quality proxy (1-WAPE): **{thirty['horizon_total']['adaptive_accuracy_proxy_pct']:.2f}%**
+- Seasonal-naive TOTAL WAPE: **{pct(thirty['horizon_total']['seasonal_naive_wape'])}**
+- TOTAL WAPE improvement vs seasonal naive: **{thirty['horizon_total']['wape_delta_vs_naive_pct_points']:.2f} percentage points**
 - Prediction-interval empirical coverage: **{thirty['interval_coverage_pct']:.2f}%**
 - Selected-model counts: `{json.dumps(thirty['winner_counts'], ensure_ascii=False)}`
 
 ## Boundary
 
-This is a real Saudi external-data transfer diagnostic, but it is **not fresh blind validation**: the Redsea dataset had already been inspected during development, and its time span is short. Do not present the values above as universal production accuracy. A new longitudinal Saudi merchant dataset remains required for that claim.
+Daily-value error and horizon-total error answer different questions. Sales Sentinel's decline decision is driven mainly by the total sales level over the next 7/30 days, so horizon-total WAPE is the more decision-relevant point-forecast diagnostic. This is still **not fresh blind validation** because Redsea was already inspected during development and covers only about four months.
 """
     (REPORT_DIR / "summary.md").write_text(summary, encoding="utf-8")
     print(summary)
