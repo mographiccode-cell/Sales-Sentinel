@@ -8,13 +8,14 @@ from sqlalchemy import case, func, select
 from app.database import session_scope
 from app.models import Sale
 from app.services.data_scope import preferred_sales_condition
-from app.services.security import login_required
+from app.services.security import branch_ids_for_user, current_user, login_required, permission_required
 
 sales_bp = Blueprint("sales", __name__, url_prefix="/sales")
 
 
 @sales_bp.get("/")
 @login_required
+@permission_required("sales.view")
 def index():
     start = request.args.get("start", "")
     end = request.args.get("end", "")
@@ -48,6 +49,9 @@ def index():
         start_date = None
         end_date = None
 
+    user = current_user()
+    allowed_branch_ids = branch_ids_for_user(user) if user else set()
+
     with session_scope() as db:
         sales_condition, data_mode, _ = preferred_sales_condition(db)
         stmt = select(
@@ -64,6 +68,8 @@ def index():
             ).label("returns"),
             func.sum(func.abs(Sale.discount_amount)).label("discounts"),
         ).where(sales_condition)
+        if allowed_branch_ids:
+            stmt = stmt.where(Sale.branch_id.in_(allowed_branch_ids))
         if start_date:
             stmt = stmt.where(Sale.sale_date >= start_date)
         if end_date:
@@ -72,12 +78,11 @@ def index():
             stmt = stmt.where(Sale.channel == channel)
         stmt = stmt.group_by(Sale.sale_date).order_by(Sale.sale_date.desc()).limit(180)
         rows = db.execute(stmt).all()
-        channels = db.scalars(
-            select(Sale.channel)
-            .where(sales_condition)
-            .distinct()
-            .order_by(Sale.channel)
-        ).all()
+
+        channel_stmt = select(Sale.channel).where(sales_condition)
+        if allowed_branch_ids:
+            channel_stmt = channel_stmt.where(Sale.branch_id.in_(allowed_branch_ids))
+        channels = db.scalars(channel_stmt.distinct().order_by(Sale.channel)).all()
 
     items = [
         {
