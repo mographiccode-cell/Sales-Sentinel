@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
@@ -17,12 +17,27 @@ forecasting_bp = Blueprint("forecasting", __name__, url_prefix="/forecasts")
 
 
 def _grouped_sales(db, condition):
-    return db.execute(
+    rows = db.execute(
         select(Sale.sale_date, func.sum(Sale.net_sales))
         .where(condition)
         .group_by(Sale.sale_date)
         .order_by(Sale.sale_date)
     ).all()
+    if not rows:
+        return []
+
+    # Forecast lags are calendar-day lags. Missing transaction dates therefore
+    # become explicit zero-sales days rather than collapsing time and turning
+    # "lag 7" into "the seventh previous observed sales day".
+    by_date = {row[0]: float(row[1] or 0.0) for row in rows}
+    start = rows[0][0]
+    end = rows[-1][0]
+    calendarized = []
+    cursor = start
+    while cursor <= end:
+        calendarized.append((cursor, by_date.get(cursor, 0.0)))
+        cursor += timedelta(days=1)
+    return calendarized
 
 
 def _daily_sales_rows(db):
