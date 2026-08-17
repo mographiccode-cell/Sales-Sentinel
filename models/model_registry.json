@@ -1,6 +1,6 @@
 {
   "project": "Sales Sentinel",
-  "registry_version": "2026-08-17",
+  "registry_version": "2026-08-17-v3",
   "canonical_business_target": "Predict whether total merchant sales will decline by at least 15% over the next 7 days relative to the trailing 28-day daily-sales baseline.",
   "models": {
     "merchant_decline_development_best": {
@@ -41,28 +41,35 @@
     },
     "point_sales_forecast": {
       "name": "Adaptive Merchant Forecast",
-      "version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1",
-      "status": "RUNTIME_LOCAL_BACKTEST_SELECTION",
-      "role": "7-day and 30-day merchant sales-value point forecast. Selects the lowest-WAPE local candidate using rolling historical origins from the uploaded merchant series.",
+      "version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V3",
+      "status": "DEFAULT_RUNTIME_POINT_FORECAST",
+      "role": "7-day and 30-day merchant sales-value forecast using merchant-local, horizon-aware rolling backtests. Candidate selection minimizes horizon-total WAPE first and daily WAPE second.",
       "engine": "app/services/adaptive_forecasting_engine.py",
       "minimum_history_days": 28,
       "candidate_models": [
         "seasonal_naive_7",
         "moving_average_7",
         "moving_average_14",
+        "median_7",
+        "median_14",
+        "weekday_mean_8w",
+        "weekday_median_8w",
+        "seasonal_level_blend",
         "weekly_trend_7"
       ],
-      "selection_metric": "merchant_rolling_wape",
-      "interval_method": "90pct_absolute_backtest_residual",
+      "selection_metric": "merchant_horizon_total_wape_then_daily_wape",
+      "primary_quality_metric": "horizon_total_wape",
+      "secondary_quality_metric": "daily_wape",
+      "interval_method": "90pct_absolute_one_step_backtest_residual",
       "decline_probability_supported": false,
-      "scientific_boundary": "Quality is merchant-specific and must be reported from the rolling backtest stored with each run. This runtime does not create a global production-accuracy claim."
+      "scientific_boundary": "Quality is merchant- and horizon-specific. Use the horizon-total WAPE stored with each run as the primary point-forecast quality measure. This runtime does not create a global production-accuracy claim."
     },
     "legacy_uci_point_forecast": {
       "name": "ridge_raw_1",
       "status": "LEGACY_NOT_DEFAULT",
       "artifact": "models/sales_forecast.json",
       "role": "Historical UCI-trained point-forecast artifact retained for reproducibility only; it is no longer the default website point-forecast engine.",
-      "must_not_be_used_for": "Merchant decline-risk model performance claims"
+      "must_not_be_used_for": "Merchant decline-risk model performance claims or current point-forecast quality claims"
     }
   },
   "external_evidence": {
@@ -77,6 +84,31 @@
       "inspection_report": "reports/external_redsea_mendeley_inspection/inspection_summary.md",
       "status": "EXTERNAL_SAUDI_MICRODATA_DIAGNOSTIC",
       "boundary": "Short external window; useful for transfer diagnostics but insufficient by itself for a production-readiness claim."
+    },
+    "redsea_adaptive_forecast_v3": {
+      "status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_NOT_FRESH_BLIND",
+      "report": "reports/external_redsea_adaptive_forecast/summary.md",
+      "source_rows": 2700,
+      "calendar_days": 123,
+      "date_start": "2023-07-01",
+      "date_end": "2023-10-31",
+      "seven_day": {
+        "folds": 9,
+        "daily_wape": 0.7252,
+        "horizon_total_wape": 0.3565,
+        "horizon_total_quality_proxy_1_minus_wape": 0.6435,
+        "seasonal_naive_total_wape": 0.4645,
+        "interval_coverage": 0.9048
+      },
+      "thirty_day": {
+        "folds": 3,
+        "daily_wape": 0.6862,
+        "horizon_total_wape": 0.0951,
+        "horizon_total_quality_proxy_1_minus_wape": 0.9049,
+        "seasonal_naive_total_wape": 0.2688,
+        "interval_coverage": 0.90
+      },
+      "boundary": "This is a real Saudi Redsea transfer diagnostic, not fresh blind validation. Redsea had already been inspected during development and spans only about four months. The 90.49% figure applies only to the 30-day horizon-total 1-WAPE diagnostic and must not be reported as universal model accuracy."
     },
     "redsea_real_runtime_v18": {
       "status": "PASS_RUNTIME_INTEGRATION_ONLY",
@@ -109,7 +141,8 @@
     "Do not use plain accuracy alone as the primary metric for the imbalanced decline target.",
     "Do not present SAMA city/market-risk metrics as merchant Sales Sentinel metrics.",
     "Do not claim RED/severe-risk classification is supported.",
-    "Do not report one global point-forecast accuracy for Adaptive Merchant Forecast; report the WAPE stored for the merchant/run.",
+    "Do not report one global point-forecast accuracy for Adaptive Merchant Forecast; report horizon-specific merchant/run WAPE.",
+    "Do not report the Redsea 30-day 90.49% horizon-total quality proxy as universal production accuracy.",
     "Do not claim production validation until an independent longitudinal Saudi merchant dataset is evaluated without tuning on it."
   ]
 }
