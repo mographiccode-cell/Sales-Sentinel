@@ -1,0 +1,20 @@
+/* RTL bidi safety for mixed Arabic, signed numeric metrics and technical identifiers. */
+html[dir="rtl"] .ux3-result-kpis strong.negative,
+html[dir="rtl"] .ux3-result-kpis strong.positive,
+html[dir="rtl"] .ux3-kpi-row strong.negative,
+html[dir="rtl"] .ux3-kpi-row strong.positive {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+/* Let each mixed technical line choose direction from its own first strong
+   character instead of inheriting the page's RTL embedding. Arabic-only
+   values remain RTL while model ids / metric names remain LTR. */
+html[dir="rtl"] .ux3-quality-grid article strong,
+html[dir="rtl"] .ux3-quality-grid article span,
+html[dir="rtl"] .ux3-tech-grid span,
+html[dir="rtl"] .ux3-result-bar small,
+html[dir="rtl"] .ux3-page-head p {
+  unicode-bidi: plaintext;
+}
