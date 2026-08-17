@@ -97,9 +97,16 @@ def permission_required(permission: str) -> Callable[[Callable[P, R]], Callable[
     return decorator
 
 
-def branch_ids_for_user(user: User) -> set[int]:
+def branch_ids_for_user(user: User) -> set[int] | None:
+    """Return the user's data scope.
+
+    ``None`` means explicit all-branch access. An empty set means the user has
+    no assigned branches and must therefore receive no branch-scoped data.
+    Keeping these states distinct prevents an empty assignment from becoming
+    an accidental unrestricted query.
+    """
     if "branches.view_all" in user.permission_codes:
-        return set()
+        return None
     return {branch.id for branch in user.branches}
 
 
