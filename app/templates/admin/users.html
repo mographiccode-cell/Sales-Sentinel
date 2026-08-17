@@ -48,6 +48,10 @@
                       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                       <button class="danger-button" type="submit">{{ 'إزالة الوصول' if locale=='ar' else 'Remove access' }}</button>
                     </form>
+                    <form method="post" action="{{ url_for('admin_user.delete_user', user_id=u.id) }}" onsubmit="return confirm('Delete this user? Historical accounts will be disabled instead.');">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="danger-button" type="submit">{{ 'حذف المستخدم' if locale=='ar' else 'Delete user' }}</button>
+                    </form>
                   </div>
                 </div>
               </details>
