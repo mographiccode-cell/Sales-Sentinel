@@ -1,6 +1,6 @@
 # Adaptive Merchant Forecast — Redsea external diagnostic
 
-- Model: `SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2`
+- Model: `SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V3`
 - Source SHA-256: `dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645`
 - Source rows read: **2700**
 - Calendarized daily window: **123 days** (2023-07-01 to 2023-10-31)
@@ -9,24 +9,24 @@
 ## 7-day walk-forward
 
 - Folds: **9**
-- Daily WAPE: **71.27%**
-- 7-day TOTAL WAPE: **39.58%**
-- 7-day TOTAL quality proxy (1-WAPE): **60.42%**
+- Daily WAPE: **72.52%**
+- 7-day TOTAL WAPE: **35.65%**
+- 7-day TOTAL quality proxy (1-WAPE): **64.35%**
 - Seasonal-naive TOTAL WAPE: **46.45%**
-- TOTAL WAPE improvement vs seasonal naive: **6.87 percentage points**
-- Prediction-interval empirical coverage: **87.30%**
-- Selected-model counts: `{"weekday_median_8w": 4, "median_14": 2, "moving_average_7": 1, "median_7": 2}`
+- TOTAL WAPE improvement vs seasonal naive: **10.80 percentage points**
+- Prediction-interval empirical coverage: **90.48%**
+- Selected-model counts: `{"weekday_median_8w": 3, "weekday_mean_8w": 6}`
 
 ## 30-day walk-forward
 
 - Folds: **3**
-- Daily WAPE: **68.96%**
-- 30-day TOTAL WAPE: **21.80%**
-- 30-day TOTAL quality proxy (1-WAPE): **78.20%**
+- Daily WAPE: **68.62%**
+- 30-day TOTAL WAPE: **9.51%**
+- 30-day TOTAL quality proxy (1-WAPE): **90.49%**
 - Seasonal-naive TOTAL WAPE: **26.88%**
-- TOTAL WAPE improvement vs seasonal naive: **5.09 percentage points**
-- Prediction-interval empirical coverage: **87.78%**
-- Selected-model counts: `{"weekday_median_8w": 2, "median_14": 1}`
+- TOTAL WAPE improvement vs seasonal naive: **17.37 percentage points**
+- Prediction-interval empirical coverage: **90.00%**
+- Selected-model counts: `{"weekday_median_8w": 3}`
 
 ## Boundary
 

@@ -1,7 +1,7 @@
 {
   "evaluation": "External Saudi Redsea adaptive point-forecast diagnostic",
   "scientific_status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_NOT_FRESH_BLIND",
-  "model_version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2",
+  "model_version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V3",
   "source_sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
   "source_rows": 2700,
   "calendar_days": 123,
@@ -14,10 +14,10 @@
     "fold_count": 9,
     "evaluated_daily_points": 63,
     "adaptive": {
-      "wape": 0.7126807182674638,
-      "mae": 22928.24381737013,
-      "rmse": 33573.493749962305,
-      "accuracy_proxy_pct": 28.731928173253618
+      "wape": 0.725209954200445,
+      "mae": 23331.332281746032,
+      "rmse": 33060.77865511397,
+      "accuracy_proxy_pct": 27.4790045799555
     },
     "seasonal_naive_7_reference": {
       "wape": 0.9764645831327836,
@@ -26,18 +26,16 @@
       "accuracy_proxy_pct": 2.3535416867216385
     },
     "horizon_total": {
-      "adaptive_wape": 0.3958201453110491,
-      "adaptive_accuracy_proxy_pct": 60.4179854688951,
+      "adaptive_wape": 0.35651083188780097,
+      "adaptive_accuracy_proxy_pct": 64.34891681121991,
       "seasonal_naive_wape": 0.4645014335892195,
-      "wape_delta_vs_naive_pct_points": 6.868128827817044
+      "wape_delta_vs_naive_pct_points": 10.799060170141855
     },
-    "daily_wape_delta_vs_naive_pct_points": 26.37838648653198,
-    "interval_coverage_pct": 87.3015873015873,
+    "daily_wape_delta_vs_naive_pct_points": 25.125462893233863,
+    "interval_coverage_pct": 90.47619047619048,
     "winner_counts": {
-      "weekday_median_8w": 4,
-      "median_14": 2,
-      "moving_average_7": 1,
-      "median_7": 2
+      "weekday_median_8w": 3,
+      "weekday_mean_8w": 6
     },
     "folds": [
       {
@@ -55,13 +53,13 @@
       {
         "origin": "2023-09-02",
         "history_days": 63,
-        "winner": "weekday_median_8w",
-        "adaptive_daily_wape": 0.44833551840118757,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 0.5796636027456281,
         "naive_daily_wape": 1.1549307062410388,
         "actual_total": 194776.56,
-        "adaptive_total": 273853.96,
+        "adaptive_total": 293064.1275,
         "naive_total": 339116.17000000004,
-        "adaptive_total_abs_error_pct": 40.59903306640184,
+        "adaptive_total_abs_error_pct": 50.461702116517515,
         "backtest_points": 42
       },
       {
@@ -79,73 +77,73 @@
       {
         "origin": "2023-09-16",
         "history_days": 77,
-        "winner": "median_14",
-        "adaptive_daily_wape": 0.6764973928741495,
+        "winner": "weekday_median_8w",
+        "adaptive_daily_wape": 0.7465598069416833,
         "naive_daily_wape": 0.9852128175353919,
         "actual_total": 279849.11999999994,
-        "adaptive_total": 152944.028671875,
+        "adaptive_total": 220771.345,
         "naive_total": 129808.20000000001,
-        "adaptive_total_abs_error_pct": 45.347682825704425,
+        "adaptive_total_abs_error_pct": 21.110580944474634,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-23",
         "history_days": 84,
-        "winner": "median_14",
-        "adaptive_daily_wape": 0.7205978197754784,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 0.38930417191717326,
         "naive_daily_wape": 0.9351936395943033,
         "actual_total": 292987.6,
-        "adaptive_total": 109660.73640625001,
+        "adaptive_total": 249504.1225,
         "naive_total": 279849.11999999994,
-        "adaptive_total_abs_error_pct": 62.57154350346226,
+        "adaptive_total_abs_error_pct": 14.84140540418775,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-30",
         "history_days": 91,
-        "winner": "moving_average_7",
-        "adaptive_daily_wape": 0.7821034999490382,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 0.7542335701726401,
         "naive_daily_wape": 0.8646976504243534,
         "actual_total": 318215.7600000001,
-        "adaptive_total": 290827.9874483542,
+        "adaptive_total": 249215.13124999998,
         "naive_total": 292987.6,
-        "adaptive_total_abs_error_pct": 8.606667548975551,
+        "adaptive_total_abs_error_pct": 21.683598810442362,
         "backtest_points": 42
       },
       {
         "origin": "2023-10-07",
         "history_days": 98,
-        "winner": "weekday_median_8w",
-        "adaptive_daily_wape": 0.5105141586112107,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 0.7162248930676445,
         "naive_daily_wape": 1.665117350967812,
         "actual_total": 155212.61,
-        "adaptive_total": 181695.055,
+        "adaptive_total": 237452.685,
         "naive_total": 318215.7600000001,
-        "adaptive_total_abs_error_pct": 17.062044765563837,
+        "adaptive_total_abs_error_pct": 52.9854339798809,
         "backtest_points": 42
       },
       {
         "origin": "2023-10-14",
         "history_days": 105,
-        "winner": "median_7",
-        "adaptive_daily_wape": 0.6557102553567463,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 0.6540788265152732,
         "naive_daily_wape": 0.6941848620131944,
         "actual_total": 215202.46,
-        "adaptive_total": 125025.59999999998,
+        "adaptive_total": 230234.125,
         "naive_total": 155212.61,
-        "adaptive_total_abs_error_pct": 41.903266347420015,
+        "adaptive_total_abs_error_pct": 6.984894596465119,
         "backtest_points": 42
       },
       {
         "origin": "2023-10-21",
         "history_days": 112,
-        "winner": "median_7",
-        "adaptive_daily_wape": 0.8348718911231693,
+        "winner": "weekday_mean_8w",
+        "adaptive_daily_wape": 1.3716166705473678,
         "naive_daily_wape": 1.5225196245920962,
         "actual_total": 101656.89,
-        "adaptive_total": 154083.93,
+        "adaptive_total": 240646.06,
         "naive_total": 215202.46,
-        "adaptive_total_abs_error_pct": 51.5725397461992,
+        "adaptive_total_abs_error_pct": 136.72380691559616,
         "backtest_points": 42
       }
     ]
@@ -156,10 +154,10 @@
     "fold_count": 3,
     "evaluated_daily_points": 90,
     "adaptive": {
-      "wape": 0.6896080906419304,
-      "mae": 23603.66765845448,
-      "rmse": 34750.73602309712,
-      "accuracy_proxy_pct": 31.03919093580696
+      "wape": 0.6862030183874089,
+      "mae": 23487.120020833332,
+      "rmse": 33385.585629288194,
+      "accuracy_proxy_pct": 31.379698161259107
     },
     "seasonal_naive_7_reference": {
       "wape": 0.8656279865287487,
@@ -168,16 +166,15 @@
       "accuracy_proxy_pct": 13.437201347125127
     },
     "horizon_total": {
-      "adaptive_wape": 0.21795678532593438,
-      "adaptive_accuracy_proxy_pct": 78.20432146740657,
+      "adaptive_wape": 0.09514720241179382,
+      "adaptive_accuracy_proxy_pct": 90.48527975882061,
       "seasonal_naive_wape": 0.26882623791801763,
-      "wape_delta_vs_naive_pct_points": 5.086945259208325
+      "wape_delta_vs_naive_pct_points": 17.367903550622383
     },
-    "daily_wape_delta_vs_naive_pct_points": 17.601989588681832,
-    "interval_coverage_pct": 87.77777777777777,
+    "daily_wape_delta_vs_naive_pct_points": 17.94249681413398,
+    "interval_coverage_pct": 90.0,
     "winner_counts": {
-      "weekday_median_8w": 2,
-      "median_14": 1
+      "weekday_median_8w": 3
     },
     "folds": [
       {
@@ -207,13 +204,13 @@
       {
         "origin": "2023-09-23",
         "history_days": 84,
-        "winner": "median_14",
-        "adaptive_daily_wape": 0.6590654902468783,
+        "winner": "weekday_median_8w",
+        "adaptive_daily_wape": 0.6485239123123733,
         "naive_daily_wape": 1.2255859387464167,
         "actual_total": 995039.5900000001,
-        "adaptive_total": 471890.07339757285,
+        "adaptive_total": 850203.6340625,
         "naive_total": 1145250.4199999997,
-        "adaptive_total_abs_error_pct": 52.57574893099752,
+        "adaptive_total_abs_error_pct": 14.555798321300975,
         "backtest_points": 42
       }
     ]
