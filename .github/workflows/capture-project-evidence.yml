@@ -63,6 +63,7 @@ jobs:
 
       - name: Capture real browser and source-code evidence
         run: |
+          set -o pipefail
           python scripts/capture_project_evidence.py | tee /tmp/project-evidence-manifest.json
 
       - name: Verify persisted database evidence
