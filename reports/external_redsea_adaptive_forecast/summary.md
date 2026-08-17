@@ -9,25 +9,25 @@
 ## 7-day walk-forward
 
 - Folds: **9**
-- Evaluated daily points: **63**
-- Adaptive WAPE: **71.27%**
-- Adaptive 1-WAPE quality proxy: **28.73%**
-- Seasonal-naive reference WAPE: **97.65%**
-- WAPE improvement vs seasonal naive: **26.38 percentage points**
+- Daily WAPE: **71.27%**
+- 7-day TOTAL WAPE: **39.58%**
+- 7-day TOTAL quality proxy (1-WAPE): **60.42%**
+- Seasonal-naive TOTAL WAPE: **46.45%**
+- TOTAL WAPE improvement vs seasonal naive: **6.87 percentage points**
 - Prediction-interval empirical coverage: **87.30%**
 - Selected-model counts: `{"weekday_median_8w": 4, "median_14": 2, "moving_average_7": 1, "median_7": 2}`
 
 ## 30-day walk-forward
 
 - Folds: **3**
-- Evaluated daily points: **90**
-- Adaptive WAPE: **68.96%**
-- Adaptive 1-WAPE quality proxy: **31.04%**
-- Seasonal-naive reference WAPE: **86.56%**
-- WAPE improvement vs seasonal naive: **17.60 percentage points**
+- Daily WAPE: **68.96%**
+- 30-day TOTAL WAPE: **21.80%**
+- 30-day TOTAL quality proxy (1-WAPE): **78.20%**
+- Seasonal-naive TOTAL WAPE: **26.88%**
+- TOTAL WAPE improvement vs seasonal naive: **5.09 percentage points**
 - Prediction-interval empirical coverage: **87.78%**
 - Selected-model counts: `{"weekday_median_8w": 2, "median_14": 1}`
 
 ## Boundary
 
-This is a real Saudi external-data transfer diagnostic, but it is **not fresh blind validation**: the Redsea dataset had already been inspected during development, and its time span is short. Do not present the values above as universal production accuracy. A new longitudinal Saudi merchant dataset remains required for that claim.
+Daily-value error and horizon-total error answer different questions. Sales Sentinel's decline decision is driven mainly by the total sales level over the next 7/30 days, so horizon-total WAPE is the more decision-relevant point-forecast diagnostic. This is still **not fresh blind validation** because Redsea was already inspected during development and covers only about four months.
