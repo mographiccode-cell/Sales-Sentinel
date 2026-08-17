@@ -87,9 +87,12 @@ jobs:
                   if not href:
                       raise RuntimeError('No analysis history row was created after upload')
                   page.goto(base+href, wait_until='networkidle')
-                  page.wait_for_selector('text=Horizon-total WAPE')
+                  if page.get_by_text('Horizon-total WAPE').count() < 1:
+                      raise RuntimeError('Horizon-total WAPE label is missing from analysis detail')
                   page.screenshot(path=str(out/'02-analysis-detail-ar.png'), full_page=True)
                   page.click('[data-ux-tab="quality"]')
+                  page.wait_for_selector('[data-ux-panel="quality"]', state='visible')
+                  page.get_by_text('Horizon-total WAPE', exact=True).wait_for(state='visible')
                   page.screenshot(path=str(out/'03-model-quality-ar.png'), full_page=True)
               except Exception:
                   print('CURRENT_URL=', page.url)
