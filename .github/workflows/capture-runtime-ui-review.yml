@@ -1,0 +1,118 @@
+name: Capture Runtime UI Review
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/templates/forecasting/detail.html'
+      - 'app/templates/imports/index.html'
+      - '.github/workflows/capture-runtime-ui-review.yml'
+
+permissions:
+  contents: write
+
+env:
+  PYTHONPATH: .
+  DATABASE_URL: sqlite:////tmp/sales_sentinel_ui_review.sqlite3
+  SECRET_KEY: ui-review-ci-secret
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install application and browser dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Build deterministic merchant upload fixture
+        run: |
+          python - <<'PY'
+          from datetime import date, timedelta
+          from openpyxl import Workbook
+          wb=Workbook(); ws=wb.active
+          ws.append(['TRX DATE','TRX NUMBER','SALES CHANNEL','CUSTOMER NUMBER','ITEM CODE','FAMILY','CLASS','SUBCLASS','FRANCHISE','Type','QUANTITY','Unit Price','Discount Amount','Discount Amount(%)','Net Amount','Vat Amount','TOTAL AMOUNT'])
+          start=date(2023,7,1)
+          for i in range(84):
+              # Stable first 70 days, then a visible decline so the explainer has real transaction signals.
+              multiplier=0.62 if i >= 70 else 1.0
+              active_customers=2 if i >= 70 else 5
+              for j in range(active_customers):
+                  qty=1+((i+j)%3); unit=(110+j*8+(i%7)*2)*multiplier
+                  net=round(qty*unit,2); vat=round(net*.15,2)
+                  ws.append([start+timedelta(days=i),f'TRX-{i:03d}-{j}','Store' if j<3 else 'Online',f'CUST-{j:02d}',f'ITEM-{j%4:02d}','Retail','General',f'Sub-{j%3}','Redsea','INV',qty,round(unit,2),0,0,net,vat,round(net+vat,2)])
+          wb.save('/tmp/ui-review-merchant.xlsx'); wb.close()
+          PY
+      - name: Start Flask runtime
+        run: |
+          rm -f /tmp/sales_sentinel_ui_review.sqlite3
+          python run.py >/tmp/sales-sentinel-ui.log 2>&1 &
+          echo $! >/tmp/sales-sentinel-ui.pid
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:5000/healthz >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/sales-sentinel-ui.log
+          exit 1
+      - name: Exercise upload-to-analysis journey and capture screenshots
+        run: |
+          mkdir -p screenshots/runtime-ui-review
+          python - <<'PY'
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+          base='http://127.0.0.1:5000'
+          out=Path('screenshots/runtime-ui-review')
+          with sync_playwright() as p:
+              browser=p.chromium.launch()
+              page=browser.new_page(viewport={'width':1440,'height':1100}, device_scale_factor=1)
+              page.goto(base+'/auth/login', wait_until='networkidle')
+              page.fill('input[name="username"]','admin')
+              page.fill('input[name="password"]','Admin@2026!')
+              page.click('button[type="submit"]')
+              page.wait_for_load_state('networkidle')
+              page.goto(base+'/locale/ar?next=/imports/', wait_until='networkidle')
+              page.set_input_files('input[name="file"]','/tmp/ui-review-merchant.xlsx')
+              page.click('button[type="submit"]')
+              page.wait_for_selector('#instant-analysis', timeout=30000)
+              page.screenshot(path=str(out/'01-import-result-ar.png'), full_page=True)
+              page.goto(base+'/forecasts/', wait_until='networkidle')
+              href=page.locator('tr[data-row-href]').first.get_attribute('data-row-href')
+              if not href:
+                  raise RuntimeError('No analysis history row was created after upload')
+              page.goto(base+href, wait_until='networkidle')
+              page.wait_for_selector('text=Horizon-total WAPE')
+              page.screenshot(path=str(out/'02-analysis-detail-ar.png'), full_page=True)
+              # Open the quality tab so the exact metric separation is visible.
+              page.click('[data-ux-tab="quality"]')
+              page.screenshot(path=str(out/'03-model-quality-ar.png'), full_page=True)
+              browser.close()
+          PY
+      - name: Verify screenshots and runtime log
+        run: |
+          test -s screenshots/runtime-ui-review/01-import-result-ar.png
+          test -s screenshots/runtime-ui-review/02-analysis-detail-ar.png
+          test -s screenshots/runtime-ui-review/03-model-quality-ar.png
+          grep -q 'GET /healthz' /tmp/sales-sentinel-ui.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-runtime-ui-review
+          path: screenshots/runtime-ui-review/
+          if-no-files-found: error
+      - name: Commit reviewed screenshots
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add screenshots/runtime-ui-review/*.png
+          if git diff --cached --quiet; then
+            echo 'Screenshots unchanged.'
+          else
+            git commit -m 'docs: refresh tested runtime UI screenshots'
+            git push
+          fi
