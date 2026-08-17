@@ -35,9 +35,13 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     point_metrics = point.get("metrics", {}) or {}
     explanation = metrics.get("explanation", {}) or {}
     decline_supported = bool(metrics.get("decline_probability_supported") and decline.get("available"))
-    wape = point_metrics.get("wape")
-    wape_pct = float(wape) * 100.0 if wape is not None else None
-    quality_pct = max(0.0, min(100.0, 100.0 - wape_pct)) if wape_pct is not None else None
+
+    daily_wape = point_metrics.get("wape")
+    daily_wape_pct = float(daily_wape) * 100.0 if daily_wape is not None else None
+    horizon_wape = point_metrics.get("horizon_total_wape")
+    horizon_wape_pct = float(horizon_wape) * 100.0 if horizon_wape is not None else None
+    primary_wape_pct = horizon_wape_pct if horizon_wape_pct is not None else daily_wape_pct
+    quality_pct = max(0.0, min(100.0, 100.0 - primary_wape_pct)) if primary_wape_pct is not None else None
 
     pdf = FPDF(format="A4")
     pdf.set_auto_page_break(auto=True, margin=14)
@@ -59,9 +63,10 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     rows = [
         ("Point forecast model", str(point.get("name") or "N/A")),
         ("Point forecast selection", str(point_metrics.get("selection_metric") or "N/A")),
-        ("Merchant backtest points", str(point_metrics.get("backtest_points") or "N/A")),
-        ("Point forecast WAPE", f"{wape_pct:.1f}%" if wape_pct is not None else "N/A"),
-        ("Point forecast quality (1-WAPE)", f"{quality_pct:.1f}%" if quality_pct is not None else "N/A"),
+        ("Horizon backtest folds", str(point_metrics.get("horizon_backtest_folds") or "N/A")),
+        ("Horizon-total WAPE", f"{horizon_wape_pct:.1f}%" if horizon_wape_pct is not None else "N/A"),
+        ("Horizon-total quality (1-WAPE)", f"{quality_pct:.1f}%" if quality_pct is not None else "N/A"),
+        ("Daily WAPE (technical)", f"{daily_wape_pct:.1f}%" if daily_wape_pct is not None else "N/A"),
         ("Validated decline probability", decline_value),
         ("Decline decision threshold", threshold_value),
     ]
@@ -112,7 +117,7 @@ def _pdf_payload(run: ModelRun, forecasts: list[Forecast]) -> bytes:
     pdf.ln(5)
     pdf.set_font("Helvetica", "I", 8)
     pdf.set_text_color(90, 100, 95)
-    pdf.multi_cell(0, 5, "Decision-support output. Point-forecast quality is merchant-specific. Decline alerts are generated only by the dedicated validated-risk runtime.")
+    pdf.multi_cell(0, 5, "Decision-support output. Primary point-forecast quality is the merchant-specific horizon-total WAPE; daily WAPE is retained as a technical diagnostic. Decline alerts are generated only by the dedicated validated-risk runtime.")
     return bytes(pdf.output())
 
 
