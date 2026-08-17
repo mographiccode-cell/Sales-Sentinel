@@ -12,12 +12,13 @@ from app.config import Config
 from app.database import session_scope
 from app.models import Alert, Forecast, ModelRun, User
 
-ADAPTIVE_VERSION = "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2"
+ADAPTIVE_VERSION = "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V3"
 ADAPTIVE_CANDIDATES = {
     "seasonal_naive_7", "moving_average_7", "moving_average_14",
     "median_7", "median_14", "weekday_mean_8w", "weekday_median_8w",
     "seasonal_level_blend", "weekly_trend_7",
 }
+SELECTION_METRIC = "merchant_horizon_total_wape_then_daily_wape"
 
 
 def _merchant_xlsx(days: int = 70) -> bytes:
@@ -93,8 +94,9 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
         instant_metrics = instant_run.metrics_json or {}
         instant_point = instant_metrics["point_forecast_engine"]
         assert instant_point["version"] == ADAPTIVE_VERSION
-        assert instant_point["metrics"]["selection_metric"] == "merchant_rolling_wape"
+        assert instant_point["metrics"]["selection_metric"] == SELECTION_METRIC
         assert instant_point["metrics"]["backtest_points"] > 0
+        assert instant_point["metrics"]["horizon_backtest_folds"] > 0
         assert instant_point["name"] in ADAPTIVE_CANDIDATES
         assert instant_metrics["decline_engine"].get("available") is True
         assert instant_metrics["decline_probability_supported"] is True
@@ -113,9 +115,8 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
         metrics7 = run7.metrics_json or {}
         point7 = metrics7["point_forecast_engine"]
         assert point7["version"] == ADAPTIVE_VERSION
-        assert point7["metrics"]["selection_metric"] == "merchant_rolling_wape"
-        assert point7["metrics"]["backtest_points"] > 0
-        assert point7["metrics"]["wape"] >= 0
+        assert point7["metrics"]["selection_metric"] == SELECTION_METRIC
+        assert point7["metrics"]["horizon_total_wape"] is not None
         assert point7["name"] in ADAPTIVE_CANDIDATES
         assert len(db.scalars(select(Forecast).where(Forecast.model_run_id == run7.id)).all()) == 7
         assert metrics7["decline_engine"].get("available") is True
@@ -148,6 +149,7 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
         assert metrics30["decline_probability_supported"] is False
         point30 = metrics30["point_forecast_engine"]
         assert point30["version"] == ADAPTIVE_VERSION
+        assert point30["metrics"]["selection_metric"] == SELECTION_METRIC
         assert point30["name"] in ADAPTIVE_CANDIDATES
         forecasts30 = db.scalars(select(Forecast).where(Forecast.model_run_id == run30.id)).all()
         assert len(forecasts30) == 30
