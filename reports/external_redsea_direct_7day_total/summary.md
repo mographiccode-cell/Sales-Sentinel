@@ -2,12 +2,13 @@
 
 - Source rows: **2700**
 - Calendar days: **123** (2023-07-01 to 2023-10-31)
+- Candidate models: **12**
 - Folds: **9**
-- Direct-total WAPE: **43.18%**
-- Direct-total quality proxy (1-WAPE): **56.82%**
+- Direct-total WAPE: **36.94%**
+- Direct-total quality proxy (1-WAPE): **63.06%**
 - Current V3 7-day total WAPE reference: **35.65%**
-- Improvement vs V3: **-7.53 percentage points**
-- Winner counts: `{"median_8w_total": 6, "mean_4w_total": 3}`
+- Improvement vs V3: **-1.29 percentage points**
+- Winner counts: `{"mean_8w_total": 8, "mean_4w_total": 1}`
 
 ## Decision rule
 
