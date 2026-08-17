@@ -33,13 +33,22 @@ def _render_imports(*, analysis: dict | None = None, analysis_error: str | None 
 def index():
     if request.method == "POST":
         uploaded = request.files.get("file")
+        locale = session.get("locale", "en")
         if not uploaded or not uploaded.filename:
-            flash("اختر ملفًا أولًا / Select a file first.", "error")
+            flash(
+                "Select a file first." if locale == "en" else "اختر ملفًا أولًا.",
+                "error",
+            )
             return redirect(url_for("imports.index"))
 
         extension = Path(uploaded.filename).suffix.lower()
         if extension not in {".csv", ".xlsx"}:
-            flash("الصيغ المدعومة هي CSV وXLSX فقط / Only CSV and XLSX are supported.", "error")
+            flash(
+                "Only CSV and XLSX files are supported."
+                if locale == "en"
+                else "الصيغ المدعومة هي CSV وXLSX فقط.",
+                "error",
+            )
             return redirect(url_for("imports.index"))
 
         destination = Path(current_app.config["UPLOAD_DIR"]) / safe_filename(uploaded.filename)
@@ -109,9 +118,6 @@ def index():
                 inserted = result["inserted_rows"]
                 duplicates = result["duplicate_rows"]
 
-                # Important for Vercel: inference happens in the SAME request and
-                # database session as ingestion. This guarantees that the newly
-                # uploaded rows are visible even when /tmp SQLite is ephemeral.
                 try:
                     analysis = run_instant_analysis(
                         db,
@@ -132,8 +138,6 @@ def index():
                     if not analysis.get("available"):
                         analysis_error = analysis.get("reason")
                 except Exception as exc:
-                    # Import success must never be rolled back just because the
-                    # model cannot run. Surface the model error separately.
                     analysis_error = str(exc)
 
             locale = session.get("locale", "en")
