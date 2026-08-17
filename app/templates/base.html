@@ -28,7 +28,10 @@
 
     <nav class="nav ux3-nav" aria-label="Primary">
       {% if 'dashboard.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><b>⌂</b><span>{{ 'الرئيسية' if locale == 'ar' else 'Home' }}</span></a>{% endif %}
-      {% if 'imports.manage' in current_user.permission_codes %}<a class="ux3-nav-primary {{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><b>＋</b><span>{{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</span></a>{% endif %}
+      {% if 'imports.manage' in current_user.permission_codes %}
+      <a class="ux3-nav-primary {{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><b>＋</b><span>{{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</span></a>
+      <a class="{{ 'active' if request.endpoint == 'import_history.history' else '' }}" href="{{ url_for('import_history.history') }}"><b>↺</b><span>{{ 'سجل الاستيراد' if locale == 'ar' else 'Import history' }}</span></a>
+      {% endif %}
       {% if 'forecasts.run' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><b>◫</b><span>{{ 'التحليلات' if locale == 'ar' else 'Analyses' }}</span></a>{% endif %}
       {% if 'sales.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><b>↗</b><span>{{ t('sales') }}</span></a>{% endif %}
       {% if 'reports.export' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><b>▤</b><span>{{ t('reports') }}</span></a>{% endif %}
