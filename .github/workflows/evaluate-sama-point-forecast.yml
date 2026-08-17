@@ -1,0 +1,71 @@
+name: Evaluate SAMA Point Forecast
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.forecast-eval-trigger'
+      - '.github/workflows/evaluate-sama-point-forecast.yml'
+      - 'scripts/forecast_sama_extended_v2_0.py'
+
+permissions:
+  contents: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install training dependencies
+        run: pip install -r requirements-training.txt
+      - name: Verify SAMA holdout inputs
+        run: |
+          test -f data/sama_pos/sama_sector_weekly_value_count_2020_2026_extended.csv
+          test -f data/sama_pos/sama_pos_national_weekly_value_2020_2026_extended.csv
+          test -f data/sama_pos/sama_pos_national_weekly_count_2020_2026_extended.csv
+          test -f data/sama_pos/sama_sector_weekly_value_count_2025_2026_holdout.csv
+      - name: Run leakage-safe walk-forward evaluation
+        run: python scripts/forecast_sama_extended_v2_0.py
+      - name: Compare against legacy Ridge point forecast
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('reports/sales_sentinel_v2_0/extended_forecaster_report.json').read_text())
+          ridge=json.loads(Path('models/sales_forecast.json').read_text())
+          sama=float(report['metrics']['value_h1']['WAPE'])
+          legacy=float(ridge['metrics']['wape'])
+          decision={
+            'sama_value_h1_wape': sama,
+            'legacy_ridge_test_wape': legacy,
+            'sama_better_than_legacy': sama < legacy,
+            'relative_wape_improvement_pct': ((legacy-sama)/legacy*100.0) if legacy else None,
+            'adoption_rule': 'Do not replace merchant point forecast unless merchant-compatible validation also passes; SAMA sector holdout is market evidence only.'
+          }
+          Path('reports/sales_sentinel_v2_0/point_forecast_comparison.json').write_text(json.dumps(decision,indent=2),encoding='utf-8')
+          print(json.dumps(decision,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sama-point-forecast-evaluation
+          path: |
+            reports/sales_sentinel_v2_0/extended_forecaster_report.json
+            reports/sales_sentinel_v2_0/point_forecast_comparison.json
+            data/sama_pos/sama_sector_walkforward_forecasts_2025_2026_v2_0.csv
+          retention-days: 30
+      - name: Persist evaluation evidence
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports/sales_sentinel_v2_0/extended_forecaster_report.json reports/sales_sentinel_v2_0/point_forecast_comparison.json
+          git diff --cached --quiet || git commit -m 'ml: persist SAMA point forecast holdout evidence [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
