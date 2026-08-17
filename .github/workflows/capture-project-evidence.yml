@@ -1,0 +1,128 @@
+name: Capture Project Evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/auth/routes.py'
+      - 'app/admin/routes.py'
+      - 'app/sales/routes.py'
+      - 'app/imports/routes.py'
+      - 'app/templates/admin/users.html'
+      - 'scripts/capture_project_evidence.py'
+      - 'tests/test_input_validation.py'
+      - '.github/workflows/capture-project-evidence.yml'
+
+permissions:
+  contents: write
+
+env:
+  PYTHONPATH: .
+  DATABASE_URL: sqlite:////tmp/sales_sentinel_project_evidence.sqlite3
+  SECRET_KEY: project-evidence-secret
+  SESSION_COOKIE_SECURE: '0'
+
+jobs:
+  capture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install runtime and evidence dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest playwright pygments pillow
+          python -m playwright install --with-deps chromium
+
+      - name: Run complete automated test suite
+        run: python -m pytest -q
+
+      - name: Start real Flask application
+        run: |
+          rm -f /tmp/sales_sentinel_project_evidence.sqlite3
+          python run.py >/tmp/sales-sentinel-project-evidence.log 2>&1 &
+          echo $! >/tmp/sales-sentinel-project-evidence.pid
+          for i in {1..45}; do
+            if curl -fsS http://127.0.0.1:5000/healthz >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/sales-sentinel-project-evidence.log
+          exit 1
+
+      - name: Capture real browser and source-code evidence
+        run: |
+          python scripts/capture_project_evidence.py | tee /tmp/project-evidence-manifest.json
+
+      - name: Verify persisted database evidence
+        run: |
+          python - <<'PY'
+          from sqlalchemy import func, select
+          from app.database import init_engine, session_scope
+          from app.models import ImportJob, ModelRun, Sale, User
+          import os
+
+          init_engine(os.environ['DATABASE_URL'])
+          with session_scope() as db:
+              evidence = {
+                  'sales rows': db.scalar(select(func.count()).select_from(Sale)),
+                  'users': db.scalar(select(func.count()).select_from(User)),
+                  'model runs': db.scalar(select(func.count()).select_from(ModelRun)),
+                  'import jobs': db.scalar(select(func.count()).select_from(ImportJob)),
+              }
+          print(evidence)
+          assert evidence['sales rows'] > 0
+          assert evidence['users'] >= 3
+          assert evidence['model runs'] >= 1
+          assert evidence['import jobs'] >= 1
+          PY
+
+      - name: Verify screenshot folder policy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          root = Path('screenshots')
+          expected = {
+              'Interface screens',
+              'Error screens',
+              'Code function screenshots',
+              'Code error screenshots',
+          }
+          actual = {p.name for p in root.iterdir() if p.is_dir()}
+          assert actual == expected, (actual, expected)
+          for file in root.rglob('*.png'):
+              assert '_' not in file.name
+              assert '_' not in file.parent.name
+              with Image.open(file) as image:
+                  image.load()
+                  assert image.height <= 1000, (file, image.size)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sales-sentinel-project-evidence
+          path: screenshots/
+          if-no-files-found: error
+
+      - name: Commit verified screenshots
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A screenshots
+          if git diff --cached --quiet; then
+            echo 'Evidence screenshots unchanged.'
+          else
+            git commit -m 'docs: capture complete tested project evidence'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
