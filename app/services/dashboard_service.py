@@ -13,7 +13,9 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
 
     def scoped(stmt):
         stmt = stmt.where(sales_condition)
-        return stmt.where(Sale.branch_id.in_(allowed_branch_ids)) if allowed_branch_ids else stmt
+        if allowed_branch_ids is None:
+            return stmt
+        return stmt.where(Sale.branch_id.in_(allowed_branch_ids))
 
     total_records = int(db.scalar(scoped(select(func.count(Sale.id)))) or 0)
     max_date = db.scalar(scoped(select(func.max(Sale.sale_date))))
@@ -89,17 +91,18 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         or 0
     )
 
-    # customer_key is an additive runtime column retained by the transaction
-    # importer. Query it directly so older databases remain migration-safe.
     source_clause = "source_import_id IS NOT NULL" if data_mode == "imported" else "source_import_id IS NULL"
     customer_sql = (
         "SELECT COUNT(DISTINCT customer_key) FROM sales "
         "WHERE customer_key IS NOT NULL AND customer_key <> '' "
         "AND sale_date BETWEEN :start AND :end AND " + source_clause
     )
-    if allowed_branch_ids:
-        safe_ids = ",".join(str(int(branch_id)) for branch_id in sorted(allowed_branch_ids))
-        customer_sql += f" AND branch_id IN ({safe_ids})"
+    if allowed_branch_ids is not None:
+        if allowed_branch_ids:
+            safe_ids = ",".join(str(int(branch_id)) for branch_id in sorted(allowed_branch_ids))
+            customer_sql += f" AND branch_id IN ({safe_ids})"
+        else:
+            customer_sql += " AND 1=0"
     try:
         active_customers = int(
             db.execute(text(customer_sql), {"start": current_start, "end": max_date}).scalar_one() or 0
@@ -144,9 +147,10 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
     )
     series = [{"date": row[0].isoformat(), "value": float(row[1])} for row in db.execute(series_stmt)]
 
-    # The executive dashboard's risk and headline forecast are canonical 7-day
-    # outputs. A later 30-day point forecast must not overwrite the 7-day risk.
-    latest_run = db.scalar(
+    # A forecast run is visible on the dashboard only when it matches the
+    # current user's branch scope. Older unscoped runs remain compatible only
+    # with explicit all-branch access.
+    candidate_runs = db.scalars(
         select(ModelRun)
         .where(
             ModelRun.status == "completed",
@@ -154,8 +158,19 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
             ModelRun.horizon_days == 7,
         )
         .order_by(desc(ModelRun.completed_at))
-        .limit(1)
-    )
+        .limit(30)
+    ).all()
+    expected_scope = None if allowed_branch_ids is None else sorted(allowed_branch_ids)
+    latest_run = None
+    for candidate in candidate_runs:
+        run_scope = (candidate.filters_json or {}).get("branch_scope")
+        if allowed_branch_ids is None:
+            if run_scope in (None, "all"):
+                latest_run = candidate
+                break
+        elif run_scope == expected_scope:
+            latest_run = candidate
+            break
 
     forecasts = []
     forecast_sales = 0.0
