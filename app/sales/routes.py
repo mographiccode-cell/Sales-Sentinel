@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, flash, render_template, request, session
 from sqlalchemy import case, func, select
 
 from app.database import session_scope
@@ -19,6 +19,34 @@ def index():
     start = request.args.get("start", "")
     end = request.args.get("end", "")
     channel = request.args.get("channel", "").strip()
+    locale = session.get("locale", "en")
+
+    try:
+        start_date = date.fromisoformat(start) if start else None
+        end_date = date.fromisoformat(end) if end else None
+    except ValueError:
+        flash(
+            "Invalid date. Use a valid start and end date."
+            if locale == "en"
+            else "التاريخ غير صالح. استخدم تاريخ بداية ونهاية صحيحين.",
+            "error",
+        )
+        start = ""
+        end = ""
+        start_date = None
+        end_date = None
+
+    if start_date and end_date and start_date > end_date:
+        flash(
+            "Start date cannot be after end date."
+            if locale == "en"
+            else "لا يمكن أن يكون تاريخ البداية بعد تاريخ النهاية.",
+            "error",
+        )
+        start = ""
+        end = ""
+        start_date = None
+        end_date = None
 
     with session_scope() as db:
         sales_condition, data_mode, _ = preferred_sales_condition(db)
@@ -36,10 +64,10 @@ def index():
             ).label("returns"),
             func.sum(func.abs(Sale.discount_amount)).label("discounts"),
         ).where(sales_condition)
-        if start:
-            stmt = stmt.where(Sale.sale_date >= date.fromisoformat(start))
-        if end:
-            stmt = stmt.where(Sale.sale_date <= date.fromisoformat(end))
+        if start_date:
+            stmt = stmt.where(Sale.sale_date >= start_date)
+        if end_date:
+            stmt = stmt.where(Sale.sale_date <= end_date)
         if channel:
             stmt = stmt.where(Sale.channel == channel)
         stmt = stmt.group_by(Sale.sale_date).order_by(Sale.sale_date.desc()).limit(180)
