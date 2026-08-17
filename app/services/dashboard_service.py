@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from sqlalchemy import case, desc, func, select
+from sqlalchemy import case, desc, func, select, text
 
 from app.models import Alert, Forecast, ModelRun, Sale
 from app.services.data_scope import preferred_sales_condition
@@ -26,6 +26,9 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
             "decline_probability": 0,
             "active_alerts": 0,
             "transactions": 0,
+            "active_customers": 0,
+            "products": 0,
+            "channels": 0,
             "returns": 0,
             "discounts": 0,
             "avg_transaction": 0,
@@ -41,14 +44,7 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
     current_start = max_date - timedelta(days=29)
     previous_start = current_start - timedelta(days=30)
     current_sales = float(
-        db.scalar(
-            scoped(
-                select(func.sum(Sale.net_sales)).where(
-                    Sale.sale_date.between(current_start, max_date)
-                )
-            )
-        )
-        or 0
+        db.scalar(scoped(select(func.sum(Sale.net_sales)).where(Sale.sale_date.between(current_start, max_date)))) or 0
     )
     previous_sales = float(
         db.scalar(
@@ -61,6 +57,7 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         or 0
     )
     change = ((current_sales - previous_sales) / previous_sales * 100) if previous_sales else 0
+
     transactions = int(
         db.scalar(
             scoped(
@@ -71,6 +68,45 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         )
         or 0
     )
+    products = int(
+        db.scalar(
+            scoped(
+                select(func.count(func.distinct(Sale.product_id))).where(
+                    Sale.sale_date.between(current_start, max_date)
+                )
+            )
+        )
+        or 0
+    )
+    channels = int(
+        db.scalar(
+            scoped(
+                select(func.count(func.distinct(Sale.channel))).where(
+                    Sale.sale_date.between(current_start, max_date)
+                )
+            )
+        )
+        or 0
+    )
+
+    # customer_key is an additive runtime column retained by the transaction
+    # importer. Query it directly so older databases remain migration-safe.
+    source_clause = "source_import_id IS NOT NULL" if data_mode == "imported" else "source_import_id IS NULL"
+    customer_sql = (
+        "SELECT COUNT(DISTINCT customer_key) FROM sales "
+        "WHERE customer_key IS NOT NULL AND customer_key <> '' "
+        "AND sale_date BETWEEN :start AND :end AND " + source_clause
+    )
+    if allowed_branch_ids:
+        safe_ids = ",".join(str(int(branch_id)) for branch_id in sorted(allowed_branch_ids))
+        customer_sql += f" AND branch_id IN ({safe_ids})"
+    try:
+        active_customers = int(
+            db.execute(text(customer_sql), {"start": current_start, "end": max_date}).scalar_one() or 0
+        )
+    except Exception:
+        active_customers = 0
+
     returns = float(
         db.scalar(
             scoped(
@@ -99,26 +135,28 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         )
     )
     avg_transaction = current_sales / transactions if transactions else 0
+
     series_stmt = scoped(
         select(Sale.sale_date, func.sum(Sale.net_sales))
         .where(Sale.sale_date >= max_date - timedelta(days=89))
         .group_by(Sale.sale_date)
         .order_by(Sale.sale_date)
     )
-    series = [
-        {"date": row[0].isoformat(), "value": float(row[1])}
-        for row in db.execute(series_stmt)
-    ]
+    series = [{"date": row[0].isoformat(), "value": float(row[1])} for row in db.execute(series_stmt)]
 
-    # A forecast generated against an older seed/import must never be shown next
-    # to newer sales as if it described the current dataset. Only a completed run
-    # whose data_end matches the current preferred sales scope is eligible.
+    # The executive dashboard's risk and headline forecast are canonical 7-day
+    # outputs. A later 30-day point forecast must not overwrite the 7-day risk.
     latest_run = db.scalar(
         select(ModelRun)
-        .where(ModelRun.status == "completed", ModelRun.data_end == max_date)
+        .where(
+            ModelRun.status == "completed",
+            ModelRun.data_end == max_date,
+            ModelRun.horizon_days == 7,
+        )
         .order_by(desc(ModelRun.completed_at))
         .limit(1)
     )
+
     forecasts = []
     forecast_sales = 0.0
     probability = 0.0
@@ -137,10 +175,10 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
                 "lower": float(row.lower_bound),
                 "upper": float(row.upper_bound),
             }
-            for row in rows
+            for row in rows[:7]
         ]
-        forecast_sales = sum(float(row.predicted_sales) for row in rows[:30])
-        probability = max((row.decline_probability for row in rows), default=0.0)
+        forecast_sales = sum(float(row.predicted_sales) for row in rows[:7])
+        probability = max((row.decline_probability for row in rows[:7]), default=0.0)
         active_alerts = int(
             db.scalar(
                 select(func.count(Alert.id))
@@ -171,6 +209,9 @@ def dashboard_summary(db, allowed_branch_ids: set[int] | None = None) -> dict:
         "decline_probability": probability,
         "active_alerts": active_alerts,
         "transactions": transactions,
+        "active_customers": active_customers,
+        "products": products,
+        "channels": channels,
         "returns": returns,
         "discounts": discounts,
         "avg_transaction": avg_transaction,
