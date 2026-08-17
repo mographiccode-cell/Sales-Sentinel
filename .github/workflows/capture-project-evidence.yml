@@ -12,6 +12,9 @@ on:
       - 'app/templates/admin/users.html'
       - 'scripts/capture_project_evidence.py'
       - 'tests/test_input_validation.py'
+      - 'tests/test_forecasting_engine.py'
+      - 'tests/test_import_route_xlsx.py'
+      - 'tests/test_v18_runtime_and_import.py'
       - '.github/workflows/capture-project-evidence.yml'
 
 permissions:
