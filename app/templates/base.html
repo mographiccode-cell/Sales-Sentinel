@@ -26,19 +26,25 @@
     </div>
 
     <nav class="nav ux3-nav" aria-label="Primary">
-      <a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><b>⌂</b><span>{{ 'الرئيسية' if locale == 'ar' else 'Home' }}</span></a>
-      <a class="ux3-nav-primary {{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><b>＋</b><span>{{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</span></a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><b>◫</b><span>{{ 'التحليلات' if locale == 'ar' else 'Analyses' }}</span></a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><b>↗</b><span>{{ t('sales') }}</span></a>
-      <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><b>▤</b><span>{{ t('reports') }}</span></a>
+      {% if 'dashboard.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint == 'dashboard.index' else '' }}" href="{{ url_for('dashboard.index') }}"><b>⌂</b><span>{{ 'الرئيسية' if locale == 'ar' else 'Home' }}</span></a>{% endif %}
+      {% if 'imports.manage' in current_user.permission_codes %}<a class="ux3-nav-primary {{ 'active' if request.endpoint and request.endpoint.startswith('imports.') else '' }}" href="{{ url_for('imports.index') }}"><b>＋</b><span>{{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</span></a>{% endif %}
+      {% if 'forecasts.run' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('forecasting.') else '' }}" href="{{ url_for('forecasting.index') }}"><b>◫</b><span>{{ 'التحليلات' if locale == 'ar' else 'Analyses' }}</span></a>{% endif %}
+      {% if 'sales.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('sales.') else '' }}" href="{{ url_for('sales.index') }}"><b>↗</b><span>{{ t('sales') }}</span></a>{% endif %}
+      {% if 'reports.export' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('reports.') else '' }}" href="{{ url_for('reports.index') }}"><b>▤</b><span>{{ t('reports') }}</span></a>{% endif %}
+      {% if 'alerts.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('alerts.') else '' }}" href="{{ url_for('alerts.index') }}"><b>!</b><span>{{ 'التنبيهات' if locale == 'ar' else 'Alerts' }}</span></a>{% endif %}
 
-      {% if 'users.manage' in current_user.permission_codes %}
+      {% if 'users.manage' in current_user.permission_codes or 'system.manage' in current_user.permission_codes %}
       <details class="ux3-admin-nav" {{ 'open' if request.endpoint and request.endpoint.startswith('admin.') else '' }}>
         <summary><span><b>⚙</b>{{ 'الإدارة' if locale == 'ar' else 'Administration' }}</span><i>⌄</i></summary>
         <div>
+          {% if 'users.manage' in current_user.permission_codes %}
           <a class="{{ 'active' if request.endpoint == 'admin.users' else '' }}" href="{{ url_for('admin.users') }}">{{ t('users') }}</a>
+          <a class="{{ 'active' if request.endpoint and request.endpoint.startswith('admin.roles') else '' }}" href="{{ url_for('admin.roles') }}">{{ 'الأدوار والصلاحيات' if locale == 'ar' else 'Roles & permissions' }}</a>
+          {% endif %}
+          {% if 'system.manage' in current_user.permission_codes %}
           <a class="{{ 'active' if request.endpoint == 'admin.health' else '' }}" href="{{ url_for('admin.health') }}">{{ t('system_health') }}</a>
           <a class="{{ 'active' if request.endpoint == 'admin.settings' else '' }}" href="{{ url_for('admin.settings') }}">{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
+          {% endif %}
         </div>
       </details>
       {% endif %}
