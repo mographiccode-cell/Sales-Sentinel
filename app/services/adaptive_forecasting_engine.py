@@ -3,8 +3,18 @@ from __future__ import annotations
 import math
 from datetime import date, timedelta
 
-MODEL_VERSION = "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1"
-_CANDIDATES = ("seasonal_naive_7", "moving_average_7", "moving_average_14", "weekly_trend_7")
+MODEL_VERSION = "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2"
+_CANDIDATES = (
+    "seasonal_naive_7",
+    "moving_average_7",
+    "moving_average_14",
+    "median_7",
+    "median_14",
+    "weekday_mean_8w",
+    "weekday_median_8w",
+    "seasonal_level_blend",
+    "weekly_trend_7",
+)
 
 
 def _mean(values: list[float]) -> float:
@@ -36,6 +46,13 @@ def _cap(history: list[float]) -> float:
     return max(max(finite) * 3.0, _mean(finite) * 8.0, 1.0)
 
 
+def _same_weekday_history(history: list[float], weeks: int = 8) -> list[float]:
+    values: list[float] = []
+    for offset in range(7, min(len(history), weeks * 7) + 1, 7):
+        values.append(float(history[-offset]))
+    return values
+
+
 def _predict_one(history: list[float], model: str) -> float:
     if len(history) < 14:
         raise ValueError("At least 14 daily observations are required for adaptive forecasting")
@@ -46,6 +63,18 @@ def _predict_one(history: list[float], model: str) -> float:
         value = _mean(history[-7:])
     elif model == "moving_average_14":
         value = _mean(history[-14:])
+    elif model == "median_7":
+        value = _median(history[-7:])
+    elif model == "median_14":
+        value = _median(history[-14:])
+    elif model == "weekday_mean_8w":
+        value = _mean(_same_weekday_history(history, 8))
+    elif model == "weekday_median_8w":
+        value = _median(_same_weekday_history(history, 8))
+    elif model == "seasonal_level_blend":
+        seasonal = float(history[-7])
+        recent_level = _median(history[-14:])
+        value = 0.60 * seasonal + 0.40 * recent_level
     elif model == "weekly_trend_7":
         recent = sum(history[-7:])
         previous = sum(history[-14:-7])
@@ -53,7 +82,6 @@ def _predict_one(history: list[float], model: str) -> float:
             factor = 1.0
         else:
             raw = recent / previous
-            # Damp short-term shocks so one unusual week cannot dominate a 30-day path.
             factor = 1.0 + 0.55 * (min(1.35, max(0.65, raw)) - 1.0)
         value = history[-7] * min(1.20, max(0.80, factor))
     else:
@@ -62,16 +90,12 @@ def _predict_one(history: list[float], model: str) -> float:
 
 
 def _backtest(history: list[float], model: str) -> dict:
-    # Use only historical values available at each origin. The latest 42 origins
-    # are preferred so model selection adapts to the merchant's current regime.
     start = max(14, len(history) - 42)
     actuals: list[float] = []
     predictions: list[float] = []
     residuals: list[float] = []
     for origin in range(start, len(history)):
         train = history[:origin]
-        if len(train) < 14:
-            continue
         pred = _predict_one(train, model)
         actual = max(0.0, float(history[origin]))
         actuals.append(actual)
@@ -90,7 +114,6 @@ def _backtest(history: list[float], model: str) -> dict:
 
 def _select(history: list[float]) -> tuple[str, dict, dict[str, dict]]:
     results = {name: _backtest(history, name) for name in _CANDIDATES}
-    # WAPE is the primary selection metric. MAE is a deterministic tie-breaker.
     selected = min(_CANDIDATES, key=lambda name: (results[name]["wape"], results[name]["mae"], name))
     return selected, results[selected], results
 
@@ -120,8 +143,6 @@ def forecast(history: list[float], last_date: date, horizon: int) -> list[dict]:
             "lower": max(0.0, predicted - interval_error),
             "upper": predicted + interval_error,
             "baseline": baseline,
-            # Point forecasting is not a validated decline classifier. V18 overwrites
-            # this field for 7-day decline-risk runs; otherwise it remains neutral.
             "decline_probability": 0.0,
             "decline_percent": decline,
             "model_name": selected,
@@ -136,7 +157,7 @@ def forecast(history: list[float], last_date: date, horizon: int) -> list[dict]:
                 "evidence_scope": "uploaded_merchant_history",
             },
             "calibration": {
-                "method": "merchant_local_rolling_model_selection_v1",
+                "method": "merchant_local_rolling_model_selection_v2",
                 "interval_method": "90pct_absolute_backtest_residual",
                 "interval_error": interval_error,
             },
