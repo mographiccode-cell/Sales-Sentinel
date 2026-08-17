@@ -35,7 +35,7 @@
       {% if 'alerts.view' in current_user.permission_codes %}<a class="{{ 'active' if request.endpoint and request.endpoint.startswith('alerts.') else '' }}" href="{{ url_for('alerts.index') }}"><b>!</b><span>{{ 'التنبيهات' if locale == 'ar' else 'Alerts' }}</span></a>{% endif %}
 
       {% if 'users.manage' in current_user.permission_codes or 'system.manage' in current_user.permission_codes %}
-      <details class="ux3-admin-nav" {{ 'open' if request.endpoint and request.endpoint.startswith('admin.') else '' }}>
+      <details class="ux3-admin-nav" {{ 'open' if request.endpoint and (request.endpoint.startswith('admin.') or request.endpoint.startswith('settings_pref.')) else '' }}>
         <summary><span><b>⚙</b>{{ 'الإدارة' if locale == 'ar' else 'Administration' }}</span><i>⌄</i></summary>
         <div>
           {% if 'users.manage' in current_user.permission_codes %}
@@ -44,7 +44,7 @@
           {% endif %}
           {% if 'system.manage' in current_user.permission_codes %}
           <a class="{{ 'active' if request.endpoint == 'admin.health' else '' }}" href="{{ url_for('admin.health') }}">{{ t('system_health') }}</a>
-          <a class="{{ 'active' if request.endpoint == 'admin.settings' else '' }}" href="{{ url_for('admin.settings') }}">{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
+          <a class="{{ 'active' if request.endpoint == 'settings_pref.settings' else '' }}" href="{{ url_for('settings_pref.settings') }}">{{ 'الإعدادات' if locale == 'ar' else 'Settings' }}</a>
           {% endif %}
         </div>
       </details>
