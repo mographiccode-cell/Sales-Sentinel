@@ -5,13 +5,14 @@ from flask import Blueprint, render_template
 
 from app.database import session_scope
 from app.services.dashboard_service import dashboard_summary
-from app.services.security import branch_ids_for_user, current_user, login_required
+from app.services.security import branch_ids_for_user, current_user, login_required, permission_required
 
 dashboard_bp = Blueprint("dashboard", __name__)
 
 
 @dashboard_bp.route("/dashboard")
 @login_required
+@permission_required("dashboard.view")
 def index():
     user = current_user()
     with session_scope() as db:
