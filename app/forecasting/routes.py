@@ -26,9 +26,6 @@ def _grouped_sales(db, condition):
     if not rows:
         return []
 
-    # Forecast lags are calendar-day lags. Missing transaction dates therefore
-    # become explicit zero-sales days rather than collapsing time and turning
-    # "lag 7" into "the seventh previous observed sales day".
     by_date = {row[0]: float(row[1] or 0.0) for row in rows}
     start = rows[0][0]
     end = rows[-1][0]
@@ -61,6 +58,29 @@ def _daily_sales_rows(db):
     return seed, "seed_aggregate"
 
 
+def _observed_recent(values: list[float], window: int = 7) -> dict:
+    current = sum(values[-window:])
+    previous = sum(values[-window * 2:-window]) if len(values) >= window * 2 else 0.0
+    change_pct = ((current - previous) / abs(previous) * 100.0) if previous else 0.0
+    return {
+        "current_sales": current,
+        "previous_sales": previous,
+        "change_pct": change_pct,
+        "decline_pct": max(0.0, -change_pct),
+    }
+
+
+def _predicted_horizon_change(values: list[float], generated: list[dict]) -> tuple[float, float, float]:
+    baseline_daily = sum(values[-28:]) / min(28, len(values)) if values else 0.0
+    forecast_total = sum(float(item["predicted"]) for item in generated)
+    forecast_average = forecast_total / len(generated) if generated else 0.0
+    predicted_change_pct = (
+        ((forecast_average - baseline_daily) / abs(baseline_daily)) * 100.0
+        if baseline_daily else 0.0
+    )
+    return baseline_daily, forecast_total, predicted_change_pct
+
+
 @forecasting_bp.route("/", methods=["GET", "POST"])
 @login_required
 @permission_required("forecasts.run")
@@ -68,6 +88,9 @@ def index():
     if request.method == "POST":
         try:
             horizon = int(request.form.get("horizon", "7"))
+            if horizon not in {7, 30}:
+                raise ValueError("Forecast horizon must be 7 or 30 days")
+
             with session_scope() as db:
                 rows, data_mode = _daily_sales_rows(db)
                 if len(rows) < 28:
@@ -77,6 +100,8 @@ def index():
                 explanation = explain_decline_drivers(db, window=7) if data_mode.startswith("transaction_level") else {"available": False, "drivers": []}
                 point_model_name = generated[0]["model_name"]
                 point_model_version = generated[0]["model_version"]
+                observed_recent = _observed_recent(values)
+                baseline_daily, forecast_total, predicted_change_pct = _predicted_horizon_change(values, generated)
 
                 decline_risk = assess_decline_risk(db) if horizon == 7 else {
                     "available": False,
@@ -102,6 +127,11 @@ def index():
                         "metrics": generated[0]["metrics"],
                         "calibration": generated[0].get("calibration", {}),
                     },
+                    "observed_recent": observed_recent,
+                    "baseline_daily_sales": baseline_daily,
+                    "forecast_total": forecast_total,
+                    "predicted_change_pct": predicted_change_pct,
+                    "predicted_decline_pct": max(0.0, -predicted_change_pct),
                     "explanation": explanation,
                 }
 
