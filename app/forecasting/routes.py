@@ -73,7 +73,7 @@ def index():
 
                 decline_risk = assess_decline_risk(db) if horizon == 7 else {
                     "available": False,
-                    "reason": "V18 is validated for the 7-day early-decline target; the 30-day view keeps the legacy point-forecast risk only.",
+                    "reason": "The validated decline-risk engine supports the canonical 7-day target only. No 30-day decline alert is generated.",
                 }
                 if decline_risk.get("available"):
                     for item in generated:
@@ -82,27 +82,25 @@ def index():
                         item["model_version"] = decline_risk["model_version"]
                     model_name = decline_risk["model_name"]
                     model_version = decline_risk["model_version"]
-                    metrics = {
-                        "decline_engine": decline_risk,
-                        "point_forecast_engine": {
-                            "name": point_model_name,
-                            "version": point_model_version,
-                            "metrics": generated[0]["metrics"],
-                        },
-                        "explanation": explanation,
-                    }
                 else:
+                    # The point forecaster is not validated as a decline detector.
+                    # Keep its sales-value forecast, but do not expose its residual
+                    # heuristic as an operational decline probability.
+                    for item in generated:
+                        item["decline_probability"] = 0.0
                     model_name = point_model_name
                     model_version = point_model_version
-                    metrics = {
-                        "decline_engine": decline_risk,
-                        "point_forecast_engine": {
-                            "name": point_model_name,
-                            "version": point_model_version,
-                            "metrics": generated[0]["metrics"],
-                        },
-                        "explanation": explanation,
-                    }
+
+                metrics = {
+                    "decline_engine": decline_risk,
+                    "decline_probability_supported": bool(decline_risk.get("available")),
+                    "point_forecast_engine": {
+                        "name": point_model_name,
+                        "version": point_model_version,
+                        "metrics": generated[0]["metrics"],
+                    },
+                    "explanation": explanation,
+                }
 
                 run = ModelRun(
                     model_name=model_name,
@@ -144,35 +142,23 @@ def index():
                         else highest
                     )
 
-                should_alert = (
-                    bool(decline_risk.get("alert"))
-                    if decline_risk.get("available")
-                    else bool(highest and highest.decline_probability >= 0.55)
+                # Operational alerts are allowed only when the dedicated decline
+                # engine is available and its validated decision policy fires.
+                should_alert = bool(
+                    decline_risk.get("available") and decline_risk.get("alert")
                 )
                 if highest and should_alert:
                     # RED/critical remains disabled because severe-decline evidence is unsupported.
                     severity = "high" if highest.decline_probability >= 0.70 else "medium"
-                    if decline_risk.get("available"):
-                        mode = decline_risk.get("policy_mode", "static")
-                        alert = Alert(
-                            forecast_id=highest.id,
-                            severity=severity,
-                            title_ar="إنذار مبكر لاحتمال انخفاض المبيعات",
-                            title_en="Early sales-decline warning",
-                            message_ar=f"اكتشف Sales Sentinel V18 خطر انخفاض خلال 7 أيام بدرجة {highest.decline_probability:.0%} باستخدام سياسة {mode}.",
-                            message_en=f"Sales Sentinel V18 detected 7-day decline risk of {highest.decline_probability:.0%} using the {mode} policy.",
-                        )
-                        factor_method = "v18_portable_extratrees"
-                    else:
-                        alert = Alert(
-                            forecast_id=highest.id,
-                            severity=severity,
-                            title_ar="احتمال انخفاض مبيعات - وضع مبسط",
-                            title_en="Sales decline probability - minimal mode",
-                            message_ar=f"لا تتوفر تفاصيل معاملات كافية لـV18؛ يعرض النظام تقدير النموذج الزمني القديم {highest.decline_probability:.0%}.",
-                            message_en=f"Transaction detail is insufficient for V18; legacy time-series risk is {highest.decline_probability:.0%}.",
-                        )
-                        factor_method = "legacy_residual_distribution"
+                    mode = decline_risk.get("policy_mode", "static")
+                    alert = Alert(
+                        forecast_id=highest.id,
+                        severity=severity,
+                        title_ar="إنذار مبكر لاحتمال انخفاض المبيعات",
+                        title_en="Early sales-decline warning",
+                        message_ar=f"اكتشف Sales Sentinel V18 خطر انخفاض خلال 7 أيام بدرجة {highest.decline_probability:.0%} باستخدام سياسة {mode}.",
+                        message_en=f"Sales Sentinel V18 detected 7-day decline risk of {highest.decline_probability:.0%} using the {mode} policy.",
+                    )
                     db.add(alert)
                     db.flush()
                     db.add(DeclineFactor(
@@ -182,7 +168,7 @@ def index():
                         factor_name_en="Trend versus baseline",
                         impact_value=highest.decline_percent,
                         direction="negative",
-                        method=factor_method,
+                        method="v18_portable_extratrees",
                     ))
                     for driver in explanation.get("drivers", []):
                         db.add(DeclineFactor(
@@ -194,13 +180,23 @@ def index():
                             direction="negative",
                             method="recent_window_explanation",
                         ))
+
+                    primary_code = str(explanation.get("primary_driver_code") or "trend_vs_baseline")[:80]
+                    recommendation_ar = str(
+                        explanation.get("recommended_action_ar")
+                        or "راجع الأيام والمنتجات والعملاء المساهمة في الانخفاض قبل اتخاذ إجراء."
+                    )
+                    recommendation_en = str(
+                        explanation.get("recommended_action_en")
+                        or "Review contributing days, products and customers before acting."
+                    )
                     db.add(Recommendation(
                         alert_id=alert.id,
-                        factor_code="trend_vs_baseline",
-                        text_ar="راجع الأيام والمنتجات والعملاء المساهمة في الانخفاض قبل اتخاذ إجراء.",
-                        text_en="Review contributing days, products and customers before acting.",
-                        rationale_ar="التوصية دعم قرار وليست قرارًا آليًا؛ قناة RED الحرجة معطلة حتى تتوفر أدلة كافية.",
-                        rationale_en="This is decision support, not an automated action; the RED/critical channel remains disabled pending sufficient evidence.",
+                        factor_code=primary_code,
+                        text_ar=recommendation_ar,
+                        text_en=recommendation_en,
+                        rationale_ar="التوصية مبنية على أقوى إشارة تفسيرية متاحة وهي دعم قرار وليست قرارًا آليًا؛ قناة RED الحرجة معطلة حتى تتوفر أدلة كافية.",
+                        rationale_en="The recommendation follows the strongest available explanatory signal and is decision support, not an automated action; the RED/critical channel remains disabled pending sufficient evidence.",
                         priority=1,
                     ))
                 run_id = run.id
