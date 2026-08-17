@@ -8,13 +8,13 @@
 - Structural-zero rate: **10.41%**
 - Fixed decline target: **20%**, next 7 days vs trailing 28 days
 - Classifier: **LogisticRegression**
-- Regressor: **HistGradientBoostingRegressor**
-- Accuracy: **58.45%**
-- Balanced Accuracy: **61.92%**
-- Precision: **45.93%**
-- Recall: **74.96%**
-- F1: **56.96%**
-- ROC-AUC: **68.33%**
+- Regressor: **XGBoostRegressor**
+- Accuracy: **58.33%**
+- Balanced Accuracy: **61.84%**
+- Precision: **45.84%**
+- Recall: **75.01%**
+- F1: **56.91%**
+- ROC-AUC: **68.05%**
 - Majority baseline: **63.32%**
 - 90% accuracy goal met: **False**
 - Scientific acceptance gates passed: **False**
