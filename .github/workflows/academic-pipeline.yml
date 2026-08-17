@@ -15,16 +15,13 @@ on:
       - '.github/workflows/academic-pipeline.yml'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-test-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -37,7 +34,7 @@ jobs:
           SECRET_KEY: ci-secret-key-that-is-long-enough
           PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/scripts
         run: python -m pytest -q tests
-      - name: Upload model and evidence
+      - name: Upload reproducible academic model and evidence
         uses: actions/upload-artifact@v4
         with:
           name: sales-sentinel-academic-artifacts
@@ -46,13 +43,4 @@ jobs:
             data/source_manifest.json
             models/sales_forecast.json
             reports/model_metrics.json
-      - name: Commit reproducible artifacts
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/processed/daily_sales.csv data/source_manifest.json models/sales_forecast.json reports/model_metrics.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'data: persist verified UCI model artifacts [skip ci]'
-            git pull --rebase origin ${{ github.head_ref || github.ref_name }}
-            git push origin HEAD:${{ github.head_ref || github.ref_name }}
-          fi
+          if-no-files-found: error
