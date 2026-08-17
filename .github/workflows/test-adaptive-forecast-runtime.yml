@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
     paths:
+      - 'main.py'
+      - 'vercel.json'
+      - 'app/config.py'
       - 'app/services/adaptive_forecasting_engine.py'
       - 'app/services/instant_analysis.py'
       - 'app/forecasting/routes.py'
@@ -14,6 +17,7 @@ on:
       - 'tests/test_adaptive_forecasting_engine.py'
       - 'tests/test_forecasting_source_isolation.py'
       - 'tests/test_end_to_end_sales_sentinel.py'
+      - 'tests/test_vercel_entrypoint.py'
       - '.github/workflows/test-adaptive-forecast-runtime.yml'
 
 permissions:
@@ -37,10 +41,12 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
       - name: Compile changed runtime files
-        run: python -m py_compile app/services/adaptive_forecasting_engine.py app/services/instant_analysis.py app/forecasting/routes.py app/reports/routes.py
+        run: python -m py_compile main.py app/services/adaptive_forecasting_engine.py app/services/instant_analysis.py app/forecasting/routes.py app/reports/routes.py
       - name: Test adaptive forecasting
         run: python -m pytest -q tests/test_adaptive_forecasting_engine.py
       - name: Test decline explainer and source isolation
         run: python -m pytest -q tests/test_decline_explainer.py tests/test_forecasting_source_isolation.py
       - name: Test complete browser journey and template rendering
         run: python -m pytest -q tests/test_end_to_end_sales_sentinel.py
+      - name: Test Vercel serverless entrypoint
+        run: python -m pytest -q tests/test_vercel_entrypoint.py
