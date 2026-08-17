@@ -53,5 +53,6 @@ jobs:
           git add data/processed/daily_sales.csv data/source_manifest.json models/sales_forecast.json reports/model_metrics.json
           if ! git diff --cached --quiet; then
             git commit -m 'data: persist verified UCI model artifacts [skip ci]'
+            git pull --rebase origin ${{ github.head_ref || github.ref_name }}
             git push origin HEAD:${{ github.head_ref || github.ref_name }}
           fi
