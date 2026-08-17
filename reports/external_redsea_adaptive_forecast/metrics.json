@@ -1,7 +1,7 @@
 {
   "evaluation": "External Saudi Redsea adaptive point-forecast diagnostic",
   "scientific_status": "POST_OPEN_EXTERNAL_DIAGNOSTIC_NOT_FRESH_BLIND",
-  "model_version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1",
+  "model_version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2",
   "source_sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
   "source_rows": 2700,
   "calendar_days": 123,
@@ -14,10 +14,10 @@
     "fold_count": 9,
     "evaluated_daily_points": 63,
     "adaptive": {
-      "wape": 0.7253891783616067,
-      "mae": 23337.098251218405,
-      "rmse": 34137.140372633,
-      "accuracy_proxy_pct": 27.461082163839336
+      "wape": 0.7126807182674638,
+      "mae": 22928.24381737013,
+      "rmse": 33573.493749962305,
+      "accuracy_proxy_pct": 28.731928173253618
     },
     "seasonal_naive_7_reference": {
       "wape": 0.9764645831327836,
@@ -25,50 +25,52 @@
       "rmse": 47313.93624437947,
       "accuracy_proxy_pct": 2.3535416867216385
     },
-    "wape_delta_vs_naive_pct_points": 25.107540477117695,
-    "interval_coverage_pct": 90.47619047619048,
+    "wape_delta_vs_naive_pct_points": 26.37838648653198,
+    "interval_coverage_pct": 87.3015873015873,
     "winner_counts": {
-      "moving_average_14": 4,
-      "moving_average_7": 5
+      "weekday_median_8w": 4,
+      "median_14": 2,
+      "moving_average_7": 1,
+      "median_7": 2
     },
     "folds": [
       {
         "origin": "2023-08-26",
         "history_days": 56,
-        "winner": "moving_average_14",
-        "adaptive_wape": 0.7065238252320057,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 0.6638187881161787,
         "naive_wape": 0.7142751405808812,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-02",
         "history_days": 63,
-        "winner": "moving_average_14",
-        "adaptive_wape": 0.370693970044065,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 0.44833551840118757,
         "naive_wape": 1.1549307062410388,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-09",
         "history_days": 70,
-        "winner": "moving_average_14",
-        "adaptive_wape": 1.1170208670140935,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 1.367418737799307,
         "naive_wape": 0.9588292573196453,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-16",
         "history_days": 77,
-        "winner": "moving_average_7",
-        "adaptive_wape": 0.7442236417121556,
+        "winner": "median_14",
+        "adaptive_wape": 0.6764973928741495,
         "naive_wape": 0.9852128175353919,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-23",
         "history_days": 84,
-        "winner": "moving_average_7",
-        "adaptive_wape": 0.49062153095698696,
+        "winner": "median_14",
+        "adaptive_wape": 0.7205978197754784,
         "naive_wape": 0.9351936395943033,
         "backtest_points": 42
       },
@@ -83,24 +85,24 @@
       {
         "origin": "2023-10-07",
         "history_days": 98,
-        "winner": "moving_average_14",
-        "adaptive_wape": 1.0166239612502976,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 0.5105141586112107,
         "naive_wape": 1.665117350967812,
         "backtest_points": 42
       },
       {
         "origin": "2023-10-14",
         "history_days": 105,
-        "winner": "moving_average_7",
-        "adaptive_wape": 0.6446465632840206,
+        "winner": "median_7",
+        "adaptive_wape": 0.6557102553567463,
         "naive_wape": 0.6941848620131944,
         "backtest_points": 42
       },
       {
         "origin": "2023-10-21",
         "history_days": 112,
-        "winner": "moving_average_7",
-        "adaptive_wape": 1.1413507870908162,
+        "winner": "median_7",
+        "adaptive_wape": 0.8348718911231693,
         "naive_wape": 1.5225196245920962,
         "backtest_points": 42
       }
@@ -112,10 +114,10 @@
     "fold_count": 3,
     "evaluated_daily_points": 90,
     "adaptive": {
-      "wape": 0.7866228589770261,
-      "mae": 26924.255657374222,
-      "rmse": 35858.78958527587,
-      "accuracy_proxy_pct": 21.33771410229739
+      "wape": 0.6896080906419304,
+      "mae": 23603.66765845448,
+      "rmse": 34750.73602309712,
+      "accuracy_proxy_pct": 31.03919093580696
     },
     "seasonal_naive_7_reference": {
       "wape": 0.8656279865287487,
@@ -123,34 +125,34 @@
       "rmse": 43299.38578950826,
       "accuracy_proxy_pct": 13.437201347125127
     },
-    "wape_delta_vs_naive_pct_points": 7.900512755172262,
+    "wape_delta_vs_naive_pct_points": 17.601989588681832,
     "interval_coverage_pct": 87.77777777777777,
     "winner_counts": {
-      "moving_average_14": 2,
-      "moving_average_7": 1
+      "weekday_median_8w": 2,
+      "median_14": 1
     },
     "folds": [
       {
         "origin": "2023-08-26",
         "history_days": 56,
-        "winner": "moving_average_14",
-        "adaptive_wape": 0.6570758285650731,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 0.709089580669427,
         "naive_wape": 0.7259796874511568,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-09",
         "history_days": 70,
-        "winner": "moving_average_14",
-        "adaptive_wape": 0.7167222402134935,
+        "winner": "weekday_median_8w",
+        "adaptive_wape": 0.6996809308636529,
         "naive_wape": 0.6644509487635513,
         "backtest_points": 42
       },
       {
         "origin": "2023-09-23",
         "history_days": 84,
-        "winner": "moving_average_7",
-        "adaptive_wape": 0.9929149236275836,
+        "winner": "median_14",
+        "adaptive_wape": 0.6590654902468783,
         "naive_wape": 1.2255859387464167,
         "backtest_points": 42
       }
