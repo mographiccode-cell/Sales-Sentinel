@@ -1,27 +1,38 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 
 from sqlalchemy import func, select
 
 from app.models import Alert, DeclineFactor, Forecast, ModelRun, Recommendation, Sale
-from app.services.forecasting_engine import forecast, load_artifact as load_point_artifact
+from app.services.adaptive_forecasting_engine import forecast
 from app.services.decline_explainer import explain_decline_drivers
 from app.services.portable_decline_engine import assess_decline_risk
 
 
 def _grouped_sales(db, condition):
-    return db.execute(
+    rows = db.execute(
         select(Sale.sale_date, func.sum(Sale.net_sales))
         .where(condition)
         .group_by(Sale.sale_date)
         .order_by(Sale.sale_date)
     ).all()
+    if not rows:
+        return []
+    by_date = {row[0]: float(row[1] or 0.0) for row in rows}
+    start = rows[0][0]
+    end = rows[-1][0]
+    output = []
+    cursor = start
+    while cursor <= end:
+        output.append((cursor, by_date.get(cursor, 0.0)))
+        cursor += timedelta(days=1)
+    return output
 
 
 def daily_sales_rows(db):
-    """Prefer real transaction-level imports over daily aggregates and demo seed data."""
+    """Prefer imported merchant history, keep calendar days contiguous, never mix sources."""
     rich = _grouped_sales(
         db,
         Sale.transaction_type.notin_(["DAILY_AGGREGATE", "DAILY_IMPORT"]),
@@ -59,21 +70,24 @@ def _recent_change(rows, window: int = 7) -> dict:
     }
 
 
-def _point_quality() -> dict:
-    artifact = load_point_artifact()
-    metrics = artifact.get("metrics") or {}
-    wape = float(metrics.get("wape") or 0.0)
-    coverage = float((artifact.get("residual_quantiles") or {}).get("empirical_coverage") or 0.0)
+def _point_quality(generated: list[dict]) -> dict:
+    first = generated[0]
+    metrics = first.get("metrics") or {}
+    wape = metrics.get("wape")
+    wape = float(wape) if wape is not None else None
     return {
-        "model_name": artifact.get("selected_model", "—"),
-        "model_version": artifact.get("version", "—"),
-        # This is deliberately labelled as 1-WAPE, not classification accuracy.
-        "accuracy_proxy_pct": max(0.0, min(100.0, (1.0 - wape) * 100.0)),
-        "error_wape_pct": max(0.0, wape * 100.0),
-        "interval_coverage_pct": max(0.0, min(100.0, coverage * 100.0)),
-        "mae": float(metrics.get("mae") or 0.0),
-        "rmse": float(metrics.get("rmse") or 0.0),
-        "smape_pct": float(metrics.get("smape") or 0.0) * 100.0,
+        "model_name": first.get("model_name", "—"),
+        "model_version": first.get("model_version", "—"),
+        "accuracy_proxy_pct": max(0.0, min(100.0, (1.0 - wape) * 100.0)) if wape is not None else None,
+        "error_wape_pct": max(0.0, wape * 100.0) if wape is not None else None,
+        "interval_coverage_pct": None,
+        "interval_method": (first.get("calibration") or {}).get("interval_method"),
+        "mae": float(metrics.get("mae")) if metrics.get("mae") is not None else None,
+        "rmse": float(metrics.get("rmse")) if metrics.get("rmse") is not None else None,
+        "backtest_points": int(metrics.get("backtest_points") or 0),
+        "selection_metric": metrics.get("selection_metric"),
+        "candidate_wape": metrics.get("candidate_wape") or {},
+        "evidence_scope": metrics.get("evidence_scope"),
     }
 
 
@@ -100,13 +114,7 @@ def _decline_quality(decline_risk: dict) -> dict:
 
 
 def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = None) -> dict:
-    """Run forecasting + decline inference immediately after import.
-
-    The result is a fully JSON-serializable snapshot so the UI can keep the last
-    analysis in browser localStorage when Vercel is using ephemeral SQLite.
-    A normal ModelRun/Forecast/Alert record is still written to SQL so persistent
-    deployments retain the standard history and report flow.
-    """
+    """Run the same adaptive point forecast + dedicated V18 risk logic used by the forecast page."""
     rows, data_mode = daily_sales_rows(db)
     if len(rows) < 28:
         return {
@@ -118,30 +126,31 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
 
     values = [float(row[1] or 0.0) for row in rows]
     generated = forecast(values, rows[-1][0], horizon)
-    point = _point_quality()
+    point = _point_quality(generated)
     recent = _recent_change(rows)
-    explanation = explain_decline_drivers(db, window=7)
+    explanation = explain_decline_drivers(db, window=7) if data_mode.startswith("transaction_level") else {"available": False, "drivers": []}
 
     if horizon == 7:
         decline_risk = assess_decline_risk(db)
     else:
         decline_risk = {
             "available": False,
-            "reason": "V18 is validated for the 7-day early-decline target only.",
+            "reason": "The dedicated decline-risk runtime supports the canonical 7-day target only.",
         }
 
-    if decline_risk.get("available"):
+    decline_supported = bool(decline_risk.get("available"))
+    if decline_supported:
         risk_score = float(decline_risk.get("score") or 0.0)
         model_name = str(decline_risk.get("model_name") or generated[0]["model_name"])
         model_version = str(decline_risk.get("model_version") or generated[0]["model_version"])
         for item in generated:
             item["decline_probability"] = risk_score
-            item["model_name"] = model_name
-            item["model_version"] = model_version
     else:
-        risk_score = max(float(item.get("decline_probability") or 0.0) for item in generated)
+        risk_score = 0.0
         model_name = str(generated[0]["model_name"])
         model_version = str(generated[0]["model_version"])
+        for item in generated:
+            item["decline_probability"] = 0.0
 
     baseline_daily = sum(values[-28:]) / min(28, len(values))
     forecast_total = sum(float(item["predicted"]) for item in generated)
@@ -152,36 +161,20 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
     )
     predicted_decline_pct = max(0.0, -predicted_change_pct)
 
-    model_alert = bool(decline_risk.get("alert")) if decline_risk.get("available") else risk_score >= 0.55
-    observed_alert = recent["change_pct"] <= -5.0
-    forecast_alert = predicted_decline_pct >= 5.0
-    should_alert = model_alert or observed_alert or forecast_alert
-
-    if risk_score >= 0.70 or recent["decline_pct"] >= 20.0 or predicted_decline_pct >= 20.0:
-        severity = "high"
-    elif risk_score >= 0.45 or recent["decline_pct"] >= 10.0 or predicted_decline_pct >= 10.0:
-        severity = "medium"
-    else:
-        severity = "low"
-
-    if model_alert and observed_alert:
-        alert_source = "model_and_observed"
-    elif model_alert:
-        alert_source = "model"
-    elif observed_alert:
-        alert_source = "observed"
-    elif forecast_alert:
-        alert_source = "forecast"
-    else:
-        alert_source = "none"
+    # Operational decline alerts may only be emitted by the dedicated V18 policy.
+    should_alert = bool(decline_supported and decline_risk.get("alert"))
+    severity = "high" if should_alert and risk_score >= 0.70 else ("medium" if should_alert else "low")
+    alert_source = "model" if should_alert else "none"
 
     decline_quality = _decline_quality(decline_risk)
     metrics = {
         "decline_engine": decline_risk,
+        "decline_probability_supported": decline_supported,
         "point_forecast_engine": {
             "name": point["model_name"],
             "version": point["model_version"],
             "metrics": generated[0].get("metrics") or {},
+            "calibration": generated[0].get("calibration") or {},
         },
         "quality": {"point": point, "decline": decline_quality},
         "observed_recent": recent,
@@ -197,8 +190,9 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         horizon_days=horizon,
         filters_json={
             "data_mode": data_mode,
-            "decline_engine_available": bool(decline_risk.get("available")),
+            "decline_engine_available": decline_supported,
             "auto_after_import": True,
+            "point_forecast_selection": "merchant_rolling_wape",
         },
         metrics_json=metrics,
         data_start=rows[0][0],
@@ -229,35 +223,28 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         forecast_models.append(forecast_row)
 
     alert_model = None
-    recommendation_ar = "استمر في المراقبة اليومية؛ لا يوجد تنبيه يتجاوز الحدود الحالية."
-    recommendation_en = "Continue daily monitoring; no current alert threshold is exceeded."
+    recommendation_ar = "استمر في المراقبة اليومية؛ لا يوجد تنبيه صادر من محرك خطر الانخفاض المعتمد."
+    recommendation_en = "Continue daily monitoring; the dedicated decline-risk engine has not issued an alert."
     if should_alert and forecast_models:
         highest = max(forecast_models, key=lambda item: float(item.decline_probability or 0.0))
         alert_model = Alert(
             forecast_id=highest.id,
             severity=severity,
-            title_ar="تنبيه تحليل المبيعات المرفوعة",
-            title_en="Uploaded-sales analysis alert",
-            message_ar=(
-                f"احتمال الانخفاض {risk_score:.1%}، والتغير المرصود لآخر 7 أيام {recent['change_pct']:.1f}%، "
-                f"والتغير المتوقع مقابل خط أساس 28 يومًا {predicted_change_pct:.1f}%."
-            ),
-            message_en=(
-                f"Decline probability {risk_score:.1%}; observed last-7-day change {recent['change_pct']:.1f}%; "
-                f"forecast change versus the 28-day baseline {predicted_change_pct:.1f}%."
-            ),
+            title_ar="إنذار مبكر لاحتمال انخفاض المبيعات",
+            title_en="Early sales-decline warning",
+            message_ar=f"اكتشف Sales Sentinel V18 خطر انخفاض خلال 7 أيام بدرجة {risk_score:.1%}.",
+            message_en=f"Sales Sentinel V18 detected a 7-day sales-decline risk score of {risk_score:.1%}.",
         )
         db.add(alert_model)
         db.flush()
-        impact = max(recent["decline_pct"], predicted_decline_pct) / 100.0
         db.add(DeclineFactor(
             forecast_id=highest.id,
-            factor_code="uploaded_recent_vs_baseline",
-            factor_name_ar="اتجاه البيانات المرفوعة مقابل خط الأساس",
-            factor_name_en="Uploaded-data trend versus baseline",
-            impact_value=impact,
-            direction="negative" if impact > 0 else "neutral",
-            method="v18_plus_observed_window" if decline_risk.get("available") else "point_forecast_plus_observed_window",
+            factor_code="v18_decline_risk",
+            factor_name_ar="خطر الانخفاض وفق V18",
+            factor_name_en="V18 decline risk",
+            impact_value=risk_score,
+            direction="negative",
+            method="v18_portable_extratrees",
         ))
         for driver in explanation.get("drivers", []):
             db.add(DeclineFactor(
@@ -269,15 +256,15 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
                 direction="negative",
                 method="recent_window_explanation",
             ))
-        recommendation_ar = explanation.get("recommended_action_ar") or "راجع المنتجات والعملاء والقنوات في آخر 14 يومًا وابدأ بمعالجة العناصر الأكثر مساهمة في الانخفاض."
-        recommendation_en = explanation.get("recommended_action_en") or "Review products, customers, and channels in the last 14 days and address the largest decline contributors first."
+        recommendation_ar = explanation.get("recommended_action_ar") or "راجع المنتجات والعملاء والقنوات الأكثر تراجعًا قبل اتخاذ الإجراء."
+        recommendation_en = explanation.get("recommended_action_en") or "Review the most-declining products, customers and channels before acting."
         db.add(Recommendation(
             alert_id=alert_model.id,
-            factor_code="uploaded_recent_vs_baseline",
+            factor_code=str(explanation.get("primary_driver_code") or "v18_decline_risk")[:80],
             text_ar=recommendation_ar,
             text_en=recommendation_en,
-            rationale_ar="التوصية مبنية على بيانات الملف المرفوع مع نتيجة النموذج، وليست قرارًا آليًا.",
-            rationale_en="The recommendation combines the uploaded data with model output and is decision support, not an automated action.",
+            rationale_ar="التوصية مبنية على تنبيه V18 وإشارات البيانات، وهي دعم قرار وليست قرارًا آليًا.",
+            rationale_en="The recommendation follows the V18 alert and data signals; it is decision support, not an automated action.",
             priority=1,
         ))
 
@@ -298,9 +285,10 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         "point_model_version": point["model_version"],
         "risk_probability_pct": risk_score * 100.0,
         "decision_threshold_pct": (float(decline_risk.get("decision_threshold")) * 100.0) if decline_risk.get("decision_threshold") is not None else None,
-        "v18_available": bool(decline_risk.get("available")),
+        "decline_probability_supported": decline_supported,
+        "v18_available": decline_supported,
         "v18_reason": decline_risk.get("reason"),
-        "alert": bool(should_alert),
+        "alert": should_alert,
         "alert_source": alert_source,
         "severity": severity,
         "observed_current_7d_sales": recent["current_sales"],
@@ -312,11 +300,15 @@ def run_instant_analysis(db, *, horizon: int = 7, created_by_id: int | None = No
         "forecast_average": forecast_average,
         "predicted_change_pct": predicted_change_pct,
         "predicted_decline_pct": predicted_decline_pct,
-        "forecast_accuracy_pct": point["accuracy_proxy_pct"],
-        "forecast_error_pct": point["error_wape_pct"],
-        "interval_coverage_pct": point["interval_coverage_pct"],
-        "forecast_mae": point["mae"],
-        "forecast_rmse": point["rmse"],
+        "forecast_accuracy_pct": point["accuracy_proxy_pct"] or 0.0,
+        "forecast_error_pct": point["error_wape_pct"] or 0.0,
+        "forecast_backtest_points": point["backtest_points"],
+        "forecast_selection_metric": point["selection_metric"],
+        "forecast_candidate_wape": point["candidate_wape"],
+        "interval_coverage_pct": 0.0,
+        "interval_method": point["interval_method"],
+        "forecast_mae": point["mae"] or 0.0,
+        "forecast_rmse": point["rmse"] or 0.0,
         "decline_diagnostic_accuracy_pct": decline_quality["accuracy_pct"],
         "decline_diagnostic_error_pct": decline_quality["error_pct"],
         "decline_correct_count": decline_quality["correct_count"],
