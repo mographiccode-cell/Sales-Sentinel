@@ -6,7 +6,6 @@ from pathlib import Path
 
 
 def _initialize_runtime_database(app) -> None:
-    """Initialize the configured database and keep Vercel cold starts resilient."""
     from .database import init_engine
     from .services.bootstrap import ensure_seed_data
 
@@ -18,10 +17,7 @@ def _initialize_runtime_database(app) -> None:
     except Exception as error:
         if not os.getenv("VERCEL"):
             raise
-        app.logger.warning(
-            "Primary Vercel database initialization failed (%s); using ephemeral SQLite fallback.",
-            type(error).__name__,
-        )
+        app.logger.warning("Primary Vercel database initialization failed (%s); using ephemeral SQLite fallback.", type(error).__name__)
 
     fallback_path = Path("/tmp/sales_sentinel.db")
     fallback_url = f"sqlite:///{fallback_path}"
@@ -30,7 +26,6 @@ def _initialize_runtime_database(app) -> None:
             fallback_path.unlink(missing_ok=True)
         except OSError:
             pass
-
     init_engine(fallback_url)
     ensure_seed_data()
     app.config["DATABASE_URL"] = fallback_url
@@ -39,7 +34,6 @@ def _initialize_runtime_database(app) -> None:
 
 def create_app(config_object=None):
     from flask import Flask, abort, redirect, render_template, request, session, url_for
-
     from .config import Config
     from .database import SessionLocal
     from .services.i18n import date_value, locale, money, number, t
@@ -53,10 +47,10 @@ def create_app(config_object=None):
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     Path(app.config["UPLOAD_DIR"]).mkdir(parents=True, exist_ok=True)
     Path(app.config["REPORT_DIR"]).mkdir(parents=True, exist_ok=True)
-
     _initialize_runtime_database(app)
 
     from .admin.routes import admin_bp
+    from .admin.settings_runtime import settings_bp
     from .admin.user_delete import admin_user_bp
     from .alerts.routes import alerts_bp
     from .auth.routes import auth_bp
@@ -66,43 +60,24 @@ def create_app(config_object=None):
     from .reports.routes import reports_bp
     from .sales.routes import sales_bp
 
-    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp, admin_user_bp):
+    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp, admin_user_bp, settings_bp):
         app.register_blueprint(blueprint)
 
     endpoint_permissions = {
-        "dashboard.index": "dashboard.view",
-        "sales.index": "sales.view",
-        "forecasting.index": "forecasts.run",
-        "forecasting.detail": "forecasts.run",
-        "imports.index": "imports.manage",
-        "reports.index": "reports.export",
-        "reports.download": "reports.export",
-        "alerts.index": "alerts.view",
-        "alerts.mark_read": "alerts.view",
-        "alerts.resolve": "alerts.view",
-        "alerts.reopen": "alerts.view",
-        "admin.users": "users.manage",
-        "admin.create_user": "users.manage",
-        "admin.edit_user": "users.manage",
-        "admin.toggle_user": "users.manage",
-        "admin.remove_user_access": "users.manage",
-        "admin_user.delete_user": "users.manage",
-        "admin.roles": "users.manage",
-        "admin.update_role_permissions": "users.manage",
-        "admin.delete_role": "users.manage",
-        "admin.health": "system.manage",
-        "admin.settings": "system.manage",
+        "dashboard.index": "dashboard.view", "sales.index": "sales.view",
+        "forecasting.index": "forecasts.run", "forecasting.detail": "forecasts.run",
+        "imports.index": "imports.manage", "reports.index": "reports.export",
+        "reports.download": "reports.export", "alerts.index": "alerts.view",
+        "alerts.mark_read": "alerts.view", "alerts.resolve": "alerts.view", "alerts.reopen": "alerts.view",
+        "admin.users": "users.manage", "admin.create_user": "users.manage", "admin.edit_user": "users.manage",
+        "admin.toggle_user": "users.manage", "admin.remove_user_access": "users.manage",
+        "admin_user.delete_user": "users.manage", "admin.roles": "users.manage",
+        "admin.update_role_permissions": "users.manage", "admin.delete_role": "users.manage",
+        "admin.health": "system.manage", "admin.settings": "system.manage", "settings_pref.settings": "system.manage",
     }
     company_scope_endpoints = {
-        "imports.index",
-        "forecasting.index",
-        "forecasting.detail",
-        "reports.index",
-        "reports.download",
-        "alerts.index",
-        "alerts.mark_read",
-        "alerts.resolve",
-        "alerts.reopen",
+        "imports.index", "forecasting.index", "forecasting.detail", "reports.index", "reports.download",
+        "alerts.index", "alerts.mark_read", "alerts.resolve", "alerts.reopen",
     }
 
     @app.before_request
@@ -118,9 +93,8 @@ def create_app(config_object=None):
                 return redirect(url_for("auth.login", next=request.full_path))
             if required_permission not in user.permission_codes:
                 abort(403)
-            # Current import, V18/Adaptive forecast, report and alert artifacts
-            # are company-scope outputs. Until branch-specific artifacts are
-            # validated, these endpoints require explicit all-branch access.
+            if endpoint == "admin.settings":
+                return redirect(url_for("settings_pref.settings"))
             if endpoint in company_scope_endpoints and "branches.view_all" not in user.permission_codes:
                 abort(403)
 
@@ -135,17 +109,21 @@ def create_app(config_object=None):
 
     @app.context_processor
     def context():
+        from sqlalchemy import select
+        from .database import session_scope
+        from .models import SystemSetting
+
         user = current_user()
+        default_forecast_horizon = 7
+        if user:
+            with session_scope() as db:
+                setting = db.scalar(select(SystemSetting).where(SystemSetting.key == "default_forecast_horizon"))
+                if setting and setting.value in {"7", "30"}:
+                    default_forecast_horizon = int(setting.value)
         return {
-            "current_user": user,
-            "t": t,
-            "locale": locale(),
-            "direction": "rtl" if locale() == "ar" else "ltr",
-            "money": money,
-            "number": number,
-            "date_value": date_value,
-            "csrf_token": csrf_token,
-            "deployment_mode": app.config["DEPLOYMENT_MODE"],
+            "current_user": user, "t": t, "locale": locale(), "direction": "rtl" if locale() == "ar" else "ltr",
+            "money": money, "number": number, "date_value": date_value, "csrf_token": csrf_token,
+            "deployment_mode": app.config["DEPLOYMENT_MODE"], "default_forecast_horizon": default_forecast_horizon,
         }
 
     @app.get("/")
