@@ -8,10 +8,14 @@ on:
       - 'app/services/adaptive_forecasting_engine.py'
       - 'app/forecasting/routes.py'
       - 'tests/test_adaptive_forecasting_engine.py'
+      - 'tests/test_forecasting_source_isolation.py'
       - '.github/workflows/test-adaptive-forecast-runtime.yml'
 
 permissions:
   contents: read
+
+env:
+  PYTHONPATH: .
 
 jobs:
   test:
@@ -30,6 +34,6 @@ jobs:
       - name: Compile changed runtime files
         run: python -m py_compile app/services/adaptive_forecasting_engine.py app/forecasting/routes.py
       - name: Test adaptive forecasting
-        run: pytest -q tests/test_adaptive_forecasting_engine.py
+        run: python -m pytest -q tests/test_adaptive_forecasting_engine.py
       - name: Test decline explainer and source isolation
-        run: pytest -q tests/test_decline_explainer.py tests/test_forecasting_source_isolation.py
+        run: python -m pytest -q tests/test_decline_explainer.py tests/test_forecasting_source_isolation.py
