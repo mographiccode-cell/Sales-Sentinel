@@ -93,7 +93,7 @@ def index():
             .join(Product, Product.id == Sale.product_id)
             .where(sales_condition)
         )
-        if allowed_branch_ids:
+        if allowed_branch_ids is not None:
             stmt = stmt.where(Sale.branch_id.in_(allowed_branch_ids))
         if start_date:
             stmt = stmt.where(Sale.sale_date >= start_date)
@@ -124,7 +124,7 @@ def index():
             .distinct()
             .order_by(Category.name_en)
         )
-        if allowed_branch_ids:
+        if allowed_branch_ids is not None:
             channel_stmt = channel_stmt.where(Sale.branch_id.in_(allowed_branch_ids))
             product_stmt = product_stmt.where(Sale.branch_id.in_(allowed_branch_ids))
             category_stmt = category_stmt.where(Sale.branch_id.in_(allowed_branch_ids))
