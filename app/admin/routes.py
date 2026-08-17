@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 from sqlalchemy import select
 
 from app.database import session_scope
@@ -29,17 +29,74 @@ def create_user():
     username = request.form.get("username", "").strip().lower()
     email = request.form.get("email", "").strip().lower()
     password = request.form.get("password", "")
-    role_id = int(request.form.get("role_id", "0"))
-    if not username or not email or len(password) < 10:
-        flash("تحقق من البيانات وكلمة المرور / Check the data and password.", "error")
+    password_confirmation = request.form.get("password_confirmation", "")
+    role_id_raw = request.form.get("role_id", "0")
+    locale = session.get("locale", "en")
+
+    if not username or not email:
+        message = (
+            "Username and email are required."
+            if locale == "en"
+            else "اسم المستخدم والبريد الإلكتروني مطلوبان."
+        )
+        flash(message, "error")
         return redirect(url_for("admin.users"))
+
+    if len(password) < 10:
+        message = (
+            "Password must be at least 10 characters."
+            if locale == "en"
+            else "يجب أن تتكون كلمة المرور من 10 أحرف على الأقل."
+        )
+        flash(message, "error")
+        return redirect(url_for("admin.users"))
+
+    if password != password_confirmation:
+        message = (
+            "Password confirmation does not match."
+            if locale == "en"
+            else "تأكيد كلمة المرور غير مطابق."
+        )
+        flash(message, "error")
+        return redirect(url_for("admin.users"))
+
+    try:
+        role_id = int(role_id_raw)
+    except ValueError:
+        flash("Invalid role." if locale == "en" else "الدور المحدد غير صالح.", "error")
+        return redirect(url_for("admin.users"))
+
     with session_scope() as db:
+        duplicate = db.scalar(
+            select(User).where((User.username == username) | (User.email == email))
+        )
+        if duplicate:
+            flash(
+                "Username or email already exists."
+                if locale == "en"
+                else "اسم المستخدم أو البريد الإلكتروني مستخدم مسبقًا.",
+                "error",
+            )
+            return redirect(url_for("admin.users"))
+
         role = db.get(Role, role_id)
         if not role:
-            flash("Invalid role", "error")
+            flash("Invalid role." if locale == "en" else "الدور المحدد غير صالح.", "error")
             return redirect(url_for("admin.users"))
-        db.add(User(username=username, email=email, full_name_ar=username, full_name_en=username, password_hash=hash_password(password), role_id=role.id, locale="en"))
-    flash("تم إنشاء المستخدم / User created.", "success")
+
+        db.add(
+            User(
+                username=username,
+                email=email,
+                full_name_ar=username,
+                full_name_en=username,
+                password_hash=hash_password(password),
+                role_id=role.id,
+                locale="en",
+            )
+        )
+
+    flash("User created." if locale == "en" else "تم إنشاء المستخدم.", "success")
     return redirect(url_for("admin.users"))
 
 
@@ -48,11 +105,17 @@ def create_user():
 @permission_required("system.manage")
 def health():
     import psutil
+
     with session_scope() as db:
         checks = db.scalars(select(SystemHealth).order_by(SystemHealth.component)).all()
     disk = psutil.disk_usage("/")
     memory = psutil.virtual_memory()
-    resources = {"cpu_percent": psutil.cpu_percent(), "memory_percent": memory.percent, "memory_available_gb": round(memory.available / 1024**3, 2), "disk_free_gb": round(disk.free / 1024**3, 2)}
+    resources = {
+        "cpu_percent": psutil.cpu_percent(),
+        "memory_percent": memory.percent,
+        "memory_available_gb": round(memory.available / 1024**3, 2),
+        "disk_free_gb": round(disk.free / 1024**3, 2),
+    }
     return render_template("admin/health.html", checks=checks, resources=resources)
 
 
@@ -61,7 +124,9 @@ def health():
 @permission_required("system.manage")
 def settings():
     with session_scope() as db:
-        setting = db.scalar(select(SystemSetting).where(SystemSetting.key == "decline_threshold"))
+        setting = db.scalar(
+            select(SystemSetting).where(SystemSetting.key == "decline_threshold")
+        )
         if request.method == "POST" and setting:
             setting.value = str(float(request.form.get("decline_threshold", "0.08")))
             flash("تم الحفظ / Saved.", "success")
