@@ -35,7 +35,7 @@ jobs:
       - name: Run maintained tests
         env:
           SECRET_KEY: ci-secret-key-that-is-long-enough
-          PYTHONPATH: ${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/scripts
         run: python -m pytest -q tests
       - name: Upload model and evidence
         uses: actions/upload-artifact@v4
