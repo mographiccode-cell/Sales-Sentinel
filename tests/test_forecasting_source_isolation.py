@@ -36,11 +36,13 @@ def test_user_history_never_mixes_with_seed_aggregates(tmp_path: Path):
         product = db.scalar(select(Product).order_by(Product.id))
         assert branch is not None and product is not None
 
-        # Add only ten days of rich user transactions. The correct behavior is
-        # to expose those ten days and let the forecasting route reject them as
-        # insufficient, never combine them with the older seeded UCI history.
+        # Add transactions spanning ten calendar days but intentionally leave
+        # one date absent. Forecast history must preserve the calendar and turn
+        # the absent transaction date into an explicit zero-sales day.
         start = date(2026, 1, 1)
         for i in range(10):
+            if i == 5:
+                continue
             day = start + timedelta(days=i)
             db.add(Sale(
                 sale_date=day,
@@ -70,6 +72,8 @@ def test_user_history_never_mixes_with_seed_aggregates(tmp_path: Path):
         assert len(rich_rows) == 10
         assert rich_rows[0][0] == start
         assert rich_rows[-1][0] == start + timedelta(days=9)
+        assert rich_rows[5][0] == start + timedelta(days=5)
+        assert float(rich_rows[5][1]) == 0.0
 
         # A complete explicit daily import may be used as a coherent fallback,
         # but it must remain isolated from both rich rows and seeded aggregates.
