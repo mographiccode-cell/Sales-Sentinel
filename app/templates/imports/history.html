@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block page_name %}{{ 'سجل الاستيراد' if locale=='ar' else 'Import history' }}{% endblock %}
+{% block content %}
+<section class="ux3-page-head">
+  <div>
+    <span class="eyebrow">DATA INGESTION</span>
+    <h1>{{ 'سجل الاستيراد' if locale=='ar' else 'Import history' }}</h1>
+    <p>{{ 'راجع الملفات المستوردة وحالتها وعدد الصفوف وبصمة SHA-256.' if locale=='ar' else 'Review imported files, status, row counts, and SHA-256 evidence.' }}</p>
+  </div>
+  <a class="primary-button" href="{{ url_for('imports.index') }}">＋ {{ 'استيراد جديد' if locale=='ar' else 'New import' }}</a>
+</section>
+
+<article class="ux3-table-section">
+  <div class="ux3-section-title"><div><span class="eyebrow">AUDIT TRAIL</span><h2>{{ 'آخر عمليات الاستيراد' if locale=='ar' else 'Recent imports' }}</h2></div><span>{{ jobs|length }}</span></div>
+  <div class="table-wrap">
+    <table class="ux3-scan-table">
+      <thead><tr><th>{{ 'الملف' if locale=='ar' else 'File' }}</th><th>{{ 'الحالة' if locale=='ar' else 'Status' }}</th><th>{{ 'الإجمالي' if locale=='ar' else 'Total rows' }}</th><th>{{ 'المقبولة' if locale=='ar' else 'Accepted' }}</th><th>{{ 'المرفوضة' if locale=='ar' else 'Rejected' }}</th><th>SHA-256</th><th>{{ 'التاريخ' if locale=='ar' else 'Date' }}</th></tr></thead>
+      <tbody>
+      {% for job in jobs %}
+        <tr>
+          <td><strong>{{ job.filename }}</strong><small>#{{ job.id }}</small></td>
+          <td><span class="status {{ 'status-completed' if job.status in ['imported','imported_no_new_rows'] else ('status-failed' if job.status=='failed' else '') }}">{{ job.status }}</span></td>
+          <td>{{ number(job.total_rows) }}</td>
+          <td>{{ number(job.accepted_rows) }}</td>
+          <td>{{ number(job.rejected_rows) }}</td>
+          <td><code title="{{ job.file_sha256 }}">{{ job.file_sha256[:12] }}…</code></td>
+          <td>{{ job.created_at.strftime('%Y-%m-%d %H:%M') if job.created_at else '—' }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7"><div class="empty-state">{{ 'لا توجد عمليات استيراد بعد' if locale=='ar' else 'No imports yet' }}</div></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</article>
+{% endblock %}
