@@ -91,18 +91,34 @@ def create_app(config_object=None):
         "admin.health": "system.manage",
         "admin.settings": "system.manage",
     }
+    company_scope_endpoints = {
+        "forecasting.index",
+        "forecasting.detail",
+        "reports.index",
+        "reports.download",
+        "alerts.index",
+        "alerts.mark_read",
+        "alerts.resolve",
+        "alerts.reopen",
+    }
 
     @app.before_request
     def before_request():
         session.permanent = True
         if request.endpoint and request.endpoint != "static":
             validate_csrf()
-        required_permission = endpoint_permissions.get(request.endpoint or "")
+        endpoint = request.endpoint or ""
+        required_permission = endpoint_permissions.get(endpoint)
         if required_permission:
             user = current_user()
             if not user:
                 return redirect(url_for("auth.login", next=request.full_path))
             if required_permission not in user.permission_codes:
+                abort(403)
+            # Current V18/Adaptive forecast, report and alert artifacts are
+            # company-scope outputs. Until a branch-specific artifact is
+            # validated, these endpoints require explicit all-branch access.
+            if endpoint in company_scope_endpoints and "branches.view_all" not in user.permission_codes:
                 abort(403)
 
     @app.after_request
