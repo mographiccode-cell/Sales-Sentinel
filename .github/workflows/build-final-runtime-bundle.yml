@@ -1,0 +1,132 @@
+name: Build Final Runtime Bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'models/model_registry.json'
+      - 'models/sales_sentinel_portable_v18.json.gz'
+      - 'requirements.txt'
+      - 'run.py'
+      - 'main.py'
+      - 'wsgi.py'
+      - 'vercel.json'
+      - 'tests/test_end_to_end_sales_sentinel.py'
+      - 'tests/test_vercel_entrypoint.py'
+      - '.github/workflows/build-final-runtime-bundle.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install runtime and test dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Assemble clean runtime bundle
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/Sales-Sentinel-Final"
+          rm -rf "$ROOT"
+          mkdir -p "$ROOT/models" "$ROOT/data/processed" "$ROOT/reports" "$ROOT/tests"
+
+          cp -R app "$ROOT/app"
+          cp main.py run.py wsgi.py requirements.txt vercel.json .env.example .python-version "$ROOT/"
+
+          # Only the approved runtime model artifact and registry are exposed.
+          cp models/model_registry.json "$ROOT/models/"
+          cp models/sales_sentinel_portable_v18.json.gz "$ROOT/models/"
+
+          # Keep the small verified seed aggregate only for immediate local UI startup.
+          if [ -f data/processed/daily_sales.csv ]; then
+            cp data/processed/daily_sales.csv "$ROOT/data/processed/"
+          fi
+
+          # Include only accepted/current evidence, never rejected experiments.
+          for d in \
+            reports/external_redsea_adaptive_forecast \
+            reports/external_redsea_runtime_v18 \
+            reports/merchant_calendar_safeguard_v13_1; do
+            if [ -d "$d" ]; then
+              cp -R "$d" "$ROOT/reports/"
+            fi
+          done
+
+          # Include the tests that prove the shipped runtime journey and Vercel entrypoint.
+          for f in \
+            tests/test_adaptive_forecasting_engine.py \
+            tests/test_decline_explainer.py \
+            tests/test_forecasting_source_isolation.py \
+            tests/test_end_to_end_sales_sentinel.py \
+            tests/test_vercel_entrypoint.py; do
+            cp "$f" "$ROOT/tests/"
+          done
+
+          cat > "$ROOT/FINAL_BUNDLE_MANIFEST.txt" <<'EOF'
+          SALES SENTINEL FINAL RUNTIME BUNDLE
+          ==================================
+          Included runtime:
+          - Flask application source under app/
+          - Adaptive Merchant Forecast V3 (code runtime)
+          - V18 Portable ExtraTrees decline-risk artifact
+          - Current model_registry.json
+          - Runtime requirements and local/Vercel entrypoints
+          - Current accepted Redsea transfer evidence
+          - Focused runtime/E2E tests
+
+          Explicitly excluded:
+          - Legacy Ridge/UCI point-forecast artifact
+          - Historical/weak experimental model directories
+          - Rejected 7-day direct-total experiment
+          - Historical training workflows and exploratory reports
+
+          Local run:
+          1. python -m venv .venv
+          2. Activate .venv
+          3. pip install -r requirements.txt
+          4. python run.py
+          5. Open http://127.0.0.1:5000
+
+          Default local admin seeded by the application:
+          username: admin
+          password: Admin@2026!
+
+          Scientific boundary:
+          The 30-day Redsea horizon-total 1-WAPE diagnostic is 90.49% on the stored post-open external diagnostic only. It is not universal production accuracy. The 7-day decline alert is controlled by V18, not by the point forecaster.
+          EOF
+
+          find "$ROOT" -type d -name '__pycache__' -prune -exec rm -rf {} +
+          find "$ROOT" -type f -name '*.pyc' -delete
+          (cd "$RUNNER_TEMP" && zip -qr Sales-Sentinel-Final.zip Sales-Sentinel-Final)
+          sha256sum "$RUNNER_TEMP/Sales-Sentinel-Final.zip" | tee "$RUNNER_TEMP/Sales-Sentinel-Final.zip.sha256"
+      - name: Smoke-test the assembled bundle
+        run: |
+          set -euo pipefail
+          ROOT="$RUNNER_TEMP/Sales-Sentinel-Final"
+          cd "$ROOT"
+          PYTHONPATH=. python -m py_compile main.py run.py app/services/adaptive_forecasting_engine.py app/services/portable_decline_engine.py
+          PYTHONPATH=. python -m pytest -q \
+            tests/test_adaptive_forecasting_engine.py \
+            tests/test_decline_explainer.py \
+            tests/test_forecasting_source_isolation.py \
+            tests/test_end_to_end_sales_sentinel.py \
+            tests/test_vercel_entrypoint.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Sales-Sentinel-Final
+          path: |
+            ${{ runner.temp }}/Sales-Sentinel-Final.zip
+            ${{ runner.temp }}/Sales-Sentinel-Final.zip.sha256
+          if-no-files-found: error
+          retention-days: 30
