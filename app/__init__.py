@@ -18,7 +18,6 @@ def _initialize_runtime_database(app) -> None:
     except Exception as error:
         if not os.getenv("VERCEL"):
             raise
-
         app.logger.warning(
             "Primary Vercel database initialization failed (%s); using ephemeral SQLite fallback.",
             type(error).__name__,
@@ -48,11 +47,7 @@ def create_app(config_object=None):
 
     config_object = config_object or Config
     runtime_instance_path = "/tmp/sales-sentinel-instance" if os.getenv("VERCEL") else None
-    app = Flask(
-        __name__,
-        instance_relative_config=True,
-        instance_path=runtime_instance_path,
-    )
+    app = Flask(__name__, instance_relative_config=True, instance_path=runtime_instance_path)
     app.config.from_object(config_object)
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(seconds=app.config["PERMANENT_SESSION_LIFETIME_SECONDS"])
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
@@ -73,11 +68,42 @@ def create_app(config_object=None):
     for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp):
         app.register_blueprint(blueprint)
 
+    endpoint_permissions = {
+        "dashboard.index": "dashboard.view",
+        "sales.index": "sales.view",
+        "forecasting.index": "forecasts.run",
+        "forecasting.detail": "forecasts.run",
+        "imports.index": "imports.manage",
+        "reports.index": "reports.export",
+        "reports.download": "reports.export",
+        "alerts.index": "alerts.view",
+        "alerts.mark_read": "alerts.view",
+        "alerts.resolve": "alerts.view",
+        "alerts.reopen": "alerts.view",
+        "admin.users": "users.manage",
+        "admin.create_user": "users.manage",
+        "admin.edit_user": "users.manage",
+        "admin.toggle_user": "users.manage",
+        "admin.remove_user_access": "users.manage",
+        "admin.roles": "users.manage",
+        "admin.update_role_permissions": "users.manage",
+        "admin.delete_role": "users.manage",
+        "admin.health": "system.manage",
+        "admin.settings": "system.manage",
+    }
+
     @app.before_request
     def before_request():
         session.permanent = True
         if request.endpoint and request.endpoint != "static":
             validate_csrf()
+        required_permission = endpoint_permissions.get(request.endpoint or "")
+        if required_permission:
+            user = current_user()
+            if not user:
+                return redirect(url_for("auth.login", next=request.full_path))
+            if required_permission not in user.permission_codes:
+                abort(403)
 
     @app.after_request
     def security_headers(response):
@@ -126,11 +152,7 @@ def create_app(config_object=None):
                 db.execute(text("SELECT 1"))
             engine = get_engine()
             dialect = engine.dialect.name if engine is not None else "unknown"
-            return {
-                "status": "ok",
-                "database": dialect,
-                "mode": app.config["DEPLOYMENT_MODE"],
-            }, 200
+            return {"status": "ok", "database": dialect, "mode": app.config["DEPLOYMENT_MODE"]}, 200
         except Exception:
             return {"status": "error"}, 503
 
