@@ -57,6 +57,7 @@ def create_app(config_object=None):
     _initialize_runtime_database(app)
 
     from .admin.routes import admin_bp
+    from .admin.user_delete import admin_user_bp
     from .alerts.routes import alerts_bp
     from .auth.routes import auth_bp
     from .dashboard.routes import dashboard_bp
@@ -65,7 +66,7 @@ def create_app(config_object=None):
     from .reports.routes import reports_bp
     from .sales.routes import sales_bp
 
-    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp):
+    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp, admin_user_bp):
         app.register_blueprint(blueprint)
 
     endpoint_permissions = {
@@ -85,6 +86,7 @@ def create_app(config_object=None):
         "admin.edit_user": "users.manage",
         "admin.toggle_user": "users.manage",
         "admin.remove_user_access": "users.manage",
+        "admin_user.delete_user": "users.manage",
         "admin.roles": "users.manage",
         "admin.update_role_permissions": "users.manage",
         "admin.delete_role": "users.manage",
