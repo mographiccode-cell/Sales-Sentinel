@@ -10,6 +10,7 @@ on:
       - 'scripts/build_uci_online_retail.py'
       - 'app/**'
       - 'tests/**'
+      - 'pytest.ini'
       - 'requirements-training.txt'
       - '.github/workflows/academic-pipeline.yml'
 
@@ -31,11 +32,11 @@ jobs:
       - run: pip install -r requirements-training.txt
       - name: Build official UCI dataset and train models
         run: python scripts/build_uci_online_retail.py
-      - name: Run tests
+      - name: Run maintained tests
         env:
           SECRET_KEY: ci-secret-key-that-is-long-enough
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m pytest -q
+        run: python -m pytest -q tests
       - name: Upload model and evidence
         uses: actions/upload-artifact@v4
         with:
