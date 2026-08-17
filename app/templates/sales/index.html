@@ -2,7 +2,31 @@
 {% block title %}{{ t('sales') }} — {{ t('app_name') }}{% endblock %}
 {% block page_name %}{{ t('sales') }}{% endblock %}
 {% block content %}
-<section class="ux3-page-head"><div><span class="eyebrow">SALES DATA</span><h1>{{ t('sales') }}</h1><p>{{ 'استعرض السجل اليومي وابحث فقط عند الحاجة.' if locale=='ar' else 'Scan daily sales and filter only when needed.' }}</p></div><button type="button" class="btn" data-toggle-target="#sales-filters">{{ 'فلترة' if locale=='ar' else 'Filter' }}</button></section>
-<article class="ux3-filter-drawer" id="sales-filters" hidden><form method="get" class="filter-form"><label>{{ 'من' if locale == 'ar' else 'From' }}<input type="date" name="start" value="{{ filters.start }}"></label><label>{{ 'إلى' if locale == 'ar' else 'To' }}<input type="date" name="end" value="{{ filters.end }}"></label><label>{{ t('channel') }}<select name="channel"><option value="">{{ t('all') }}</option>{% for channel in channels %}<option value="{{ channel }}" {{ 'selected' if filters.channel == channel else '' }}>{{ channel }}</option>{% endfor %}</select></label><button class="primary-button" type="submit">{{ t('search') }}</button></form></article>
-<article class="ux3-table-section"><div class="ux3-section-title"><div><span class="eyebrow">DAILY RECORDS</span><h2>{{ 'الحركة اليومية' if locale=='ar' else 'Daily activity' }}</h2></div><span>{{ items|length }} {{ 'يومًا' if locale=='ar' else 'days' }}</span></div><div class="table-wrap"><table class="ux3-scan-table"><thead><tr><th>{{ 'التاريخ' if locale == 'ar' else 'Date' }}</th><th>{{ 'صافي المبيعات' if locale == 'ar' else 'Net sales' }}</th><th>{{ 'الإجمالي' if locale == 'ar' else 'Gross' }}</th><th>{{ 'السجلات' if locale == 'ar' else 'Records' }}</th><th>{{ 'الكمية' if locale == 'ar' else 'Qty' }}</th><th>{{ 'الخصم' if locale == 'ar' else 'Discount' }}</th></tr></thead><tbody>{% for item in items %}<tr><td><strong>{{ date_value(item.date) }}</strong></td><td>{{ money(item.net_sales) }}</td><td>{{ money(item.total_amount) }}</td><td>{{ number(item.transactions) }}</td><td>{{ number(item.quantity) }}</td><td>{{ money(item.discounts) }}</td></tr>{% else %}<tr><td colspan="6"><div class="empty-state">{{ 'لا توجد نتائج' if locale == 'ar' else 'No results' }}</div></td></tr>{% endfor %}</tbody></table></div></article>
+<section class="ux3-page-head">
+  <div><span class="eyebrow">SALES DATA</span><h1>{{ t('sales') }}</h1><p>{{ 'استعرض المبيعات وابحث حسب التاريخ والمنتج والفئة والقناة.' if locale=='ar' else 'Review sales and filter by date, product, category, and channel.' }}</p></div>
+  <button type="button" class="btn" data-toggle-target="#sales-filters">{{ 'فلترة' if locale=='ar' else 'Filter' }}</button>
+</section>
+
+<article class="ux3-filter-drawer" id="sales-filters" hidden>
+  <form method="get" class="filter-form">
+    <label>{{ 'من' if locale == 'ar' else 'From' }}<input type="date" name="start" value="{{ filters.start }}"></label>
+    <label>{{ 'إلى' if locale == 'ar' else 'To' }}<input type="date" name="end" value="{{ filters.end }}"></label>
+    <label>{{ t('channel') }}
+      <select name="channel"><option value="">{{ t('all') }}</option>{% for channel in channels %}<option value="{{ channel }}" {{ 'selected' if filters.channel == channel else '' }}>{{ channel }}</option>{% endfor %}</select>
+    </label>
+    <label>{{ 'Product' if locale == 'en' else 'المنتج' }}
+      <select name="product"><option value="">{{ t('all') }}</option>{% for product in products %}<option value="{{ product.id }}" {{ 'selected' if filters.product == product.id|string else '' }}>{{ product.name_ar if locale=='ar' else product.name_en }}</option>{% endfor %}</select>
+    </label>
+    <label>{{ 'Category' if locale == 'en' else 'الفئة' }}
+      <select name="category"><option value="">{{ t('all') }}</option>{% for category in categories %}<option value="{{ category.id }}" {{ 'selected' if filters.category == category.id|string else '' }}>{{ category.name_ar if locale=='ar' else category.name_en }}</option>{% endfor %}</select>
+    </label>
+    <button class="primary-button" type="submit">{{ t('search') }}</button>
+    <a class="secondary-button" href="{{ url_for('sales.index') }}">{{ 'إعادة ضبط' if locale=='ar' else 'Reset' }}</a>
+  </form>
+</article>
+
+<article class="ux3-table-section">
+  <div class="ux3-section-title"><div><span class="eyebrow">DAILY RECORDS</span><h2>{{ 'الحركة اليومية' if locale=='ar' else 'Daily activity' }}</h2></div><span>{{ items|length }} {{ 'يومًا' if locale=='ar' else 'days' }}</span></div>
+  <div class="table-wrap"><table class="ux3-scan-table"><thead><tr><th>{{ 'التاريخ' if locale == 'ar' else 'Date' }}</th><th>{{ 'صافي المبيعات' if locale == 'ar' else 'Net sales' }}</th><th>{{ 'الإجمالي' if locale == 'ar' else 'Gross' }}</th><th>{{ 'المعاملات' if locale == 'ar' else 'Transactions' }}</th><th>{{ 'الكمية' if locale == 'ar' else 'Qty' }}</th><th>{{ 'الخصم' if locale == 'ar' else 'Discount' }}</th></tr></thead><tbody>{% for item in items %}<tr><td><strong>{{ date_value(item.date) }}</strong></td><td>{{ money(item.net_sales) }}</td><td>{{ money(item.total_amount) }}</td><td>{{ number(item.transactions) }}</td><td>{{ number(item.quantity) }}</td><td>{{ money(item.discounts) }}</td></tr>{% else %}<tr><td colspan="6"><div class="empty-state">{{ 'لا توجد نتائج' if locale == 'ar' else 'No results' }}</div></td></tr>{% endfor %}</tbody></table></div>
+</article>
 {% endblock %}
