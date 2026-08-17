@@ -5,8 +5,10 @@ on:
   push:
     branches: [main]
     paths:
+      - 'app/templates/base.html'
       - 'app/templates/forecasting/detail.html'
       - 'app/templates/imports/index.html'
+      - 'app/static/css/bidi-fixes.css'
       - '.github/workflows/capture-runtime-ui-review.yml'
 
 permissions:
