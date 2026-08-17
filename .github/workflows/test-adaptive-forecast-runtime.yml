@@ -10,6 +10,7 @@ on:
       - 'app/forecasting/routes.py'
       - 'app/reports/routes.py'
       - 'app/templates/imports/index.html'
+      - 'models/model_registry.json'
       - 'tests/test_adaptive_forecasting_engine.py'
       - 'tests/test_forecasting_source_isolation.py'
       - 'tests/test_end_to_end_sales_sentinel.py'
