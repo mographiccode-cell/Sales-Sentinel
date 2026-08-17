@@ -6,11 +6,10 @@ import sys
 from pathlib import Path
 
 
-def test_vercel_entrypoint_imports_and_serves_login_without_repo_writes():
+def test_vercel_entrypoint_imports_and_serves_registered_login_route():
     repo = Path(__file__).resolve().parents[1]
     code = r'''
 import json
-from pathlib import Path
 
 import main
 
@@ -22,20 +21,24 @@ assert str(app.config["UPLOAD_DIR"]).startswith("/tmp/")
 assert str(app.config["REPORT_DIR"]).startswith("/tmp/")
 assert app.config["SESSION_COOKIE_SECURE"] is True
 
+rules = {rule.rule: rule.endpoint for rule in app.url_map.iter_rules()}
+assert rules.get("/auth/login") == "auth.login", rules
+
 client = app.test_client()
-login = client.get("/login")
+login = client.get("/auth/login")
 assert login.status_code == 200, login.status_code
 root = client.get("/", follow_redirects=False)
-assert root.status_code in {200, 302}, root.status_code
-health_candidates = ["/system-status/", "/status/", "/health"]
-# Do not require a particular optional health route; the entrypoint itself and
-# authenticated routing are what Vercel must be able to import and execute.
+assert root.status_code == 302, root.status_code
+location = root.headers.get("Location", "")
+assert "/auth/login" in location, location
 
 print(json.dumps({
     "deployment_mode": app.config["DEPLOYMENT_MODE"],
     "database_url": app.config["DATABASE_URL"],
+    "login_route": "/auth/login",
     "login_status": login.status_code,
     "root_status": root.status_code,
+    "root_location": location,
 }))
 '''
     env = os.environ.copy()
@@ -54,4 +57,6 @@ print(json.dumps({
     )
     assert completed.returncode == 0, f"STDOUT:\n{completed.stdout}\nSTDERR:\n{completed.stderr}"
     assert '"deployment_mode": "vercel-demo-ephemeral"' in completed.stdout
+    assert '"login_route": "/auth/login"' in completed.stdout
     assert '"login_status": 200' in completed.stdout
+    assert '"root_status": 302' in completed.stdout
