@@ -1,5 +1,75 @@
-{% extends 'base.html' %}{% block page_name %}{{ t('users') }}{% endblock %}{% block content %}
-<section class="ux3-page-head"><div><span class="eyebrow">ADMINISTRATION</span><h1>{{ t('users') }}</h1><p>{{ 'إدارة الوصول منفصلة عن مهام التحليل اليومية.' if locale=='ar' else 'Access management stays separate from daily analysis work.' }}</p></div><button class="primary-button" type="button" data-toggle-target="#new-user-form">＋ {{ 'مستخدم جديد' if locale=='ar' else 'New user' }}</button></section>
-<section class="ux3-admin-layout"><article class="ux3-table-section"><div class="ux3-section-title"><div><h2>{{ 'المستخدمون الحاليون' if locale=='ar' else 'Current users' }}</h2></div><span>{{ users|length }}</span></div><div class="table-wrap"><table class="ux3-scan-table"><thead><tr><th>{{ 'الاسم' if locale=='ar' else 'Name' }}</th><th>{{ 'الدور' if locale=='ar' else 'Role' }}</th><th>{{ 'الحالة' if locale=='ar' else 'Status' }}</th></tr></thead><tbody>{% for u in users %}<tr><td><strong>{{ u.full_name_ar if locale=='ar' else u.full_name_en }}</strong><small>{{ u.email }}</small></td><td>{{ u.role.name_ar if locale=='ar' else u.role.name_en }}</td><td><span class="status {{ 'status-completed' if u.is_active else 'status-failed' }}">{{ 'نشط' if u.is_active and locale=='ar' else ('Active' if u.is_active else ('معطل' if locale=='ar' else 'Disabled')) }}</span></td></tr>{% endfor %}</tbody></table></div></article>
-<aside class="ux3-admin-form" id="new-user-form" hidden><h2>{{ 'إضافة مستخدم' if locale=='ar' else 'Add user' }}</h2><form method="post" action="{{ url_for('admin.create_user') }}" class="stacked-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><label>Username<input name="username" required></label><label>Email<input name="email" type="email" required></label><label>Password<input name="password" type="password" minlength="10" required></label><label>Password confirmation<input name="password_confirmation" type="password" minlength="10" required></label><label>Role<select name="role_id">{% for r in roles %}<option value="{{ r.id }}">{{ r.name_ar if locale=='ar' else r.name_en }}</option>{% endfor %}</select></label><button class="primary-button" type="submit">{{ 'إنشاء' if locale=='ar' else 'Create' }}</button></form></aside></section>
+{% extends 'base.html' %}
+{% block page_name %}{{ t('users') }}{% endblock %}
+{% block content %}
+<section class="ux3-page-head">
+  <div>
+    <span class="eyebrow">ADMINISTRATION</span>
+    <h1>{{ t('users') }}</h1>
+    <p>{{ 'إنشاء المستخدمين وتعديلهم وتغيير أدوارهم والتحكم في وصولهم.' if locale=='ar' else 'Create users, edit their details, change roles, and control access.' }}</p>
+  </div>
+  <div class="ux3-head-actions">
+    <a class="secondary-button" href="{{ url_for('admin.roles') }}">{{ 'الأدوار والصلاحيات' if locale=='ar' else 'Roles & permissions' }}</a>
+    <button class="primary-button" type="button" data-toggle-target="#new-user-form">＋ {{ 'مستخدم جديد' if locale=='ar' else 'New user' }}</button>
+  </div>
+</section>
+
+<section class="ux3-admin-layout">
+  <article class="ux3-table-section">
+    <div class="ux3-section-title"><div><h2>{{ 'المستخدمون الحاليون' if locale=='ar' else 'Current users' }}</h2></div><span>{{ users|length }}</span></div>
+    <div class="table-wrap">
+      <table class="ux3-scan-table">
+        <thead><tr><th>{{ 'المستخدم' if locale=='ar' else 'User' }}</th><th>{{ 'الدور' if locale=='ar' else 'Role' }}</th><th>{{ 'الحالة' if locale=='ar' else 'Status' }}</th><th>{{ 'الإجراءات' if locale=='ar' else 'Actions' }}</th></tr></thead>
+        <tbody>
+        {% for u in users %}
+          <tr>
+            <td><strong>{{ u.full_name_ar if locale=='ar' else u.full_name_en }}</strong><small>@{{ u.username }} · {{ u.email }}</small></td>
+            <td>{{ u.role.name_ar if locale=='ar' else u.role.name_en }}</td>
+            <td><span class="status {{ 'status-completed' if u.is_active else 'status-failed' }}">{{ 'نشط' if u.is_active and locale=='ar' else ('Active' if u.is_active else ('معطل' if locale=='ar' else 'Disabled')) }}</span></td>
+            <td>
+              <details>
+                <summary class="ux3-text-action">{{ 'إدارة' if locale=='ar' else 'Manage' }}</summary>
+                <div class="ux3-inline-admin-panel">
+                  <form method="post" action="{{ url_for('admin.edit_user', user_id=u.id) }}" class="stacked-form compact-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <label>Username<input name="username" value="{{ u.username }}" required></label>
+                    <label>Email<input name="email" type="email" value="{{ u.email }}" required></label>
+                    <label>English name<input name="full_name_en" value="{{ u.full_name_en }}"></label>
+                    <label>Arabic name<input name="full_name_ar" value="{{ u.full_name_ar }}"></label>
+                    <label>Role<select name="role_id">{% for r in roles %}<option value="{{ r.id }}" {{ 'selected' if r.id == u.role_id else '' }}>{{ r.name_ar if locale=='ar' else r.name_en }}</option>{% endfor %}</select></label>
+                    <label>{{ 'كلمة مرور جديدة (اختياري)' if locale=='ar' else 'New password (optional)' }}<input name="password" type="password" minlength="10"></label>
+                    <button class="primary-button" type="submit">{{ 'حفظ التعديلات' if locale=='ar' else 'Save changes' }}</button>
+                  </form>
+                  <div class="ux3-row-actions">
+                    <form method="post" action="{{ url_for('admin.toggle_user', user_id=u.id) }}">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="secondary-button" type="submit">{{ ('تعطيل' if u.is_active else 'تفعيل') if locale=='ar' else ('Disable' if u.is_active else 'Activate') }}</button>
+                    </form>
+                    <form method="post" action="{{ url_for('admin.remove_user_access', user_id=u.id) }}" onsubmit="return confirm('Remove access for this user?');">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="danger-button" type="submit">{{ 'إزالة الوصول' if locale=='ar' else 'Remove access' }}</button>
+                    </form>
+                  </div>
+                </div>
+              </details>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+  <aside class="ux3-admin-form" id="new-user-form" hidden>
+    <h2>{{ 'إضافة مستخدم' if locale=='ar' else 'Add user' }}</h2>
+    <form method="post" action="{{ url_for('admin.create_user') }}" class="stacked-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Username<input name="username" required></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Password<input name="password" type="password" minlength="10" required></label>
+      <label>Password confirmation<input name="password_confirmation" type="password" minlength="10" required></label>
+      <label>Role<select name="role_id">{% for r in roles %}<option value="{{ r.id }}">{{ r.name_ar if locale=='ar' else r.name_en }}</option>{% endfor %}</select></label>
+      <button class="primary-button" type="submit">{{ 'إنشاء' if locale=='ar' else 'Create' }}</button>
+    </form>
+  </aside>
+</section>
 {% endblock %}
