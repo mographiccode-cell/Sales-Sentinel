@@ -13,6 +13,7 @@ on:
       - 'app/forecasting/routes.py'
       - 'app/reports/routes.py'
       - 'app/templates/imports/index.html'
+      - 'app/templates/forecasting/detail.html'
       - 'models/model_registry.json'
       - 'tests/test_adaptive_forecasting_engine.py'
       - 'tests/test_forecasting_source_isolation.py'
