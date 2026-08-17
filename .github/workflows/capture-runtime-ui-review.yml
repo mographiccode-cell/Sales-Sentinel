@@ -41,7 +41,6 @@ jobs:
           ws.append(['TRX DATE','TRX NUMBER','SALES CHANNEL','CUSTOMER NUMBER','ITEM CODE','FAMILY','CLASS','SUBCLASS','FRANCHISE','Type','QUANTITY','Unit Price','Discount Amount','Discount Amount(%)','Net Amount','Vat Amount','TOTAL AMOUNT'])
           start=date(2023,7,1)
           for i in range(84):
-              # Stable first 70 days, then a visible decline so the explainer has real transaction signals.
               multiplier=0.62 if i >= 70 else 1.0
               active_customers=2 if i >= 70 else 5
               for j in range(active_customers):
@@ -72,27 +71,33 @@ jobs:
           with sync_playwright() as p:
               browser=p.chromium.launch()
               page=browser.new_page(viewport={'width':1440,'height':1100}, device_scale_factor=1)
-              page.goto(base+'/auth/login', wait_until='networkidle')
-              page.fill('input[name="username"]','admin')
-              page.fill('input[name="password"]','Admin@2026!')
-              page.click('button[type="submit"]')
-              page.wait_for_load_state('networkidle')
-              page.goto(base+'/locale/ar?next=/imports/', wait_until='networkidle')
-              page.set_input_files('input[name="file"]','/tmp/ui-review-merchant.xlsx')
-              page.click('button[type="submit"]')
-              page.wait_for_selector('#instant-analysis', timeout=30000)
-              page.screenshot(path=str(out/'01-import-result-ar.png'), full_page=True)
-              page.goto(base+'/forecasts/', wait_until='networkidle')
-              href=page.locator('tr[data-row-href]').first.get_attribute('data-row-href')
-              if not href:
-                  raise RuntimeError('No analysis history row was created after upload')
-              page.goto(base+href, wait_until='networkidle')
-              page.wait_for_selector('text=Horizon-total WAPE')
-              page.screenshot(path=str(out/'02-analysis-detail-ar.png'), full_page=True)
-              # Open the quality tab so the exact metric separation is visible.
-              page.click('[data-ux-tab="quality"]')
-              page.screenshot(path=str(out/'03-model-quality-ar.png'), full_page=True)
-              browser.close()
+              try:
+                  page.goto(base+'/auth/login', wait_until='networkidle')
+                  page.fill('input[name="username"]','admin')
+                  page.fill('input[name="password"]','Admin@2026!')
+                  page.click('form button[type="submit"]')
+                  page.wait_for_load_state('networkidle')
+                  page.goto(base+'/locale/ar?next=/imports/', wait_until='networkidle')
+                  page.set_input_files('form.ux3-upload-form input[name="file"]','/tmp/ui-review-merchant.xlsx')
+                  page.click('form.ux3-upload-form button[type="submit"]')
+                  page.wait_for_selector('#instant-analysis', timeout=30000)
+                  page.screenshot(path=str(out/'01-import-result-ar.png'), full_page=True)
+                  page.goto(base+'/forecasts/', wait_until='networkidle')
+                  href=page.locator('tr[data-row-href]').first.get_attribute('data-row-href')
+                  if not href:
+                      raise RuntimeError('No analysis history row was created after upload')
+                  page.goto(base+href, wait_until='networkidle')
+                  page.wait_for_selector('text=Horizon-total WAPE')
+                  page.screenshot(path=str(out/'02-analysis-detail-ar.png'), full_page=True)
+                  page.click('[data-ux-tab="quality"]')
+                  page.screenshot(path=str(out/'03-model-quality-ar.png'), full_page=True)
+              except Exception:
+                  print('CURRENT_URL=', page.url)
+                  print('BODY_TEXT=', page.locator('body').inner_text()[:8000])
+                  page.screenshot(path=str(out/'failure-diagnostic.png'), full_page=True)
+                  raise
+              finally:
+                  browser.close()
           PY
       - name: Verify screenshots and runtime log
         run: |
@@ -114,5 +119,6 @@ jobs:
             echo 'Screenshots unchanged.'
           else
             git commit -m 'docs: refresh tested runtime UI screenshots'
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
