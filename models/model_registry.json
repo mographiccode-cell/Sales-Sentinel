@@ -1,6 +1,6 @@
 {
   "project": "Sales Sentinel",
-  "registry_version": "2026-08-16",
+  "registry_version": "2026-08-17",
   "canonical_business_target": "Predict whether total merchant sales will decline by at least 15% over the next 7 days relative to the trailing 28-day daily-sales baseline.",
   "models": {
     "merchant_decline_development_best": {
@@ -40,9 +40,28 @@
       "important_note": "V18 is the deployment/runtime representation. It must not be reported as a separate higher-accuracy experimental model unless evaluated under an explicitly comparable protocol."
     },
     "point_sales_forecast": {
+      "name": "Adaptive Merchant Forecast",
+      "version": "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1",
+      "status": "RUNTIME_LOCAL_BACKTEST_SELECTION",
+      "role": "7-day and 30-day merchant sales-value point forecast. Selects the lowest-WAPE local candidate using rolling historical origins from the uploaded merchant series.",
+      "engine": "app/services/adaptive_forecasting_engine.py",
+      "minimum_history_days": 28,
+      "candidate_models": [
+        "seasonal_naive_7",
+        "moving_average_7",
+        "moving_average_14",
+        "weekly_trend_7"
+      ],
+      "selection_metric": "merchant_rolling_wape",
+      "interval_method": "90pct_absolute_backtest_residual",
+      "decline_probability_supported": false,
+      "scientific_boundary": "Quality is merchant-specific and must be reported from the rolling backtest stored with each run. This runtime does not create a global production-accuracy claim."
+    },
+    "legacy_uci_point_forecast": {
       "name": "ridge_raw_1",
-      "status": "LEGACY_POINT_FORECAST_ONLY",
-      "role": "Daily sales-value point forecast and interval estimation only",
+      "status": "LEGACY_NOT_DEFAULT",
+      "artifact": "models/sales_forecast.json",
+      "role": "Historical UCI-trained point-forecast artifact retained for reproducibility only; it is no longer the default website point-forecast engine.",
       "must_not_be_used_for": "Merchant decline-risk model performance claims"
     }
   },
@@ -90,6 +109,7 @@
     "Do not use plain accuracy alone as the primary metric for the imbalanced decline target.",
     "Do not present SAMA city/market-risk metrics as merchant Sales Sentinel metrics.",
     "Do not claim RED/severe-risk classification is supported.",
+    "Do not report one global point-forecast accuracy for Adaptive Merchant Forecast; report the WAPE stored for the merchant/run.",
     "Do not claim production validation until an independent longitudinal Saudi merchant dataset is evaluated without tuning on it."
   ]
 }
