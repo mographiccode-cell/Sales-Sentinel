@@ -4,7 +4,7 @@
 {% block content %}
 <section class="ux3-page-head">
   <div><span class="eyebrow">OVERVIEW</span><h1>{{ 'ملخص المبيعات' if locale == 'ar' else 'Sales overview' }}</h1><p>{{ 'ما تحتاجه لاتخاذ القرار الآن، والتفاصيل الثانوية عند الطلب.' if locale == 'ar' else 'What you need for the next decision; secondary detail stays on demand.' }}</p></div>
-  <a class="primary-button ux3-primary-cta" href="{{ url_for('imports.index') }}">＋ {{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</a>
+  {% if 'imports.manage' in current_user.permission_codes %}<a class="primary-button ux3-primary-cta" href="{{ url_for('imports.index') }}">＋ {{ 'تحليل جديد' if locale == 'ar' else 'New analysis' }}</a>{% endif %}
 </section>
 
 <div data-browser-analysis-slot data-locale="{{ locale }}" class="ux3-browser-slot"></div>
@@ -13,7 +13,7 @@
   <article><small>{{ 'المبيعات الحالية' if locale == 'ar' else 'Current sales' }}</small><strong>{{ money(summary.current_sales) }}</strong><span class="{{ 'negative' if summary.change_percent < 0 else 'positive' }}">{{ '%+.1f'|format(summary.change_percent) }}% {{ 'عن الفترة السابقة' if locale == 'ar' else 'vs previous period' }}</span></article>
   <article><small>{{ 'التغير' if locale == 'ar' else 'Change' }}</small><strong class="{{ 'negative' if summary.change_percent < 0 else 'positive' }}">{{ '%+.1f'|format(summary.change_percent) }}%</strong><span>{{ 'آخر 30 يومًا متاحًا' if locale == 'ar' else 'Latest 30 available days' }}</span></article>
   <article class="risk"><small>{{ 'احتمال الانخفاض' if locale == 'ar' else 'Decline probability' }}</small><strong>{{ '%.0f%%'|format(summary.decline_probability * 100) }}</strong><span>{{ summary.active_alerts }} {{ 'تنبيه نشط' if locale == 'ar' else 'active alerts' }}</span></article>
-  <article><small>{{ 'توقع 7 أيام' if locale == 'ar' else '7-day forecast' }}</small><strong>{{ money(summary.forecast_sales) }}</strong><span>{{ 'آخر نموذج محفوظ' if locale == 'ar' else 'latest stored run' }}</span></article>
+  <article><small>{{ 'توقع 7 أيام' if locale == 'ar' else '7-day forecast' }}</small><strong>{{ money(summary.forecast_sales) }}</strong><span>{{ 'آخر توقع 7 أيام محفوظ' if locale == 'ar' else 'latest stored 7-day run' }}</span></article>
 </section>
 
 <section class="ux3-dashboard-main">
@@ -25,15 +25,18 @@
   <aside class="ux3-alert-block">
     <div class="ux3-section-title"><div><span class="eyebrow">LATEST SIGNAL</span><h2>{{ 'آخر تنبيه' if locale == 'ar' else 'Latest alert' }}</h2></div></div>
     <div class="alert-list ux3-alert-list">{% for alert in summary.top_alerts[:1] %}<div class="alert-row"><span class="severity severity-{{ alert.severity }}"></span><div><strong>{{ alert.title_ar if locale == 'ar' else alert.title_en }}</strong><small>{{ alert.message_ar if locale == 'ar' else alert.message_en }}</small></div></div>{% else %}<div class="empty-state ux3-empty"><span>✓</span><strong>{{ 'لا يوجد تنبيه نشط الآن' if locale == 'ar' else 'No active alert right now' }}</strong><small>{{ 'شغّل تحليلًا جديدًا للحصول على أحدث إشارة.' if locale == 'ar' else 'Run a new analysis to get the latest signal.' }}</small></div>{% endfor %}</div>
-    <a class="ux3-text-action" href="{{ url_for('forecasting.index') }}">{{ 'عرض كل التحليلات' if locale == 'ar' else 'View all analyses' }} ←</a>
+    {% if 'alerts.view' in current_user.permission_codes %}<a class="ux3-text-action" href="{{ url_for('alerts.index') }}">{{ 'عرض كل التنبيهات' if locale == 'ar' else 'View all alerts' }} ←</a>{% endif %}
   </aside>
 </section>
 
 <details class="ux3-more-metrics">
   <summary>{{ 'المزيد من المؤشرات' if locale == 'ar' else 'More metrics' }} <span>＋</span></summary>
   <div class="ux3-secondary-metrics">
-    <div><small>{{ 'أيام الفترة' if locale == 'ar' else 'Days in period' }}</small><strong>{{ number(summary.transactions) }}</strong></div>
-    <div><small>{{ 'المتوسط اليومي' if locale == 'ar' else 'Daily average' }}</small><strong>{{ money(summary.avg_transaction) }}</strong></div>
+    <div><small>{{ 'المعاملات' if locale == 'ar' else 'Transactions' }}</small><strong>{{ number(summary.transactions) }}</strong></div>
+    <div><small>{{ 'العملاء النشطون' if locale == 'ar' else 'Active customers' }}</small><strong>{{ number(summary.active_customers) }}</strong></div>
+    <div><small>{{ 'المنتجات' if locale == 'ar' else 'Products' }}</small><strong>{{ number(summary.products) }}</strong></div>
+    <div><small>{{ 'قنوات المبيعات' if locale == 'ar' else 'Sales channels' }}</small><strong>{{ number(summary.channels) }}</strong></div>
+    <div><small>{{ 'متوسط قيمة المعاملة' if locale == 'ar' else 'Average transaction value' }}</small><strong>{{ money(summary.avg_transaction) }}</strong></div>
     <div><small>{{ 'المرتجعات' if locale == 'ar' else 'Returns' }}</small><strong>{{ money(summary.returns) }}</strong></div>
     <div><small>{{ 'الخصومات' if locale == 'ar' else 'Discounts' }}</small><strong>{{ money(summary.discounts) }}</strong></div>
   </div>
