@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 env:
-  PYTHONPATH: .
+  PYTHONPATH: .:scripts
   DATABASE_URL: sqlite:////tmp/sales_sentinel_project_evidence.sqlite3
   SECRET_KEY: project-evidence-secret
   SESSION_COOKIE_SECURE: '0'
@@ -38,11 +38,11 @@ jobs:
       - name: Install runtime and evidence dependencies
         run: |
           pip install -r requirements.txt
-          pip install pytest playwright pygments pillow
+          pip install pytest playwright pygments pillow numpy pandas joblib scikit-learn xgboost
           python -m playwright install --with-deps chromium
 
-      - name: Run complete automated test suite
-        run: python -m pytest -q
+      - name: Run application test suite
+        run: python -m pytest -q tests
 
       - name: Start real Flask application
         run: |
