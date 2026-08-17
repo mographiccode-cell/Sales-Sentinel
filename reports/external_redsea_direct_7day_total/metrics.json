@@ -1,0 +1,257 @@
+{
+  "experiment": "Direct 7-day total forecast with weekday-share decomposition",
+  "scientific_status": "POST_OPEN_EXTERNAL_EXPERIMENT_NOT_FRESH_BLIND",
+  "source_sha256": "dd994d25042e54119babe058820b02e00b3443fe18150b9213f9c6929466a645",
+  "source_rows": 2700,
+  "calendar_days": 123,
+  "date_start": "2023-07-01",
+  "date_end": "2023-10-31",
+  "result": {
+    "fold_count": 9,
+    "total_wape": 0.4317758219101036,
+    "quality_proxy_1_minus_wape": 0.5682241780898964,
+    "current_v3_total_wape_reference": 0.3565,
+    "improvement_vs_v3_pct_points": -7.527582191010362,
+    "winner_counts": {
+      "median_8w_total": 6,
+      "mean_4w_total": 3
+    },
+    "folds": [
+      {
+        "origin": "2023-08-26",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 4,
+        "candidate_total_wape": {
+          "last_7d_total": 0.47984888458000946,
+          "mean_2w_total": 0.4357978280939912,
+          "mean_4w_total": 0.42569853840764915,
+          "median_4w_total": 0.46019752548385745,
+          "median_8w_total": 0.3770301861332801,
+          "weighted_4w_total": 0.42557237674154025,
+          "damped_weekly_trend": 0.544028326901226
+        },
+        "actual_total": 339116.17000000004,
+        "predicted_total": 261228.485,
+        "absolute_error_pct": 22.967847566808757,
+        "daily_path": [
+          27094.662489869814,
+          44382.76393715575,
+          29061.096073636236,
+          45227.71519781369,
+          47606.05785572628,
+          60006.3175542623,
+          7849.871891535909
+        ]
+      },
+      {
+        "origin": "2023-09-02",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 5,
+        "candidate_total_wape": {
+          "last_7d_total": 0.5118154718553642,
+          "mean_2w_total": 0.44937648350016907,
+          "mean_4w_total": 0.3765710128010287,
+          "median_4w_total": 0.4091235040321598,
+          "median_8w_total": 0.3411223246695115,
+          "weighted_4w_total": 0.40125039891158315,
+          "damped_weekly_trend": 0.5865655324151907
+        },
+        "actual_total": 194776.56,
+        "predicted_total": 315375.935,
+        "absolute_error_pct": 61.91678043805682,
+        "daily_path": [
+          33890.65704221138,
+          53470.303878845,
+          44111.11907817629,
+          48640.1757667981,
+          57702.33141155888,
+          69810.67546715934,
+          7750.672355251015
+        ]
+      },
+      {
+        "origin": "2023-09-09",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 6,
+        "candidate_total_wape": {
+          "last_7d_total": 0.5399613607283916,
+          "mean_2w_total": 0.41987969293477445,
+          "mean_4w_total": 0.3803224105190823,
+          "median_4w_total": 0.4101159557629622,
+          "median_8w_total": 0.375260986417303,
+          "weighted_4w_total": 0.39249558770966025,
+          "damped_weekly_trend": 0.6643116375726543
+        },
+        "actual_total": 129808.20000000001,
+        "predicted_total": 315375.935,
+        "absolute_error_pct": 142.95532562657826,
+        "daily_path": [
+          35032.67541026906,
+          53191.38976436621,
+          45597.53783246935,
+          51121.106804947594,
+          56693.905425440964,
+          62567.4930045005,
+          11171.826758006322
+        ]
+      },
+      {
+        "origin": "2023-09-16",
+        "winner": "mean_4w_total",
+        "local_backtest_folds": 7,
+        "candidate_total_wape": {
+          "last_7d_total": 0.536976218853381,
+          "mean_2w_total": 0.4680297424542847,
+          "mean_4w_total": 0.4039288744971649,
+          "median_4w_total": 0.42224997675948306,
+          "median_8w_total": 0.4550052288686598,
+          "weighted_4w_total": 0.41962883102746357,
+          "damped_weekly_trend": 0.6178727286830445
+        },
+        "actual_total": 279849.11999999994,
+        "predicted_total": 198901.9775,
+        "absolute_error_pct": 28.92528034392245,
+        "daily_path": [
+          22281.47281998979,
+          35154.14649734217,
+          29285.421986460828,
+          31232.640206991815,
+          36058.44252551001,
+          39794.16012246756,
+          5095.6933412378385
+        ]
+      },
+      {
+        "origin": "2023-09-23",
+        "winner": "mean_4w_total",
+        "local_backtest_folds": 8,
+        "candidate_total_wape": {
+          "last_7d_total": 0.5368602877493538,
+          "mean_2w_total": 0.4613059199051912,
+          "mean_4w_total": 0.38785098505737114,
+          "median_4w_total": 0.42141886102503173,
+          "median_8w_total": 0.4040972509382084,
+          "weighted_4w_total": 0.4051231493179036,
+          "damped_weekly_trend": 0.6210618255916794
+        },
+        "actual_total": 292987.6,
+        "predicted_total": 235887.5125,
+        "absolute_error_pct": 19.488909257593143,
+        "daily_path": [
+          25622.30521673081,
+          37430.702584110484,
+          39432.14122329883,
+          18051.886081717857,
+          51581.699323966735,
+          54107.53162168307,
+          9661.246448492218
+        ]
+      },
+      {
+        "origin": "2023-09-30",
+        "winner": "mean_4w_total",
+        "local_backtest_folds": 9,
+        "candidate_total_wape": {
+          "last_7d_total": 0.47388360309106536,
+          "mean_2w_total": 0.4407740056229639,
+          "mean_4w_total": 0.36315245579836597,
+          "median_4w_total": 0.3918010667252279,
+          "median_8w_total": 0.37272444924894466,
+          "weighted_4w_total": 0.3835167484601646,
+          "damped_weekly_trend": 0.5653246772032081
+        },
+        "actual_total": 318215.7600000001,
+        "predicted_total": 224355.37,
+        "absolute_error_pct": 29.495833267340405,
+        "daily_path": [
+          20825.027279365208,
+          44503.32208815913,
+          39609.464126294115,
+          18133.063840400133,
+          41542.02953591675,
+          52782.767138795105,
+          6959.69599106954
+        ]
+      },
+      {
+        "origin": "2023-10-07",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 9,
+        "candidate_total_wape": {
+          "last_7d_total": 0.4335537483829415,
+          "mean_2w_total": 0.41820237292731205,
+          "mean_4w_total": 0.40002916212921935,
+          "median_4w_total": 0.41685784007219473,
+          "median_8w_total": 0.3940375645474498,
+          "weighted_4w_total": 0.3968008788267877,
+          "damped_weekly_trend": 0.5084014145265502
+        },
+        "actual_total": 155212.61,
+        "predicted_total": 246405.10499999998,
+        "absolute_error_pct": 58.7532771982895,
+        "daily_path": [
+          31226.603151418905,
+          53994.60504781592,
+          48528.44874007268,
+          22000.326592017278,
+          47720.17734596831,
+          34490.944469237154,
+          8443.999653469733
+        ]
+      },
+      {
+        "origin": "2023-10-14",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 9,
+        "candidate_total_wape": {
+          "last_7d_total": 0.5101804691200156,
+          "mean_2w_total": 0.5129538390128616,
+          "mean_4w_total": 0.44995493407450726,
+          "median_4w_total": 0.4856914457750699,
+          "median_8w_total": 0.4307728051173222,
+          "weighted_4w_total": 0.4679316528177709,
+          "damped_weekly_trend": 0.5763521725493664
+        },
+        "actual_total": 215202.46,
+        "predicted_total": 237312.83999999997,
+        "absolute_error_pct": 10.274222701729329,
+        "daily_path": [
+          24982.07014400766,
+          53386.97035702738,
+          47516.212002762746,
+          26985.730933915384,
+          40904.785183956505,
+          30386.45552242877,
+          13150.615855901513
+        ]
+      },
+      {
+        "origin": "2023-10-21",
+        "winner": "median_8w_total",
+        "local_backtest_folds": 9,
+        "candidate_total_wape": {
+          "last_7d_total": 0.4418757832053474,
+          "mean_2w_total": 0.45438314645005795,
+          "mean_4w_total": 0.3997975869101079,
+          "median_4w_total": 0.44383986283128385,
+          "median_8w_total": 0.3912652674394356,
+          "weighted_4w_total": 0.4062903424067877,
+          "damped_weekly_trend": 0.5050132555662301
+        },
+        "actual_total": 101656.89,
+        "predicted_total": 247525.78999999998,
+        "absolute_error_pct": 143.49140525546272,
+        "daily_path": [
+          25574.74886948376,
+          46598.72800191488,
+          53490.012246274215,
+          30083.30641018057,
+          45600.06876764024,
+          31518.807464816127,
+          14660.118239690171
+        ]
+      }
+    ]
+  },
+  "acceptance_rule": "Do not replace V3 unless total WAPE is lower than V3 and full runtime tests pass."
+}
