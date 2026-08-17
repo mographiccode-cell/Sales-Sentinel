@@ -5,16 +5,24 @@ on:
   push:
     branches: [main]
     paths:
+      - 'app/__init__.py'
       - 'app/auth/routes.py'
-      - 'app/admin/routes.py'
+      - 'app/admin/**'
+      - 'app/alerts/**'
+      - 'app/dashboard/**'
       - 'app/sales/routes.py'
       - 'app/imports/routes.py'
-      - 'app/templates/admin/users.html'
+      - 'app/forecasting/routes.py'
+      - 'app/reports/routes.py'
+      - 'app/templates/base.html'
+      - 'app/templates/admin/**'
+      - 'app/templates/alerts/**'
+      - 'app/templates/dashboard/**'
+      - 'app/templates/forecasting/**'
+      - 'app/templates/sales/**'
+      - 'app/static/css/management.css'
       - 'scripts/capture_project_evidence.py'
-      - 'tests/test_input_validation.py'
-      - 'tests/test_forecasting_engine.py'
-      - 'tests/test_import_route_xlsx.py'
-      - 'tests/test_v18_runtime_and_import.py'
+      - 'tests/**'
       - '.github/workflows/capture-project-evidence.yml'
 
 permissions:
