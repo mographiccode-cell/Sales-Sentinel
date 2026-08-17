@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import math
 import os
 from collections import Counter
 from datetime import date, datetime, timedelta
@@ -15,8 +14,13 @@ CANDIDATES = (
     "last_7d_total",
     "mean_2w_total",
     "mean_4w_total",
+    "mean_8w_total",
     "median_4w_total",
     "median_8w_total",
+    "trimmed_mean_8w_total",
+    "ewma_8w_total",
+    "blend_mean_median_8w",
+    "blend_mean8_recent",
     "weighted_4w_total",
     "damped_weekly_trend",
 )
@@ -76,6 +80,10 @@ def _median(values: list[float]) -> float:
     return ordered[m] if len(ordered) % 2 else (ordered[m - 1] + ordered[m]) / 2.0
 
 
+def _mean(values: list[float]) -> float:
+    return sum(values) / len(values) if values else 0.0
+
+
 def _weekly_totals(history: list[float], weeks: int = 8) -> list[float]:
     totals = []
     for w in range(weeks):
@@ -84,7 +92,7 @@ def _weekly_totals(history: list[float], weeks: int = 8) -> list[float]:
         if start < 0:
             break
         totals.append(sum(history[start:end]))
-    return totals  # newest first
+    return totals
 
 
 def predict_total(history: list[float], model: str) -> float:
@@ -94,18 +102,33 @@ def predict_total(history: list[float], model: str) -> float:
     if model == "last_7d_total":
         value = weeks[0]
     elif model == "mean_2w_total":
-        value = sum(weeks[:2]) / len(weeks[:2])
+        value = _mean(weeks[:2])
     elif model == "mean_4w_total":
-        value = sum(weeks[:4]) / len(weeks[:4])
+        value = _mean(weeks[:4])
+    elif model == "mean_8w_total":
+        value = _mean(weeks[:8])
     elif model == "median_4w_total":
         value = _median(weeks[:4])
     elif model == "median_8w_total":
         value = _median(weeks[:8])
+    elif model == "trimmed_mean_8w_total":
+        subset = sorted(weeks[:8])
+        trimmed = subset[1:-1] if len(subset) >= 5 else subset
+        value = _mean(trimmed)
+    elif model == "ewma_8w_total":
+        subset = weeks[:8]
+        weights = [0.34, 0.23, 0.16, 0.11, 0.07, 0.05, 0.025, 0.015][:len(subset)]
+        value = sum(v * w for v, w in zip(subset, weights)) / sum(weights)
+    elif model == "blend_mean_median_8w":
+        subset = weeks[:8]
+        value = 0.55 * _mean(subset) + 0.45 * _median(subset)
+    elif model == "blend_mean8_recent":
+        subset = weeks[:8]
+        value = 0.70 * _mean(subset) + 0.30 * weeks[0]
     elif model == "weighted_4w_total":
         subset = weeks[:4]
         weights = [0.40, 0.30, 0.20, 0.10][:len(subset)]
-        scale = sum(weights)
-        value = sum(v * w for v, w in zip(subset, weights)) / scale
+        value = sum(v * w for v, w in zip(subset, weights)) / sum(weights)
     elif model == "damped_weekly_trend":
         if len(weeks) < 2:
             value = weeks[0]
@@ -144,8 +167,6 @@ def select(history: list[float]) -> tuple[str, dict[str, float], int]:
 
 
 def weekday_shares(history: list[float]) -> list[float]:
-    # Relative positions 0..6 for the next seven calendar days. Estimate each
-    # from up to eight same-weekday historical observations, then normalize.
     levels = []
     for future_pos in range(7):
         samples = []
@@ -158,7 +179,7 @@ def weekday_shares(history: list[float]) -> list[float]:
 
 
 def evaluate(dates: list[date], values: list[float]) -> dict:
-    actuals, preds, v3_reference = [], [], []
+    actuals, preds = [], []
     winners: Counter[str] = Counter()
     folds = []
     for origin in range(56, len(values) - 7 + 1, 7):
@@ -168,9 +189,6 @@ def evaluate(dates: list[date], values: list[float]) -> dict:
         predicted_total = predict_total(history, winner)
         shares = weekday_shares(history)
         daily_path = [predicted_total * share for share in shares]
-
-        # Keep the current V3 external result visible as the fixed comparison
-        # target. The experiment is accepted only if its total WAPE improves it.
         actuals.append(actual_total)
         preds.append(predicted_total)
         winners[winner] += 1
@@ -184,7 +202,6 @@ def evaluate(dates: list[date], values: list[float]) -> dict:
             "absolute_error_pct": abs(actual_total - predicted_total) / max(abs(actual_total), 1e-9) * 100.0,
             "daily_path": daily_path,
         })
-
     error = sum(abs(a - p) for a, p in zip(actuals, preds))
     denom = sum(abs(a) for a in actuals)
     wape = error / max(denom, 1e-9)
@@ -204,13 +221,14 @@ def main() -> None:
     dates, values, source_rows = load_daily(source)
     result = evaluate(dates, values)
     payload = {
-        "experiment": "Direct 7-day total forecast with weekday-share decomposition",
+        "experiment": "Direct 7-day total forecast with robust 8-week candidate pool and weekday-share decomposition",
         "scientific_status": "POST_OPEN_EXTERNAL_EXPERIMENT_NOT_FRESH_BLIND",
         "source_sha256": SOURCE_SHA256,
         "source_rows": source_rows,
         "calendar_days": len(values),
         "date_start": dates[0].isoformat(),
         "date_end": dates[-1].isoformat(),
+        "candidate_models": list(CANDIDATES),
         "result": result,
         "acceptance_rule": "Do not replace V3 unless total WAPE is lower than V3 and full runtime tests pass.",
     }
@@ -220,6 +238,7 @@ def main() -> None:
 
 - Source rows: **{source_rows}**
 - Calendar days: **{len(values)}** ({dates[0]} to {dates[-1]})
+- Candidate models: **{len(CANDIDATES)}**
 - Folds: **{result['fold_count']}**
 - Direct-total WAPE: **{result['total_wape'] * 100:.2f}%**
 - Direct-total quality proxy (1-WAPE): **{result['quality_proxy_1_minus_wape'] * 100:.2f}%**
