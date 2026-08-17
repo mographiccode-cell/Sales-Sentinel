@@ -12,6 +12,13 @@ from app.config import Config
 from app.database import session_scope
 from app.models import Alert, Forecast, ModelRun, User
 
+ADAPTIVE_VERSION = "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V2"
+ADAPTIVE_CANDIDATES = {
+    "seasonal_naive_7", "moving_average_7", "moving_average_14",
+    "median_7", "median_14", "weekday_mean_8w", "weekday_median_8w",
+    "seasonal_level_blend", "weekly_trend_7",
+}
+
 
 def _merchant_xlsx(days: int = 70) -> bytes:
     workbook = Workbook()
@@ -71,8 +78,6 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
     csrf = "e2e-csrf"
     _authenticate(client, admin_id, csrf)
 
-    # The redesigned import page renders the automatic analysis inline in the
-    # same request. A successful upload therefore returns 200, not a redirect.
     upload = client.post(
         "/imports/",
         data={"csrf_token": csrf, "file": (BytesIO(_merchant_xlsx()), "merchant-sales.xlsx")},
@@ -82,16 +87,15 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
     assert upload.status_code == 200
     assert b"instant-analysis" in upload.data
 
-    # Verify the automatic upload analysis already uses the adaptive merchant
-    # point forecaster and the dedicated V18 risk runtime.
     with session_scope() as db:
         instant_run = db.scalar(select(ModelRun).order_by(desc(ModelRun.id)))
         assert instant_run is not None
         instant_metrics = instant_run.metrics_json or {}
         instant_point = instant_metrics["point_forecast_engine"]
-        assert instant_point["version"] == "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1"
+        assert instant_point["version"] == ADAPTIVE_VERSION
         assert instant_point["metrics"]["selection_metric"] == "merchant_rolling_wape"
         assert instant_point["metrics"]["backtest_points"] > 0
+        assert instant_point["name"] in ADAPTIVE_CANDIDATES
         assert instant_metrics["decline_engine"].get("available") is True
         assert instant_metrics["decline_probability_supported"] is True
 
@@ -108,13 +112,11 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
         assert run7 is not None
         metrics7 = run7.metrics_json or {}
         point7 = metrics7["point_forecast_engine"]
-        assert point7["version"] == "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1"
+        assert point7["version"] == ADAPTIVE_VERSION
         assert point7["metrics"]["selection_metric"] == "merchant_rolling_wape"
         assert point7["metrics"]["backtest_points"] > 0
         assert point7["metrics"]["wape"] >= 0
-        assert point7["name"] in {
-            "seasonal_naive_7", "moving_average_7", "moving_average_14", "weekly_trend_7"
-        }
+        assert point7["name"] in ADAPTIVE_CANDIDATES
         assert len(db.scalars(select(Forecast).where(Forecast.model_run_id == run7.id)).all()) == 7
         assert metrics7["decline_engine"].get("available") is True
         assert metrics7["decline_probability_supported"] is True
@@ -131,8 +133,6 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
     assert pdf_report.mimetype == "application/pdf"
     assert pdf_report.data.startswith(b"%PDF")
 
-    # A 30-day run is a value forecast only. It must never create a legacy
-    # Ridge-derived decline alert or claim a validated 30-day risk probability.
     _authenticate(client, admin_id, csrf)
     run30_response = client.post(
         "/forecasts/",
@@ -147,7 +147,8 @@ def test_complete_browser_journey_upload_forecast_risk_explanation_and_reports(t
         metrics30 = run30.metrics_json or {}
         assert metrics30["decline_probability_supported"] is False
         point30 = metrics30["point_forecast_engine"]
-        assert point30["version"] == "SALES-SENTINEL-ADAPTIVE-MERCHANT-FORECAST-V1"
+        assert point30["version"] == ADAPTIVE_VERSION
+        assert point30["name"] in ADAPTIVE_CANDIDATES
         forecasts30 = db.scalars(select(Forecast).where(Forecast.model_run_id == run30.id)).all()
         assert len(forecasts30) == 30
         assert all(float(item.decline_probability) == 0.0 for item in forecasts30)
