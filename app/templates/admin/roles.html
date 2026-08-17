@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block page_name %}{{ 'الأدوار والصلاحيات' if locale=='ar' else 'Roles & permissions' }}{% endblock %}
+{% block content %}
+<section class="ux3-page-head">
+  <div>
+    <span class="eyebrow">ACCESS CONTROL</span>
+    <h1>{{ 'الأدوار والصلاحيات' if locale=='ar' else 'Roles & permissions' }}</h1>
+    <p>{{ 'تحكم بما يستطيع كل دور الوصول إليه داخل النظام.' if locale=='ar' else 'Control exactly what each role can access inside Sales Sentinel.' }}</p>
+  </div>
+  <a class="secondary-button" href="{{ url_for('admin.users') }}">{{ 'المستخدمون' if locale=='ar' else 'Users' }}</a>
+</section>
+
+<section class="ux3-dashboard-main">
+  <article class="ux3-plain-block">
+    <div class="ux3-section-title"><div><h2>{{ 'الأدوار الحالية' if locale=='ar' else 'Current roles' }}</h2></div><span>{{ roles|length }}</span></div>
+    {% for role in roles %}
+    <details class="ux3-more-metrics" {{ 'open' if role.code == 'analyst' else '' }}>
+      <summary><strong>{{ role.name_ar if locale=='ar' else role.name_en }}</strong> <small>{{ role.code }} · {{ role.users|length }} users</small><span>＋</span></summary>
+      <form method="post" action="{{ url_for('admin.update_role_permissions', role_id=role.id) }}" class="stacked-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="ux3-permission-grid">
+          {% for permission in permissions %}
+          <label class="ux3-check-row">
+            <input type="checkbox" name="permission_id" value="{{ permission.id }}" {{ 'checked' if permission in role.permissions else '' }} {{ 'disabled' if role.code == 'admin' else '' }}>
+            <span><strong>{{ permission.name_ar if locale=='ar' else permission.name_en }}</strong><small>{{ permission.code }}</small></span>
+          </label>
+          {% endfor %}
+        </div>
+        <button class="primary-button" type="submit">{{ 'حفظ الصلاحيات' if locale=='ar' else 'Save permissions' }}</button>
+      </form>
+      {% if role.code not in ['admin','analyst'] %}
+      <form method="post" action="{{ url_for('admin.delete_role', role_id=role.id) }}" onsubmit="return confirm('Delete this role?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="danger-button" type="submit">{{ 'حذف الدور' if locale=='ar' else 'Delete role' }}</button>
+      </form>
+      {% endif %}
+    </details>
+    {% endfor %}
+  </article>
+
+  <aside class="ux3-alert-block">
+    <div class="ux3-section-title"><div><span class="eyebrow">NEW ROLE</span><h2>{{ 'إنشاء دور' if locale=='ar' else 'Create role' }}</h2></div></div>
+    <form method="post" action="{{ url_for('admin.roles') }}" class="stacked-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Code<input name="code" placeholder="regional-manager" required></label>
+      <label>English name<input name="name_en" required></label>
+      <label>Arabic name<input name="name_ar"></label>
+      <div class="ux3-permission-grid">
+        {% for permission in permissions %}
+        <label class="ux3-check-row"><input type="checkbox" name="permission_id" value="{{ permission.id }}"><span>{{ permission.name_ar if locale=='ar' else permission.name_en }}</span></label>
+        {% endfor %}
+      </div>
+      <button class="primary-button" type="submit">{{ 'إنشاء الدور' if locale=='ar' else 'Create role' }}</button>
+    </form>
+  </aside>
+</section>
+{% endblock %}
