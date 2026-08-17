@@ -23,7 +23,7 @@ def test_rejects_unsupported_horizon():
         forecast([100.0] * 56, date(2026, 1, 1), 14)
 
 
-def test_adaptive_forecast_uses_merchant_backtest_and_valid_intervals():
+def test_adaptive_forecast_uses_horizon_aware_backtest_and_valid_intervals():
     history = []
     weekly = [100.0, 120.0, 140.0, 160.0, 180.0, 150.0, 130.0]
     for week in range(10):
@@ -35,11 +35,14 @@ def test_adaptive_forecast_uses_merchant_backtest_and_valid_intervals():
     assert result[0]["model_version"] == MODEL_VERSION
     assert result[0]["model_name"] in CANDIDATES
     metrics = result[0]["metrics"]
-    assert metrics["selection_metric"] == "merchant_rolling_wape"
+    assert metrics["selection_metric"] == "merchant_horizon_total_wape_then_daily_wape"
     assert metrics["evidence_scope"] == "uploaded_merchant_history"
     assert metrics["backtest_points"] > 0
+    assert metrics["horizon_backtest_folds"] > 0
+    assert metrics["horizon_total_wape"] is not None
     assert 0 <= metrics["wape"] < 1
     assert set(metrics["candidate_wape"]) == CANDIDATES
+    assert set(metrics["candidate_horizon_total_wape"]) == CANDIDATES
     assert all(item["predicted"] >= 0 for item in result)
     assert all(item["lower"] <= item["predicted"] <= item["upper"] for item in result)
     assert all(item["decline_probability"] == 0.0 for item in result)
@@ -51,6 +54,7 @@ def test_model_selection_prefers_weekly_pattern_when_it_is_best():
     result = forecast(history, date(2026, 7, 1), 30)
     assert result[0]["model_name"] in {"seasonal_naive_7", "weekday_mean_8w", "weekday_median_8w"}
     assert result[0]["metrics"]["wape"] == pytest.approx(0.0)
+    assert result[0]["metrics"]["horizon_total_wape"] == pytest.approx(0.0)
     assert len(result) == 30
 
 
