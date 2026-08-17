@@ -6,13 +6,7 @@ from pathlib import Path
 
 
 def _initialize_runtime_database(app) -> None:
-    """Initialize the configured database and keep Vercel cold starts resilient.
-
-    A bad/unreachable hosted DATABASE_URL must not turn the public landing page
-    into FUNCTION_INVOCATION_FAILED. On Vercel only, retry with an ephemeral
-    SQLite database under /tmp. Local and non-Vercel environments still fail
-    loudly so development/test errors are never hidden.
-    """
+    """Initialize the configured database and keep Vercel cold starts resilient."""
     from .database import init_engine
     from .services.bootstrap import ensure_seed_data
 
@@ -32,10 +26,6 @@ def _initialize_runtime_database(app) -> None:
 
     fallback_path = Path("/tmp/sales_sentinel.db")
     fallback_url = f"sqlite:///{fallback_path}"
-
-    # If the configured database was already the ephemeral SQLite target, the
-    # file may be a partially initialized artifact from a previous failed cold
-    # start. Recreate it once before retrying.
     if configured_url == fallback_url:
         try:
             fallback_path.unlink(missing_ok=True)
@@ -57,12 +47,6 @@ def create_app(config_object=None):
     from .services.security import csrf_token, current_user, validate_csrf
 
     config_object = config_object or Config
-
-    # Vercel Functions run with a read-only project filesystem. Flask's default
-    # instance directory lives beside the application code, so trying to create
-    # it during a cold start can raise EROFS and crash the Python function before
-    # any route is served. Keep the instance directory in /tmp on Vercel, which
-    # is the runtime's writable scratch space.
     runtime_instance_path = "/tmp/sales-sentinel-instance" if os.getenv("VERCEL") else None
     app = Flask(
         __name__,
@@ -78,6 +62,7 @@ def create_app(config_object=None):
     _initialize_runtime_database(app)
 
     from .admin.routes import admin_bp
+    from .alerts.routes import alerts_bp
     from .auth.routes import auth_bp
     from .dashboard.routes import dashboard_bp
     from .forecasting.routes import forecasting_bp
@@ -85,7 +70,7 @@ def create_app(config_object=None):
     from .reports.routes import reports_bp
     from .sales.routes import sales_bp
 
-    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, admin_bp):
+    for blueprint in (auth_bp, dashboard_bp, sales_bp, forecasting_bp, imports_bp, reports_bp, alerts_bp, admin_bp):
         app.register_blueprint(blueprint)
 
     @app.before_request
