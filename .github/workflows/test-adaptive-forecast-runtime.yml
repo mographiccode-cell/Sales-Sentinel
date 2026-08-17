@@ -1,0 +1,35 @@
+name: Test Adaptive Forecast Runtime
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'app/services/adaptive_forecasting_engine.py'
+      - 'app/forecasting/routes.py'
+      - 'tests/test_adaptive_forecasting_engine.py'
+      - '.github/workflows/test-adaptive-forecast-runtime.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install runtime and test dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Compile changed runtime files
+        run: python -m py_compile app/services/adaptive_forecasting_engine.py app/forecasting/routes.py
+      - name: Test adaptive forecasting
+        run: pytest -q tests/test_adaptive_forecasting_engine.py
+      - name: Test decline explainer and source isolation
+        run: pytest -q tests/test_decline_explainer.py tests/test_forecasting_source_isolation.py
